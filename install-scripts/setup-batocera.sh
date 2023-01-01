@@ -165,6 +165,10 @@ fi
 #  startup_flag=false
 #fi
 
+if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
+   mkdir ${INSTALLPATH}pixelcade
+fi
+
 #java needed for high scores, hi2txt
 cd ${INSTALLPATH}pixelcade
 JDKDEST="${INSTALLPATH}pixelcade/jdk"
@@ -193,10 +197,6 @@ if [[ ! -d $JDKDEST ]]; then #does Java exist already
     else
       echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /userdata/system/jdk"
     fi
-fi
-
-if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
-   mkdir ${INSTALLPATH}pixelcade
 fi
 
 if [[ -f master.zip ]]; then
