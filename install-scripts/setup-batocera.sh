@@ -36,7 +36,9 @@ else
    exit 1
 fi
 
+# let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
+curl localhost:8080/quit
 
 # let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
@@ -125,12 +127,16 @@ if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it
    mkdir ${INSTALLPATH}pixelcade
 fi
 
-if [[ -f "${INSTALLPATH}pixelweb" ]]; then #wget will create a copy if we don't delete it
-   rm ${INSTALLPATH}pixelweb
+if [[ -f master.zip ]]; then
+    rm master.zip
 fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
+if [[ -f pixelweb ]]; then
+    echo "Removed previous version of Pixelcade (pixelweb - Pixelcade Listener)..."
+    rm pixelweb
+fi
 wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
 echo "Getting the latest Pixelcade Artwork..."
