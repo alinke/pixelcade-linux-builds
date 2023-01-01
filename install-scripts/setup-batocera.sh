@@ -237,10 +237,10 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd ~/pixelcade && ./pixelweb -system-image batocera &\n" >> custom.sh
+      echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh
   fi
 
-  if cat ${INSTALLPATH}custom.sh | grep -q 'system-image'; then
+  if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
