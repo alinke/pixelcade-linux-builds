@@ -290,11 +290,11 @@ if [[ -d ${INSTALLPATH}ptemp ]]; then
 fi
 
 echo ""
-pixelcade_version="$(cd ${INSTALLPATH} && ./pixelweb -version)"
+pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
-sleep 20
+sleep 10
 
 echo " "
 while true; do
