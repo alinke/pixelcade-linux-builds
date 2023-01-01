@@ -291,7 +291,7 @@ fi
 
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH} && ./pixelweb -version)"
-echo "[INFO] Pixelcade Version $pixelcade_version Installed"
+echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
 sleep 10
