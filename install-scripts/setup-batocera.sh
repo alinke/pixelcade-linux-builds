@@ -294,7 +294,7 @@ pixelcade_version="$(cd ${INSTALLPATH} && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
-sleep 10
+sleep 20
 
 echo " "
 while true; do
