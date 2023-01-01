@@ -281,6 +281,8 @@ echo ""
 echo "**** INSTALLATION COMPLETE ****"
 install_succesful=true
 
+sleep 10
+
 echo " "
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
