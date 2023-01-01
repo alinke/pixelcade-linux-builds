@@ -259,7 +259,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh #Note that ~ does not work in custom.sh !
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
 
   if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
@@ -284,7 +284,7 @@ cd ${INSTALLPATH}pixelcade
 # TO DO add the Pixelcade LCD check later
 
 #now let's run pixelweb and let the user know things are working
-if [[ $startup_flag == "true" ]]; then 
+if [[ $startup_flag == "true" ]]; then
      cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &
 else
      cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &
