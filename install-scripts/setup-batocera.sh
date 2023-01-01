@@ -180,7 +180,7 @@ if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask us
     while true; do
           read -p "Would you like to check and get the latest Pixelcade artwork (y/n) " yn
           case $yn in
-              [Yy]* ) cd ${INSTALLPATH} && ./pixelweb -update-artwork; break;;
+              [Yy]* ) cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork; break;;
               [Nn]* ) echo "Continuing Pixelcade Installation..."; break;;
               * ) echo "Please answer y or n";;
           esac
