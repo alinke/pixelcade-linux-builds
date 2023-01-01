@@ -170,11 +170,12 @@ sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 # 1. the user had the older java pixelweb so we need to remove that line and replace
 # 2. the user already has the new pixelweb so we don't touch it
 
+cd ${INSTALLPATH}
+
 if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
    if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
         wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/odroidn2/custom.sh
    else
-        cp ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/v2/custom.sh ${INSTALLPATH} #without the startup flag
         wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh
    fi
 else    #custom.sh is already there so let's check if old java pixelweb is there
