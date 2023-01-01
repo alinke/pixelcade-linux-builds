@@ -63,7 +63,7 @@ else
         while true; do
             read -p "Would you like to upgrade your Batocera version now (y/n) " yn
             case $yn in
-                [Yy]* ) batocera-upgrade=true; break;;
+                [Yy]* ) batocera-upgrade; break;;
                 [Nn]* ) echo "Continuing Pixelcade Installation on your existing Batocera Version $batocera_version..."; break;;
                 * ) echo "Please answer y or n";;
             esac
