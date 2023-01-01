@@ -10,6 +10,7 @@ version=8  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 pixelcade_version=default
+startup_flag=false
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
@@ -156,7 +157,7 @@ fi
 if [[ $machine_arch == "default" ]]; then
   echo "[ERROR] Your device platform WAS NOT Detected"
   echo "[WARNING] Guessing that you are on aarch64 but be aware Pixelcade may not work"
-  machine_arch=amd64
+  machine_arch=arm64
 fi
 
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
