@@ -245,7 +245,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       sed -e '/pixelweb.jar -b -a -s/,+12 s/^/#/' -i custom.sh #comment out 12 lines after the match
       sed -e '/userdata/,+2 s/^/#/' -i custom.sh
       echo "Adding pixelweb to startup"
-      echo -e "cd ~/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh
   fi
 
   if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
@@ -254,7 +254,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh #Note that ~ does not work in custom.sh !
   fi
 
   if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
@@ -279,7 +279,11 @@ cd ${INSTALLPATH}pixelcade
 # TO DO add the Pixelcade LCD check later
 
 #now let's run pixelweb and let the user know things are working
-source ${INSTALLPATH}custom.sh #run pixelweb
+if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
+     cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &
+else
+     cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &
+fi
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
