@@ -9,6 +9,7 @@ machine_arch=default
 version=8  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
+pixelcade_version=default
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
@@ -174,8 +175,19 @@ if [[ -f pixelweb ]]; then
 fi
 wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
-echo "Getting the latest Pixelcade Artwork..."
 ./pixelweb -install-artwork #install the artwork
+if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask user if they want to check for updates
+          read -p "Would you like to check and get the latest Pixelcade artwork (y/n) " yn
+          case $yn in
+              [Yy]* ) cd ${INSTALLPATH} && ./pixelweb -update-artwork; break;;
+              [Nn]* ) echo "Continuing Pixelcade Installation..."; break;;
+              * ) echo "Please answer y or n";;
+          esac
+      done
+fi
+
+
+#to do prompt user to upgrade if artwork already there
 
 if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
@@ -278,7 +290,8 @@ if [[ -d ${INSTALLPATH}ptemp ]]; then
 fi
 
 echo ""
-echo "**** INSTALLATION COMPLETE ****"
+pixelcade_version="$(cd ${INSTALLPATH} && ./pixelweb -version)"
+echo "[INFO] Pixelcade Version $pixelcade_version Installed"
 install_succesful=true
 
 sleep 10
