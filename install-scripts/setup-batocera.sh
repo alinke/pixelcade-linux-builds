@@ -177,6 +177,7 @@ wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_a
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask user if they want to check for updates
+    while true; do
           read -p "Would you like to check and get the latest Pixelcade artwork (y/n) " yn
           case $yn in
               [Yy]* ) cd ${INSTALLPATH} && ./pixelweb -update-artwork; break;;
@@ -185,7 +186,6 @@ if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask us
           esac
       done
 fi
-
 
 #to do prompt user to upgrade if artwork already there
 
