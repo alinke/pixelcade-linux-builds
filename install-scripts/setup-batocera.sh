@@ -10,7 +10,7 @@ version=8  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 pixelcade_version=default
-startup_flag=false
+startup_flag=true #by default, let's assume we need the startup flag
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
@@ -160,6 +160,11 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=arm64
 fi
 
+#add known combos here where startup flag is not needed
+if [[ $pi4 == "true" && "$machine_arch" == "arm64" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
+  startup_flag=false
+fi
+
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
 fi
@@ -177,6 +182,7 @@ fi
 wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
+# Thought about prompting user for artwork update but let's just do it by default
 #if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask user if they want to check for updates
 #    while true; do
 #          read -p "Would you like to check and get the latest Pixelcade artwork (y/n) " yn
@@ -192,8 +198,6 @@ if [[ $? == 2 ]]; then #this means artwork is already installed so let's check f
   echo "Checking for new Pixelcade artwork..."
   cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
 fi
-
-#to do prompt user to upgrade if artwork already there
 
 if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
@@ -232,10 +236,10 @@ sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 cd ${INSTALLPATH}
 
 if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
-   if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
-        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/odroidn2/custom.sh
+   if [[ $startup_flag == "true" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
+        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/startupflag/custom.sh
    else
-        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh
+        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #no startup flag
    fi
 else    #custom.sh is already there so let's check if old java pixelweb is there
 
@@ -262,7 +266,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then
+      if [[ $startup_flag == "true" ]]; then
         echo "Adding Pixelcade to startup with startup flag in custom.sh"
         echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh
       else
@@ -280,7 +284,7 @@ cd ${INSTALLPATH}pixelcade
 # TO DO add the Pixelcade LCD check later
 
 #now let's run pixelweb and let the user know things are working
-if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
+if [[ $startup_flag == "true" ]]; then 
      cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &
 else
      cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &
