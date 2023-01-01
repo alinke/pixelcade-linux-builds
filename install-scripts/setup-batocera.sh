@@ -250,7 +250,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       sed -e '/pixelweb.jar -b -a -s/,+12 s/^/#/' -i custom.sh #comment out 12 lines after the match
       sed -e '/userdata/,+2 s/^/#/' -i custom.sh
       echo "Adding pixelweb to startup"
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh
   fi
 
   if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
@@ -259,7 +259,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
 
   if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
