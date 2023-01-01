@@ -263,10 +263,10 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
       if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then
         echo "Adding Pixelcade to startup with startup flag in custom.sh"
-        echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh
+        echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh
       else
         echo "Adding Pixelcade to startup in custom.sh"
-        echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh
+        echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh
       fi
   fi
 fi
