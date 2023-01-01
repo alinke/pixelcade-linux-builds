@@ -161,9 +161,9 @@ if [[ $machine_arch == "default" ]]; then
 fi
 
 #add known combos here where startup flag is not needed
-if [[ $pi4 == "true" && "$machine_arch" == "arm64" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
-  startup_flag=false
-fi
+#if [[ $pi4 == "true" && "$machine_arch" == "arm64" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
+#  startup_flag=false
+#fi
 
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
@@ -313,8 +313,9 @@ sleep 5
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
-echo "[INFO] After purchase, the art pack can be installed with this command:"
-echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack"
+echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
+echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
+
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
