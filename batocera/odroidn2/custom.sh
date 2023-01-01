@@ -1,2 +1,2 @@
 #!/bin/bash
-cd ~/pixelcade && ./pixelweb -system-image batocera -startup &
+cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &

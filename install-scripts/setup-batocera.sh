@@ -10,6 +10,9 @@ version=8  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 
+# Run this script with this command
+# wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
+
 cat << "EOF"
        _          _               _
  _ __ (_)_  _____| | ___ __ _  __| | ___
@@ -243,10 +246,10 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
       if [[ $odroidn2 == "true" || "$machine_arch" == "amd64" || "$machine_arch" == "386" ]]; then
         echo "Adding Pixelcade to startup with startup flag in custom.sh"
-        echo -e "cd ~/pixelcade && ./pixelweb -system-image batocera -startup &\n" >> custom.sh
+        echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &\n" >> custom.sh
       else
         echo "Adding Pixelcade to startup in custom.sh"
-        echo -e "cd ~/pixelcade && ./pixelweb -system-image batocera &\n" >> custom.sh
+        echo -e "cd ~/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy &\n" >> custom.sh
       fi
   fi
 fi
