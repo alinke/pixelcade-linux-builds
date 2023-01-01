@@ -311,6 +311,10 @@ install_succesful=true
 sleep 5
 
 echo " "
+echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
+echo "[INFO] The LED art pack adds additional animated marquees for select games"
+echo "[INFO] After purchase, the art pack can be installed with this command:"
+echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack"
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
