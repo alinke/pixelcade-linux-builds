@@ -7,6 +7,8 @@ pi3=false
 odroidn2=false
 machine_arch=default
 version=8  #increment this as the script is updated
+batocera_version=default
+batocera_recommended_minimum_version=33
 
 cat << "EOF"
        _          _               _
@@ -25,6 +27,11 @@ echo "Now connect Pixelcade to a free USB port on your device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
 
+function pause(){
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
+}
+
 INSTALLPATH="${HOME}/"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
@@ -34,6 +41,31 @@ if batocera-info | grep -q 'System'; then
 else
    echo "Sorry, Batocera was not detected, exiting..."
    exit 1
+fi
+
+batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
+
+if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera versio so just warn the user
+  echo "[INFO] Could not detect your Batocra version"
+  echo "[INFO] Please note that Batocera V33 or higher is required"
+  echo "[INFO] for Pixelcade to update while scrolling through games"
+  pause
+else
+  if [[ $batocera_version -lt $batocera_recommended_minimum_version ]]; then
+        echo "[INFO] Your Batocera version $batocera_version does not support Pixelcade updates during game scrolling"
+        echo "[INFO] On Batocera version $batocera_version, Pixelcade will update only when a game is launched"
+        echo "[INFO] Pixelcade updates during scrolling requires Batocera version $batocera_recommended_minimum_version or higher"
+        while true; do
+            read -p "Would you like to upgrade your Batocera version now (y/n) " yn
+            case $yn in
+                [Yy]* ) batocera-upgrade=true; break;;
+                [Nn]* ) echo "Continuing Pixelcade Installation on your existing Batocera Version $batocera_version..."; break;;
+                * ) echo "Please answer y or n";;
+            esac
+        done
+    else
+      echo "[INFO] Your Batocera version $batocera_version supports Pixelcade updates during game scrolling"
+  fi
 fi
 
 # let's make sure pixelweb is not already running
@@ -146,7 +178,7 @@ if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
 fi
 
-#creating a temp dir for the Pixelcade system files
+#creating a temp dir for the Pixelcade common system files & scripts
 mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 
