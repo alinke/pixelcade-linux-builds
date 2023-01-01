@@ -199,7 +199,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo -e "cd ~/pixelcade && ./pixelweb -system-image batocera &\n" >> custom.sh
   fi
 
-  if cat ${INSTALLPATH}custom.sh | grep -q '-system-image'; then
+  if cat ${INSTALLPATH}custom.sh | grep -q 'system-image'; then
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
@@ -222,8 +222,6 @@ cd ${INSTALLPATH}pixelcade
 
 #now let's run pixelweb and let the user know things are working
 source ${INSTALLPATH}custom.sh #run pixelweb
-sleep 2
-curl "localhost:8080/arcade/stream/mame/1941" #send a test image for the user to see
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
@@ -244,7 +242,7 @@ install_succesful=true
 
 echo " "
 while true; do
-    read -p "Is the 1941 Game Logo Displaying on Pixelcade Now? (y/n)" yn
+    read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
         [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
         [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
