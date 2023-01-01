@@ -188,6 +188,7 @@ chmod +x pixelweb
 #fi
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+  echo "Checking for new Pixelcade artwork..."
   cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
 fi
 
