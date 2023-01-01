@@ -165,6 +165,36 @@ fi
 #  startup_flag=false
 #fi
 
+#java needed for high scores, hi2txt
+cd ${INSTALLPATH}pixelcade
+JDKDEST="${INSTALLPATH}pixelcade/jdk"
+
+if [[ ! -d $JDKDEST ]]; then #does Java exist already
+    if [[ $machine_arch == "arm64" ]]; then
+          echo "${yellow}Installing Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
+          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip #this is a 64-bit small JRE , same one used on the ALU
+          unzip jdk-aarch64.zip
+          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+    elif [ $machine_arch == "arm_v7" ]; then
+          echo "${yellow}Installing Java JRE 11 32-Bit for aarch32...${white}"
+          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch32.zip
+          unzip jdk-aarch32.zip
+          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+    elif [ $machine_arch == "386" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
+          echo "${yellow}Installing Java JRE 11 32-Bit for X86...${white}"
+          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-32.zip
+          unzip jdk-x86-32.zip
+          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+    elif [ $machine_arch == "amd64" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
+          echo "${yellow}Installing Java JRE 11 64-Bit for X86...${white}"
+          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-64.zip
+          unzip jdk-x86-64.zip
+          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+    else
+      echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /userdata/system/jdk"
+    fi
+fi
+
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
 fi
@@ -221,7 +251,7 @@ echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
 #hi2txt for high score scrolling
-echo "${yellow}Installing hi2txt for High Scores...${white}"
+echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
 
 # need to remove a few lines in console.csv
