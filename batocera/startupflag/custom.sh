@@ -7,7 +7,7 @@
 case "$1" in
     start)
         # Code in here will only be executed on boot.
-        cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -fuzzy -startup &
+        cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &
         ;;
     stop)
         # Code in here will only be executed on shutdown.
