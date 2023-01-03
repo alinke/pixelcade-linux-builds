@@ -168,6 +168,10 @@ if [[ -f master.zip ]]; then
     rm master.zip
 fi
 
+if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
+   mkdir ${INSTALLPATH}pixelcade
+fi
+
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 if [[ -f pixelweb ]]; then
