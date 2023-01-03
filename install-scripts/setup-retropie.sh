@@ -103,7 +103,7 @@ curl localhost:8080/quit
 # linux_arm_v6
 # linux_arm_v7
 
-#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64 🤣
+#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64
 #Pi model B+ armv6, no work
 
 if uname -m | grep -q 'armv6'; then
@@ -146,9 +146,10 @@ if cat /proc/device-tree/model | grep -q 'Raspberry Pi 3'; then
    pi3=true
 fi
 
-if cat /proc/device-tree/model | grep -q 'Pi 4'; then
+if cat /proc/device-tree/model | grep -q 'Pi 4'; then #this counts Pi 400 too
    printf "${yellow}Raspberry Pi 4 detected...\n"
    pi4=true
+   #machine_arch=arm64
 fi
 
 if cat /proc/device-tree/model | grep -q 'Pi Zero W'; then
@@ -167,10 +168,30 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=arm64
 fi
 
-#add known combos here where startup flag is not needed
-#if [[ $pi4 == "true" && "$machine_arch" == "arm64" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
-#  startup_flag=false
-#fi
+#Now we need to check if we have the ES version that includes the game-select and system-select events
+#ES verion Data Points
+# Jan '23 BEFORE Pi updater: Version 2.10.1rp, built Dec 26 2021 - 16:25:37
+# Jan '23 on Pi 4 after Pi updater: Version 2.11.0rp, built Dec 10 2022 - 12:26:20
+# so looks like we need 2.11
+
+es_version=$(cd /usr/bin && ./emulationstation -h | grep 'Version')
+es_version=${es_version#*Version } #get onlly the line with Version
+es_version=${es_version%,*} # keep all text before the comma // Version 2.10.1rp, built Dec 26 2021 - 16:25:37, built Dec 26 2021 - 16:25:37
+es_version_numeric=$(echo $es_version | sed 's/[^0-9.]*//g') #now remove all letters // Version 2.10.1rp ==> 2.10.1
+es_version_result=$(echo $es_version_numeric $es_minimum_version | awk '{if ($1 >= $2) print "pass"; else print "fail"}')
+
+if [[ ! $es_version_result == "pass" ]]; then #we need to update to the latest EmulationStation to get the new game-select and system-select events
+    while true; do
+        read -p "${red}[IMPORTANT] Pixelcade needs EmulationStation version $es_minimum_version or higher, type y to upgrade your RetroPie and EmulationStation now and then choose "Update" from the RetroPie GUI menu(y/n)${white}" yn
+        case $yn in
+          [Yy]* ) sudo ~/RetroPie-Setup/retropie_setup.sh; break;;
+          [Nn]* ) echo "${yellow}Continuing Pixelcade installation without RetroPie update, NOT RECOMMENDED${white}"; break;;
+            * ) echo "Please answer y or n";;
+        esac
+    done
+else
+  echo "${green}Your EmulationStation version $es_version is good & meets the minimum EmulationStation version $es_minimum_version that is required for Pixelcade${white}"
+fi
 
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
@@ -202,7 +223,7 @@ if [[ ! -d $JDKDEST ]]; then #does Java exist already
           unzip jdk-x86-64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     else
-      echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /home/pi/jdk"
+      echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /userdata/system/jdk"
     fi
 fi
 
@@ -258,11 +279,8 @@ if [[ ! -d ${INSTALLPATH}.emulationstation/scripts ]]; then #does the ES scripts
     mkdir ${INSTALLPATH}.emulationstation/scripts
 fi
 
-#pixelcade core files
-echo "${yellow}Installing Pixelcade Core Files...${white}"
-cp -f ${INSTALLPATH}ptemp/pixelcade-linux-main/core/* ${INSTALLPATH}pixelcade #the core Pixelcade files, no sub-folders in this copy
 #pixelcade system folder
-cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/system ${INSTALLPATH}pixelcade #system folder, .initial-date will go in here
+cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/system ${INSTALLPATH}pixelcade #TO DO fix this
 #pixelcade scripts for emulationstation events
 echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
 sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/scripts ${INSTALLPATH}.emulationstation #note this will overwrite existing scripts
@@ -270,19 +288,7 @@ sudo find ${INSTALLPATH}.emulationstation/scripts -type f -iname "*.sh" -exec ch
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}"
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
-#copy over the patched emulationstation and resources folder to /usr/bin, in the future add a check here if the RetroPie team ever incorporates the patch
-#if [ "$pi4" = true ] ; then
-#  echo "${yellow}Copying patched EmulationStation for Pixelcade for Pi 4...${white}"
-#  sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/pi4/emulationstation /usr/bin
-#  sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/pi4/resources /usr/bin
-#  sudo chmod +x /usr/bin/emulationstation
-#fi
-#if [ "$pi3" = true ] ; then
-#  echo "${yellow}Copying patched EmulationStation for Pixelcade for Pi 3...${white}"
-#  sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/pi3/emulationstation /usr/bin
-#  sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/pi3/resources /usr/bin
-#  sudo chmod +x /usr/bin/emulationstation
-#fi
+
 #now lets check if the user also has attractmode installed
 if [[ -d "//home/pi/.attract" ]]; then
   echo "${yellow}Attract Mode front end detected, installing Pixelcade plug-in for Attract Mode...${white}"
@@ -307,21 +313,12 @@ else
   attractmode=false
   echo "${yellow}Attract Mode front end is not installed..."
 fi
-# set the RetroPie logo as the startup marquee
-sed -i 's/startupLEDMarqueeName=arcade/startupLEDMarqueeName=retropie/' ${INSTALLPATH}pixelcade/settings.ini
-# no longer need these
+
 sed -i '/all,mame/d' ${INSTALLPATH}pixelcade/console.csv
 sed -i '/favorites,mame/d' ${INSTALLPATH}pixelcade/console.csv
 sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 #add to retropie startup
 if [ "$retropie" = true ] ; then
-
-    # for existing users, let's add the -s flag
-    #if cat /opt/retropie/configs/all/autostart.sh | grep -w 'cd /home/pi/pixelcade && java -jar pixelweb.jar -b &'; then
-    #  echo "${yellow}Setting Pixelcade to silent mode...${white}"
-    #  sed -i '/cd \/home\/pi\/pixelcade && java -jar pixelweb.jar -b &/d' /opt/retropie/configs/all/autostart.sh #delete the line
-    #  sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && java -jar pixelweb.jar -b -s &' /opt/retropie/configs/all/autostart.sh #replace it with -s
-    #fi
 
     if cat /opt/retropie/configs/all/autostart.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
         echo "${yellow}Backing up autostart.sh to autostart.bak${white}"
@@ -329,10 +326,9 @@ if [ "$retropie" = true ] ; then
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh #replace it with -s
+        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh 
         #echo -e "cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n" >> autostart.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
     fi
-
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
     if cat /opt/retropie/configs/all/autostart.sh | grep -q 'pixelweb -image'; then
@@ -360,43 +356,47 @@ else #there is no retropie so we need to add pixelcade using .service instead
   sudo fc-cache -v -f
   echo "${yellow}Adding Pixelcade to Startup...${white}"
   cd /home/pi/pixelcade/system
-  sudo chmod +x /home/pi/pixelcade/system/autostart.sh
+  sudo chmod +x /home/pi/pixelcade/system/autostart.sh # TO DO need to replace this
   sudo cp pixelcade.service /etc/systemd/system/pixelcade.service
   #to do add check if the service is already running
   sudo systemctl start pixelcade.service
   sudo systemctl enable pixelcade.service
 fi
 
-echo "Checking for Pixelcade LCDs..."
-java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
+sudo chown -R pi: /home/pi/pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
 
-cd ${INSTALLPATH}pixelcade
-java -jar pixelweb.jar -b & #run pixelweb in the background\
-
-# let's send a test image and see if it displays
-sleep 8
-cd ${INSTALLPATH}pixelcade
-#java -jar pixelcade.jar -m stream -c mame -g 1941
+cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
-if [[ -d "${INSTALLPATH}pixelcade-master" ]]; then #if the user killed the installer mid-stream,it's possible this file is still there so let's remove it to be sure before downloading, otherwise wget will download and rename to .1
-   sudo rm master.zip
+
+if [[ -f master.zip ]]; then
+    rm master.zip
 fi
-sudo rm setup.sh
-sudo rm -r ${INSTALLPATH}ptemp
 
-sudo chown -R pi: /home/pi/pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
-#do we need to do for ES scripts too?
+rm ${SCRIPTPATH}/setup-retropie.sh
 
-echo "INSTALLATION COMPLETE , please now reboot and then the Pixelcade logo should be display on Pixelcade"
+if [[ -d ${INSTALLPATH}ptemp ]]; then
+    rm -r ${INSTALLPATH}ptemp
+fi
+
+echo ""
+pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
+echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
+sleep 5
+
 echo " "
+echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
+echo "[INFO] The LED art pack adds additional animated marquees for select games"
+echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
+echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
+
 while true; do
-    read -p "Is the 1941 Game Logo Displaying on Pixelcade Now? (y/n)" yn
+    read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
-        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by RetroPie" && install_succesful=true; break;;
+        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
         [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
         * ) echo "Please answer yes or no.";;
     esac
@@ -404,9 +404,9 @@ done
 
 if [ "$install_succesful" = true ] ; then
   while true; do
-      read -p "Would you like to reboot now? (y/n)" yn
+      read -p "Reboot Now? (y/n)" yn
       case $yn in
-          [Yy]* ) sudo reboot; break;;
+          [Yy]* ) reboot; break;;
           [Nn]* ) echo "Please reboot when you get a chance" && exit;;
           * ) echo "Please answer yes or no.";;
       esac
