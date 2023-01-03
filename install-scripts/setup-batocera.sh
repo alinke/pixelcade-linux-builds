@@ -70,7 +70,7 @@ else
             esac
         done
     else
-      echo "[INFO] Your Batocera version $batocera_version supports Pixelcade updates during game scrolling"
+      echo "[INFO] Your Batocera version $batocera_version supports dynamic Pixelcade updates during front end scrolling"
   fi
 fi
 
