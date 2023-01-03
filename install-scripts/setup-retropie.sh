@@ -258,11 +258,6 @@ cd ${INSTALLPATH}ptemp
 wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
 unzip main.zip
 
-# we have all the pre-requisites so let's continue
-#sudo apt-get -y update
-
-# this is where pixelcade will live but if it's already there, then we need to do a refresh and not a git clone
-
 mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 if [[ ! -d ${INSTALLPATH}ptemp/pixelcade-linux-main ]]; then
@@ -273,14 +268,11 @@ echo "${yellow}Installing Pixelcade System Files...${white}"
 #get the Pixelcade system files
 wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
 unzip main.zip
-#git clone --depth 1 https://github.com/alinke/pixelcade-linux.git #we could do git clone here but batocera doesn't support git so let's be consistent with the code
 
 if [[ ! -d ${INSTALLPATH}.emulationstation/scripts ]]; then #does the ES scripts folder exist, make it if not
     mkdir ${INSTALLPATH}.emulationstation/scripts
 fi
 
-#pixelcade system folder
-cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/system ${INSTALLPATH}pixelcade #TO DO fix this
 #pixelcade scripts for emulationstation events
 echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
 sudo cp -a -f ${INSTALLPATH}ptemp/pixelcade-linux-main/retropie/scripts ${INSTALLPATH}.emulationstation #note this will overwrite existing scripts
@@ -326,7 +318,7 @@ if [ "$retropie" = true ] ; then
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh 
+        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh
         #echo -e "cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n" >> autostart.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
     fi
 
@@ -347,15 +339,17 @@ if [ "$retropie" = true ] ; then
     sudo cp /home/pi/pixelcade/fonts/*.ttf /home/pi/.fonts
     sudo apt -y install font-manager
     sudo fc-cache -v -f
-else #there is no retropie so we need to add pixelcade using .service instead
+else #there is no retropie so we need to start pixelcade using the pixelcade.service instead
   echo "${yellow}Installing Fonts...${white}"
   cd /home/pi/pixelcade
   mkdir /home/pi/.fonts
   sudo cp /home/pi/pixelcade/fonts/*.ttf /home/pi/.fonts
   sudo apt -y install font-manager
   sudo fc-cache -v -f
-  echo "${yellow}Adding Pixelcade to Startup...${white}"
+  echo "${yellow}Adding Pixelcade to Startup via pixelcade.service...${white}"
   cd /home/pi/pixelcade/system
+  wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/system/autostart.sh
+  wget https://raw.githubusercontent.com/alinke/pixelcade-linux/main/system/pixelcade.service
   sudo chmod +x /home/pi/pixelcade/system/autostart.sh # TO DO need to replace this
   sudo cp pixelcade.service /etc/systemd/system/pixelcade.service
   #to do add check if the service is already running
