@@ -235,6 +235,15 @@ if [[ ! -d $JDKDEST ]]; then #does Java exist already
     else
       echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /userdata/system/jdk"
     fi
+
+    #now let's add java to path
+    if cat ~/.bashrc | grep -q 'pixelcade/jdk/bin/java'; then
+      echo "${yellow}Java already added to .bashrc, skipping...${white}"
+    else
+      echo "${yellow}Adding Java to Path via .bashrc (Java is needed for high scores)...${white}"
+      sed -i -e '$aexport PATH="$HOME/pixelcade/jdk/bin/java:$PATH"' ~/.bashrc
+    fi
+
 fi
 
 if [[ -f master.zip ]]; then
