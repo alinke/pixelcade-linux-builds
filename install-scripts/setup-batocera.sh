@@ -6,11 +6,12 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=8  #increment this as the script is updated
+version=10  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 pixelcade_version=default
 startup_flag=true #by default, let's assume we need the startup flag
+NEWLINE=$'\n'
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
@@ -26,8 +27,8 @@ EOF
 
 echo "       Pixelcade LED for Batocera : Installer Version $version    "
 echo ""
-echo "This script will install Pixelcade in your /userdata/system folder"
-echo "Plese ensure you have at least 500 MB of free disk space in /userdata/system"
+echo "This script will install the Pixelcade LED software in $HOME/pixelcade"
+echo "Plese ensure you have at least 800 MB of free disk space in $HOME"
 echo "Now connect Pixelcade to a free USB port on your device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
@@ -73,6 +74,7 @@ else
   fi
 fi
 
+echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
 curl localhost:8080/quit
@@ -84,7 +86,7 @@ else
     if ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
         echo "Pixelcade LED Marquee Detected on ttyACM1"
     else
-       echo "Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
+       echo "Sorry, Pixelcade LED Marquee was not detected.${NEWLINE}Please ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
        exit 1
     fi
 fi
@@ -195,7 +197,15 @@ if [[ ! -d $JDKDEST ]]; then #does Java exist already
           unzip jdk-x86-64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     else
-      echo "${red}Sorry, do not have a Java JDK for your platform, you'll need to install a Java JDK or JRE manually under /userdata/system/jdk"
+      echo "${red}Sorry, do not have a Java JDK for your platform.${NEWLINE}You'll need to install a Java JDK or JRE manually under ${INSTALLPATH}pixelcade/jdk/bin/java${NEWLINE}Note Java is only needed for high score functionality so you can also skip it"
+    fi
+
+    #now let's add java to path
+    if cat ~/.bashrc | grep -q 'pixelcade/jdk/bin/java'; then
+      echo "${yellow}Java already added to .bashrc, skipping...${white}"
+    else
+      echo "${yellow}Adding Java to Path via .bashrc (Java is needed for high scores)...${white}"
+      sed -i -e '$aexport PATH="$HOME/pixelcade/jdk/bin:$PATH"' ~/.bashrc
     fi
 fi
 
