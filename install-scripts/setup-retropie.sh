@@ -108,6 +108,14 @@ curl localhost:8080/quit
 #rcade is armv7 userspace and aarch64 kernel space so it shows aarch64
 #Pi model B+ armv6, no work
 
+#let's check if retropie is installed
+if [[ -f "/opt/retropie/configs/all/autostart.sh" ]]; then
+  echo "${yellow}RetroPie installation detected...${white}"
+  retropie=true
+else
+   echo "${yellow}RetroPie is not installed..."
+fi
+
 if uname -m | grep -q 'armv6'; then
    echo "${yellow}arm_v6 Detected..."
    machine_arch=arm_v6
@@ -252,14 +260,6 @@ if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
 fi
 
-#creating a temp dir for the Pixelcade common system files & scripts
-mkdir ${INSTALLPATH}ptemp
-cd ${INSTALLPATH}ptemp
-
-#get the Pixelcade system files
-wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
-unzip main.zip
-
 mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 if [[ ! -d ${INSTALLPATH}ptemp/pixelcade-linux-main ]]; then
@@ -316,11 +316,11 @@ if [ "$retropie" = true ] ; then
 
     if cat /opt/retropie/configs/all/autostart.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
         echo "${yellow}Backing up autostart.sh to autostart.bak${white}"
-        cp autostart.sh autostart.bak
+        cd /opt/retropie/configs/all && cp autostart.sh autostart.bak #let's make a backup of autostart.sh since we are modifying it
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh
+        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh
         #echo -e "cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n" >> autostart.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
     fi
 
@@ -328,11 +328,13 @@ if [ "$retropie" = true ] ; then
     if cat /opt/retropie/configs/all/autostart.sh | grep -q 'pixelweb -image'; then
       echo "${yellow}Pixelcade already added to autostart.sh, skipping...${white}"
     else
-      echo "${yellow}Adding Pixelcade /opt/retropie/configs/all/autostart.sh...${white}"
-      sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
+      echo "${yellow}Adding Pixelcade to Auto Start in /opt/retropie/configs/all/autostart.sh...${white}"
+      cd /opt/retropie/configs/all
+      sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
       if [ "$attractmode" = true ] ; then
           echo "${yellow}Adding Pixelcade for Attract Mode to /opt/retropie/configs/all/autostart.sh...${white}"
-          sudo sed -i '/^attract.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n' /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
+          cd /opt/retropie/configs/all
+          sudo sed -i '/^attract.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
       fi
     fi
     echo "${yellow}Installing Fonts...${white}"
@@ -349,7 +351,7 @@ else #there is no retropie so we need to start pixelcade using the pixelcade.ser
   sudo apt -y install font-manager
   sudo fc-cache -v -f
   echo "${yellow}Adding Pixelcade to Startup via pixelcade.service...${white}"
-  cd /home/pi/pixelcade/system
+  cd /home/pi/pixelcade/system && rm autostart.sh && rm pixelcade.service
   wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/system/autostart.sh
   wget https://raw.githubusercontent.com/alinke/pixelcade-linux/main/system/pixelcade.service
   sudo chmod +x /home/pi/pixelcade/system/autostart.sh # TO DO need to replace this
