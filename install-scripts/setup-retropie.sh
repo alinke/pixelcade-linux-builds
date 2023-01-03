@@ -23,6 +23,8 @@ reset=`tput sgr0`
 upgrade_artwork=false
 upgrade_software=false
 version=10  #increment this as the script is updated
+es_minimum_version=2.11.0
+es_version=default
 
 cat << "EOF"
        _          _               _
