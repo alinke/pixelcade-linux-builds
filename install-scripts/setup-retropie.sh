@@ -402,7 +402,7 @@ echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
-        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
+        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by RetroPie" && install_succesful=true; break;;
         [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
         * ) echo "Please answer yes or no.";;
     esac
