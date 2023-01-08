@@ -66,8 +66,7 @@ fi
 if [ -f "/media/fat/linux/_user-startup.sh" ] || [ -f "/media/fat/linux/user-startup.sh" ]; then
       echo "${yellow}Updated MiSTer Detected, Good${white}"
 else
-      echo "${red}Pixelcade is not compatible with this version of MiSTer as no /media/fat/linux/_user-startup.sh was found. Please upgrade to the latest MiSTer first${white}"
-      exit 1
+      echo "${red}WARNING: Pixelcade may not be compatible with this version of MiSTer as no /media/fat/linux/_user-startup.sh was found. Please upgrade to the latest MiSTer first${white}"
 fi
 
 #is Pixelcade already installed?
