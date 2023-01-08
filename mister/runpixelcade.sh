@@ -2,6 +2,7 @@
 pixelcade_detected=false
 java_installed=false
 INSTALLDIR=$(readlink -f $(dirname "$0"))
+pixelcadePort="/dev/ttyACM0"
 
 cat << "EOF"
        _          _               _
@@ -21,19 +22,26 @@ if ps aux | grep -q 'pixelweb'; then
    echo "${yellow}Pixelcade Already Running${white}"
    ps -ef | grep pixelweb | grep -v grep | awk '{print $1}' | xargs kill
 fi
-# detect what OS we have
+
+# let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
-   echo "${yellow}Pixelcade LED Marquee Detected${white}"
+   echo "Pixelcade LED Marquee Detected on ttyACM0"
+   pixelcadePort="/dev/ttyACM0"
 else
-  echo "${red}Sorry, a Pixelcade LED Marquee was not detected, please ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
-  exit 1
+    if ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
+        echo "Pixelcade LED Marquee Detected on ttyACM1"
+        pixelcadePort="/dev/ttyACM1"
+    else
+       echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
+       exit 1
+    fi
 fi
 
 cd $INSTALLDIR
 echo "Pixelcade is Starting..."
-./pixelweb -image "system/mister.png" -startup &
-echo "10 second delay"
-sleep 10
+./pixelweb -d $pixelcadePort -image "system/mister.png" -startup &
+echo "5 second delay"
+sleep 5
 
 saveIP=`cat /media/fat/pixelcade/ip.txt`  #this will be localhost for Pixelcade LED and would be a real IP if using Pixelcade LCD
 
