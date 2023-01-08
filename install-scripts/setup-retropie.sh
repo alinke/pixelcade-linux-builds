@@ -26,6 +26,7 @@ version=10  #increment this as the script is updated
 es_minimum_version=2.11.0
 es_version=default
 NEWLINE=$'\n'
+pixelcadePort="/dev/ttyACM0"
 
 cat << "EOF"
        _          _               _
@@ -82,11 +83,14 @@ fi
 
 #******************* MAIN SCRIPT START ******************************
 # let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
+
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
    echo "Pixelcade LED Marquee Detected on ttyACM0"
+   pixelcadePort="/dev/ttyACM0"
 else
     if ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
         echo "Pixelcade LED Marquee Detected on ttyACM1"
+        pixelcadePort="/dev/ttyACM1"
     else
        echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
        exit 1
@@ -103,6 +107,7 @@ curl localhost:8080/quit
 # linux_amd64
 # linux_arm_v6
 # linux_arm_v7
+# linux_arm_v7pi temp hack for RetroPie
 
 #rcade is armv7 userspace and aarch64 kernel space so it shows aarch64
 #Pi model B+ armv6, no work
@@ -255,7 +260,7 @@ if [[ -f pixelweb ]]; then
     echo "Removed previous version of Pixelcade (pixelweb - Pixelcade Listener)..."
     rm pixelweb
 fi
-wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}pi/pixelweb #TO DO the pi is a hack for now for RetroPie, put back to armv7 once that is working
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 
@@ -328,8 +333,7 @@ if [ "$retropie" = true ] ; then
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh
-        #echo -e "cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &\n" >> autostart.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh
     fi
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
@@ -338,11 +342,11 @@ if [ "$retropie" = true ] ; then
     else
       echo "${yellow}Adding Pixelcade to Auto Start in /opt/retropie/configs/all/autostart.sh...${white}"
       cd /opt/retropie/configs/all
-      sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
+      sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
       if [ "$attractmode" = true ] ; then
           echo "${yellow}Adding Pixelcade for Attract Mode to /opt/retropie/configs/all/autostart.sh...${white}"
           cd /opt/retropie/configs/all
-          sudo sed -i '/^attract.*/i cd /home/pi/pixelcade && ./pixelweb -image "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
+          sudo sed -i '/^attract.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
       fi
     fi
     echo "${yellow}Installing Fonts...${white}"
@@ -371,7 +375,7 @@ fi
 
 sudo chown -R pi: /home/pi/pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
 
-cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &
+cd ~/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
