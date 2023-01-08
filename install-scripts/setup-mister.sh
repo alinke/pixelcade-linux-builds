@@ -42,6 +42,13 @@ echo "Now connect Pixelcade to a free USB port on your MiSTer"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab some coffee or tea, this installer will take around 30 minutes to complete"
 
+INSTALLPATH="/media/fat/"
+
+function pause(){
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
+}
+
 #do we have enough disk space?
 cd /media/fat
 FREE=`df -k --output=avail "$PWD" | tail -n1`   # df -k not df -h
@@ -54,20 +61,13 @@ fi
 if [ -f "/media/fat/linux/_user-startup.sh" ] || [ -f "/media/fat/linux/user-startup.sh" ]; then
       echo "${yellow}Updated MiSTer Detected, Good${white}"
 else
-      echo "${yellow}Pixelcade is not compatible with this version of MiSTer, please upgrade to the latest MiSTer first${white}"
+      echo "${red}Pixelcade is not compatible with this version of MiSTer as no /media/fat/linux/_user-startup.sh was found. Please upgrade to the latest MiSTer first${white}"
       exit 1
 fi
 
 #is Pixelcade already installed?
 if [[ -d "/media/fat/pixelcade" ]]; then
-            while true; do
-                read -p "${magenta}You already have MiSTer Pixelcade installed. If you continue, this installer will overwrite all existing files including any custom artwork you've added, do you want to continue? (y/n) ${white}" yn
-                case $yn in
-                    [Yy]* ) cd /media/fat && sudo rm -r pixelcade; break;;
-                    [Nn]* ) exit; break;;
-                    * ) echo "Please answer y or n";;
-                esac
-      done
+    echo "${yellow}Pixelcade is already installed, updating to the latest including artwork${white}"
 fi
 
 # let's detect if Pixelcade is connected
@@ -172,7 +172,6 @@ chmod +x /media/fat/linux/user-startup.sh
 
 
 echo "${yellow}Modifying MiSTer.ini to turn on current game logging which is needed for Pixelcade...${white}"
-
 cd /media/fat
 if [[ -f "/media/fat/MiSTer.ini" ]]; then
       echo "${yellow}Updating your existing MiSTer.ini${white}"
@@ -185,6 +184,44 @@ elif [[ -f "/media/fat/MiSTer_example.ini" ]]; then
 else  #then worst case let's add a new MiSTer.ini
       echo "${yellow}Getting a vanilla MiSTer.ini${white}"
       cd /media/fat && wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/MiSTer.ini
+fi
+
+echo ""
+pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
+echo "[INFO] $pixelcade_version Installed"
+install_succesful=true
+
+echo "Cleaning up..."
+if [[ -f ${INSTALLPATH}setup-mister.sh ]]; then
+    rm ${INSTALLPATH}setup-mister.sh.sh
+fi
+
+if [[ -f /storage/setup-mister.sh.sh ]]; then
+    rm /storage/setup-mister.sh.sh
+fi
+
+#let's run Pixelcade now
+/media/fat/linux/user-startup.sh
+sleep 5
+
+while true; do
+    read -p "Is Pixelcade Up and Running? (y/n)" yn
+    case $yn in
+        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by MiSTer" && install_succesful=true; break;;
+        [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+if [ "$install_succesful" = true ] ; then
+  while true; do
+      read -p "Reboot Now? (y/n)" yn
+      case $yn in
+          [Yy]* ) reboot; break;;
+          [Nn]* ) echo "Please reboot when you get a chance" && exit;;
+          * ) echo "Please answer yes or no.";;
+      esac
+  done
 fi
 
 echo "${yellow}Installation Complete, Please Reboot your MiSTer...${white}"
