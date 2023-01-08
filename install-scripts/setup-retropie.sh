@@ -275,7 +275,7 @@ fi
 
 mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
-if [[ ! -d ${INSTALLPATH}ptemp/pixelcade-linux-main ]]; then
+if [[ -d ${INSTALLPATH}ptemp/pixelcade-linux-main ]]; then #remove this folder if it's already there
     sudo rm -r ${INSTALLPATH}ptemp/pixelcade-linux-main
 fi
 
@@ -333,7 +333,7 @@ if [ "$retropie" = true ] ; then
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh
+        sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh
     fi
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
@@ -342,11 +342,11 @@ if [ "$retropie" = true ] ; then
     else
       echo "${yellow}Adding Pixelcade to Auto Start in /opt/retropie/configs/all/autostart.sh...${white}"
       cd /opt/retropie/configs/all
-      sudo sed -i '/^emulationstation.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
+      sudo sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
       if [ "$attractmode" = true ] ; then
           echo "${yellow}Adding Pixelcade for Attract Mode to /opt/retropie/configs/all/autostart.sh...${white}"
           cd /opt/retropie/configs/all
-          sudo sed -i '/^attract.*/i cd /home/pi/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &' /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
+          sudo sed -i "/^attract.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
       fi
     fi
     echo "${yellow}Installing Fonts...${white}"
@@ -375,7 +375,7 @@ fi
 
 sudo chown -R pi: /home/pi/pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
 
-cd ~/pixelcade && ./pixelweb -image -d $pixelcadePort "system/retropie.png" -startup &
+cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
