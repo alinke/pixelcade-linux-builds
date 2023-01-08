@@ -49,6 +49,11 @@ function pause(){
  echo ""
 }
 
+echo "Stopping Pixelcade (if running...)"
+# let's make sure pixelweb is not already running
+killall java #in the case user has java pixelweb running
+curl localhost:8080/quit
+
 #do we have enough disk space?
 cd /media/fat
 FREE=`df -k --output=avail "$PWD" | tail -n1`   # df -k not df -h
