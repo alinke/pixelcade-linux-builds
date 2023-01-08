@@ -13,7 +13,6 @@ fullPath=`cat /tmp/FULLPATH`
 system=`cat /tmp/CORENAME`
 
 lastCall=""
-REPLY=""
 HOST=${1}
 
 #From SO or a gist...
@@ -63,29 +62,23 @@ if [[ $fullPath == ""  ]]; then
   system="console"
 fi
 
-#If the ile does not have an extension for he rom, add ".zip" to the call
+#If the file does not have an extension for the rom, add ".zip" to the call
 ext="${current##*.}"
-          base="${current##*/}"
-          echo "We have: ${base}.${ext}"
-          if [[ "${ext}" == "${base}" ]]; then
-            REPLY=".zip"
-            echo "adding zip"
-          fi
+base="${current##*/}"
+echo "We have: ${base}.${ext}"
+#if [[ "${ext}" == "${base}" ]]; then
+#  REPLY=".zip"
+#  echo "adding zip"
+#fi
 
 #urlencode everything
 encn=`encode "${name}"`
-
+encn=${encn%.*} #strip out the extension BUT this will break any games with another . in the name
 encs=`encode "${system}"`
 enct=`encode "${base}"`
 
-if [ "${system}" == "mame"  ]; then
- REPLY=""
-fi
-
 if [ "${lastCall}" != "${enct}"  ] && [ "${enct}" != ".."  ] ; then
- curl "http://${HOST}:8080/arcade/stream/${encs}/${encn}${REPLY}"
-# curl "http://${HOST}:8080/text?t=`encode "  "`"
-#curl "http://${HOST}:8080/text?t=${enct}&ss=1&c=orange&l=1&game=${encn}&system=${encs}"
+ curl "http://${HOST}:8080/arcade/stream/${encs}/${encn}"
 
  lastCall="${enct}"
  else
@@ -113,7 +106,7 @@ pixelcadeIP=`cat /media/fat/pixelcade/ip.txt 2>/dev/null`
 echo ":::::::::::::::::::"
 echo "::               ::"
 echo ":: PixelcadeLink ::"
-echo ":: v1.4         ::"
+echo ":: v1.5         ::"
 echo "::               ::"
 echo ":::::::::::::::::::"
 echo "/IP: ${pixelcadeIP}"
@@ -128,7 +121,7 @@ inotifywait -qm  --timefmt '%Y-%m-%dT%H:%M:%S' --event close_write --format '%T 
     fullPath=`cat /tmp/FULLPATH`
 
   	if [ "${current}" != "${lastPath}" ] && [ "${current}" != "" ]; then
-          REPLY=""
+          #REPLY=""
    	  urlencode ${pixelcadeIP}
    	  #echo
    	  lastPath=`cat /tmp/CURRENTPATH`
