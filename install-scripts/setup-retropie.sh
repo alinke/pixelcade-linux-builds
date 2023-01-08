@@ -255,12 +255,7 @@ if [[ -f master.zip ]]; then
 fi
 
 cd ${INSTALLPATH}pixelcade
-echo "Installing Pixelcade Software..."
-if [[ -f pixelweb ]]; then
-    echo "Removed previous version of Pixelcade (pixelweb - Pixelcade Listener)..."
-    rm pixelweb
-fi
-wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}pi/pixelweb #TO DO the pi is a hack for now for RetroPie, put back to armv7 once that is working
+wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}pi/pixelweb #TO DO the pi is a hack for now for RetroPie, put back to armv7 once that is working
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 
@@ -281,7 +276,7 @@ fi
 
 echo "${yellow}Installing Pixelcade System Files...${white}"
 #get the Pixelcade system files
-wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
+wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
 unzip main.zip
 
 if [[ ! -d ${INSTALLPATH}.emulationstation/scripts ]]; then #does the ES scripts folder exist, make it if not
@@ -297,12 +292,12 @@ echo "${yellow}Installing hi2txt for High Scores...${white}"
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
 
 #now lets check if the user also has attractmode installed
-if [[ -d "//home/pi/.attract" ]]; then
+if [[ -d "${INSTALLPATH}.attract" ]]; then
   echo "${yellow}Attract Mode front end detected, installing Pixelcade plug-in for Attract Mode...${white}"
   attractmode=true
-  cd /home/pi/.attract
-  #sudo cp -r /home/pi/pixelcade/attractmode-plugin/Pixelcade /home/pi/.attract/plugins
-  cp -r ${INSTALLPATH}ptemp/pixelcade-linux-main/attractmode-plugin/Pixelcade /home/pi/.attract/plugins
+  cd ${INSTALLPATH}.attract
+  #sudo cp -r ${INSTALLPATH}pixelcade/attractmode-plugin/Pixelcade ${INSTALLPATH}.attract/plugins
+  cp -r ${INSTALLPATH}ptemp/pixelcade-linux-main/attractmode-plugin/Pixelcade ${INSTALLPATH}.attract/plugins
     #let's also enable the plug-in saving the user from having to do that
   if cat attract.cfg | grep -q 'Pixelcade'; then
      echo "${yellow}Pixelcade Attract Mode plug-in already in attract.cfg, please ensure it's enabled from the Attract Mode GUI${white}"
@@ -314,8 +309,8 @@ if [[ -d "//home/pi/.attract" ]]; then
      sudo sed -i '$ a enabled\tyes' attract.cfg
   fi
   #don't forget to make the scripts executable
-  sudo chmod +x /home/pi/.attract/plugins/Pixelcade/scripts/update_pixelcade.sh
-  sudo chmod +x /home/pi/.attract/plugins/Pixelcade/scripts/display_marquee_text.sh
+  sudo chmod +x ${INSTALLPATH}.attract/plugins/Pixelcade/scripts/update_pixelcade.sh
+  sudo chmod +x ${INSTALLPATH}.attract/plugins/Pixelcade/scripts/display_marquee_text.sh
 else
   attractmode=false
   echo "${yellow}Attract Mode front end is not installed..."
@@ -333,7 +328,8 @@ if [ "$retropie" = true ] ; then
         echo "${yellow}Commenting out old java pixelweb version${white}"
         sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh
+        #sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh
+        sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh
     fi
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
@@ -346,36 +342,38 @@ if [ "$retropie" = true ] ; then
       if [ "$attractmode" = true ] ; then
           echo "${yellow}Adding Pixelcade for Attract Mode to /opt/retropie/configs/all/autostart.sh...${white}"
           cd /opt/retropie/configs/all
-          sudo sed -i "/^attract.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
+          #sudo sed -i "/^attract.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
+          sudo sed -i "/^attract.*/i cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before attract #auto
       fi
     fi
     echo "${yellow}Installing Fonts...${white}"
-    cd /home/pi/pixelcade
-    mkdir /home/pi/.fonts
-    sudo cp /home/pi/pixelcade/fonts/*.ttf /home/pi/.fonts
+    cd ${INSTALLPATH}pixelcade
+    mkdir ${INSTALLPATH}.fonts
+    sudo cp ${INSTALLPATH}pixelcade/fonts/*.ttf ${INSTALLPATH}.fonts
     sudo apt -y install font-manager
     sudo fc-cache -v -f
 else #there is no retropie so we need to start pixelcade using the pixelcade.service instead
   echo "${yellow}Installing Fonts...${white}"
-  cd /home/pi/pixelcade
-  mkdir /home/pi/.fonts
-  sudo cp /home/pi/pixelcade/fonts/*.ttf /home/pi/.fonts
+  cd ${INSTALLPATH}pixelcade
+  mkdir ${INSTALLPATH}.fonts
+  sudo cp ${INSTALLPATH}pixelcade/fonts/*.ttf ${INSTALLPATH}.fonts
   sudo apt -y install font-manager
   sudo fc-cache -v -f
   echo "${yellow}Adding Pixelcade to Startup via pixelcade.service...${white}"
-  cd /home/pi/pixelcade/system && rm autostart.sh && rm pixelcade.service
-  wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/system/autostart.sh
-  wget https://raw.githubusercontent.com/alinke/pixelcade-linux/main/system/pixelcade.service
-  sudo chmod +x /home/pi/pixelcade/system/autostart.sh # TO DO need to replace this
+  #cd ${INSTALLPATH}pixelcade/system && rm autostart.sh && rm pixelcade.service
+  wget -O ${INSTALLPATH}/pixelcade/system/autostart.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/system/autostart.sh
+  wget -O ${INSTALLPATH}/pixelcade/system/pixelcade.service https://raw.githubusercontent.com/alinke/pixelcade-linux/main/system/pixelcade.service
+  sudo chmod +x ${INSTALLPATH}pixelcade/system/autostart.sh # TO DO need to replace this
   sudo cp pixelcade.service /etc/systemd/system/pixelcade.service
   #to do add check if the service is already running
   sudo systemctl start pixelcade.service
   sudo systemctl enable pixelcade.service
 fi
 
-sudo chown -R pi: /home/pi/pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
+sudo chown -R pi: ${INSTALLPATH}pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
 
-cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &
+#cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &
+cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}

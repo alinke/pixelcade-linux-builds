@@ -39,9 +39,10 @@ fi
 
 cd $INSTALLDIR
 echo "Pixelcade is Starting..."
-./pixelweb -d $pixelcadePort -image "system/mister.png" -startup &
-echo "5 second delay"
-sleep 5
+#./pixelweb -d $pixelcadePort -image "system/mister.png" -startup &
+./pixelweb -image "system/mister.png" -startup &
+echo "3 second delay"
+sleep 3
 
 saveIP=`cat /media/fat/pixelcade/ip.txt`  #this will be localhost for Pixelcade LED and would be a real IP if using Pixelcade LCD
 
