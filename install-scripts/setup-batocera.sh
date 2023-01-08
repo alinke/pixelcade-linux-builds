@@ -10,7 +10,6 @@ version=10  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 pixelcade_version=default
-startup_flag=true #by default, let's assume we need the startup flag
 NEWLINE=$'\n'
 
 # Run this script with this command
@@ -162,11 +161,6 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=arm64
 fi
 
-#add known combos here where startup flag is not needed
-#if [[ $pi4 == "true" && "$machine_arch" == "arm64" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
-#  startup_flag=false
-#fi
-
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
 fi
@@ -207,24 +201,9 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-if [[ -f pixelweb ]]; then
-    echo "Removed previous version of Pixelcade (pixelweb - Pixelcade Listener)..."
-    rm pixelweb
-fi
-wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
-# Thought about prompting user for artwork update but let's just do it by default
-#if [[ $? == 2 ]]; then #this means artwork is already installed so we can ask user if they want to check for updates
-#    while true; do
-#          read -p "Would you like to check and get the latest Pixelcade artwork (y/n) " yn
-#          case $yn in
-#              [Yy]* ) cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork; break;;
-#              [Nn]* ) echo "Continuing Pixelcade Installation..."; break;;
-#              * ) echo "Please answer y or n";;
-#          esac
-#      done
-#fi
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
   echo "Checking for new Pixelcade artwork..."
@@ -240,7 +219,7 @@ mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 
 #get the Pixelcade system files
-wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
+wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
 unzip main.zip
 
 if [[ ! -d ${INSTALLPATH}configs/emulationstation/scripts ]]; then #does the ES scripts folder exist, make it if not
@@ -268,11 +247,7 @@ sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 cd ${INSTALLPATH}
 
 if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
-   if [[ $startup_flag == "true" ]]; then  #if we have an Odroid N2+ (am assuming Odroid N2 is same behavior) or x86, Pixelcade will hang on first start so a special startup script is needed to get around this issue which also had to be done for the ALU
-        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/startupflag/custom.sh
-   else
-        wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #no startup flag
-   fi
+     wget -O ${INSTALLPATH}custom.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #with startup flag
 else    #custom.sh is already there so let's check if old java pixelweb is there
 
   if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb.jar -b -a -s'; then  #user has the old java pixelweb with the extra startup bash code lines
@@ -298,13 +273,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      if [[ $startup_flag == "true" ]]; then
-        echo "Adding Pixelcade to startup with startup flag in custom.sh"
-        echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
-      else
-        echo "Adding Pixelcade to startup in custom.sh"
-        echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" &\n" >> custom.sh
-      fi
+      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
   fi
 fi
 
@@ -316,11 +285,7 @@ cd ${INSTALLPATH}pixelcade
 # TO DO add the Pixelcade LCD check later
 
 #now let's run pixelweb and let the user know things are working
-if [[ $startup_flag == "true" ]]; then
-     cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &
-else
-     cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" &
-fi
+cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
