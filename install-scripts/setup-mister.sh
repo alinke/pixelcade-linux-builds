@@ -120,6 +120,7 @@ fi
 if uname -m | grep -q 'x86_64'; then
    echo "${yellow}x86 64-bit Detected..."
    machine_arch=amd64
+fi
 
 cd /media/fat/
 
@@ -142,24 +143,12 @@ if [[ $? == 2 ]]; then #this means artwork is already installed so let's check f
   cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
 fi
 
-#echo "${yellow}Downloading Pixelcade MiSTer from GitHub Repo https://github.com/alinke/pixelcade-mister-led/tree/master...${white}"
-#mkdir /media/fat/pixelcade
-#cd /media/fat/
-#curl -k -LO https://github.com/alinke/pixelcade-mister-led/archive/refs/heads/master.zip
-#echo "${yellow}Unzipping...${white}"
-#unzip -o /media/fat/master.zip
-#echo "${yellow}Cleaning Up which will take about 10 minutes...${white}"
-#rm /media/fat/master.zip
-#cp -R /media/fat/pixelcade-mister-led-master/pixelcade /media/fat/
-#rm -r /media/fat/pixelcade-mister-led-master
-
 echo "${yellow}Downloading Additional Files Needed for Pixelcade MiSTer...${white}"
 cd /media/fat/pixelcade
 wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/ip.txt
 wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/pixelcadeLink.sh
 wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/runpixelcade.sh
 chmod +x /media/fat/pixelcade/runpixelcade.sh
-
 
 echo "${yellow}Adding Pixelcade MiSTer to Startup...${white}"
 
