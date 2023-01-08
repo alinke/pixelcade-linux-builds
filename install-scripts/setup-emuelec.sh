@@ -174,11 +174,7 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-if [[ -f pixelweb ]]; then
-    echo "Removed previous version of Pixelcade (pixelweb - Pixelcade Listener)..."
-    rm pixelweb
-fi
-wget https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 

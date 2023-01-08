@@ -305,6 +305,7 @@ pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
+echo "Pausing for 5 seconds..."
 sleep 5
 
 echo " "

@@ -203,7 +203,8 @@ fi
 
 #let's run Pixelcade now
 ${INSTALLPATH}linux/user-startup.sh
-sleep 3
+echo "Pausing for 5 seconds..."
+sleep 5
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
