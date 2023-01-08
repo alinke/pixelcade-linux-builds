@@ -202,7 +202,7 @@ fi
 
 #let's run Pixelcade now
 /media/fat/linux/user-startup.sh
-sleep 5
+sleep 3
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
