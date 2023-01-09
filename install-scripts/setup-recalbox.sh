@@ -37,7 +37,7 @@ function pause(){
  echo ""
 }
 
-INSTALLPATH="/recalbox/share/"
+INSTALLPATH="/etc/init.d/"
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
@@ -226,25 +226,21 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/recalbox.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+      echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
   if cat ${STARTUPPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/recalbox.png" -startup &" ${STARTUPPATH}custom.sh  #insert this line after "before"
+      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &" ${STARTUPPATH}custom.sh  #insert this line after "before"
   fi
 fi
 
 chmod +x ${STARTUPPATH}custom.sh
 cd ${INSTALLPATH}pixelcade
 
-#echo "Checking for Pixelcade LCDs..."
-#${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
-# TO DO add the Pixelcade LCD check later
-
 #now let's run pixelweb and let the user know things are working
-cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/recalbox.png" -startup &
+cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
