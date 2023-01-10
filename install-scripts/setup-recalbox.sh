@@ -217,7 +217,7 @@ wget -O ${ESSCRIPTS}esquit[start].sh https://raw.githubusercontent.com/alinke/pi
 find ${ESSCRIPTS} -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble but this may not actually be necessary with RecalBox ?
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
-if [[ -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
+if [[! -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
     mkdir ${INSTALLPATH}pixelcade/hi2txt
 fi
 wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.jar https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.jar
