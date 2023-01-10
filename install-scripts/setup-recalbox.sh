@@ -198,10 +198,6 @@ if [[ $? == 2 ]]; then #this means artwork is already installed so let's check f
   cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -update-artwork
 fi
 
-if [[ -d ${INSTALLPATH}ptemp ]]; then
-    rm -r ${INSTALLPATH}ptemp
-fi
-
 if [[ ! -d /recalbox/share/userscripts ]]; then #does the ES scripts folder exist, make it if not
     mkdir /recalbox/share/userscripts
 fi
@@ -212,12 +208,11 @@ echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
 wget -O ${ESSCRIPTS}systembrowse[systembrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/systembrowse%5Bsystembrowsing%5D.sh
 wget -O ${ESSCRIPTS}gamescroll[gamelistbrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bgamelistbrowsing%5D.sh
 wget -O ${ESSCRIPTS}gamelaunch[rungame].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamelaunch%5Brungame%5D.sh
-wget -O ${ESSCRIPTS}esstart[stop].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esstart%5Bstop%5D.sh
 wget -O ${ESSCRIPTS}esquit[start].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esquit%5Bstart%5D.sh
 find ${ESSCRIPTS} -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble but this may not actually be necessary with RecalBox ?
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
-if [[! -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
+if [[ ! -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
     mkdir ${INSTALLPATH}pixelcade/hi2txt
 fi
 wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.jar https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.jar
