@@ -220,9 +220,9 @@ wget -O ${INSTALLPATH}pixelcade/hi2txt.jar https://github.com/alinke/pixelcade-l
 wget -O ${INSTALLPATH}pixelcade/hi2txt.zip https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.zip
 
 # need to remove a few lines in console.csv
-sed -i '/all,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/favorites,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
+sed -i '/all,mame/d' ${ARTPATH}console.csv
+sed -i '/favorites,mame/d' ${ARTPATH}console.csv
+sed -i '/recent,mame/d' ${ARTPATH}console.csv
 
 # We need to handle two cases here for S99MyScript.py
 # 1. the user had the older java pixelweb so we need to remove that line and replace
