@@ -33,13 +33,13 @@ cat << "EOF"
 |_|
 EOF
 
-echo "       Pixelcade LED for RecalBox : Installer Version $version    "
+echo "       Pixelcade LED Marquee for RecalBox : Installer Version $version    "
 echo ""
-echo "This script will install the Pixelcade LED software in $HOME/pixelcade"
-echo "Plese ensure you have at least 800 MB of free disk space in $HOME"
-echo "Now connect Pixelcade to a free USB port on your device"
+echo "This script will install the Pixelcade LED software in /recalbox/share/pixelcade-art"
+echo "Plese ensure you have at least 800 MB of free disk space in /recalbox/share/"
+echo "You'll need to have Pixelcade plugged into a free USB port on your RecalBox device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
-echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
+echo "Grab a coffee or tea as this installer will take around 20-30 minutes depending on your Internet connection speed"
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
@@ -154,22 +154,22 @@ JDKDEST="${INSTALLPATH}pixelcade/jdk"
 
 if [[ ! -d $JDKDEST ]]; then #does Java exist already
     if [[ $machine_arch == "arm64" ]]; then
-          echo "${yellow}Installing Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
+          echo "${yellow}Installing Compact Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip #this is a 64-bit small JRE , same one used on the ALU
           unzip jdk-aarch64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "arm_v7" ]; then
-          echo "${yellow}Installing Java JRE 11 32-Bit for aarch32...${white}"
+          echo "${yellow}Installing Compact Java JRE 11 32-Bit for aarch32...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch32.zip
           unzip jdk-aarch32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "386" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
-          echo "${yellow}Installing Java JRE 11 32-Bit for X86...${white}"
+          echo "${yellow}Installing Compact Java JRE 11 32-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-32.zip
           unzip jdk-x86-32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "amd64" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
-          echo "${yellow}Installing Java JRE 11 64-Bit for X86...${white}"
+          echo "${yellow}Installing Compact Java JRE 11 64-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-64.zip
           unzip jdk-x86-64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
