@@ -14,6 +14,15 @@ NEWLINE=$'\n'
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
+# Here's what this script does:
+
+# Downloads pixelweb to /etc/init.d/pixelcade
+# Adds a startup script (S99MyScript.py) that runs pixelweb in the background at startup
+# adds java to /etc/init.d/pixelcade/jdk/java #only need this for high scores
+# installs pixlecade artwork in /recalbox/share/pixelcade-art
+# downloads Pixelcade ES scripts to /recalbox/share/userscripts
+
+
 
 cat << "EOF"
        _          _               _
@@ -32,19 +41,24 @@ echo "Now connect Pixelcade to a free USB port on your device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
 
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
 function pause(){
  read -s -n 1 -p "Press any key to continue . . ."
  echo ""
 }
 
-INSTALLPATH="/etc/init.d/"
+mount -o remount,rw /  #have to do this to get write access
 
-SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+INSTALLPATH="/etc/init.d/"
+ARTPATH="/recalbox/share/pixelcade-art/"
+ESSCRIPTS="/recalbox/share/userscripts/"
+
 
 echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
-curl localhost:8080/quit
+curl localhost:7070/quit
 
 # let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
@@ -64,9 +78,6 @@ fi
 # linux_amd64
 # linux_arm_v6
 # linux_arm_v7
-
-#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64 🤣
-#Pi model B+ armv6, no work
 
 if uname -m | grep -q 'armv6'; then
    echo "${yellow}arm_v6 Detected..."
@@ -133,6 +144,10 @@ if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it
    mkdir ${INSTALLPATH}pixelcade
 fi
 
+if [[ ! -d "${ARTPATH}" ]]; then #create the pixelcade-art folder if it's not there
+   mkdir ${ARTPATH}
+fi
+
 #java needed for high scores, hi2txt
 cd ${INSTALLPATH}pixelcade
 JDKDEST="${INSTALLPATH}pixelcade/jdk"
@@ -171,89 +186,77 @@ cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
-./pixelweb -install-artwork #install the artwork
+#./pixelweb -install-artwork #install the artwork
+./pixelweb -p ${ARTPATH} -install-artwork #install the artwork here and set this as pixelcade root
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
   echo "Checking for new Pixelcade artwork..."
-  cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+  cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -update-artwork
 fi
 
 if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
 fi
 
-#creating a temp dir for the Pixelcade common system files & scripts
-mkdir ${INSTALLPATH}ptemp
-cd ${INSTALLPATH}ptemp
-
-#get the Pixelcade system files
-wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
-unzip main.zip
-
-if [[ ! -d ${INSTALLPATH}configs/emulationstation/scripts ]]; then #does the ES scripts folder exist, make it if not
-    mkdir ${INSTALLPATH}configs/emulationstation/scripts
+if [[ ! -d /recalbox/share/userscripts ]]; then #does the ES scripts folder exist, make it if not
+    mkdir /recalbox/share/userscripts
 fi
 
 #pixelcade scripts for emulationstation events
 #copy over the custom scripts
 echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
-cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
-find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
+wget -O ${ESSCRIPTS}systembrowse[systembrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/systembrowse%5Bsystembrowsing%5D.sh
+wget -O ${ESSCRIPTS}gamescroll[gamelistbrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bgamelistbrowsing%5D.sh
+wget -O ${ESSCRIPTS}gamelaunch[rungame].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamelaunch%5Brungame%5D.sh
+wget -O ${ESSCRIPTS}esstart[stop].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esstart%5Bstop%5D.sh
+wget -O ${ESSCRIPTS}esquit[start].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esquit%5Bstart%5D.sh
+find ${ESSCRIPTS} -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble but this may not actually be necessary with RecalBox ?
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
-cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
+if [[ -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
+    mkdir ${INSTALLPATH}pixelcade/hi2txt
+fi
+wget -O ${INSTALLPATH}pixelcade/hi2txt.jar https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.jar
+wget -O ${INSTALLPATH}pixelcade/hi2txt.zip https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.zip
 
 # need to remove a few lines in console.csv
 sed -i '/all,mame/d' ${INSTALLPATH}pixelcade/console.csv
 sed -i '/favorites,mame/d' ${INSTALLPATH}pixelcade/console.csv
 sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 
-# We need to handle two cases here for custom.sh
+# We need to handle two cases here for S99MyScript.py
 # 1. the user had the older java pixelweb so we need to remove that line and replace
 # 2. the user already has the new pixelweb so we don't touch it
 
-STARTUPPATH="/etc/init.d/"
-cd ${STARTUPPATH}
+cd ${INSTALLPATH}
 
-mount -o remount,rw /  #have to do this to get write access to this file
-
-if [[ ! -f ${STARTUPPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
-     wget -O ${STARTUPPATH}custom.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/recalbox/batocera/custom.sh #with startup flag
-else    #custom.sh is already there so let's check if old java pixelweb is there
-  if cat ${STARTUPPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
-      echo "Backing up custom.sh to custom.bak"
-      cp custom.sh custom.bak
+if [[ ! -f ${INSTALLPATH}S99MyScript.py ]]; then #S99MyScript.py is not there already so let's create one with pixelcade autostart
+     wget -O ${INSTALLPATH}S99MyScript.py https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/recalbox/S99MyScript.py
+else    #S99MyScript.py is already there so let's check if old java pixelweb is there
+  if cat ${INSTALLPATH}S99MyScript.py | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
+      echo "Backing up S99MyScript.py to S99MyScript.bak"
+      cp S99MyScript.py S99MyScript.bak
       echo "Commenting out old java pixelweb version"
-      sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
+      sed -e '/java/ s/^#*/#/' -i S99MyScript.py #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+      echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &\n" >> ${INSTALLPATH}S99MyScript.py #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
-  if cat ${STARTUPPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
-      echo "Pixelcade already added to custom.sh, skipping..."
+  if cat ${INSTALLPATH}S99MyScript.py | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
+      echo "Pixelcade already added to S99MyScript.py, skipping..."
   else
-      echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &" ${STARTUPPATH}custom.sh  #insert this line after "before"
+      echo "Adding Pixelcade Listener auto start to your existing S99MyScript.py ..."  #if we got here, then the user already has a S99MyScript.py but there is not pixelcade in there yet
+      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before"
   fi
 fi
 
-chmod +x ${STARTUPPATH}custom.sh
+chmod +x ${INSTALLPATH}S99MyScript.py
 cd ${INSTALLPATH}pixelcade
 
 #now let's run pixelweb and let the user know things are working
-cd ${INSTALLPATH}pixelcade && ./pixelweb -port 7070 -image "system/recalbox.png" -startup &
+cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &
 
 echo "Cleaning Up..."
-cd ${INSTALLPATH}
-
-if [[ -f master.zip ]]; then
-    rm master.zip
-fi
-
 rm ${SCRIPTPATH}/setup-recalbox.sh
-
-if [[ -d ${INSTALLPATH}ptemp ]]; then
-    rm -r ${INSTALLPATH}ptemp
-fi
 
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
@@ -267,7 +270,7 @@ echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
-echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
+echo "[INFO] cd ~/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn

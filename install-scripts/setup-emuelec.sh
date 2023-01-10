@@ -192,7 +192,7 @@ mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 
 #get the Pixelcade system files
-wget https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
+wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
 unzip main.zip
 
 if [[ ! -d /storage/.emulationstation/scripts ]]; then #does the ES scripts folder exist, make it if not
@@ -222,14 +222,14 @@ if cat /storage/.config/custom_start.sh | grep "^[^#;]" | grep -q 'java'; then  
     echo "Backing up custom.sh to custom.bak"
     cp /storage/.config/custom_start.sh /storage/.config/custom_start.bak
     echo "Replacing old java pixelweb with new pixelweb"
-    sed -i '/java -jar pixelweb.jar/c\cd /storage/roms/pixelcade && ./pixelweb -image "system/emuelec.png" -startup &' /storage/.config/custom_start.sh #comment out the line
+    sed -i "/java -jar pixelweb.jar/c\cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/emuelec.png" -startup &" /storage/.config/custom_start.sh #comment out the line
 fi
 
 if cat /storage/.config/custom_start.sh | grep -q 'pixelweb -image'; then
     echo "Pixelcade was already added to custom_start.sh, skipping..."
 else
     echo "Adding Pixelcade Listener auto start to custom_start.sh ..."
-    sed -i '/^"before")/a cd /storage/roms/pixelcade && ./pixelweb -image "system/emuelec.png" -startup &' /storage/.config/custom_start.sh  #insert this line after "before"
+    sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/emuelec.png" -startup &" /storage/.config/custom_start.sh  #insert this line after "before"
 fi
 
 #TO DO fix this later lastly let's just check for Pixelcade LCD
@@ -237,7 +237,7 @@ fi
 #echo "Checking for Pixelcade LCDs..."
 #${INSTALLPATH}bios/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
 
-cd /storage/roms/pixelcade && ./pixelweb -image "system/emuelec.png" -startup &
+cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/emuelec.png" -startup &
 
 chmod +x /storage/.config/custom_start.sh
 
@@ -259,13 +259,14 @@ pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 install_succesful=true
 
+echo "Pausing for 5 seconds..."
 sleep 5
 
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
-echo "[INFO] cd /storage/roms/pixelcade && ./pixelweb --install-artpack <serial code>"
+echo "[INFO] cd ${INSTALLPATH}pixelcade && ./pixelweb --install-artpack <serial code>"
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
