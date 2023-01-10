@@ -158,21 +158,25 @@ if [[ ! -d $JDKDEST ]]; then #does Java exist already
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip #this is a 64-bit small JRE , same one used on the ALU
           unzip jdk-aarch64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+          rm ${INSTALLPATH}pixelcade/jdk-aarch64.zip
     elif [ $machine_arch == "arm_v7" ]; then
           echo "${yellow}Installing Compact Java JRE 11 32-Bit for aarch32...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch32.zip
           unzip jdk-aarch32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+          rm ${INSTALLPATH}pixelcade/jdk-aarch32.zip
     elif [ $machine_arch == "386" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
           echo "${yellow}Installing Compact Java JRE 11 32-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-32.zip
           unzip jdk-x86-32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+          rm ${INSTALLPATH}pixelcade/jdk-x86-32.zip
     elif [ $machine_arch == "amd64" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
           echo "${yellow}Installing Compact Java JRE 11 64-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-64.zip
           unzip jdk-x86-64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+          rm ${INSTALLPATH}pixelcade/jdk-x86-64.zip
     else
       echo "${red}Sorry, do not have a Java JDK for your platform.${NEWLINE}You'll need to install a Java JDK or JRE manually under ${INSTALLPATH}pixelcade/jdk/bin/java${NEWLINE}Note Java is only needed for high score functionality so you can also skip it"
     fi
@@ -216,8 +220,8 @@ echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires
 if [[ -d ${INSTALLPATH}pixelcade/hi2txt ]]; then
     mkdir ${INSTALLPATH}pixelcade/hi2txt
 fi
-wget -O ${INSTALLPATH}pixelcade/hi2txt.jar https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.jar
-wget -O ${INSTALLPATH}pixelcade/hi2txt.zip https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.zip
+wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.jar https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.jar
+wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.zip https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.zip
 
 # need to remove a few lines in console.csv
 sed -i '/all,mame/d' ${ARTPATH}console.csv
