@@ -231,7 +231,7 @@ sed -i '/recent,mame/d' ${ARTPATH}console.csv
 cd ${INSTALLPATH}
 
 if [[ ! -f ${INSTALLPATH}S99MyScript.py ]]; then #S99MyScript.py is not there already so let's create one with pixelcade autostart
-     wget -O ${INSTALLPATH}S99MyScript.py https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/recalbox/S99MyScript.py
+     wget -O ${INSTALLPATH}S99MyScript.py https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/S99MyScript.py
 else    #S99MyScript.py is already there so let's check if old java pixelweb is there
   if cat ${INSTALLPATH}S99MyScript.py | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
       echo "Backing up S99MyScript.py to S99MyScript.bak"
@@ -270,7 +270,7 @@ echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
-echo "[INFO] cd ~/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
+echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
