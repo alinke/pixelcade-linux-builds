@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=10  #increment this as the script is updated
+version=11  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 pixelcade_version=default
@@ -273,7 +273,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      sed -i "/start)/acd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start
+      sed -i "/start)/acd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)
   fi
 fi
 
