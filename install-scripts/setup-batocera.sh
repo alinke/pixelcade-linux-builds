@@ -228,7 +228,8 @@ fi
 
 #pixelcade scripts for emulationstation events
 #copy over the custom scripts
-echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
+echo "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...${white}"
+#copy over the custom scripts
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
 #hi2txt for high score scrolling
@@ -273,7 +274,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      sed -i "/start)/acd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)
+      sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
   fi
 fi
 
