@@ -273,7 +273,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
+      sed -i "/start)/acd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start
   fi
 fi
 
