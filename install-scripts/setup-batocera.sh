@@ -273,8 +273,13 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
   if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
-      echo "Adding Pixelcade Listener auto start to your existing custom.sh ..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-      sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+    if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then #this means we have a custom.sh with a start)
+        echo "custom.sh start is here..."
+        sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+    else
+        echo "Adding Pixelcade Listener auto start to your existing custom.sh for non-vanilla Batocera image..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
+        echo "cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" >> ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+    fi
   fi
 fi
 
