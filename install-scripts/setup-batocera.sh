@@ -78,17 +78,25 @@ echo "Stopping Pixelcade (if running...)"
 killall java #in the case user has java pixelweb running
 curl localhost:8080/quit
 
-# let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
-if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
-   echo "Pixelcade LED Marquee Detected on ttyACM0"
+#let's see if Pixelcade is there using lsusb
+if ! command -v lsusb  &> /dev/null; then
+    echo "${red}lsusb command not be found so cannot check if Pixelcade is USB connected${white}"
 else
-    if ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
-        echo "Pixelcade LED Marquee Detected on ttyACM1"
-    else
-       echo "Sorry, Pixelcade LED Marquee was not detected.${NEWLINE}Please ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
-       exit 1
-    fi
+   if lsusb | grep -q '1b4f:0008'; then
+      echo "${yellow}Pixelcade LED Marquee Detected${white}"
+   elif lsusb | grep -q '2e8a:1050'; then 
+      echo "${yellow}Pixelcade LED Marquee Detected${white}"
+   else  
+      echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting...${white}"
+      exit 1
+   fi
 fi
+
+#if [[ -d "/etc/udev/rules.d" ]]; then #let's create the udev rule for Pixelcade to avoid possible conflicts with other USB devices if the rules.d folder is there
+  #echo "${yellow}Adding udev rule...${white}"
+  #wget -O /userdata/system/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules 
+  #BUT this does not take effect until reboot
+#fi
 
 # The possible platforms are:
 # linux_arm64
