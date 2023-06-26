@@ -278,7 +278,7 @@ else    #custom.sh is already there so let's check if old java pixelweb is there
       echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
 
-  if cat ${INSTALLPATH}custom.sh | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
+  if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
       echo "Pixelcade already added to custom.sh, skipping..."
   else
     if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then #this means we have a custom.sh with a start)
