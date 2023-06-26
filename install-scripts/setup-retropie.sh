@@ -46,7 +46,8 @@ echo "Now connect Pixelcade to a free USB port on your device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab a coffee or tea as this installer will take between 10 and 20 minutes"
 
-INSTALLPATH="/home/pi/"
+#INSTALLPATH="/home/pi/"
+INSTALLPATH=$HOME"/"
 
 # let's see what installation we have
 if lsb_release -a | grep -q 'stretch'; then
@@ -372,9 +373,11 @@ fi
 
 sudo chown -R pi: ${INSTALLPATH}pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
 
-#add udev rule
-#sudo wget -O /etc/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules
-#sudo /etc/init.d/udev restart
+if [[ -d "/etc/udev/rules.d" ]]; then #let's create the udev rule for Pixelcade if the rules.d folder is there
+  echo "${yellow}Adding udev rule...${white}"
+  sudo wget -O /etc/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules
+  sudo /etc/init.d/udev restart #BUT it seems this takes a re-start and does not work immediately
+fi
 
 #cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &
 cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &
