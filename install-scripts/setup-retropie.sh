@@ -86,11 +86,11 @@ fi
 
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
    echo "Pixelcade LED Marquee Detected on ttyACM0"
-   pixelcadePort="/dev/ttyACM0"
+   #pixelcadePort="/dev/ttyACM0"
 else
     if ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
         echo "Pixelcade LED Marquee Detected on ttyACM1"
-        pixelcadePort="/dev/ttyACM1"
+        #pixelcadePort="/dev/ttyACM1"
     else
        echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting..."
        exit 1
@@ -338,7 +338,7 @@ if [ "$retropie" = true ] ; then
     else
       echo "${yellow}Adding Pixelcade to Auto Start in /opt/retropie/configs/all/autostart.sh...${white}"
       cd /opt/retropie/configs/all
-      sudo sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
+      sudo sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh #insert this line before emulationstation #auto
       if [ "$attractmode" = true ] ; then
           echo "${yellow}Adding Pixelcade for Attract Mode to /opt/retropie/configs/all/autostart.sh...${white}"
           cd /opt/retropie/configs/all
@@ -371,6 +371,10 @@ else #there is no retropie so we need to start pixelcade using the pixelcade.ser
 fi
 
 sudo chown -R pi: ${INSTALLPATH}pixelcade #this is our fail safe in case the user did a sudo ./setup.sh which seems to be needed on some pre-made Pi images
+
+#add udev rule
+#sudo wget -O /etc/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules
+#sudo /etc/init.d/udev restart
 
 #cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &
 cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -startup &
