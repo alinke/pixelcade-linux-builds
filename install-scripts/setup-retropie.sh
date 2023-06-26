@@ -334,7 +334,7 @@ if [ "$retropie" = true ] ; then
     fi
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
-    if cat /opt/retropie/configs/all/autostart.sh | grep -q 'pixelweb -image'; then
+    if cat /opt/retropie/configs/all/autostart.sh |  grep "^[^#;]" | grep -q 'pixelweb -image'; then
       echo "${yellow}Pixelcade already added to autostart.sh, skipping...${white}"
     else
       echo "${yellow}Adding Pixelcade to Auto Start in /opt/retropie/configs/all/autostart.sh...${white}"
