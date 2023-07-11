@@ -375,7 +375,7 @@ sudo chown -R pi: ${INSTALLPATH}pixelcade #this is our fail safe in case the use
 
 if [[ -d "/etc/udev/rules.d" ]]; then #let's create the udev rule for Pixelcade if the rules.d folder is there
   echo "${yellow}Adding udev rule...${white}"
-  sudo wget -O /etc/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules
+  sudo wget -O /etc/udev/rules.d/99-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/99-pixelcade.rules
   sudo /etc/init.d/udev restart #BUT it seems this takes a re-start and does not work immediately
 fi
 
