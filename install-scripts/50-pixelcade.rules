@@ -1,3 +1,1 @@
 ACTION=="add", SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1b4f", ATTRS{idProduct}=="0008", SYMLINK+="PIXELCADE%n", MODE="666"
-ATTRS{idVendor}=="1b4f", ATTRS{idProduct}=="0008", ENV{ID_MM_DEVICE_IGNORE}="1"
-
