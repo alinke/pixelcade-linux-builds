@@ -210,7 +210,13 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+
+if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
+    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+else
+    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
+fi
+
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 
@@ -244,11 +250,6 @@ find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec 
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
-
-# need to remove a few lines in console.csv
-sed -i '/all,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/favorites,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 
 # We need to handle two cases here for custom.sh
 # 1. the user had the older java pixelweb so we need to remove that line and replace
