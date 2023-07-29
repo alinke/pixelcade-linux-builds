@@ -301,7 +301,7 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
         echo "Backing up custom.sh to custom.bak"
         cp custom.sh custom.bak
         echo "Commenting out pixelweb in custom.sh as we no longer need it here"
-        sed -e '/pixelcade/ s/^#*/#/' -i custom.sh #comment out the line
+        sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
     fi
 fi
 
