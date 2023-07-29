@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=12  #increment this as the script is updated
+version=13  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -106,7 +106,7 @@ fi
 # linux_arm_v6
 # linux_arm_v7
 
-#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64 🤣
+#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64
 #Pi model B+ armv6, no work
 
 if uname -m | grep -q 'armv6'; then
