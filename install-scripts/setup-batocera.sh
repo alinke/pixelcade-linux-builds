@@ -255,7 +255,7 @@ cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade
 # 1. the user had the older java pixelweb so we need to remove that line and replace
 # 2. the user already has the new pixelweb so we don't touch it
 
-if [[ $batocera_self_contained == "false" ]]; then #we need to add to custom.sh
+if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify custom.sh
 
     cd ${INSTALLPATH}
 
@@ -294,10 +294,15 @@ if [[ $batocera_self_contained == "false" ]]; then #we need to add to custom.sh
         fi
       fi
     fi
-
     chmod +x ${INSTALLPATH}custom.sh
     cd ${INSTALLPATH}pixelcade
-
+else #we have self contained V38 or above so let's make sure custom.sh has pixelweb removed
+    if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelcade'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
+        echo "Backing up custom.sh to custom.bak"
+        cp custom.sh custom.bak
+        echo "Commenting out pixelweb in custom.sh as we no longer need it here"
+        sed -e '/pixelcade/ s/^#*/#/' -i custom.sh #comment out the line
+    fi
 fi
 
 #echo "Checking for Pixelcade LCDs..."
