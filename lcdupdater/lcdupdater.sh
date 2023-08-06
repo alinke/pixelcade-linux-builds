@@ -95,11 +95,12 @@ fi
 echo "Downloading Pixelcade LCD Updater..."
 
 if [[ -d ${INSTALLPATH}pixelcade ]]; then
+    cd ${INSTALLPATH}pixelcade
    wget -O ${INSTALLPATH}pixelcade/lcdupdate https://github.com/alinke/pixelcade-linux-builds/raw/main/lcdupdater/linux_${machine_arch}/lcdupdate
-   cd ${INSTALLPATH}pixelcade
+   
 else
-    wget -O ${INSTALLPATH}lcdupdate https://github.com/alinke/pixelcade-linux-builds/raw/main/lcdupdater/linux_${machine_arch}/lcdupdate
     cd ${INSTALLPATH}
+    wget -O ${INSTALLPATH}lcdupdate https://github.com/alinke/pixelcade-linux-builds/raw/main/lcdupdater/linux_${machine_arch}/lcdupdate
 fi
 
 chmod +x lcdupdate
