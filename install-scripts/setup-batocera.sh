@@ -6,9 +6,11 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=12  #increment this as the script is updated
+version=13  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
+batocera_self_contained_version=38
+batocera_self_contained=false
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -50,7 +52,12 @@ fi
 
 batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
 
-if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera versio so just warn the user
+if [[ $batocera_version -eq $batocera_self_contained_version ]]; then #we couldn't get the Batocera version so just warn the user
+  echo "[INFO] Your version of Batocera $batocera_version has Pixelcade support built in"
+  batocera_self_contained=true
+fi
+
+if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
   echo "[INFO] Could not detect your Batocra version"
   echo "[INFO] Please note that Batocera V33 or higher is required"
   echo "[INFO] for Pixelcade to update while scrolling through games"
@@ -92,12 +99,6 @@ else
    fi
 fi
 
-#if [[ -d "/etc/udev/rules.d" ]]; then #let's create the udev rule for Pixelcade to avoid possible conflicts with other USB devices if the rules.d folder is there
-  #echo "${yellow}Adding udev rule...${white}"
-  #wget -O /userdata/system/udev/rules.d/50-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/50-pixelcade.rules 
-  #BUT this does not take effect until reboot
-#fi
-
 # The possible platforms are:
 # linux_arm64
 # linux_386
@@ -105,7 +106,7 @@ fi
 # linux_arm_v6
 # linux_arm_v7
 
-#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64 🤣
+#rcade is armv7 userspace and aarch64 kernel space so it shows aarch64
 #Pi model B+ armv6, no work
 
 if uname -m | grep -q 'armv6'; then
@@ -209,7 +210,13 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+
+if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
+    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+else
+    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
+fi
+
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 
@@ -244,55 +251,59 @@ find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec 
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
 
-# need to remove a few lines in console.csv
-sed -i '/all,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/favorites,mame/d' ${INSTALLPATH}pixelcade/console.csv
-sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
-
 # We need to handle two cases here for custom.sh
 # 1. the user had the older java pixelweb so we need to remove that line and replace
 # 2. the user already has the new pixelweb so we don't touch it
 
-cd ${INSTALLPATH}
+if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify custom.sh
 
-if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
-     wget -O ${INSTALLPATH}custom.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #with startup flag
-else    #custom.sh is already there so let's check if old java pixelweb is there
+    cd ${INSTALLPATH}
 
-  if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb.jar -b -a -s'; then  #user has the old java pixelweb with the extra startup bash code lines
-      echo "Backing up custom.sh to custom.bak"
-      cp custom.sh custom.bak
-      echo "Commenting out old java pixelweb version with extra startup lines"
-      sed -e '/pixelweb.jar -b -a -s/,+12 s/^/#/' -i custom.sh #comment out 12 lines after the match
-      sed -e '/userdata/,+2 s/^/#/' -i custom.sh
-      echo "Adding pixelweb to startup"
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
-  fi
+    if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
+        wget -O ${INSTALLPATH}custom.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #with startup flag
+    else    #custom.sh is already there so let's check if old java pixelweb is there
 
-  if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
-      echo "Backing up custom.sh to custom.bak"
-      cp custom.sh custom.bak
-      echo "Commenting out old java pixelweb version"
-      sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
-      echo "Adding pixelweb to startup"
-      echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
-  fi
+      if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb.jar -b -a -s'; then  #user has the old java pixelweb with the extra startup bash code lines
+          echo "Backing up custom.sh to custom.bak"
+          cp custom.sh custom.bak
+          echo "Commenting out old java pixelweb version with extra startup lines"
+          sed -e '/pixelweb.jar -b -a -s/,+12 s/^/#/' -i custom.sh #comment out 12 lines after the match
+          sed -e '/userdata/,+2 s/^/#/' -i custom.sh
+          echo "Adding pixelweb to startup"
+          echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
+      fi
 
-  if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
-      echo "Pixelcade already added to custom.sh, skipping..."
-  else
-    if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then #this means we have a custom.sh with a start)
-        echo "custom.sh start is here..."
-        sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
-    else
-        echo "Adding Pixelcade Listener auto start to your existing custom.sh for non-vanilla Batocera image..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-        echo "cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" >> ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+      if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
+          echo "Backing up custom.sh to custom.bak"
+          cp custom.sh custom.bak
+          echo "Commenting out old java pixelweb version"
+          sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
+          echo "Adding pixelweb to startup"
+          echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+      fi
+
+      if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
+          echo "Pixelcade already added to custom.sh, skipping..."
+      else
+        if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then #this means we have a custom.sh with a start)
+            echo "custom.sh start is here..."
+            sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+        else
+            echo "Adding Pixelcade Listener auto start to your existing custom.sh for non-vanilla Batocera image..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
+            echo "cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" >> ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+        fi
+      fi
     fi
-  fi
+    chmod +x ${INSTALLPATH}custom.sh
+    cd ${INSTALLPATH}pixelcade
+else #we have self contained V38 or above so let's make sure custom.sh has pixelweb removed
+    if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelcade'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
+        echo "Backing up custom.sh to custom.bak"
+        cp custom.sh custom.bak
+        echo "Commenting out pixelweb in custom.sh as we no longer need it here"
+        sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
+    fi
 fi
-
-chmod +x ${INSTALLPATH}custom.sh
-cd ${INSTALLPATH}pixelcade
 
 #echo "Checking for Pixelcade LCDs..."
 #${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
