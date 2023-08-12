@@ -83,7 +83,13 @@ fi
 echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
-curl localhost:8080/quit
+
+if pgrep pixelweb > /dev/null; then
+    echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
+    curl localhost:8080/quit
+else
+    echo "[INFO] Pixelcade is not already running, all good to proceed with installation"
+fi
 
 #let's see if Pixelcade is there using lsusb
 if ! command -v lsusb  &> /dev/null; then
@@ -211,11 +217,11 @@ fi
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 
-if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
-    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
-else
-    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
-fi
+#if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
+wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+#else
+#    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
+#fi
 
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
