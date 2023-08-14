@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=13  #increment this as the script is updated
+version=14  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -217,13 +217,14 @@ fi
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 
+#uncomment out if want to do beta's
 #if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
 wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 #else
 #    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
 #fi
 
-chmod +x pixelweb
+chmod a+x ${INSTALLPATH}pixelcade/pixelweb
 ./pixelweb -install-artwork #install the artwork
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
@@ -238,6 +239,16 @@ fi
 #creating a temp dir for the Pixelcade common system files & scripts
 mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
+
+#this is a hack for now as the native pixelweb artwork instlaller does not always work on non arm64
+if [[ $machine_arch != "arm64" ]]; then
+    #get the Pixelcade artwork
+    wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
+    unzip master.zip
+    cd {INSTALLPATH}ptemp/pixelcade-master
+    cp -r -v * ${INSTALLPATH}pixelcade
+    cd ${INSTALLPATH}ptemp
+fi
 
 #get the Pixelcade system files
 wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
