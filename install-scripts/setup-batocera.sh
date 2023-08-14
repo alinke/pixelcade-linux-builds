@@ -245,8 +245,9 @@ if [[ $machine_arch != "arm64" ]]; then
     #get the Pixelcade artwork
     wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
     unzip master.zip
-    cd {INSTALLPATH}ptemp/pixelcade-master
+    cd ~/ptemp/pixelcade-master
     cp -r -v * ${INSTALLPATH}pixelcade
+    cp -r -v * ~/pixelcade
     cd ${INSTALLPATH}ptemp
 fi
 
