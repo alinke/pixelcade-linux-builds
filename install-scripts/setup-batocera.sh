@@ -261,6 +261,9 @@ fi
 
 #pixelcade scripts for emulationstation events
 #copy over the custom scripts
+echo "${yellow}Removing Legacy Pixelcade Scripts called 01-pixelcade.sh (if they exist)...${white}"
+find ${INSTALLPATH}configs/emulationstation/scripts -type f -name "01-pixelcade.sh" -ls
+find ${INSTALLPATH}configs/emulationstation/scripts -type f -name "01-pixelcade.sh" -exec rm {} \;
 echo "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...${white}"
 #copy over the custom scripts
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
