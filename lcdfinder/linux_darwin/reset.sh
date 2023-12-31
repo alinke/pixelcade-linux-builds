@@ -1,0 +1,1 @@
+curl http://pixelcadedx-67793a14.local:8080/v2/utility/factoryReset/0U812

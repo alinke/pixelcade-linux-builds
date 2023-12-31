@@ -1,0 +1,1 @@
+scp payload pi@pixelcadedx-67793a14.local:/home/pi/payload
