@@ -104,5 +104,5 @@ else
 fi
 
 chmod +x lcdupdate
-./lcdupdate
+./lcdupdate $1
 
