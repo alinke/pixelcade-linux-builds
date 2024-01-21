@@ -52,7 +52,7 @@ fi
 
 batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
 
-if [[ $batocera_version -eq $batocera_self_contained_version ]]; then #we couldn't get the Batocera version so just warn the user
+if [[ $batocera_version -ge $batocera_self_contained_version ]]; then #we couldn't get the Batocera version so just warn the user
   echo "[INFO] Your version of Batocera $batocera_version has Pixelcade support built in"
   batocera_self_contained=true
 fi
