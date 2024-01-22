@@ -84,11 +84,13 @@ echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
 
-if pgrep pixelweb > /dev/null; then
-    echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
-    curl localhost:8080/quit
-else
-    echo "[INFO] Pixelcade is not already running, all good to proceed with installation"
+if [[ $batocera_self_contained == "false" ]]; then #this locks up on V38 so don't do this if we're already in V38 or above
+    if pgrep pixelweb > /dev/null; then
+        echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
+        curl 127.0.0.1:8080/quit
+    else
+        echo "[INFO] Pixelcade is not already running, all good to proceed with installation"
+    fi
 fi
 
 #let's see if Pixelcade is there using lsusb
