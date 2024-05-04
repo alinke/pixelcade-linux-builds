@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=15  #increment this as the script is updated
+version=16  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -229,14 +229,14 @@ wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-lin
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
 ./pixelweb -install-artwork #install the artwork
 
-if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-  echo "Checking for new Pixelcade artwork..."
-  cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
-fi
+#if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+#  echo "Checking for new Pixelcade artwork..."
+#  cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+#fi
 
-if [[ -d ${INSTALLPATH}ptemp ]]; then
-    rm -r ${INSTALLPATH}ptemp
-fi
+#if [[ -d ${INSTALLPATH}ptemp ]]; then
+#    rm -r ${INSTALLPATH}ptemp
+#fi
 
 #creating a temp dir for the Pixelcade common system files & scripts
 mkdir ${INSTALLPATH}ptemp
@@ -251,6 +251,14 @@ if [[ $machine_arch != "arm64" ]]; then
     cp -r -v * ${INSTALLPATH}pixelcade
     cp -r -v * ~/pixelcade
     cd ${INSTALLPATH}ptemp
+else 
+    chmod a+x ${INSTALLPATH}pixelcade/pixelweb
+    ./pixelweb -install-artwork #install the artwork
+
+    if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+    echo "Checking for new Pixelcade artwork..."
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+    fi
 fi
 
 #get the Pixelcade system files
