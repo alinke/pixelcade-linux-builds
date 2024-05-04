@@ -327,7 +327,8 @@ if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify cus
       fi
     fi
     chmod +x ${INSTALLPATH}custom.sh
-    cd ${INSTALLPATH}pixelcade
+    # because we are not on self contained, pixelweb won't be running so let's start it now
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup & #note we dont' want to start pixelweb if we are on V38 or above as it's already running
 else #we have self contained V38 or above so let's make sure custom.sh has pixelweb removed
     if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelcade'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
         echo "Backing up custom.sh to custom.bak"
@@ -335,8 +336,6 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
         echo "Commenting out pixelweb in custom.sh as we no longer need it here"
         sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
     fi
-#now let's run pixelweb and let the user know things are working
-cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup & #note we dont' want to start pixelweb if we are on V38 or above as it's already running
 fi
 
 #echo "Checking for Pixelcade LCDs..."
