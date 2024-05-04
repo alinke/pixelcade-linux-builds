@@ -227,16 +227,17 @@ wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-lin
 #fi
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
-./pixelweb -install-artwork #install the artwork
+
+#./pixelweb -install-artwork #install the artwork
 
 #if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
 #  echo "Checking for new Pixelcade artwork..."
 #  cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
 #fi
 
-#if [[ -d ${INSTALLPATH}ptemp ]]; then
-#    rm -r ${INSTALLPATH}ptemp
-#fi
+if [[ -d ${INSTALLPATH}ptemp ]]; then
+    rm -r ${INSTALLPATH}ptemp
+fi
 
 #creating a temp dir for the Pixelcade common system files & scripts
 mkdir ${INSTALLPATH}ptemp
