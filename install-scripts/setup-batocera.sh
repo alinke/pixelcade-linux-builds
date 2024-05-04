@@ -335,6 +335,8 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
         echo "Commenting out pixelweb in custom.sh as we no longer need it here"
         sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
     fi
+#now let's run pixelweb and let the user know things are working
+cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup & #note we dont' want to start pixelweb if we are on V38 or above as it's already running
 fi
 
 #echo "Checking for Pixelcade LCDs..."
@@ -342,7 +344,7 @@ fi
 # TO DO add the Pixelcade LCD check later
 
 #now let's run pixelweb and let the user know things are working
-cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &
+#cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
