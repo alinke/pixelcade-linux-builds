@@ -228,13 +228,6 @@ wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-lin
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
 
-#./pixelweb -install-artwork #install the artwork
-
-#if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-#  echo "Checking for new Pixelcade artwork..."
-#  cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
-#fi
-
 if [[ -d ${INSTALLPATH}ptemp ]]; then
     rm -r ${INSTALLPATH}ptemp
 fi
@@ -288,9 +281,7 @@ cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade
 # 2. the user already has the new pixelweb so we don't touch it
 
 if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify custom.sh
-
     cd ${INSTALLPATH}
-
     if [[ ! -f ${INSTALLPATH}custom.sh ]]; then #custom.sh is not there already so let's create one with pixelcade autostart
         wget -O ${INSTALLPATH}custom.sh https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/custom.sh #with startup flag
     else    #custom.sh is already there so let's check if old java pixelweb is there
@@ -337,13 +328,9 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
         sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
     fi
 fi
-
 #echo "Checking for Pixelcade LCDs..."
 #${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
 # TO DO add the Pixelcade LCD check later
-
-#now let's run pixelweb and let the user know things are working
-#cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
@@ -361,10 +348,6 @@ fi
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
-install_succesful=true
-
-echo "Pausing for 5 seconds..."
-sleep 5
 
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
@@ -372,22 +355,4 @@ echo "[INFO] The LED art pack adds additional animated marquees for select games
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
 
-while true; do
-    read -p "Is Pixelcade Up and Running? (y/n)" yn
-    case $yn in
-        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
-        [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
 
-if [ "$install_succesful" = true ] ; then
-  while true; do
-      read -p "Reboot Now? (y/n)" yn
-      case $yn in
-          [Yy]* ) reboot; break;;
-          [Nn]* ) echo "Please reboot when you get a chance" && exit;;
-          * ) echo "Please answer yes or no.";;
-      esac
-  done
-fi
