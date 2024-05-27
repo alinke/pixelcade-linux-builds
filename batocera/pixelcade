@@ -1,0 +1,20 @@
+#!/bin/bash
+# Code here will be executed on every boot and shutdown.
+  
+case "$1" in
+    start)
+        # Code in here will only be executed on boot.
+        cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &
+        ;;
+    stop)
+        # Code in here will only be executed on shutdown.
+        ;;
+    restart|reload)
+        # Code in here will executed (when?).
+        ;;
+    *)
+        # Code in here will be executed in all other conditions.
+        ;;
+esac
+ 
+exit $?
