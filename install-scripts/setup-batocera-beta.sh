@@ -241,19 +241,19 @@ fi
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 
-if [[ $beta == "true" ]]; then 
-    # check to make sure a beta file is actually there and if not , take the prod version
+if [[ $beta == "true" ]]; then
     url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
-    status_code=$(curl -o /dev/null -s -w "%{http_code}\n" -I "$url")
-    if [ "$status_code" -eq 200 ]; then
+    if wget --spider "$url" 2>/dev/null; then
         echo "[BETA] A Pixelcade LED is available so let's get it..."
-        wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
     else
         echo "There is no beta available at this time so we'll go with the production version"
-        wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+        prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
     fi
 else
-     wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+    prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
 fi
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
