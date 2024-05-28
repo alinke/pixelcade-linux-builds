@@ -12,6 +12,7 @@ batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
 batocera_self_contained=false
 batocera_40_plus_version=40
+batocera_40_plus=false
 pixelcade_version=default
 beta=false
 NEWLINE=$'\n'
@@ -67,6 +68,7 @@ if [[ $batocera_version -ge $batocera_self_contained_version ]]; then #we couldn
 fi
 
 if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add the service file and enable in services
+    batocera_40_plus=true
     if [[ ! -d ${INSTALLPATH}services ]]; then #does the ES scripts folder exist, make it if not
         mkdir ${INSTALLPATH}services
     fi
@@ -77,7 +79,6 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     batocera-services enable pixelcade
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
 fi
-
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
   echo "[INFO] Could not detect your Batocra version"
@@ -244,7 +245,7 @@ echo "Installing Pixelcade Software..."
 if [[ $beta == "true" ]]; then
     url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
     if wget --spider "$url" 2>/dev/null; then
-        echo "[BETA] A Pixelcade LED is available so let's get it..."
+        echo "[BETA] A Pixelcade LED beta version is available so let's get it..."
         wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
     else
         echo "There is no beta available at this time so we'll go with the production version"
@@ -378,6 +379,13 @@ fi
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
+
+if [[ $batocera_40_plus == "true" ]]; then #we couldn't get the Batocera version so just warn the user
+  echo "[INFO] Starting Pixelcade..."
+  batocera-services start pixelcade
+else 
+  echo "[INFO] Please now Reboot"
+fi
 
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
