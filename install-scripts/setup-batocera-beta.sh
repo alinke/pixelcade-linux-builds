@@ -54,9 +54,9 @@ else
    exit 1
 fi
 
-if [ "$commandLineArg" == "beta" ]; then
-   echo "[INFO] Installig Beta Version of Pixelcade"
-   beta = true
+if [[ "$commandLineArg" == "beta" ]]; then
+   echo "[INFO] Installing Beta Version of Pixelcade"
+   beta=true
 fi
 
 batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
