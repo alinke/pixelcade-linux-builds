@@ -6,12 +6,15 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=17  #increment this as the script is updated
+version=18  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
 batocera_self_contained=false
+batocera_40_plus_version=40
+batocera_40_plus=false
 pixelcade_version=default
+beta=false
 NEWLINE=$'\n'
 
 # Run this script with this command
@@ -42,6 +45,8 @@ function pause(){
 INSTALLPATH="${HOME}/"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
+commandLineArg=$1
+
 # let's make sure we have Baticera installation
 if batocera-info | grep -q 'System'; then
         echo "Batocera Detected"
@@ -50,11 +55,29 @@ else
    exit 1
 fi
 
+if [[ "$commandLineArg" == "beta" ]]; then
+   echo "[INFO] Installing Beta Version of Pixelcade"
+   beta=true
+fi
+
 batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
 
 if [[ $batocera_version -ge $batocera_self_contained_version ]]; then #we couldn't get the Batocera version so just warn the user
   echo "[INFO] Your version of Batocera $batocera_version has Pixelcade support built in"
   batocera_self_contained=true
+fi
+
+if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add the service file and enable in services
+    batocera_40_plus=true
+    if [[ ! -d ${INSTALLPATH}services ]]; then #does the ES scripts folder exist, make it if not
+        mkdir ${INSTALLPATH}services
+    fi
+    wget -O ${INSTALLPATH}services/pixelcade https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/pixelcade
+    chmod +x ${INSTALLPATH}services/pixelcade
+    sleep 1
+    #now enable the service
+    batocera-services enable pixelcade
+    echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -219,12 +242,20 @@ fi
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
 
-#uncomment out if want to do beta's
-#if [[ $batocera_self_contained == "false" ]]; then #if v38, we'll use the beta for now but chagne this later
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
-#else
-#    wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb
-#fi
+if [[ $beta == "true" ]]; then
+    url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$url" 2>/dev/null; then
+        echo "[BETA] A Pixelcade LED beta version is available so let's get it..."
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
+    else
+        echo "There is no beta available at this time so we'll go with the production version"
+        prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+    fi
+else
+    prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+fi
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
 
@@ -349,10 +380,15 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 
+if [[ $batocera_40_plus == "true" ]]; then #we couldn't get the Batocera version so just warn the user
+  echo "[INFO] Starting Pixelcade..."
+  batocera-services start pixelcade
+else 
+  echo "[INFO] Please now Reboot"
+fi
+
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
-
-
