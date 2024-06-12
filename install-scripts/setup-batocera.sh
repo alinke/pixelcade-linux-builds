@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=18  #increment this as the script is updated
+version=19  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -78,6 +78,8 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     #now enable the service
     batocera-services enable pixelcade
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
+    echo "[INFO] Stopping the Pixelcade Listener..."
+    pkill -9 pixelweb
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
