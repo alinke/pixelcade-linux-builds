@@ -78,8 +78,6 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     #now enable the service
     batocera-services enable pixelcade
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
-    echo "[INFO] Stopping the Pixelcade Listener..."
-    pkill -9 pixelweb
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -116,6 +114,10 @@ if [[ $batocera_self_contained == "false" ]]; then #this locks up on V38 so don'
     else
         echo "[INFO] Pixelcade is not already running, all good to proceed with installation"
     fi
+fi
+
+if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
+    pkill -9 pixelweb
 fi
 
 #let's see if Pixelcade is there using lsusb
