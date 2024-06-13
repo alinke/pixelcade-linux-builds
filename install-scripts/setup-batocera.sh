@@ -118,9 +118,9 @@ else #V38 and above kill like this
      pkill -9 pixelweb    
 fi
 
-#if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
-#    pkill -9 pixelweb
-#fi
+if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
+    pkill -9 pixelweb
+fi
 
 #let's see if Pixelcade is there using lsusb
 if ! command -v lsusb  &> /dev/null; then
