@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=19  #increment this as the script is updated
+version=20  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -75,8 +75,8 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     wget -O ${INSTALLPATH}services/pixelcade https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/pixelcade
     chmod +x ${INSTALLPATH}services/pixelcade
     sleep 1
-    #now enable the service
-    batocera-services enable pixelcade
+    batocera-services disable dmd_real #disable DMD server in case you user turned it on
+    batocera-services enable pixelcade #enable the pixelcade service
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
 fi
 
@@ -107,18 +107,20 @@ echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
 
-if [[ $batocera_self_contained == "false" ]]; then #this locks up on V38 so don't do this if we're already in V38 or above
-    if pgrep pixelweb > /dev/null; then
+if [[ $batocera_self_contained == "false" ]]; then #meaning below V38
+    if pgrep pixelweb > /dev/null; then #this locks up on V38 
         echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
         curl 127.0.0.1:8080/quit
     else
-        echo "[INFO] Pixelcade is not already running, all good to proceed with installation"
+        echo "[INFO] Pixelcade was not already running, all good to proceed with installation"
     fi
+else #V38 and above kill like this
+     pkill -9 pixelweb    
 fi
 
-if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
-    pkill -9 pixelweb
-fi
+#if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
+#    pkill -9 pixelweb
+#fi
 
 #let's see if Pixelcade is there using lsusb
 if ! command -v lsusb  &> /dev/null; then
