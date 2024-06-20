@@ -76,6 +76,7 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     chmod +x ${INSTALLPATH}services/pixelcade
     sleep 1
     batocera-services disable dmd_real #disable DMD server in case you user turned it on
+    batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services enable pixelcade #enable the pixelcade service
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
 fi
