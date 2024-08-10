@@ -6,12 +6,13 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=20  #increment this as the script is updated
+version=22  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
 batocera_self_contained=false
 batocera_40_plus_version=40
+batocera_39_version=39
 batocera_40_plus=false
 pixelcade_version=default
 beta=false
@@ -79,6 +80,13 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services enable pixelcade #enable the pixelcade service
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
+fi
+
+if [[ $batocera_version -eq $batocera_39_version ]]; then #if a user was on V40 and then went back to V39, we have to disable pixelcade service
+    batocera-services disable dmd_real #disable DMD server in case you user turned it on
+    batocera-settings-set dmd.pixelcade.dmdserver 0
+    batocera-services disable pixelcade #disable the pixelcade service
+    echo "[INFO] Pixelcade service disabled for Batocera V39"
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -395,7 +403,7 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 
-if [[ $batocera_40_plus == "true" ]]; then #we couldn't get the Batocera version so just warn the user
+if [[ $batocera_40_plus == "true" ]]; then 
   echo "[INFO] Starting Pixelcade..."
   batocera-services start pixelcade
 else 
