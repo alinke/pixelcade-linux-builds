@@ -275,23 +275,23 @@ mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 
 #this is a hack for now as the native pixelweb artwork instlaller does not always work on non arm64
-if [[ $machine_arch != "arm64" ]]; then
+#if [[ $machine_arch != "arm64" ]]; then
     #get the Pixelcade artwork
-    wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
-    unzip master.zip
-    cd ~/ptemp/pixelcade-master
-    cp -r -v * ${INSTALLPATH}pixelcade
-    cp -r -v * ~/pixelcade
-    cd ${INSTALLPATH}ptemp
-else 
+#    wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
+#    unzip master.zip
+#    cd ~/ptemp/pixelcade-master
+#    cp -r -v * ${INSTALLPATH}pixelcade
+#    cp -r -v * ~/pixelcade
+#    cd ${INSTALLPATH}ptemp
+#else 
     chmod a+x ${INSTALLPATH}pixelcade/pixelweb
     ./pixelweb -install-artwork #install the artwork
 
     if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-    echo "Checking for new Pixelcade artwork..."
-    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+        echo "Checking for new Pixelcade artwork..."
+        cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
     fi
-fi
+#fi
 
 #get the Pixelcade system files
 wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
