@@ -284,13 +284,13 @@ cd ${INSTALLPATH}ptemp
 #    cp -r -v * ~/pixelcade
 #    cd ${INSTALLPATH}ptemp
 #else 
-    chmod a+x ${INSTALLPATH}pixelcade/pixelweb
-    ./pixelweb -install-artwork #install the artwork
+   # chmod a+x ${INSTALLPATH}pixelcade/pixelweb
+   # cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
 
-    if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-        echo "Checking for new Pixelcade artwork..."
-        cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
-    fi
+   # if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+   #     echo "Checking for new Pixelcade artwork..."
+   #     cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+   # fi
 #fi
 
 #get the Pixelcade system files
@@ -369,6 +369,14 @@ fi
 #echo "Checking for Pixelcade LCDs..."
 #${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
 # TO DO add the Pixelcade LCD check later
+
+chmod a+x ${INSTALLPATH}pixelcade/pixelweb
+cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
+
+if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+    echo "Checking for new Pixelcade artwork..."
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+fi
 
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
