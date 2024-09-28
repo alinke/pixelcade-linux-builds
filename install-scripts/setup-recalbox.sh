@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=11  #increment this as the script is updated
+version=12  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -44,7 +44,7 @@ function pause(){
  echo ""
 }
 
-# mount -o remount,rw /  #have to do this to get write access, removing though as it's needed in the main command now
+#mount -o remount,rw /  #have to do this to get write access, removing though as it's needed in the main command now
 
 INSTALLPATH="/etc/init.d/"
 ARTPATH="/recalbox/share/pixelcade-art/"
@@ -240,7 +240,7 @@ else    #S99MyScript.py is already there so let's check if old java pixelweb is 
       echo "Pixelcade already added to S99MyScript.py, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing S99MyScript.py ..."  #if we got here, then the user already has a S99MyScript.py but there is not pixelcade in there yet
-      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before"
+      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before" , note 7070 is needed as something else already using 8080
   fi
 fi
 
@@ -266,6 +266,9 @@ echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
+
+mount -o remount,ro / #put back into read only
+
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
