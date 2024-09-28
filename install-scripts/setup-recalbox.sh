@@ -267,7 +267,7 @@ echo "[INFO] The LED art pack adds additional animated marquees for select games
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
 
-mount -o remount,ro / #put back into read only
+# mount -o remount,ro / #put back into read only
 
 
 while true; do
