@@ -6,14 +6,10 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=10  #increment this as the script is updated
-batocera_version=default
-batocera_recommended_minimum_version=33
+version=11  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
-# Run this script with this command
-# wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
 # Here's what this script does:
 
 # Downloads pixelweb to /etc/init.d/pixelcade
@@ -48,7 +44,7 @@ function pause(){
  echo ""
 }
 
-mount -o remount,rw /  #have to do this to get write access
+# mount -o remount,rw /  #have to do this to get write access, removing though as it's needed in the main command now
 
 INSTALLPATH="/etc/init.d/"
 ARTPATH="/recalbox/share/pixelcade-art/"
@@ -274,7 +270,7 @@ echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artp
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
-        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
+        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by RecalBox" && install_succesful=true; break;;
         [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
         * ) echo "Please answer yes or no.";;
     esac
