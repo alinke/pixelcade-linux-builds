@@ -6,12 +6,13 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=20  #increment this as the script is updated
+version=22  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
 batocera_self_contained=false
 batocera_40_plus_version=40
+batocera_39_version=39
 batocera_40_plus=false
 pixelcade_version=default
 beta=false
@@ -79,6 +80,13 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services enable pixelcade #enable the pixelcade service
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
+fi
+
+if [[ $batocera_version -eq $batocera_39_version ]]; then #if a user was on V40 and then went back to V39, we have to disable pixelcade service
+    batocera-services disable dmd_real #disable DMD server in case you user turned it on
+    batocera-settings-set dmd.pixelcade.dmdserver 0
+    batocera-services disable pixelcade #disable the pixelcade service
+    echo "[INFO] Pixelcade service disabled for Batocera V39"
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -275,23 +283,23 @@ mkdir ${INSTALLPATH}ptemp
 cd ${INSTALLPATH}ptemp
 
 #this is a hack for now as the native pixelweb artwork instlaller does not always work on non arm64
-if [[ $machine_arch != "arm64" ]]; then
+#if [[ $machine_arch != "arm64" ]]; then
     #get the Pixelcade artwork
-    wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
-    unzip master.zip
-    cd ~/ptemp/pixelcade-master
-    cp -r -v * ${INSTALLPATH}pixelcade
-    cp -r -v * ~/pixelcade
-    cd ${INSTALLPATH}ptemp
-else 
-    chmod a+x ${INSTALLPATH}pixelcade/pixelweb
-    ./pixelweb -install-artwork #install the artwork
+#    wget -O ${INSTALLPATH}ptemp/master.zip https://github.com/alinke/pixelcade/archive/refs/heads/master.zip
+#    unzip master.zip
+#    cd ~/ptemp/pixelcade-master
+#    cp -r -v * ${INSTALLPATH}pixelcade
+#    cp -r -v * ~/pixelcade
+#    cd ${INSTALLPATH}ptemp
+#else 
+   # chmod a+x ${INSTALLPATH}pixelcade/pixelweb
+   # cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
 
-    if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-    echo "Checking for new Pixelcade artwork..."
-    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
-    fi
-fi
+   # if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+   #     echo "Checking for new Pixelcade artwork..."
+   #     cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+   # fi
+#fi
 
 #get the Pixelcade system files
 wget -O ${INSTALLPATH}ptemp/main.zip https://github.com/alinke/pixelcade-linux/archive/refs/heads/main.zip
@@ -370,6 +378,14 @@ fi
 #${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
 # TO DO add the Pixelcade LCD check later
 
+chmod a+x ${INSTALLPATH}pixelcade/pixelweb
+cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
+
+if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+    echo "Checking for new Pixelcade artwork..."
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+fi
+
 echo "Cleaning Up..."
 cd ${INSTALLPATH}
 
@@ -387,7 +403,7 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
 
-if [[ $batocera_40_plus == "true" ]]; then #we couldn't get the Batocera version so just warn the user
+if [[ $batocera_40_plus == "true" ]]; then 
   echo "[INFO] Starting Pixelcade..."
   batocera-services start pixelcade
 else 

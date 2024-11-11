@@ -6,14 +6,10 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=10  #increment this as the script is updated
-batocera_version=default
-batocera_recommended_minimum_version=33
+version=12  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
-# Run this script with this command
-# wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
 # Here's what this script does:
 
 # Downloads pixelweb to /etc/init.d/pixelcade
@@ -48,7 +44,7 @@ function pause(){
  echo ""
 }
 
-mount -o remount,rw /  #have to do this to get write access
+#mount -o remount,rw /  #have to do this to get write access, removing though as it's needed in the main command now
 
 INSTALLPATH="/etc/init.d/"
 ARTPATH="/recalbox/share/pixelcade-art/"
@@ -188,9 +184,25 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+
+if [[ $beta == "true" ]]; then
+    url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$url" 2>/dev/null; then
+        echo "[BETA] A Pixelcade LED beta version is available so let's get it..."
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
+    else
+        echo "There is no beta available at this time so we'll go with the production version"
+        prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+    fi
+else
+    prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+fi
+
+#wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
-#./pixelweb -install-artwork #install the artwork
+
 ./pixelweb -p ${ARTPATH} -install-artwork #install the artwork here and set this as pixelcade root
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
@@ -244,7 +256,7 @@ else    #S99MyScript.py is already there so let's check if old java pixelweb is 
       echo "Pixelcade already added to S99MyScript.py, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing S99MyScript.py ..."  #if we got here, then the user already has a S99MyScript.py but there is not pixelcade in there yet
-      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before"
+      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before" , note 7070 is needed as something else already using 8080
   fi
 fi
 
@@ -271,10 +283,13 @@ echo "[INFO] The LED art pack adds additional animated marquees for select games
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
 
+# mount -o remount,ro / #put back into read only
+
+
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
-        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by Batocera" && install_succesful=true; break;;
+        [Yy]* ) echo "INSTALLATION COMPLETE , please now reboot and then Pixelcade will be controlled by RecalBox" && install_succesful=true; break;;
         [Nn]* ) echo "It may still be ok and try rebooting, you can also refer to https://pixelcade.org/download-pi/ for troubleshooting steps" && exit;;
         * ) echo "Please answer yes or no.";;
     esac
