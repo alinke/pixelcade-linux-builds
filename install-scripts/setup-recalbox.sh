@@ -184,9 +184,25 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+
+if [[ $beta == "true" ]]; then
+    url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$url" 2>/dev/null; then
+        echo "[BETA] A Pixelcade LED beta version is available so let's get it..."
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
+    else
+        echo "There is no beta available at this time so we'll go with the production version"
+        prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+    fi
+else
+    prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
+fi
+
+#wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
 chmod +x pixelweb
-#./pixelweb -install-artwork #install the artwork
+
 ./pixelweb -p ${ARTPATH} -install-artwork #install the artwork here and set this as pixelcade root
 
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
