@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=22  #increment this as the script is updated
+version=23  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -116,19 +116,28 @@ echo "Stopping Pixelcade (if running...)"
 # let's make sure pixelweb is not already running
 killall java #in the case user has java pixelweb running
 
-if [[ $batocera_self_contained == "false" ]]; then #meaning below V38
-    if pgrep pixelweb > /dev/null; then #this locks up on V38 
+if pgrep pixelweb > /dev/null; then #this locks up on V38 
         echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
         curl 127.0.0.1:8080/quit
-    else
+else
         echo "[INFO] Pixelcade was not already running, all good to proceed with installation"
-    fi
-else #V38 and above kill like this
-     pkill -9 pixelweb    
 fi
 
+#if [[ $batocera_self_contained == "false" ]]; then #meaning below V38
+#    if pgrep pixelweb > /dev/null; then #this locks up on V38 
+#        echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
+#        curl 127.0.0.1:8080/quit
+#    else
+#        echo "[INFO] Pixelcade was not already running, all good to proceed with installation"
+#    fi
+#else #V38 and above kill like this
+#     #pkill -9 pixelweb    
+#     curl 127.0.0.1:8080/quit
+#fi
+
 if [[ $batocera_version -ge $batocera_40_plus_version ]]; then 
-    pkill -9 pixelweb
+    #pkill -9 pixelweb
+    curl 127.0.0.1:8080/quit
 fi
 
 #let's see if Pixelcade is there using lsusb
