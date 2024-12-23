@@ -190,8 +190,7 @@ sudo sh -c 'echo MSFT100 > os_desc/qw_sign'
 
 # Create device strings directory
 sudo mkdir -p strings/0x409
-sudo sh -c 'echo "123456789" > strings/0x409/serialnumber'
-sudo sh -c 'echo "pixlc8899" > strings/0x409/serialnumber'
+sudo sh -c 'echo "pixlc8090" > strings/0x409/serialnumber'
 sudo sh -c 'echo "Pixelcade" > strings/0x409/manufacturer'
 sudo sh -c 'echo "Pixelcade LCD Marquee" > strings/0x409/product'
 
