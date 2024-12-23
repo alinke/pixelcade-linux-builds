@@ -1,0 +1,12 @@
+[Unit]
+Description=Configure USB gadget
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/configure-usb-gadget.sh
+RemainAfterExit=yes
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target
