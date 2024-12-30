@@ -1,43 +1,11 @@
 #!/bin/bash
-set -x  # Enable debugging
+#set -x  # Enable debugging
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
     echo "Please run as root or with sudo"
     exit 1
 fi
-
-# Function to check if an IP is in use
-check_ip_in_use() {
-    local ip=$1
-    # Use arping to check if IP is in use (timeout after 1 second)
-    arping -D -I usb0 -c 1 -w 1 "$ip" > /dev/null 2>&1
-    return $?
-}
-
-# Function to find next available IP
-find_available_ip() {
-    local base_ip="169.254.100"
-    local ip_suffix=1
-    
-    while [ $ip_suffix -lt 255 ]; do
-        local test_ip="${base_ip}.${ip_suffix}"
-        
-        # Check if IP exists in any interface
-        if ! ip addr show | grep -q "$test_ip"; then
-            # Double check with arping
-            if ! check_ip_in_use "$test_ip"; then
-                echo "$test_ip"
-                return 0
-            fi
-        fi
-        
-        ((ip_suffix++))
-    done
-    
-    echo "No available IPs found in range ${base_ip}.1-254"
-    return 1
-}
 
 # Check if configfs is mounted, if not mount it
 if ! mountpoint -q /sys/kernel/config; then
@@ -124,15 +92,8 @@ for i in $(seq 1 10); do
         sudo ip link set usb0 down
         sudo ip addr flush dev usb0
         
-        # Find available IP
-        AVAILABLE_IP=$(find_available_ip)
-        if [ $? -ne 0 ]; then
-            echo "Failed to find available IP address"
-            exit 1
-        fi
-        
         # Configure link-local address with specific scope
-        sudo ip addr add "${AVAILABLE_IP}/16" dev usb0 scope link
+        sudo ip addr add 169.254.100.1/16 dev usb0 scope link
 
         # Create strict isolation rules
         sudo nft flush ruleset
@@ -141,9 +102,9 @@ for i in $(seq 1 10); do
         sudo nft add chain ip filter output { type filter hook output priority 0 \; }
         sudo nft add chain ip filter forward { type filter hook forward priority 0 \; }
 
-        # Strict interface isolation (using dynamic IP)
-        sudo nft add rule ip filter input iifname != "usb0" ip daddr "${AVAILABLE_IP}/16" drop
-        sudo nft add rule ip filter output oifname != "usb0" ip saddr "${AVAILABLE_IP}/16" drop
+        # Strict interface isolation
+        sudo nft add rule ip filter input iifname != "usb0" ip daddr 169.254.100.1/16 drop
+        sudo nft add rule ip filter output oifname != "usb0" ip saddr 169.254.100.1/16 drop
 
         # Block all forwarding for USB interface
         sudo nft add rule ip filter forward iifname "usb0" drop
@@ -171,7 +132,6 @@ for i in $(seq 1 10); do
         sudo ip link set usb0 up
 
         # Show final config
-        echo "Successfully configured USB gadget with IP: ${AVAILABLE_IP}"
         ip addr show usb0
         exit 0
     fi
