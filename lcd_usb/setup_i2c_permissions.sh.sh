@@ -38,5 +38,7 @@ echo "Reloading udev rules..."
 udevadm control --reload-rules
 udevadm trigger
 
+sudo sh -c 'echo "export PATH=\$PATH:/usr/sbin" > /etc/profile.d/usr-sbin-path.sh'
+
 echo "I2C permissions setup complete!"
 echo "Note: A system reboot is recommended for all changes to take effect."
