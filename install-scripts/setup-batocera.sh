@@ -132,7 +132,9 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then
 fi
 
 #let's see if Pixelcade is there using lsusb
-if ! command -v lsusb  &> /dev/null; then
+if [[ "$1" == "-skip" || "$2" == "-skip" ]]; then
+  echo "[INFO] Skipping Pixelcade USB detection check..."
+elif ! command -v lsusb  &> /dev/null; then
     echo "${red}lsusb command not be found so cannot check if Pixelcade is USB connected${white}"
 else
    if lsusb | grep -q '1b4f:0008'; then
