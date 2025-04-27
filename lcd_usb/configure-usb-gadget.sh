@@ -43,7 +43,7 @@ sudo sh -c 'echo MSFT100 > os_desc/qw_sign'
 
 # Create device strings directory
 sudo mkdir -p strings/0x409
-sudo sh -c 'echo "123456789" > strings/0x409/serialnumber'
+sudo sh -c 'echo "381729645" > strings/0x409/serialnumber'
 sudo sh -c 'echo "Open Gadgets" > strings/0x409/manufacturer'   # Changed to Open Gadgets
 sudo sh -c 'echo "Pixelcade LCD Marquee" > strings/0x409/product'
 
@@ -134,8 +134,8 @@ for i in $(seq 1 10); do
         # Show final config
         ip addr show usb0
         echo "USB Device successfully configured with:"
-        echo "  VID: 0x1B4F"
-        echo "  PID: 0x8888" 
+        echo "  VID: 0x1D6B"
+        echo "  PID: 0x3232" 
         echo "  Device Name: Pixelcade LCD Marquee"
         echo "  Manufacturer: Open Gadgets"
         exit 0
