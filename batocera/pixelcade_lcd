@@ -3,14 +3,6 @@
 
 case "$1" in
     start)
-        # Code executed on boot
-        
-        # Create a connman config file to ignore the USB interface
-        mkdir -p /etc/connman
-        echo "[General]" > /etc/connman/main.conf
-        echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
-        
-        # Wait for network interface to appear
         for i in $(seq 1 10); do
             if ip link show eth1 > /dev/null 2>&1; then
                 # Configure static IP for eth1 (USB gadget)
