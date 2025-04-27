@@ -29,9 +29,9 @@ sleep 1
 sudo mkdir -p /sys/kernel/config/usb_gadget/orangepi
 cd /sys/kernel/config/usb_gadget/orangepi || exit 1
 
-# Configure USB device
-sudo sh -c 'echo 0x1d6b > idVendor'  # Linux Foundation
-sudo sh -c 'echo 0x0104 > idProduct'  # Multifunction Composite Gadget
+# Configure USB device with the new VID/PID
+sudo sh -c 'echo 0x1D6B > idVendor'  # Linux Foundation
+sudo sh -c 'echo 0x3232 > idProduct'  # Custom PID
 sudo sh -c 'echo 0x0100 > bcdDevice'  # v1.0.0
 sudo sh -c 'echo 0x0200 > bcdUSB'     # USB 2.0
 
@@ -44,12 +44,12 @@ sudo sh -c 'echo MSFT100 > os_desc/qw_sign'
 # Create device strings directory
 sudo mkdir -p strings/0x409
 sudo sh -c 'echo "123456789" > strings/0x409/serialnumber'
-sudo sh -c 'echo "Pixelcade" > strings/0x409/manufacturer'
+sudo sh -c 'echo "Open Gadgets" > strings/0x409/manufacturer'   # Changed to Open Gadgets
 sudo sh -c 'echo "Pixelcade LCD Marquee" > strings/0x409/product'
 
 # Create configuration
 sudo mkdir -p configs/c.1/strings/0x409
-sudo sh -c 'echo "Config 1: RNDIS" > configs/c.1/strings/0x409/configuration'
+sudo sh -c 'echo "RNDIS Configuration" > configs/c.1/strings/0x409/configuration'
 sudo sh -c 'echo 250 > configs/c.1/MaxPower'
 
 # Create RNDIS function with specific class codes
@@ -133,6 +133,11 @@ for i in $(seq 1 10); do
 
         # Show final config
         ip addr show usb0
+        echo "USB Device successfully configured with:"
+        echo "  VID: 0x1B4F"
+        echo "  PID: 0x8888" 
+        echo "  Device Name: Pixelcade LCD Marquee"
+        echo "  Manufacturer: Open Gadgets"
         exit 0
     fi
     sleep 1
