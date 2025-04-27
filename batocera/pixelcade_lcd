@@ -1,0 +1,47 @@
+#!/bin/bash
+# Service to configure USB gadget interface and prevent link-local addressing conflicts
+
+case "$1" in
+    start)
+        # Code executed on boot
+        
+        # Create a connman config file to ignore the USB interface
+        mkdir -p /etc/connman
+        echo "[General]" > /etc/connman/main.conf
+        echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
+        
+        # Restart connman
+        systemctl restart connman
+        
+        # Wait for network interface to appear
+        for i in $(seq 1 10); do
+            if ip link show eth1 > /dev/null 2>&1; then
+                # Configure static IP for eth1 (USB gadget)
+                ifconfig eth1 down
+                ifconfig eth1 169.254.100.2 netmask 255.255.0.0 up
+                echo 1 > /proc/sys/net/ipv6/conf/eth1/disable_ipv6
+                break
+            fi
+            sleep 1
+        done
+        ;;
+        
+    stop)
+        # Code executed on shutdown
+        # No specific actions needed
+        ;;
+        
+    restart|reload)
+        # Restart the service
+        $0 stop
+        $0 start
+        ;;
+        
+    *)
+        # Default action
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+        ;;
+esac
+
+exit $?
