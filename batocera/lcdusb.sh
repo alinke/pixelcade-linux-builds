@@ -5,7 +5,6 @@ function pause(){
  echo ""
 }
 
-
 echo "Pixelcade Software installation - USB Connected Pixelcade LCD Marquee"
 mkdir -p /etc/connman
 echo "[General]" > /etc/connman/main.conf

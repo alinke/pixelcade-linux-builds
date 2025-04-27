@@ -33,6 +33,7 @@ for arg in "$@"; do
   elif [[ "$arg" == "lcdusb" ]]; then
     echo "[INFO] Setting up for Pixelcade LCD Marquee over USB"
     pixelcade_lcd_usb_already_set=true
+    pixelcade_lcd_usb=true
   fi
 done
 
@@ -101,8 +102,6 @@ fi
 
 INSTALLPATH="${HOME}/"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
-
-
 
 # let's make sure we have Baticera installation
 if batocera-info | grep -q 'System'; then
