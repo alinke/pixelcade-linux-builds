@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=23  #increment this as the script is updated
+version=24  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -16,10 +16,25 @@ batocera_39_version=39
 batocera_40_plus=false
 pixelcade_version=default
 beta=false
+pixelcade_lcd_usb=false
+pixelcade_lcd_usb_already_set=false
 NEWLINE=$'\n'
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
+
+commandLineArg=$1 #using this for skip
+
+# Check for command line arguments
+for arg in "$@"; do
+  if [[ "$arg" == "beta" ]]; then
+    echo "[INFO] Installing Beta Version of Pixelcade"
+    beta=true
+  elif [[ "$arg" == "lcdusb" ]]; then
+    echo "[INFO] Setting up for Pixelcade LCD Marquee over USB"
+    pixelcade_lcd_usb_already_set=true
+  fi
+done
 
 cat << "EOF"
        _          _               _
@@ -30,12 +45,11 @@ cat << "EOF"
 |_|
 EOF
 
-echo "       Pixelcade LED for Batocera : Installer Version $version    "
+echo "       Pixelcade LED & LCD for Batocera : Installer Version $version    "
 echo ""
-echo "This script will install the Pixelcade LED software in $HOME/pixelcade"
+echo "This script will install the Pixelcade software in $HOME/pixelcade"
 echo "Plese ensure you have at least 800 MB of free disk space in $HOME"
-echo "Now connect Pixelcade to a free USB port on your device"
-echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
+echo "Now connect your Pixelcade marquee(s) to free USB port(s) on your device"
 echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
 
 function pause(){
@@ -43,10 +57,52 @@ function pause(){
  echo ""
 }
 
+#let's see if Pixelcade LCD is there using lsusb and if not, ask the user a question as not all Pixelcade LCDs have the USB ID set, that is only with firmware 6.3 and above
+if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
+  if lsusb | grep -q '1d6b:3232'; then
+      echo "${yellow}[INFO] Pixelcade LCD Marquee Detected over USB${white}"
+      pixelcade_lcd_usb="true"
+      #this disables local link addressing conflicts
+      mkdir -p /etc/connman
+      echo "[General]" > /etc/connman/main.conf
+      echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
+      batocera-save-overlay
+  else  
+      # We didn't detect so ask if user has a Pixelcade LCD marquee
+      echo "Do you have a Pixelcade LCD marquee connected over USB? (y/n)"
+      # Wait specifically for y or n input
+      while true; do
+          read -r -n 1 has_pixelcade_lcd
+          echo "" 
+          case $has_pixelcade_lcd in
+              [Yy]* ) 
+                  pixelcade_lcd_usb="true"
+                  echo "${yellow}Setting up for Pixelcade LCD Marquee over USB${white}"
+                  #this disables local link addressing conflicts
+                  mkdir -p /etc/connman
+                  echo "[General]" > /etc/connman/main.conf
+                  echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
+                  batocera-save-overlay
+                  break
+                  ;;
+              [Nn]* ) 
+                  echo "${yellow}Continuing with Pixelcade LED setup${white}"
+                  break
+                  ;;
+              * ) 
+                  echo "Please answer y or n."
+                  ;;
+          esac
+      done
+  fi
+else
+  echo "${yellow}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${white}"
+fi
+
 INSTALLPATH="${HOME}/"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-commandLineArg=$1
+
 
 # let's make sure we have Baticera installation
 if batocera-info | grep -q 'System'; then
@@ -54,11 +110,6 @@ if batocera-info | grep -q 'System'; then
 else
    echo "Sorry, Batocera was not detected, exiting..."
    exit 1
-fi
-
-if [[ "$commandLineArg" == "beta" ]]; then
-   echo "[INFO] Installing Beta Version of Pixelcade"
-   beta=true
 fi
 
 batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
@@ -80,13 +131,27 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services enable pixelcade #enable the pixelcade service
     echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
+
+    #adding the services file for Pixelcade LCD over USB
+    if [[ "$pixelcade_lcd_usb" == "true" ]]; then
+        echo "[INFO] Setting up your Pixelcade LCD marquee with USB configuration"
+        wget -O ${INSTALLPATH}services/pixelcade_lcd https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/pixelcade_lcd
+        chmod +x ${INSTALLPATH}services/pixelcade_lcd
+        sleep 1
+        batocera-services enable pixelcade_lcd 
+        batocera-services start pixelcade_lcd 
+        echo "[INFO] Pixelcade LCD added to Batocera services for Batocera V40 and up"
+    else
+        echo "[INFO] Skipping Pixelcade LCD marquee configuration"
+    fi
 fi
 
 if [[ $batocera_version -eq $batocera_39_version ]]; then #if a user was on V40 and then went back to V39, we have to disable pixelcade service
     batocera-services disable dmd_real #disable DMD server in case you user turned it on
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services disable pixelcade #disable the pixelcade service
-    echo "[INFO] Pixelcade service disabled for Batocera V39"
+    batocera-services disable pixelcade_lcd #disable the pixelcade service
+    echo "[INFO] Pixelcade service(s) disabled for Batocera V39"
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -141,8 +206,10 @@ else
       echo "${yellow}Pixelcade LED Marquee Detected${white}"
    elif lsusb | grep -q '2e8a:1050'; then 
       echo "${yellow}[INFO] Pixelcade LED Marquee Detected${white}"
+   elif [[ "$pixelcade_lcd_usb" == "true" ]]; then
+      echo "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
    else  
-      echo "${red}[ERROR] Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting...${white}"
+      echo "${red}[ERROR] Sorry, Pixelcade LED or LCD Marquee was not detected, please ensure Pixelcade LED or LCD is USB connected to your Pi, exiting...${white}"
       exit 1
    fi
 fi
@@ -386,6 +453,27 @@ cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
 if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
     echo "Checking for new Pixelcade artwork..."
     cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+fi
+
+cd ${INSTALLPATH}pixelcade
+
+wget -O ${INSTALLPATH}pixelcade/pixelcadelcdfinder https://github.com/alinke/pixelcade-linux-builds/raw/main/lcdfinder/linux_${machine_arch}/pixelcadelcdfinder
+chmod +x ${INSTALLPATH}pixelcade/pixelcadelcdfinder
+
+echo "Checking for Pixelcade LCDs on your network..."
+${INSTALLPATH}pixelcade/pixelcadelcdfinder -nogui #check for Pixelcade LCDs
+
+
+#if pixelcade lcd is usb connected, then update pixelcade.ini accordingly
+if [[ "$pixelcade_lcd_usb" == "true" ]]; then
+    echo "Updating pixelcade.ini for LCD USB connection..."
+    if [[ -f ${INSTALLPATH}pixelcade/pixelcade.ini ]]; then
+        sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
+        sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
+        echo "Successfully updated pixelcade.ini for LCD USB connection"
+    else
+        echo "pixelcade.ini not found, skipping update..."
+    fi
 fi
 
 echo "Cleaning Up..."

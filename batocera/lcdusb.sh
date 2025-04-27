@@ -13,4 +13,6 @@ echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
 batocera-save-overlay
 echo "Please now USB connect your Pixelcade LCD Marquee to your Batocera device"
 pause
-curl -kLO -H "Cache-Control: no-cache" https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
+curl -kLO -H "Cache-Control: no-cache" https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh lcdusb
+
+
