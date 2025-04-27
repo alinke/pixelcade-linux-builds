@@ -23,6 +23,25 @@ NEWLINE=$'\n'
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
 
+configure_usb_lcd() {
+    echo "Configuring USB LCD ethernet connection..."
+    echo "for i in \$(seq 1 10); do
+        if ip link show eth1 > /dev/null 2>&1; then
+            # Configure static IP for eth1 (USB gadget)
+            ifconfig eth1 down
+            ifconfig eth1 169.254.100.2 netmask 255.255.0.0 up
+            echo 1 > /proc/sys/net/ipv6/conf/eth1/disable_ipv6
+            break
+        fi
+        sleep 1
+    done"
+}
+
+function pause(){
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
+}
+
 commandLineArg=$1 #using this for skip
 
 # Check for command line arguments
@@ -52,11 +71,6 @@ echo "This script will install the Pixelcade software in $HOME/pixelcade"
 echo "Plese ensure you have at least 800 MB of free disk space in $HOME"
 echo "Now connect your Pixelcade marquee(s) to free USB port(s) on your device"
 echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
-
-function pause(){
- read -s -n 1 -p "Press any key to continue . . ."
- echo ""
-}
 
 #let's see if Pixelcade LCD is there using lsusb and if not, ask the user a question as not all Pixelcade LCDs have the USB ID set, that is only with firmware 6.3 and above
 if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
@@ -407,7 +421,12 @@ if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify cus
           sed -e '/pixelweb.jar -b -a -s/,+12 s/^/#/' -i custom.sh #comment out 12 lines after the match
           sed -e '/userdata/,+2 s/^/#/' -i custom.sh
           echo "Adding pixelweb to startup"
-          echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh
+          if [ "$pixelcade_lcd_usb" = "true" ]; then
+            usb_lcd_config=$(configure_usb_lcd)
+            echo -e "${usb_lcd_config}\ncd /userdata/system/pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &\n" >> custom.sh
+          else
+            echo -e "cd /userdata/system/pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &\n" >> custom.sh
+          fi
       fi
 
       if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
@@ -416,24 +435,39 @@ if [[ $batocera_self_contained == "false" ]]; then #we need to add to modify cus
           echo "Commenting out old java pixelweb version"
           sed -e '/java/ s/^#*/#/' -i custom.sh #comment out the line
           echo "Adding pixelweb to startup"
-          echo -e "cd /userdata/system/pixelcade && ./pixelweb -image "system/batocera.png" -startup &\n" >> custom.sh #we'll just need to assume startup flag is needed now even though  may not have been in the past
+          if [ "$pixelcade_lcd_usb" = "true" ]; then
+            usb_lcd_config=$(configure_usb_lcd)
+            echo -e "${usb_lcd_config}\ncd /userdata/system/pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &\n" >> custom.sh
+          else
+            echo -e "cd /userdata/system/pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &\n" >> custom.sh
+          fi
       fi
 
-      if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
-          echo "Pixelcade already added to custom.sh, skipping..."
-      else
-        if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then #this means we have a custom.sh with a start)
+    if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelweb -image'; then
+        echo "Pixelcade already added to custom.sh, skipping..."
+    else
+        if cat ${INSTALLPATH}custom.sh | grep -q 'start)'; then
             echo "custom.sh start is here..."
-            sed -i "/start)/a\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+            if [ "$pixelcade_lcd_usb" = "true" ]; then
+                usb_lcd_config=$(configure_usb_lcd)
+                sed -i "/start)/a\\\\t${usb_lcd_config}\n\\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &" ${INSTALLPATH}custom.sh
+            else
+                sed -i "/start)/a\\\\tcd ${INSTALLPATH}pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &" ${INSTALLPATH}custom.sh
+            fi
         else
-            echo "Adding Pixelcade Listener auto start to your existing custom.sh for non-vanilla Batocera image..."  #if we got here, then the user already has a custom.sh but there is not pixelcade in there yet
-            echo "cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup &" >> ${INSTALLPATH}custom.sh #insert pixelweb after start)  , note \\\t is a tab
+            echo "Adding Pixelcade Listener auto start to your existing custom.sh for non-vanilla Batocera image..."
+            if [ "$pixelcade_lcd_usb" = "true" ]; then
+                usb_lcd_config=$(configure_usb_lcd)
+                echo -e "${usb_lcd_config}\ncd ${INSTALLPATH}pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &" >> ${INSTALLPATH}custom.sh
+            else
+                echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -image \"system/batocera.png\" -startup &" >> ${INSTALLPATH}custom.sh
+            fi
         fi
-      fi
     fi
     chmod +x ${INSTALLPATH}custom.sh
     # because we are not on self contained, pixelweb won't be running so let's start it now
     cd ${INSTALLPATH}pixelcade && ./pixelweb -image "system/batocera.png" -startup & #note we dont' want to start pixelweb if we are on V38 or above as it's already running
+fi
 else #we have self contained V38 or above so let's make sure custom.sh has pixelweb removed
     if cat ${INSTALLPATH}custom.sh | grep "^[^#;]" | grep -q 'pixelcade'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
         echo "Backing up custom.sh to custom.bak"
@@ -442,9 +476,6 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
         sed -e '/pixelcade/ s/^#*/#/' -i ${INSTALLPATH}custom.sh #comment out the line
     fi
 fi
-#echo "Checking for Pixelcade LCDs..."
-#${INSTALLPATH}pixelcade/jdk/bin/java -jar pixelcadelcdfinder.jar -nogui #check for Pixelcade LCDs
-# TO DO add the Pixelcade LCD check later
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
 cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
