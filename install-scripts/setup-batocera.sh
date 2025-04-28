@@ -82,33 +82,6 @@ if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
       echo "[General]" > /etc/connman/main.conf
       echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
       batocera-save-overlay
-  else  
-      # We didn't detect so ask if user has a Pixelcade LCD marquee
-      echo "Do you have a Pixelcade LCD marquee connected over USB? (y/n)"
-      # Wait specifically for y or n input
-      while true; do
-          read -r -n 1 has_pixelcade_lcd
-          echo "" 
-          case $has_pixelcade_lcd in
-              [Yy]* ) 
-                  pixelcade_lcd_usb="true"
-                  echo "${yellow}Setting up for Pixelcade LCD Marquee over USB${white}"
-                  #this disables local link addressing conflicts
-                  mkdir -p /etc/connman
-                  echo "[General]" > /etc/connman/main.conf
-                  echo "NetworkInterfaceBlacklist=eth1" >> /etc/connman/main.conf
-                  batocera-save-overlay
-                  break
-                  ;;
-              [Nn]* ) 
-                  echo "${yellow}Continuing with Pixelcade LED setup${white}"
-                  break
-                  ;;
-              * ) 
-                  echo "Please answer y or n."
-                  ;;
-          esac
-      done
   fi
 else
   echo "${yellow}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${white}"
