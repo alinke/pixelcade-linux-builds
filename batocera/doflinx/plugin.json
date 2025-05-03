@@ -1,0 +1,10 @@
+{
+  "plugin": {
+	"name": "doflinx",
+	"description": "DOFLinx plugin",
+	"version": "2",
+	"author": "DDH69",
+	"type": "plugin",
+	"start": "true"
+  }
+}
