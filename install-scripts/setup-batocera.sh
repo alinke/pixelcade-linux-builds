@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=24  #increment this as the script is updated
+version=25  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -19,6 +19,43 @@ beta=false
 pixelcade_lcd_usb=false
 pixelcade_lcd_usb_already_set=false
 NEWLINE=$'\n'
+
+# Color definitions
+cyan='\033[0;36m'
+red='\033[0;31m'
+yellow='\033[0;33m'
+green='\033[0;32m'
+magenta='\033[0;35m'
+orange='\033[0;33m' 
+
+# Additional useful colors
+blue='\033[0;34m'
+purple='\033[0;35m'  # Same as magenta in basic ANSI
+white='\033[1;37m'
+black='\033[0;30m'
+gray='\033[1;30m'
+light_blue='\033[1;34m'
+light_green='\033[1;32m'
+light_cyan='\033[1;36m'
+
+# Bold versions
+bold='\033[1m'
+bold_red='\033[1;31m'
+bold_green='\033[1;32m'
+bold_yellow='\033[1;33m'
+
+# Background colors
+bg_black='\033[40m'
+bg_red='\033[41m'
+bg_green='\033[42m'
+bg_yellow='\033[43m'
+bg_blue='\033[44m'
+bg_magenta='\033[45m'
+bg_cyan='\033[46m'
+bg_white='\033[47m'
+
+# Reset color after use
+nc='\033[0m' # No Color
 
 # Run this script with this command
 # wget https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-batocera.sh && chmod +x setup-batocera.sh && ./setup-batocera.sh
@@ -47,10 +84,10 @@ commandLineArg=$1 #using this for skip
 # Check for command line arguments
 for arg in "$@"; do
   if [[ "$arg" == "beta" ]]; then
-    echo "[INFO] Installing Beta Version of Pixelcade"
+    echo -e "${cyan}[INFO] Installing Beta Version of Pixelcade${nc}"
     beta=true
   elif [[ "$arg" == "lcdusb" ]]; then
-    echo "[INFO] Setting up for Pixelcade LCD Marquee over USB"
+    echo -e "${cyan}[INFO] Setting up for Pixelcade LCD Marquee over USB${nc}"
     pixelcade_lcd_usb_already_set=true
     pixelcade_lcd_usb=true
   fi
@@ -65,17 +102,17 @@ cat << "EOF"
 |_|
 EOF
 
-echo "       Pixelcade LED & LCD for Batocera : Installer Version $version    "
+echo -e "${magenta}       Pixelcade LED & LCD for Batocera : Installer Version $version    ${nc}"
 echo ""
-echo "This script will install the Pixelcade software in $HOME/pixelcade"
-echo "Plese ensure you have at least 800 MB of free disk space in $HOME"
-echo "Now connect your Pixelcade marquee(s) to free USB port(s) on your device"
-echo "Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed"
+echo -e "${cyan}This script will install the Pixelcade software in $HOME/pixelcade${nc}"
+echo -e "${cyan}Plese ensure you have at least 800 MB of free disk space in $HOME${nc}"
+echo -e "${cyan}Now connect your Pixelcade marquee(s) to free USB port(s) on your device${nc}"
+echo -e "${cyan}Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed${nc}"
 
 #let's see if Pixelcade LCD is there using lsusb and if not, ask the user a question as not all Pixelcade LCDs have the USB ID set, that is only with firmware 6.3 and above
 if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
   if lsusb | grep -q '1d6b:3232'; then
-      echo "${yellow}[INFO] Pixelcade LCD Marquee Detected over USB${white}"
+      echo "${magenta}[INFO] Pixelcade LCD Marquee Detected over USB${nc}"
       pixelcade_lcd_usb="true"
       #this disables local link addressing conflicts
       mkdir -p /etc/connman
@@ -84,25 +121,27 @@ if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
       batocera-save-overlay
   fi
 else
-  echo "${yellow}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${white}"
+  echo -e "${cyan}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${nc}"
 fi
 
 INSTALLPATH="${HOME}/"
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
+batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
+
 # let's make sure we have Baticera installation
 if batocera-info | grep -q 'System'; then
-        echo "Batocera Detected"
+    echo -e "${cyan}[INFO] Batocera Version ${batocera_version} Detected${nc}"
 else
    echo "Sorry, Batocera was not detected, exiting..."
+   echo -e "${red}[ERROR] Sorry, Batocera was not detected, exiting...${nc}"
    exit 1
 fi
 
-batocera_version="$(batocera-es-swissknife --version | cut -c1-2)" #get the version of Batocera
-
 if [[ $batocera_version -ge $batocera_self_contained_version ]]; then #we couldn't get the Batocera version so just warn the user
-  echo "[INFO] Your version of Batocera $batocera_version has Pixelcade support built in"
-  batocera_self_contained=true
+    batocera-services disable dmd_real #disable DMD server in case you user turned it on
+    batocera-settings-set dmd.pixelcade.dmdserver 0
+    batocera_self_contained=true
 fi
 
 if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add the service file and enable in services
@@ -116,19 +155,19 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
     batocera-services disable dmd_real #disable DMD server in case you user turned it on
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services enable pixelcade #enable the pixelcade service
-    echo "[INFO] Pixelcade added to Batocera services for Batocera V40 and up"
+    echo -e "${cyan}[INFO] Pixelcade added to Batocera services for auto-start${nc}"
 
     #adding the services file for Pixelcade LCD over USB
     if [[ "$pixelcade_lcd_usb" == "true" ]]; then
-        echo "[INFO] Setting up your Pixelcade LCD marquee with USB configuration"
+        echo -e "${cyan}[INFO] Setting up your Pixelcade LCD marquee with USB configuration${nc}"
         wget -O ${INSTALLPATH}services/pixelcade_lcd https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/pixelcade_lcd
         chmod +x ${INSTALLPATH}services/pixelcade_lcd
         sleep 1
         batocera-services enable pixelcade_lcd 
         batocera-services start pixelcade_lcd 
-        echo "[INFO] Pixelcade LCD added to Batocera services for Batocera V40 and up"
+        echo -e "${cyan}[INFO] Pixelcade LCD added to Batocera services for auto-start${nc}"
     else
-        echo "[INFO] Skipping Pixelcade LCD marquee configuration"
+        echo -e "${cyan}[INFO] Skipping Pixelcade LCD marquee configuration${nc}"
     fi
 fi
 
@@ -137,7 +176,7 @@ if [[ $batocera_version -eq $batocera_39_version ]]; then #if a user was on V40 
     batocera-settings-set dmd.pixelcade.dmdserver 0
     batocera-services disable pixelcade #disable the pixelcade service
     batocera-services disable pixelcade_lcd #disable the pixelcade service
-    echo "[INFO] Pixelcade service(s) disabled for Batocera V39"
+    echo -e "${cyan}[INFO] Pixelcade service(s) disabled for Batocera V39${nc}"
 fi
 
 if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera version so just warn the user
@@ -147,9 +186,9 @@ if [[ $batocera_version == "default" ]]; then #we couldn't get the Batocera vers
   pause
 else
   if [[ $batocera_version -lt $batocera_recommended_minimum_version ]]; then
-        echo "[INFO] Your Batocera version $batocera_version does not support Pixelcade updates during game scrolling"
-        echo "[INFO] On Batocera version $batocera_version, Pixelcade will update only when a game is launched"
-        echo "[INFO] Pixelcade updates during scrolling requires Batocera version $batocera_recommended_minimum_version or higher"
+        echo -e "${cyan}[INFO] Your Batocera version $batocera_version does not support Pixelcade updates during game scrolling${nc}"
+        echo -e "${cyan}[INFO] On Batocera version $batocera_version, Pixelcade will update only when a game is launched${nc}"
+        echo -e "${cyan}[INFO] Pixelcade updates during scrolling requires Batocera version $batocera_recommended_minimum_version or higher${nc}"
         while true; do
             read -p "Would you like to upgrade your Batocera version now (y/n) " yn
             case $yn in
@@ -159,7 +198,7 @@ else
             esac
         done
     else
-      echo "[INFO] Your Batocera version $batocera_version supports dynamic Pixelcade updates during front end scrolling"
+      echo -e "${cyan}[INFO] Your Batocera version $batocera_version supports dynamic Pixelcade updates during front end scrolling${nc}"
   fi
 fi
 
@@ -169,12 +208,12 @@ killall java #in the case user has java pixelweb running
 
 if [[ $batocera_self_contained == "false" ]]; then #meaning below V38
     if pgrep pixelweb > /dev/null; then #this locks up on V38 
-        echo "[INFO] Pixelcade is running, we'll stop it now before proceeding with installation"
+        echo -e "${cyan}[INFO] Pixelcade is running, we'll stop it now before proceeding with installation${nc}"
         curl 127.0.0.1:8080/quit
     else
-        echo "[INFO] Pixelcade was not already running, all good to proceed with installation"
+        echo -e "${cyan}[INFO] Pixelcade was not already running, all good to proceed with installation${nc}"
     fi
-else #V38 and above kill like this
+else #V38 and above kill like this TODO
      pkill -9 pixelweb    
 fi
 
@@ -184,18 +223,18 @@ fi
 
 #let's see if Pixelcade is there using lsusb
 if [[ "$1" == "-skip" || "$2" == "-skip" ]]; then
-  echo "[INFO] Skipping Pixelcade USB detection check..."
+  echo -e "${red}[INFO] Skipping Pixelcade USB detection check...${nc}"
 elif ! command -v lsusb  &> /dev/null; then
     echo "${red}lsusb command not be found so cannot check if Pixelcade is USB connected${white}"
 else
    if lsusb | grep -q '1b4f:0008'; then
-      echo "${yellow}Pixelcade LED Marquee Detected${white}"
+      echo -e "${magenta}Pixelcade LED Marquee V1 Detected${white}"
    elif lsusb | grep -q '2e8a:1050'; then 
-      echo "${yellow}[INFO] Pixelcade LED Marquee Detected${white}"
+      echo -e "${magenta}[INFO] Pixelcade LED Marquee V2 Detected${white}"
    elif [[ "$pixelcade_lcd_usb" == "true" ]]; then
-      echo "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
+      echo -e "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
    else  
-      echo "${red}[ERROR] Sorry, Pixelcade LED or LCD Marquee was not detected, please ensure Pixelcade LED or LCD is USB connected to your Pi, exiting...${white}"
+      echo -e "${red}[ERROR] Sorry, Pixelcade LED or LCD Marquee was not detected, please ensure Pixelcade LED or LCD is USB connected to your Pi, exiting...${white}"
       exit 1
    fi
 fi
@@ -211,42 +250,42 @@ fi
 #Pi model B+ armv6, no work
 
 if uname -m | grep -q 'armv6'; then
-   echo "${yellow}arm_v6 Detected..."
+   echo -e "${yellow}arm_v6 Detected..."
    machine_arch=arm_v6
 fi
 
 if uname -m | grep -q 'armv7'; then
-   echo "${yellow}arm_v7 Detected..."
+   echo -e "${yellow}arm_v7 Detected..."
    machine_arch=arm_v7
 fi
 
 if uname -m | grep -q 'aarch32'; then
-   echo "${yellow}aarch32 Detected..."
+   echo -e "${yellow}aarch32 Detected..."
    aarch32=arm_v7
 fi
 
 if uname -m | grep -q 'aarch64'; then
-   echo "${yellow}aarch64 Detected..."
+   echo -e "${yellow}aarch64 Detected..."
    machine_arch=arm64
 fi
 
 if uname -m | grep -q 'x86'; then
-   echo "${yellow}x86 32-bit Detected..."
+   echo -e "${yellow}x86 32-bit Detected..."
    machine_arch=386
 fi
 
 if uname -m | grep -q 'amd64'; then
-   echo "${yellow}x86 64-bit Detected..."
+   echo -e "${yellow}x86 64-bit Detected..."
    machine_arch=amd64
 fi
 
 if uname -m | grep -q 'x86_64'; then
-   echo "${yellow}x86 64-bit Detected..."
+   echo -e "${yellow}x86 64-bit Detected..."
    machine_arch=amd64
 fi
 
 if cat /proc/device-tree/model | grep -q 'Raspberry Pi 3'; then
-   echo "${yellow}Raspberry Pi 3 detected..."
+   echo -e "${yellow}Raspberry Pi 3 detected..."
    pi3=true
 fi
 
@@ -281,27 +320,27 @@ JDKDEST="${INSTALLPATH}pixelcade/jdk"
 
 if [[ ! -d $JDKDEST ]]; then #does Java exist already
     if [[ $machine_arch == "arm64" ]]; then
-          echo "${yellow}Installing Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
+          echo -e "${yellow}Installing Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip #this is a 64-bit small JRE , same one used on the ALU
           unzip jdk-aarch64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "arm_v7" ]; then
-          echo "${yellow}Installing Java JRE 11 32-Bit for aarch32...${white}"
+          echo -e "${yellow}Installing Java JRE 11 32-Bit for aarch32...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch32.zip
           unzip jdk-aarch32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "386" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
-          echo "${yellow}Installing Java JRE 11 32-Bit for X86...${white}"
+          echo -e "${yellow}Installing Java JRE 11 32-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-32.zip
           unzip jdk-x86-32.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     elif [ $machine_arch == "amd64" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
-          echo "${yellow}Installing Java JRE 11 64-Bit for X86...${white}"
+          echo -e "${yellow}Installing Java JRE 11 64-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-64.zip
           unzip jdk-x86-64.zip
           chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
     else
-      echo "${red}Sorry, do not have a Java JDK for your platform.${NEWLINE}You'll need to install a Java JDK or JRE manually under ${INSTALLPATH}pixelcade/jdk/bin/java${NEWLINE}Note Java is only needed for high score functionality so you can also skip it"
+      echo -e "${red}Sorry, do not have a Java JDK for your platform.${NEWLINE}You'll need to install a Java JDK or JRE manually under ${INSTALLPATH}pixelcade/jdk/bin/java${NEWLINE}Note Java is only needed for high score functionality so you can also skip it"
     fi
 fi
 
@@ -310,15 +349,15 @@ if [[ -f master.zip ]]; then
 fi
 
 cd ${INSTALLPATH}pixelcade
-echo "Installing Pixelcade Software..."
+echo -e "${cyan}[INFO] Installing Pixelcade Software...${nc}"
 
 if [[ $beta == "true" ]]; then
     url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
     if wget --spider "$url" 2>/dev/null; then
-        echo "[BETA] A Pixelcade LED beta version is available so let's get it..."
+        echo -e "${cyan}[BETA] A Pixelcade LED beta version is available so let's get it...${nc}"
         wget -O "${INSTALLPATH}pixelcade/pixelweb" "$url"
     else
-        echo "There is no beta available at this time so we'll go with the production version"
+        echo -e "${cyan}There is no beta available at this time so we'll go with the production version${nc}"
         prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
         wget -O "${INSTALLPATH}pixelcade/pixelweb" "$prod_url"
     fi
@@ -366,15 +405,15 @@ fi
 
 #pixelcade scripts for emulationstation events
 #copy over the custom scripts
-echo "${yellow}Removing Legacy Pixelcade Scripts called 01-pixelcade.sh (if they exist)...${white}"
+echo -e "${yellow}Removing Legacy Pixelcade Scripts called 01-pixelcade.sh (if they exist)...${white}"
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -name "01-pixelcade.sh" -ls
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -name "01-pixelcade.sh" -exec rm {} \;
-echo "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...${white}"
+echo -e "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...${white}"
 #copy over the custom scripts
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
 #hi2txt for high score scrolling
-echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
+echo -e "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
 
 # We need to handle two cases here for custom.sh
@@ -473,9 +512,9 @@ if [[ "$pixelcade_lcd_usb" == "true" ]]; then
     if [[ -f ${INSTALLPATH}pixelcade/pixelcade.ini ]]; then
         sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
         sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
-        echo "Successfully updated pixelcade.ini for LCD USB connection"
+        echo -e "${cyan}Successfully updated pixelcade.ini for LCD USB connection${nc}"
     else
-        echo "pixelcade.ini not found, skipping update..."
+        echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
     fi
 fi
 
@@ -494,17 +533,36 @@ fi
 
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
-echo "[INFO] $pixelcade_version Installed"
-
-if [[ $batocera_40_plus == "true" ]]; then 
-  echo "[INFO] Starting Pixelcade..."
-  batocera-services start pixelcade
-else 
-  echo "[INFO] Please now Reboot"
-fi
+echo -e "${magenta}[INFO] Pixelcade $pixelcade_version Installed${nc}"
 
 echo " "
-echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
-echo "[INFO] The LED art pack adds additional animated marquees for select games"
-echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
-echo "[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>"
+echo -e "${cyan}[INFO] An LED art pack is available at https://pixelcade.org/artpack/${nc}"
+echo -e "${cyan}[INFO] The LED art pack adds additional animated marquees for select games${nc}"
+echo -e "${cyan}[INFO] After purchase, you'll receive a serial code and then install with this command:${nc}"
+echo -e "${cyan}[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>${nc}"
+
+echo -e "\n${magenta}Please now reboot and Pixelcade will be loaded automatically on startup${nc}"
+echo -e "${magenta}Would you like to reboot now? (y/n)${nc}"
+
+read -r answer
+
+case ${answer:0:1} in
+    y|Y )
+        echo -e "${magenta}System will reboot now...${nc}"
+        sleep 2
+        reboot || sudo reboot
+        ;;
+    * )
+        echo -e "${red}Reboot skipped. Please remember to reboot your system later.${nc}"
+        pause
+        echo -e "${cyan}[INFO] Now Starting Pixlecade but may not work until a reboot...${nc}"
+        if [[ $batocera_40_plus == "true" ]]; then 
+          echo "[INFO] Starting Pixelcade..."
+          batocera-services start pixelcade
+        else 
+          echo "[INFO] Please now Reboot"
+        fi
+        ;;
+esac
+
+echo ""
