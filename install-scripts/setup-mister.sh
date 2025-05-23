@@ -18,7 +18,7 @@ magenta=`tput setaf 5`
 white=`tput setaf 7`
 reset=`tput sgr0`
 machine_arch=default
-version=10  #increment this as the script is updated
+version=11  #increment this as the script is updated
 #echo "${red}red text ${green}green text${reset}"
 
 cat << "EOF"
@@ -47,6 +47,14 @@ INSTALLPATH="/media/fat/"
 function pause(){
  read -s -n 1 -p "Press any key to continue . . ."
  echo ""
+}
+
+add_log_entry_if_needed() {
+    if ! grep -q "^log_file_entry=1" MiSTer.ini; then
+        sed -i '/^\[MiSTer\]/a\log_file_entry=1' MiSTer.ini
+    else
+        echo "${yellow}log_file_entry=1 is already present, skipping...${white}"
+    fi
 }
 
 echo "Stopping Pixelcade (if running...)"
@@ -175,16 +183,17 @@ chmod +x ${INSTALLPATH}linux/user-startup.sh
 echo "${yellow}Modifying MiSTer.ini to turn on current game logging which is needed for Pixelcade...${white}"
 cd ${INSTALLPATH}
 if [[ -f "${INSTALLPATH}MiSTer.ini" ]]; then
-      echo "${yellow}Updating your existing MiSTer.ini${white}"
-      sed -i '/^\[MiSTer\]/a\log_file_entry=1' MiSTer.ini
+    echo "${yellow}Updating your existing MiSTer.ini${white}"
+    add_log_entry_if_needed
 elif [[ -f "${INSTALLPATH}MiSTer_example.ini" ]]; then
-      echo "${yellow}Adding MiSTer.ini${white}"
-      mv ${INSTALLPATH}MiSTer_example.ini ${INSTALLPATH}MiSTer.ini
-      sed -i '/^\[MiSTer\]/a\log_file_entry=1' MiSTer.ini
-      exit 1
-else  #then worst case let's add a new MiSTer.ini
-      echo "${yellow}Getting a vanilla MiSTer.ini${white}"
-      wget -O ${INSTALLPATH}MiSTer.ini https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/MiSTer.ini
+    echo "${yellow}Adding MiSTer.ini${white}"
+    mv ${INSTALLPATH}MiSTer_example.ini ${INSTALLPATH}MiSTer.ini
+    add_log_entry_if_needed
+    exit 1
+else
+    echo "${yellow}Getting a vanilla MiSTer.ini${white}"
+    wget -O ${INSTALLPATH}MiSTer.ini https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/mister/MiSTer.ini
+    add_log_entry_if_needed
 fi
 
 echo ""
