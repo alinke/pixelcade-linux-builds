@@ -1,1 +1,1 @@
-curl http://pixelcadedx-67793a14.local:8080/v2/utility/factoryReset/0U812
+curl http://pixelcadedx-f0f37baa.local:8080/v2/utility/factoryReset/0U812
