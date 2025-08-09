@@ -1,0 +1,13 @@
+{
+  "production": {
+    "version": 22
+  },
+  "beta": {
+    "version": 23
+  },
+  "lastUpdated": "2025-01-08T00:00:00Z",
+  "baseUrls": {
+    "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/current/",
+    "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/beta/"
+  }
+}
