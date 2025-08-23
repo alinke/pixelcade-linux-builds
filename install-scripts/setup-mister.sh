@@ -18,7 +18,7 @@ magenta=`tput setaf 5`
 white=`tput setaf 7`
 reset=`tput sgr0`
 machine_arch=default
-version=11  #increment this as the script is updated
+version=12  #increment this as the script is updated
 #echo "${red}red text ${green}green text${reset}"
 
 cat << "EOF"
@@ -39,7 +39,7 @@ EOF
 echo "${magenta}       Pixelcade for MiSTer : Installer Version $version    ${white}"
 echo ""
 echo "Now connect Pixelcade to a free USB port on your MiSTer"
-echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
+echo "If you have a Pixelcade LCD Marquee, ensure it is connected to your WiFi or Ethernet network and cannot be connected via USB to MiSTer"
 echo "Grab some coffee or tea, this installer will take around 30 minutes to complete"
 
 INSTALLPATH="/media/fat/"
@@ -50,11 +50,29 @@ function pause(){
 }
 
 add_log_entry_if_needed() {
-    if ! grep -q "^log_file_entry=1" MiSTer.ini; then
-        sed -i '/^\[MiSTer\]/a\log_file_entry=1' MiSTer.ini
+    echo "${yellow}Ensuring only one log_file_entry=1 exists in MiSTer.ini...${white}"
+    
+    # Create a temporary file
+    temp_file=$(mktemp)
+    
+    # Remove all existing log_file_entry lines and copy the rest to temp file
+    grep -v "^log_file_entry=" MiSTer.ini > "$temp_file"
+    
+    # Check if [MiSTer] section exists
+    if grep -q "^\[MiSTer\]" "$temp_file"; then
+        # Add log_file_entry=1 after [MiSTer] section
+        sed -i '/^\[MiSTer\]/a\log_file_entry=1' "$temp_file"
+        echo "${yellow}Added log_file_entry=1 after [MiSTer] section${white}"
     else
-        echo "${yellow}log_file_entry=1 is already present, skipping...${white}"
+        # If no [MiSTer] section, add it at the beginning with log_file_entry=1
+        echo -e "[MiSTer]\nlog_file_entry=1\n$(cat "$temp_file")" > "$temp_file"
+        echo "${yellow}Added [MiSTer] section with log_file_entry=1${white}"
     fi
+    
+    # Replace the original file with the cleaned up version
+    mv "$temp_file" MiSTer.ini
+    
+    echo "${yellow}Successfully ensured single log_file_entry=1 in MiSTer.ini${white}"
 }
 
 echo "Stopping Pixelcade (if running...)"
@@ -83,12 +101,15 @@ if [[ -d "${INSTALLPATH}pixelcade" ]]; then
 fi
 
 # let's detect if Pixelcade is connected
+pixelcade_led_detected=false
 if ls /dev/ttyACM0 | grep -q '/dev/ttyACM0'; then
    echo "${yellow}Pixelcade LED Marquee Detected on /dev/ttyACM0${white}"
+   pixelcade_led_detected=true
 elif ls /dev/ttyACM1 | grep -q '/dev/ttyACM1'; then
   echo "${yellow}Pixelcade LED Marquee Detected on /dev/ttyACM1${white}"
+  pixelcade_led_detected=true
 else
-   echo "${red}Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB"
+   echo "${red}Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your MiSTer if you have a Pixelcade LED Marquee. You can still use Pixelcade with just a Pixelcade LCD Marquee connected to your network${white}"
 fi
 
 # TO DO ask user if they want to install on SD card or USB
@@ -214,6 +235,40 @@ fi
 ${INSTALLPATH}linux/user-startup.sh
 echo "Pausing for 5 seconds..."
 sleep 5
+
+# Check if LED was not detected and prompt for LCD setup
+if [ "$pixelcade_led_detected" = false ] ; then
+    while true; do
+        read -p "${yellow}Do you have a Pixelcade LCD Marquee and if so, is it connected to your WiFi or Ethernet? Note: MiSTer unfortunately does not support Pixelcade LCD over USB. (y/n)${white}" yn
+        case $yn in
+            [Yy]* ) 
+                echo "${yellow}Setting up Pixelcade LCD Marquee...${white}"
+                read -p "${yellow}Please enter your Pixelcade LCD's IP address: ${white}" lcd_ip_address
+                
+                # Update pixelcade.ini with LCD settings
+                cd ${INSTALLPATH}pixelcade
+                if [[ -f "pixelcade.ini" ]]; then
+                    echo "${yellow}Updating pixelcade.ini for LCD Marquee...${white}"
+                    # Update existing values only - using precise patterns to avoid duplicates
+                    sed -i "s/^lcdMarquee[[:space:]]*=.*/lcdMarquee = true/" pixelcade.ini
+                    sed -i "s/^lcdUsbConnected[[:space:]]*=.*/lcdUsbConnected = false/" pixelcade.ini
+                    sed -i "s/^lcdMarqueeIPAddress[[:space:]]*=.*/lcdMarqueeIPAddress = ${lcd_ip_address}/" pixelcade.ini
+                    sed -i "s/^lcdMarqueeHostName[[:space:]]*=.*/lcdMarqueeHostName = /" pixelcade.ini
+                    sed -i "s/^lcdDisableUSBCheck[[:space:]]*=.*/lcdDisableUSBCheck = true/" pixelcade.ini
+                    
+                    echo "${yellow}LCD Marquee configured with IP address: ${lcd_ip_address}${white}"
+                else
+                    echo "${red}Warning: pixelcade.ini not found. LCD settings could not be configured.${white}"
+                fi
+                break;;
+            [Nn]* ) 
+                echo "${yellow}Continuing without LCD Marquee setup...${white}"
+                break;;
+            * ) 
+                echo "Please answer yes or no.";;
+        esac
+    done
+fi
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
