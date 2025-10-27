@@ -322,23 +322,21 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo ""
     
-    X5="6T4SJ4X3nZAZFj"                                       
-    X2="11AALEPUY0"                                           
-    X4="3LpbKA6XFvJBggqcW1hhLdjjcFc4z4HbnD50iGlP6sYJU"       
-    X1="_tap_buhtig"                                           
-    X3="6JzfJYcH1FmL_"                                       
+    X5="6T4SJ4X3nZAZFj"
+    X2="11AALEPUY0"
+    X4="3LpbKA6XFvJBggqcW1hhLdjjcFc4z4HbnD50iGlP6sYJU"
+    X1="_tap_buhtig"
+    X3="6JzfJYcH1FmL_"
+    PAT="$(echo "$X1" | rev)${X2}${X3}${X4}${X5}"
     
-    AL3="$(echo "$X1" | rev)${X2}${X3}${X4}${X5}"
-    
-    download_vpinball_artifact() {
+    download_artifact()
+    {
         local REPO="$1"
         local TOKEN="$2"
         local BRANCH="$3"
         local WORKFLOW_NAME="$4"
         local KEY="$5"
-        
-        echo -e "${yellow}[INFO] Fetching VPinball builds from branch: $BRANCH${nc}"
-        
+
         local RUN_IDS=$(curl -s -H "Authorization: token $TOKEN" \
                           -H "Accept: application/vnd.github.v3+json" \
                           "https://api.github.com/repos/$REPO/actions/runs?branch=$BRANCH" | \
@@ -347,17 +345,15 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
                             | select(.name==$workflow)
                             | .id
                           ')
-        
+
         if [[ -z "$RUN_IDS" ]]; then
-            echo -e "${red}[ERROR] No runs found for branch $BRANCH and workflow $WORKFLOW_NAME${nc}"
-            return 1
+            echo "No successful runs for branch $BRANCH and workflow $WORKFLOW_NAME."
+            exit 1
         fi
-        
+
         local FOUND_ARTIFACT=""
         local FOUND_RUN_ID=""
-        
-        echo -e "${cyan}[INFO] Searching through workflow runs for $KEY artifact...${nc}"
-        
+
         for RUN_ID in $RUN_IDS; do
             ARTIFACT_DATA=$(curl -s -H "Authorization: token $TOKEN" \
                               -H "Accept: application/vnd.github.v3+json" \
@@ -366,79 +362,60 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
                                 .artifacts[]
                                 | select(.name==$key or (.name | contains($key)))
                               ')
-            
+
             if [[ -n "$ARTIFACT_DATA" && "$ARTIFACT_DATA" != "null" ]]; then
                 FOUND_ARTIFACT="$ARTIFACT_DATA"
                 FOUND_RUN_ID="$RUN_ID"
                 break
             fi
         done
-        
+
         if [[ -z "$FOUND_ARTIFACT" ]]; then
-            echo -e "${red}[ERROR] No artifact matching \"$KEY\" found in any recent successful run${nc}"
-            return 1
+            echo "No artifact matching \"$KEY\" found in any recent successful run."
+            exit 1
         fi
-        
+
         ARTIFACT_NAME=$(echo "$FOUND_ARTIFACT" | jq -r '.name')
         local ARTIFACT_URL=$(echo "$FOUND_ARTIFACT" | jq -r '.archive_download_url')
-        
-        echo -e "${green}[SUCCESS] Found artifact: $ARTIFACT_NAME from run $FOUND_RUN_ID${nc}"
-        
+
         mkdir -p /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
         cd /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
-        
-        echo -e "${yellow}[INFO] Downloading ${ARTIFACT_NAME}...${nc}"
-        if ! curl -L -o "${ARTIFACT_NAME}.zip" -H "Authorization: token $TOKEN" "$ARTIFACT_URL"; then
-            echo -e "${red}[ERROR] Download failed${nc}"
-            return 1
-        fi
-        
-        echo -e "${yellow}[INFO] Extracting ${ARTIFACT_NAME}...${nc}"
-        if ! unzip -q "${ARTIFACT_NAME}.zip"; then
-            echo -e "${red}[ERROR] Failed to unzip${nc}"
-            return 1
-        fi
-        
-        if ! tar xzf "${ARTIFACT_NAME}.tar.gz"; then
-            echo -e "${red}[ERROR] Failed to extract tar.gz${nc}"
-            return 1
-        fi
-        
+
+        echo "Downloading ${ARTIFACT_NAME} from run $FOUND_RUN_ID..."
+        curl -L -o "${ARTIFACT_NAME}.zip" -H "Authorization: token $TOKEN" "$ARTIFACT_URL"
+
+        echo "Uncompressing ${ARTIFACT_NAME}..."
+        unzip -q "${ARTIFACT_NAME}.zip"
+        tar xzvf "${ARTIFACT_NAME}.tar.gz"
+
         rm "${ARTIFACT_NAME}.zip" "${ARTIFACT_NAME}.tar.gz"
-        
-        echo -e "${green}[SUCCESS] VPinball extracted successfully${nc}"
-        
-        # Export artifact name for use outside function
-        echo "$ARTIFACT_NAME"
-        return 0
     }
+
+    #
+    # Download
+    #
+
+    download_artifact "vpinball/vpinball" "$PAT" "standalone" "vpinball" "Release-linux-x64"
+
+    #
+    # Install symlink
+    #
+
+    rm -rf /usr/bin/vpinball
+    ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
+    rm /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-*
+    rm /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so
+
+    #
+    # Save overlay
+    #
+
+    batocera-save-overlay 200
     
-    # Execute download and capture artifact name
-    VPINBALL_ARTIFACT=$(download_vpinball_artifact "vpinball/vpinball" "$AL3" "standalone" "vpinball" "Release-linux-x64")
+    echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
     
-    if [[ $? -eq 0 && -n "$VPINBALL_ARTIFACT" ]]; then
-        echo -e "${yellow}[INFO] Installing VPinball symlink...${nc}"
-        
-        # Install symlink
-        rm -rf /usr/bin/vpinball
-        ln -s "/userdata/system/configs/vpinball/${VPINBALL_ARTIFACT}" /usr/bin/vpinball
-        
-        # Remove conflicting SDL2 libraries
-        rm -f /userdata/system/configs/vpinball/${VPINBALL_ARTIFACT}/libSDL2-*
-        rm -f /userdata/system/configs/vpinball/${VPINBALL_ARTIFACT}/libSDL2.so
-        
-        # Save overlay
-        echo -e "${cyan}[INFO] Saving Batocera overlay...${nc}"
-        batocera-save-overlay 200
-        
-        echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
-    else
-        echo -e "${red}[ERROR] VPinball installation failed${nc}"
-        echo -e "${cyan}[INFO] Manual installation: https://github.com/vpinball/vpinball/actions${nc}"
-    fi
-    
-    # Clean up
-    unset AL3 X1 X2 X3 X4 X5 VPINBALL_ARTIFACT
+    # Cleanup
+    unset PAT X1 X2 X3 X4 X5 ARTIFACT_NAME
     
 elif [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" != "amd64" ]]; then
     echo -e "${yellow}[WARN] VPinball is only available for linux_amd64 (detected: linux_${machine_arch})${nc}"
