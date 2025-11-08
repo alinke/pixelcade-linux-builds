@@ -20,8 +20,9 @@ function pause(){
 echo -e ""
 echo -e "       ${cyan}DOFLinx for R-Cade : Installer Version $version${nc}    "
 echo -e ""
-echo -e "This script will install the DOFLinx software in /rcade/share/doflinx"
-echo -e "Please ensure you have at least 1 GB of free disk space in /rcade/share"
+echo -e "This script will install and configure Pixelcade & DOFLinx in game effects"
+echo -e "Pixelcade artwork will be installed in /rcade/share/pixelcade"
+echo -e "DOFLinx will be installed in /rcade/share/doflinx"
 echo -e ""
 pause
 
