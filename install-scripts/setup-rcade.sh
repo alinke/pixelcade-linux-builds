@@ -127,7 +127,7 @@ echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
 
 cd ${INSTALLPATH}doflinx/temp
 
-# Download DOFLinx
+# Download Base DOFLinx
 doflinx_url=https://github.com/DOFLinx/DOFLinx-for-Linux/releases/download/doflinx/doflinx.zip
 echo -e "${green}[INFO]${nc} Downloading DOFLinx..."
 wget -O "${INSTALLPATH}doflinx/temp/doflinx.zip" "$doflinx_url"
@@ -150,6 +150,26 @@ else
          echo -e "${red}[ERROR]${nc} Failed to copy DOFLinx files"
          install_successful=false
       fi
+
+      # Now get the latest DOFLinx version //TODO we can remove this once the base repo has been updated
+      #************** remove this block below once base DOFLinx repo is updated **************#
+      echo -e "${green}[INFO]${nc} Downloading latest DOFLinx binaries for ${machine_arch}..."
+      doflinx_binary_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/doflinx/${machine_arch}/DOFLinx"
+      doflinx_pdb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/doflinx/${machine_arch}/DOFLinx.pdb"
+      
+      if wget -O "${INSTALLPATH}doflinx/DOFLinx" "$doflinx_binary_url" 2>/dev/null; then
+         chmod a+x ${INSTALLPATH}doflinx/DOFLinx
+         echo -e "${green}[SUCCESS]${nc} DOFLinx binary updated to latest version"
+      else
+         echo -e "${yellow}[WARNING]${nc} Failed to download latest DOFLinx binary for ${machine_arch}"
+      fi
+      
+      if wget -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "$doflinx_pdb_url" 2>/dev/null; then
+         echo -e "${green}[SUCCESS]${nc} DOFLinx.pdb updated to latest version"
+      else
+         echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb for ${machine_arch}"
+      fi
+      #************** remove this block above once base DOFLinx repo is updated **************#
    fi
 fi
 
