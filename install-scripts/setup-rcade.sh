@@ -18,7 +18,7 @@ function pause(){
 }
 
 echo -e ""
-echo -e "       ${cyan}DOFLinx for R-Cade : Installer Version $version${nc}    "
+echo -e "       ${cyan}Pixelcade & DOFLinx for R-Cade : Installer Version $version${nc}    "
 echo -e ""
 echo -e "This script will install and configure Pixelcade & DOFLinx in game effects"
 echo -e "Pixelcade artwork will be installed in /rcade/share/pixelcade"
