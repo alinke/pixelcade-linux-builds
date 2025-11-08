@@ -276,6 +276,39 @@ else
     echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: ./pixelweb -p /rcade/share/pixelcade -update-artwork"
 fi
 
+# Update RetroArch configuration for RetroAchievements
+echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
+RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
+
+if [[ -f "$RETROARCH_CFG" ]]; then
+    # Create a backup
+    cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
+    
+    # Function to update or add a setting
+    update_setting() {
+        local setting="$1"
+        local value="$2"
+        local file="$3"
+        
+        if grep -q "^${setting} =" "$file"; then
+            # Setting exists, update it
+            sed -i "s|^${setting} =.*|${setting} = ${value}|" "$file"
+        else
+            # Setting doesn't exist, append it
+            echo "${setting} = ${value}" >> "$file"
+        fi
+    }
+    
+    # Update the three RetroAchievements settings
+    update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
+    update_setting "cheevos_hardcore_mode_enable" '"false"' "$RETROARCH_CFG"
+    update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
+    
+    echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
+else
+    echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
+fi
+
 # Cleanup
 echo -e "${green}[INFO]${nc} Cleaning up temporary files..."
 cd ${INSTALLPATH}
