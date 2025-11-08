@@ -1,7 +1,7 @@
 #!/bin/bash
 # DOFLinx installer for R-Cade
 
-version=2
+version=3
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -236,8 +236,13 @@ else
     echo -e "${yellow}[WARNING]${nc} $RCADE_STARTUP not found - DOFLinx will need to be started manually"
 fi
 
+# Stop Pixelcade before updating
+echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
+curl -s localhost:8080/quit >/dev/null 2>&1
+sleep 2
+
 # Update pixelweb binary
-echo -e "${green}[INFO]${nc} Updating pixelweb binary to latest version..."
+echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
 cd /usr/bin
 
 pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
