@@ -275,6 +275,8 @@ fi
 echo -e "${green}[INFO]${nc} Updating Pixelcade artwork and DOFLinx .MAME files..."
 cd /usr/bin
 ./pixelweb -p /rcade/share/pixelcade -update-artwork
+# Let's also force and update the latest DOFLinx MAME files too because it'll skip if artwork is already up to date
+./pixelweb -p /rcade/share/pixelcade -update-doflinx
 
 if [ $? -eq 0 ]; then
     echo -e "${green}[SUCCESS]${nc} Pixelcade artwork and DOFLinx .MAME files updated"
