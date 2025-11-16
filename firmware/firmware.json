@@ -1,7 +1,7 @@
 {
   "production": {
     "version": 23,
-    "subversion": 2
+    "subversion": 3
   },
   "beta": {
     "version": 23,
