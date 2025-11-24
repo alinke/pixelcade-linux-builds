@@ -1,0 +1,8 @@
+{
+  "latestFirmwareVersion": "6.3.0.0",
+  "latestArtworkVersion": 17,
+  "updateScriptVersion": 41,
+  "releaseDate": "2025-01-23",
+  "releaseNotes": "USB search fix for MP4s, download from Companion and can create alias",
+  "minimumRequiredVersion": "5.0.0.0"
+}
