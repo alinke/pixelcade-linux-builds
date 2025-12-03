@@ -1,8 +1,8 @@
 {
-  "latestFirmwareVersion": "6.3.0.0",
-  "latestArtworkVersion": 17,
+  "latestFirmwareVersion": "7.4.0.0",
+  "latestArtworkVersion": 18,
   "updateScriptVersion": 41,
   "releaseDate": "2025-01-23",
-  "releaseNotes": "USB search fix for MP4s, download from Companion and can create alias",
+  "releaseNotes": "USB search fix for MP4s, full resolutions downloads from Companion and can create aliases",
   "minimumRequiredVersion": "5.0.0.0"
 }
