@@ -1,9 +1,9 @@
 {
-  "latestFirmwareVersion": "6.3.0.0",
+  "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.0.0.0",
+  "betaFirmwareVersion": "7.0.1",
   "updateScriptVersion": 42,
   "releaseDate": "12-02-2025",
   "releaseNotes": "USB search fix for MP4s, full resolutions downloads from Companion and can create aliases",
-  "minimumRequiredVersion": "5.0.0.0"
+  "minimumRequiredVersion": "5.0.0"
 }
