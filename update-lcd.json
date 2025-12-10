@@ -1,9 +1,24 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.0.7",
+  "betaFirmwareVersion": "7.0.8",
   "updateScriptVersion": 42,
-  "releaseDate": "12-02-2025",
-  "releaseNotes": "USB search fix for MP4s, full resolutions downloads from Companion and can create aliases",
+  "releaseDate": "12-09-2025",
+  "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
+  "releaseNotesList": [
+    "USB search fix for MP4s",
+    "Full resolution downloads from Companion",
+    "Can create aliases"
+  ],
+  "betaReleaseNotes": [
+    "Added static marquees only option in settings (will skip video marquees)",
+    "Lookup cache auto-refreshes on uploads with manual refresh button",
+    "Added Favorites and slideshow feature (includes video marquees)",
+    "Added copy button to log",
+    "/list handler for third party integration",
+    "Fixed intermittent 'not connected' boot screen",
+    "Changed video icon indicator",
+    "Ability to delete user-added system/console names"
+  ],
   "minimumRequiredVersion": "5.0.0"
 }
