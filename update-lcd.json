@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.0.8",
+  "betaFirmwareVersion": "7.0.9",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -18,7 +18,9 @@
     "/list handler for third party integration",
     "Fixed intermittent 'not connected' boot screen",
     "Changed video icon indicator",
-    "Ability to delete user-added system/console names"
+    "Ability to delete user-added system/console names",
+    "Fixed wifi reconnect issue on some networks",
+    "Fixed intermittent sports scoreboard not configured message"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
