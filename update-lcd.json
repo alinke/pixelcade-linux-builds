@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.1.1",
+  "betaFirmwareVersion": "7.1.2",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -20,7 +20,9 @@
     "Changed video icon indicator",
     "Ability to delete user-added system/console names",
     "Fixed wifi reconnect issue on some networks",
-    "Fixed intermittent sports scoreboard not configured message"
+    "Fixed intermittent sports scoreboard not configured message",
+    "USB formatting for a blank thumb drive fixed and works from mobile app too",
+    "Added bulk upload support from Custom Upload in Companion, takes around 10 minutes to process 2000+ marquees and shows a progress update"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
