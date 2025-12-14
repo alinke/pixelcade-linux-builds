@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.1.2",
+  "betaFirmwareVersion": "7.1.4",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -22,7 +22,17 @@
     "Fixed wifi reconnect issue on some networks",
     "Fixed intermittent sports scoreboard not configured message",
     "USB formatting for a blank thumb drive fixed and works from mobile app too",
-    "Added bulk upload support from Custom Upload in Companion, takes around 10 minutes to process 2000+ marquees and shows a progress update"
+    "Added bulk upload support from Custom Upload in Companion, takes around 10 minutes to process 2000+ marquees and shows a progress update",
+    "Fixed intermittent marquees showing up without images in Companion",
+    "Browse marquees in Pixelcade Companion is much faster now",
+    "Added variations filter in Companion so by default we don't show all the rom name variations, mainly for MAME",
+    "User added systems in Companion will show up in a different color and sorted at",
+    "Time zone can be set in seettings which is needed for log time stamps and clock widget",
+    "MP4 video will now upload to the right location in the mp4marquees folder",
+    "Device info in Companion shows total numbrer of marquees in system, intenral, and USB storage",
+    "USB marquees are now found immediately during boot even while cache is still scanning",
+    "Marquee info page in Companion shows more details including if from USB or internal storage",
+    "The uploader in Companion now shows the progress and activity for each file"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
