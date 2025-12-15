@@ -34,7 +34,8 @@
     "Marquee info page in Companion shows more details including if from USB or internal storage",
     "The uploader in Companion now shows the progress and activity for each file",
     "Some users were geting WiFi connected but no Internet",
-    "Files uploaded to internal storage wasn't getting picked up"
+    "Files uploaded to internal storage weren't getting",
+    "Browse marquees sorting always alphabetical"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
