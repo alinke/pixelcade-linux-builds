@@ -10,7 +10,7 @@
     "version": "7.0.1",
     "artworkUpdate": true,
     "releaseNotes": [
-      "Fix for mDNS disvoery on RCade",
+      "mDNS discovery fix for Linux, tested on RCade",
       "Pixelcade Companion UI improvements",
       "Grey out Pixelcade Companion LED components when running in LCD only mode"
     ]
