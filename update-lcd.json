@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.1.5",
+  "betaFirmwareVersion": "7.1.6",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -35,7 +35,9 @@
     "The uploader in Companion now shows the progress and activity for each file",
     "Some users were geting WiFi connected but no Internet",
     "Files uploaded to internal storage weren't getting picked up",
-    "Browse marquees sorting always alphabetical"
+    "Browse marquees sorting always alphabetical",
+    "Can now delete user added video marquees",
+    "New header logo so easier to tell different between Pixelcade Companion LCD and LED"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
