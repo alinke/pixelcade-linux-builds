@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.1.4",
+  "betaFirmwareVersion": "7.1.5",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -32,7 +32,9 @@
     "Device info in Companion shows total numbrer of marquees in system, intenral, and USB storage",
     "USB marquees are now found immediately during boot even while cache is still scanning",
     "Marquee info page in Companion shows more details including if from USB or internal storage",
-    "The uploader in Companion now shows the progress and activity for each file"
+    "The uploader in Companion now shows the progress and activity for each file",
+    "Some users were geting WiFi connected but no Internet",
+    "Files uploaded to internal storage wasn't getting picked up"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
