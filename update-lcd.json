@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.1.6",
+  "betaFirmwareVersion": "7.2.0",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -38,9 +38,14 @@
     "7.1.5: Browse marquees sorting always alphabetical",
     "7.1.6: Can now delete user added video marquees",
     "7.1.6: New header logo so easier to tell different between Pixelcade Companion LCD and LED",
-    "7.2.0: Added app based WiFi setup",
-    "7.2.0: Added WiFi password validation so we don't kill existing WiFi if the user entered the wrong password",
-    "7.2.0: Adding option to forget WiFi connection which reverts to HotSpot setup mode"
+    "7.2.0: Added app based WiFi setup with hotspot when no WiFi configured",
+    "7.2.0: Added WiFi password validation so we don't kill existing WiFi if wrong password entered",
+    "7.2.0: Adding option to forget WiFi connection which reverts to HotSpot setup mode",
+    "7.2.0: Favorites changed to playlist, you can add widgets now to the playlist, drag and drop order and control each item duration",
+    "7.2.0: Fixed new USB formatting issue when hot swapping a new USB drive without a reboot",
+    "7.2.0: Added clear button to log",
+    "7.2.0: If no connectivity, show the QR code for the mobile apps to setup WiFi on startup",
+    "7.2.0: Added eject button for safe USB eject"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
