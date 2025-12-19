@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.2.0",
+  "betaFirmwareVersion": "7.2.1",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -45,7 +45,9 @@
     "7.2.0: Fixed new USB formatting issue when hot swapping a new USB drive without a reboot",
     "7.2.0: Added clear button to log",
     "7.2.0: If no connectivity, show the QR code for the mobile apps to setup WiFi on startup",
-    "7.2.0: Added eject button for safe USB eject"
+    "7.2.0: Added eject button for safe USB eject",  
+    "7.2.1: Added attract mode option to playlist that if on will prevent interruption during arcade scrolling and game launches", 
+    "7.2.1: Added drag icons to playlist items"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
