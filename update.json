@@ -7,12 +7,18 @@
     ]
   },
   "beta": {
-    "version": "7.0.1",
+    "version": "7.0.3",
     "artworkUpdate": true,
     "releaseNotes": [
       "mDNS discovery fix for Linux, tested on RCade",
       "Pixelcade Companion UI improvements",
-      "Grey out Pixelcade Companion LED components when running in LCD only mode"
+      "Grey out Pixelcade Companion LED components when running in LCD only mode",
+      "Added Playlist which allows you to define a slideshow of marquees and widgets and set the duration for each item",
+      "Added drag and drop to Playlist and attract mode toggle which prevents the playlist being interrupted when in arcade mode (not on by default",
+      "Added clear and download buttons to log",
+      "Improved Pixelcade Companion UI with mobile apps",
+      "Added user system mappings which do not get overwritten",
+      "Fixed bug where a Pixelcade LCD was being detected as a USB but is not USB connected"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
