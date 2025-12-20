@@ -1,11 +1,22 @@
 {
   "production": {
     "version": 23,
-    "subversion": 3
+    "subversion": 3,
+    "releaseNotes": [
+      "Fixed intermittent bug when deleting zones",
+      "Added matrix 8x48 support",
+      "Fixed LED effects for multi-zone support"
+    ]
   },
   "beta": {
     "version": 23,
-    "subversion": 3
+    "subversion": 4,
+    "releaseNotes": [
+      "Duration param will not clear the pulse device when over",
+      "All 8x8 achieveemnts effect work now",
+      "Added color params to all 8x8 matrix explosions",
+      "Fixed crash with clear all zones"
+    ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
   "baseUrls": {
