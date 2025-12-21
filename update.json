@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.0.3",
+    "version": "7.0.4",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added Playlist feature which allows you to define a slideshow of marquees and widgets and set the duration for each item",
@@ -20,8 +20,12 @@
       "Fixed bug where a Pixelcade LCD was being detected as USB but is not USB connected",
       "The premium art pack will now show if there is an update or have latest version",
       "Added custom artwork uploader in Companion",
-      "Added release notes to Updates in Companion",
-      "Bug fix where Pixelcade intermittently hangs on exit"
+      "Added release notes to Updates in Companion for both Pixelcade software and firmware",
+      "Bug fix where Pixelcade intermittently hangs on exit",
+      "Added flip option for Pixelcade Pulse matrix devices in case the user installed upside down",
+      "Add duration option to Pixelcade Companion for Pulse effects",
+      "Added no interrupt flag for all the widgets so they can be called in Attract Modes without being interrupted",
+      "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
