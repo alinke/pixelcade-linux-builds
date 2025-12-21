@@ -10,9 +10,11 @@
     "version": "7.1.0",
     "artworkUpdate": true,
     "releaseNotes": [
+      "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
       "Added Playlist feature which allows you to define a slideshow of marquees and widgets and set the duration for each item",
       "Added drag and drop to Playlist and attract mode toggle which prevents the playlist being interrupted when in arcade mode (not on by default",
       "mDNS discovery fix for Linux, tested working on RCade",
+      "Moved log to main menu and full screen, much easier to read",
       "Grey out Pixelcade Companion LED components when running in LCD only mode",
       "Added clear and download buttons to Companion log",
       "Improved Pixelcade Companion UI with mobile apps for iOS and Android",
@@ -25,7 +27,9 @@
       "Added flip option for Pixelcade Pulse matrix devices in case the user installed upside down",
       "Add duration option to Pixelcade Companion for Pulse effects",
       "Added no interrupt flag for all the widgets so they can be called in Attract Modes without being interrupted",
-      "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source"
+      "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source",
+      "Adding plumbing for front end / Attract mode integration for widgets and playlist, also if LCD is installed, display widgets and playlist on LCD instead",
+      "Made fonts cleaner, reduced dithering on the top and sides of the text"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",

@@ -47,7 +47,8 @@
     "7.2.0: If no connectivity, show the QR code for the mobile apps to setup WiFi on startup",
     "7.2.0: Added eject button for safe USB eject",  
     "7.2.1: Added attract mode option to playlist that if on will prevent interruption during arcade scrolling and game launches", 
-    "7.2.1: Added drag icons to playlist items"
+    "7.2.1: Added drag icons to playlist items",
+    "7.2.2: Added plumbing for arcade front end Attract Mode/screen saver integration"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
