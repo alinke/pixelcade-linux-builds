@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.0.4",
+    "version": "7.1.0",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added Playlist feature which allows you to define a slideshow of marquees and widgets and set the duration for each item",
