@@ -29,7 +29,8 @@
       "Added no interrupt flag for all the widgets so they can be called in Attract Modes without being interrupted",
       "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source",
       "Adding plumbing for front end / Attract mode integration for widgets and playlist, also if LCD is installed, display widgets and playlist on LCD instead",
-      "Made fonts cleaner, reduced dithering on the top and sides of the text"
+      "Made fonts cleaner, reduced dithering on the top and sides of the text",
+      "Added Word clock, see in Clock widget settings in Companion"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
