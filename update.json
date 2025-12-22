@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.1.0",
+    "version": "7.1.1",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -30,7 +30,10 @@
       "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source",
       "Adding plumbing for front end / Attract mode integration for widgets and playlist, also if LCD is installed, display widgets and playlist on LCD instead",
       "Made fonts cleaner, reduced dithering on the top and sides of the text",
-      "Added Word clock, see in Clock widget settings in Companion"
+      "Added Word clock, see in Clock widget settings in Companion",
+      "7.1.1: Added YouTube Stats widget",
+      "7.1.1: Added Pacman, Galaga, Tron, Arkanoid, themed clocks",
+      "7.1.1: Support for 8x48 matrices"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
