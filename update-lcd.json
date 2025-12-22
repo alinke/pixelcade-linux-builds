@@ -48,7 +48,12 @@
     "7.2.0: Added eject button for safe USB eject",  
     "7.2.1: Added attract mode option to playlist that if on will prevent interruption during arcade scrolling and game launches", 
     "7.2.1: Added drag icons to playlist items",
-    "7.2.2: Added plumbing for arcade front end Attract Mode/screen saver integration"
+    "7.2.2: Added plumbing for arcade front end Attract Mode/screen saver integration",
+    "7.2.3: Added Youtube channel stats widget",
+    "7.2.3: Added Google Calendar widget",
+    "7.2.3: Added Google Task widge",
+    "7.2.3: Added AI marquee generation widget that generates an AI marquee from the last selected game",
+    "7.2.3: Added Google Photos widget (not working yet)"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
