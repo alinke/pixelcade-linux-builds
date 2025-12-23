@@ -53,7 +53,10 @@
     "7.2.3: Added Google Calendar widget",
     "7.2.3: Added Google Task widge",
     "7.2.3: Added AI marquee generation widget that generates an AI marquee from the last selected game",
-    "7.2.3: Added Google Photos widget (not working yet)"
+    "7.2.4: Added Spotify now playing widget with album art",
+    "7.2.4: Added Google Photos widget with ability to select photos",
+    "7.2.4: Added drag and drop indicator on the Playlist screen in Companion",
+    "7.2.4: Better UI for widgets and settings in Companion"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
