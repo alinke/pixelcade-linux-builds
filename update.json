@@ -32,8 +32,13 @@
       "Made fonts cleaner, reduced dithering on the top and sides of the text",
       "Added Word clock, see in Clock widget settings in Companion",
       "7.1.1: Added YouTube Stats widget",
-      "7.1.1: Added Pacman, Galaga, Tron, Arkanoid, themed clocks",
-      "7.1.1: Support for 8x48 matrices"
+      "7.1.1: Added Pacman, Galaga, Tron, Arkanoid, Tron, Burger Time, Donkey Kong, Space Invaders, Centipede, and Asteroids themed clocks",
+      "7.1.1: Support for 8x48 matrices",
+      "7.1.2: Playlist Drag Indicator - Visual drop indicator shows exactly where items will be placed when reordering the playlist",
+      "7.1.2: Added Spotify widget for music, podcasts, and audiobooks with album art & integration with Pixelcade Pulse devices including metadata displays and LED strip effects",
+      "7.1.2: Added Youtube channel stats widget",
+      "7.1.2: Added Google Calendar widget",
+      "7.1.2: Widget Settings UX Redesign - Widget settings now open as full-screen pages instead of modals for better mobile experience"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
