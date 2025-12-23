@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.2.2",
+  "betaFirmwareVersion": "7.2.4",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -53,10 +53,10 @@
     "7.2.3: Added Google Calendar widget",
     "7.2.3: Added Google Task widge",
     "7.2.3: Added AI marquee generation widget that generates an AI marquee from the last selected game",
-    "7.2.4: Added Spotify now playing widget with album art",
+    "7.2.4: Added Spotify now playing widget with album art for music, podcasts, and audiobooks",
     "7.2.4: Added Google Photos widget with ability to select photos",
-    "7.2.4: Added drag and drop indicator on the Playlist screen in Companion",
-    "7.2.4: Better UI for widgets and settings in Companion"
+    "7.2.4: Playlist Drag Indicator - Visual drop indicator shows exactly where items will be placed when reordering the playlist",
+    "7.2.4: Widget Settings UX Redesign - Widget settings now open as full-screen pages instead of modals for better mobile experience"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
