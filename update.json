@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.1.2",
+    "version": "7.1.4",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -41,7 +41,8 @@
       "7.1.2: Widget Settings UX Redesign - Widget settings now open as full-screen pages instead of modals for better mobile experience",
       "7.1.4: Cleaned up Spotify one time auth screen",
       "7.1.4: Widget bug fixes, weren't getting interrupted correctly",
-      "7.1.4: Fix for bug where Pixelcade intermittently hangs on startup"
+      "7.1.4: Fix for bug where Pixelcade intermittently hangs on startup",
+      "7.1.4: Visual indicator in Companion home when prod or beta version updates are available"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
