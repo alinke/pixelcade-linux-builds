@@ -42,7 +42,9 @@
       "7.1.4: Cleaned up Spotify one time auth screen",
       "7.1.4: Widget bug fixes, weren't getting interrupted correctly",
       "7.1.4: Fix for bug where Pixelcade intermittently hangs on startup",
-      "7.1.4: Visual indicator in Companion home when prod or beta version updates are available"
+      "7.1.4: Visual indicator in Companion home when prod or beta version updates are available",
+      "7.1.4: Spotify widget will also send meta data to Pixelcade Pulse 7 segment, WS2812B matrix (center_matrix), and mini LCD sub-displays",
+      "7.1.4: Cleaned up logging and checking debug in companion will switch to debug logging without a restart"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
