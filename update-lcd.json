@@ -58,7 +58,8 @@
     "7.2.4: Playlist Drag Indicator - Visual drop indicator shows exactly where items will be placed when reordering the playlist",
     "7.2.4: Widget Settings UX Redesign - Widget settings now open as full-screen pages instead of modals for better mobile experience",
     "7.2.5: Widget bug fixes, weren't getting interrupted correctly",
-    "7.2.5: Added Custom Mappings which auto redirects to the local Pixelcade Companion UI"
+    "7.2.5: Added Custom Mappings which auto redirects to the local Pixelcade Companion UI",
+    "7.2.5: Spotify widget can now be added to your playlist"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
