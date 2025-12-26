@@ -6,9 +6,23 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=12  #increment this as the script is updated
+version=14  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
+
+# Parse command line arguments
+beta=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        beta|--beta|-beta)
+            beta=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
 
 # Here's what this script does:
 
@@ -30,6 +44,9 @@ cat << "EOF"
 EOF
 
 echo "       Pixelcade LED Marquee for RecalBox : Installer Version $version    "
+if [[ "$beta" == "true" ]]; then
+    echo "       *** BETA MODE ENABLED ***"
+fi
 echo ""
 echo "This script will install the Pixelcade LED software in /recalbox/share/pixelcade-art"
 echo "Plese ensure you have at least 800 MB of free disk space in /recalbox/share/"

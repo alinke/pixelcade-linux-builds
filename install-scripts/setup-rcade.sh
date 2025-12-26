@@ -1,7 +1,7 @@
 #!/bin/bash
 # DOFLinx installer for R-Cade
 
-version=3
+version=4
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -12,6 +12,20 @@ yellow='\033[0;33m'
 green='\033[0;32m'
 nc='\033[0m'
 
+# Parse command line arguments
+beta=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        beta|--beta|-beta)
+            beta=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
+
 function pause(){
  read -s -n 1 -p "Press any key to continue . . ."
  echo ""
@@ -19,6 +33,9 @@ function pause(){
 
 echo -e ""
 echo -e "       ${cyan}Pixelcade & DOFLinx for R-Cade : Installer Version $version${nc}    "
+if [[ "$beta" == "true" ]]; then
+    echo -e "       ${cyan}*** BETA MODE ENABLED ***${nc}"
+fi
 echo -e ""
 echo -e "This script will install and configure Pixelcade & DOFLinx in game effects"
 echo -e "Pixelcade artwork will be installed in /rcade/share/pixelcade"
@@ -245,20 +262,44 @@ sleep 2
 echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
 cd /usr/bin
 
-pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
-
-if wget --spider "$pixelweb_url" 2>/dev/null; then
-    echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
-    wget -O /usr/bin/pixelweb "$pixelweb_url"
-    
-    if [ $? -eq 0 ]; then
-        chmod a+x /usr/bin/pixelweb
-        echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
+if [[ "$beta" == "true" ]]; then
+    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$pixelweb_url" 2>/dev/null; then
+        echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+        wget -O /usr/bin/pixelweb "$pixelweb_url"
+        if [ $? -eq 0 ]; then
+            chmod a+x /usr/bin/pixelweb
+            echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+        fi
     else
-        echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
+        echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        if wget --spider "$pixelweb_url" 2>/dev/null; then
+            wget -O /usr/bin/pixelweb "$pixelweb_url"
+            if [ $? -eq 0 ]; then
+                chmod a+x /usr/bin/pixelweb
+                echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
+            fi
+        fi
     fi
 else
-    echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
+    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    if wget --spider "$pixelweb_url" 2>/dev/null; then
+        echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
+        wget -O /usr/bin/pixelweb "$pixelweb_url"
+        if [ $? -eq 0 ]; then
+            chmod a+x /usr/bin/pixelweb
+            echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
+        fi
+    else
+        echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
+    fi
 fi
 
 #Download and replace DOFLinx.ini with an R-Cade specific version
@@ -332,6 +373,9 @@ if [[ $install_successful == "true" ]]; then
        echo -e "${green}[SUCCESS]${nc} DOFLinx reinstalled successfully for R-Cade!"
    else
        echo -e "${green}[SUCCESS]${nc} DOFLinx installed successfully for R-Cade!"
+   fi
+   if [[ "$beta" == "true" ]]; then
+       echo -e "${cyan}[INFO]${nc} Beta version of pixelweb was installed"
    fi
    echo -e ""
    echo -e "Installation Details:"

@@ -9,6 +9,7 @@ java_installed=false
 install_succesful=false
 auto_update=false
 attractmode=false
+beta=false
 black=`tput setaf 0`
 red=`tput setaf 1`
 green=`tput setaf 2`
@@ -20,6 +21,15 @@ reset=`tput sgr0`
 machine_arch=default
 version=12  #increment this as the script is updated
 #echo "${red}red text ${green}green text${reset}"
+
+# Parse command line arguments
+for arg in "$@"; do
+    case $arg in
+        beta|--beta|-beta)
+            beta=true
+            ;;
+    esac
+done
 
 cat << "EOF"
        _          _               _
@@ -37,6 +47,9 @@ EOF
 #_user-startup.sh
 
 echo "${magenta}       Pixelcade for MiSTer : Installer Version $version    ${white}"
+if [[ "$beta" == "true" ]]; then
+    echo "${magenta}       *** BETA MODE ENABLED ***${white}"
+fi
 echo ""
 echo "Now connect Pixelcade to a free USB port on your MiSTer"
 echo "If you have a Pixelcade LCD Marquee, ensure it is connected to your WiFi or Ethernet network and cannot be connected via USB to MiSTer"
@@ -163,7 +176,22 @@ fi
 
 cd ${INSTALLPATH}pixelcade
 echo "Installing Pixelcade Software..."
-wget -O ${INSTALLPATH}pixelcade/pixelweb https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb
+
+if [[ "$beta" == "true" ]]; then
+    url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$url" 2>/dev/null; then
+        echo "${yellow}[BETA] A Pixelcade LED beta version is available so let's get it...${white}"
+        wget -O ${INSTALLPATH}pixelcade/pixelweb "$url"
+    else
+        echo "${yellow}There is no beta available at this time so we'll go with the production version${white}"
+        prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        wget -O ${INSTALLPATH}pixelcade/pixelweb "$prod_url"
+    fi
+else
+    prod_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+    wget -O ${INSTALLPATH}pixelcade/pixelweb "$prod_url"
+fi
+
 chmod +x pixelweb
 ./pixelweb -install-artwork #install the artwork
 
@@ -220,6 +248,9 @@ fi
 echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo "[INFO] $pixelcade_version Installed"
+if [[ "$beta" == "true" ]]; then
+    echo "[INFO] Beta version installed"
+fi
 install_succesful=true
 
 echo "Cleaning up..."
