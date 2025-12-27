@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.2.3",
+    "version": "7.2.4",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -54,7 +54,8 @@
       "7.2.3  Add experimental rom match memory map to handle wheels like favorites, gun games, shmups that have roms across multiple systems, set romLookupFallback = true in pixelcade.ini to try it, it's turned off by default",
       "7.2.3  Added animated arcade themed clocks (pacman, galaga, tron, etc.)",
       "7.2.3  The playlist can accept multiple clock items with different clock types",
-      "7.2.3  Music visualizer effects for Pixelcade Pulse devices when using the Spotify and Last.fm widgets"
+      "7.2.3  Music visualizer effects for Pixelcade Pulse devices when using the Spotify and Last.fm widgets",
+      "7.2.4  Intermittent freezing fixes"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
