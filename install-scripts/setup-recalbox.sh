@@ -238,6 +238,9 @@ wget -O ${ESSCRIPTS}systembrowse[systembrowsing].sh https://raw.githubuserconten
 wget -O ${ESSCRIPTS}gamescroll[gamelistbrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bgamelistbrowsing%5D.sh
 wget -O ${ESSCRIPTS}gamelaunch[rungame].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamelaunch%5Brungame%5D.sh
 wget -O ${ESSCRIPTS}esquit[start].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esquit%5Bstart%5D.sh
+wget -O ${ESSCRIPTS}gamescroll[startgameclip].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bstartgameclip%5D.sh
+wget -O ${ESSCRIPTS}gamescroll[rundemo].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Brundemo%5D.sh
+
 find ${ESSCRIPTS} -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble but this may not actually be necessary with RecalBox ?
 #hi2txt for high score scrolling
 echo "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
