@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=14  #increment this as the script is updated
+version=15  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
