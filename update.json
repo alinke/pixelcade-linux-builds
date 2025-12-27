@@ -47,9 +47,8 @@
       "7.1.5: Cleaned up logging and checking debug in companion will switch to debug logging without a restart",
       "7.1.5: Added hidden pixelcade.ini key calked skipFirmwareSync which if true will skip the sync of pulse zones to the firmware on startup",
       "7.1.6  Fixed intermittent freeze on startup",
-      "7.1.7  Adding last.fm widget, not fully functioannl yet",
-      "7.1.7  Attempted fix at OTA updates for Recalbox",
-      "7.1.8  OTA firmware debugging logs"
+      "7.1.7  Adding last.fm widget",
+      "7.2.1  Bug fix for OTA firwmare updates, was failing when LED strip were not enabled"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
