@@ -59,7 +59,10 @@
     "7.2.4: Widget Settings UX Redesign - Widget settings now open as full-screen pages instead of modals for better mobile experience",
     "7.2.5: Widets were not stopping consistently when other widgets or arcade marquees are sent",
     "7.2.5: Added Custom Mappings to LCD Companion which auto redirects to the local Pixelcade Companion UI",
-    "7.2.5: Spotify widget can now be added to your playlist"
+    "7.2.5: Spotify widget can now be added to your playlist",
+    "7.2.5: Added Last.fm widget which can also be added to your playlist",
+    "7.2.5: Note that the Spotify widget currently requires a manual whitelist, DM me on Pixelcade Discord to get added",
+    "7.2.5: Note that Last.fm does not require a whitelist but you do need a Last.fm account"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
