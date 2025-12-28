@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.2.4",
+    "version": "7.2.5",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -55,7 +55,8 @@
       "7.2.3  Added animated arcade themed clocks (pacman, galaga, tron, etc.)",
       "7.2.3  The playlist can accept multiple clock items with different clock types",
       "7.2.3  Music visualizer effects for Pixelcade Pulse devices when using the Spotify and Last.fm widgets",
-      "7.2.4  Intermittent freezing fixes"
+      "7.2.4  Intermittent freezing fixes",
+      "7.2.5  Intermittent freezing fixes continued"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
