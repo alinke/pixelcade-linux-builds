@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.2.6",
+  "betaFirmwareVersion": "7.2.7",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -62,7 +62,9 @@
     "7.2.5: Spotify widget can now be added to your playlist",
     "7.2.6: Added Last.fm widget which can also be added to your playlist",
     "7.2.6: Note that the Spotify widget currently requires a manual whitelist, DM me on Pixelcade Discord to get added",
-    "7.2.6: Note that Last.fm does not require a whitelist but you do need a Last.fm account"
+    "7.2.6: Note that Last.fm does not require a whitelist but you do need a Last.fm account",
+    "7.2.7: Added last.fm stats widget that shows most played artists, albums, recent tracks, discoveries, or a calendar view",
+    "7.2.7: Add stats for DOFLinx in game events"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
