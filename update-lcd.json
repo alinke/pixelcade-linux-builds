@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 17,
-  "betaFirmwareVersion": "7.2.7",
+  "betaFirmwareVersion": "7.2.8",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -64,7 +64,9 @@
     "7.2.6: Note that the Spotify widget currently requires a manual whitelist, DM me on Pixelcade Discord to get added",
     "7.2.6: Note that Last.fm does not require a whitelist but you do need a Last.fm account",
     "7.2.7: Added last.fm stats widget that shows most played artists, albums, recent tracks, discoveries, or a calendar view",
-    "7.2.7: Add stats for DOFLinx in game events"
+    "7.2.7: Add stats for DOFLinx in game events",
+    "7.2.8: Added share button for logs on mobile devices (requires version 2.5+ of the iOS and Android apps)",
+    "7.2.8: Custom artwork upload works now from the Pixelcade Android app (requires versions 2.5+ of the app)"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
