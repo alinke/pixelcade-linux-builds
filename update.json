@@ -60,7 +60,8 @@
       "7.2.8  Added differential artwork updates so only new or changed artwork is downloaded",
       "7.2.8  Added a secondary Weather service check in case the first one fails",
       "7.2.8  Added share button for logs on mobile devices (requires version 2.5 of the iOS and Android apps)",
-      "7.2.8  Added updater for DOFLinx in game effects core files in the Updates section of Companion"
+      "7.2.8  Added updater for DOFLinx in game effects core files in the Updates section of Companion",
+      "7.2.8  Sped up update check and added animation while checking for updates"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
