@@ -66,7 +66,8 @@
     "7.2.7: Added last.fm stats widget that shows most played artists, albums, recent tracks, discoveries, or a calendar view",
     "7.2.7: Add stats for DOFLinx in game events",
     "7.2.8: Added share button for logs on mobile devices (requires version 2.5+ of the iOS and Android apps)",
-    "7.2.8: Custom artwork upload works now from the Pixelcade Android app (requires versions 2.5+ of the app)"
+    "7.2.8: Custom artwork upload works now from the Pixelcade Android app (requires versions 2.5+ of the app)",
+    "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time"
   ],
   "minimumRequiredVersion": "5.0.0"
 }

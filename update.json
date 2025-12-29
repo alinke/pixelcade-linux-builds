@@ -29,7 +29,7 @@
       "Added no interrupt flag for all the widgets so they can be called in Attract Modes without being interrupted",
       "The pulse zones in the Pixelcade software and firmware sometimes got out of sync, added a one time sync at startup, the pixelcade software is the definitive source",
       "Adding plumbing for front end / Attract mode integration for widgets and playlist, also if LCD is installed, display widgets and playlist on LCD instead",
-      "Made fonts cleaner, reduced dithering on the top and sides of the text",
+      "Made scrolling text fonts cleaner, reduced dithering on the top and sides of the scrolling text",
       "Added Word clock, see in Clock widget settings in Companion",
       "7.1.1: Added YouTube Stats widget",
       "7.1.1: Added Pacman, Galaga, Tron, Arkanoid, Tron, Burger Time, Donkey Kong, Space Invaders, Centipede, and Asteroids themed clocks",
@@ -57,11 +57,13 @@
       "7.2.3  Music visualizer effects for Pixelcade Pulse devices when using the Spotify and Last.fm widgets",
       "7.2.4  Intermittent freezing fixes",
       "7.2.5  Intermittent freezing fixes continued",
-      "7.2.8  Added differential artwork updates so only new or changed artwork is downloaded",
+      "7.2.8  Added differential artwork updates so only new or changed artwork is downloaded vs. the whole repo every time",
       "7.2.8  Added a secondary Weather service check in case the first one fails",
       "7.2.8  Added share button for logs on mobile devices (requires version 2.5 of the iOS and Android apps)",
       "7.2.8  Added updater for DOFLinx in game effects core files in the Updates section of Companion",
-      "7.2.8  Sped up update check and added animation while checking for updates"
+      "7.2.8  Added DOFLinx help and supported games link to the DOFLinx update section in Companion",
+      "7.2.8  Update check is much faster and added animation while checking for updates",
+      "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
