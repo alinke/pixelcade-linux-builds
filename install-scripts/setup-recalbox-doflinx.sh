@@ -33,7 +33,7 @@ echo -e ""
 echo -e "       ${cyan}DOFLinx for RecalBox : Installer Version $version${nc}    "
 echo -e ""
 echo -e "This script will install and configure DOFLinx for in-game effects on RecalBox"
-echo -e "DOFLinx will be installed in /etc/init.d/doflinx"
+echo -e "DOFLinx will be installed in /recalbox/share/bootvideos/doflinx"
 echo -e ""
 echo -e "${yellow}Prerequisites:${nc}"
 echo -e "  - Pixelcade must already be installed (run setup-recalbox.sh first)"
@@ -45,9 +45,9 @@ echo -e "  - This script will configure DOFLinx to start after pixelweb with a d
 echo -e ""
 pause
 
-# Paths for RecalBox (matching setup-recalbox.sh pattern)
-# pixelweb installs to /etc/init.d/pixelcade, so DOFLinx goes to /etc/init.d/doflinx
-INSTALLPATH="/etc/init.d/"
+# Paths for RecalBox
+# DOFLinx installs to /recalbox/share/bootvideos/doflinx (has more space than /etc/init.d)
+INSTALLPATH="/recalbox/share/bootvideos/"
 DOFLINX_PATH="${INSTALLPATH}doflinx"
 PIXELCADE_PATH="/etc/init.d/pixelcade"
 ARTPATH="/recalbox/share/pixelcade-art/"
@@ -59,8 +59,8 @@ if [[ ! -f "${PIXELCADE_PATH}/pixelweb" ]]; then
 fi
 
 # Check if we have write permissions to the install path
-if [[ ! -w "/etc/init.d" ]]; then
-    echo -e "${red}[ERROR]${nc} No write permission to /etc/init.d."
+if [[ ! -w "/recalbox/share/bootvideos" ]]; then
+    echo -e "${red}[ERROR]${nc} No write permission to /recalbox/share/bootvideos."
     echo -e "${yellow}[INFO]${nc} Try running: mount -o remount,rw /"
     exit 1
 fi
@@ -235,7 +235,7 @@ done
 sleep 2
 
 echo "Starting DOFLinx..."
-cd /etc/init.d/doflinx && ./DOFLinx PATH_INI=/etc/init.d/doflinx/config/ &
+cd /recalbox/share/bootvideos/doflinx && ./DOFLinx PATH_INI=/recalbox/share/bootvideos/doflinx/config/ &
 EOFSCRIPT
 chmod +x ${DOFLINX_PATH}/doflinx.sh
 
@@ -256,7 +256,7 @@ if [[ -f "$RECALBOX_STARTUP" ]]; then
         if grep -q "pixelweb" "$RECALBOX_STARTUP"; then
             # Add DOFLinx startup after pixelweb line
             # The doflinx.sh script itself waits for pixelweb, so we just need to call it after
-            sed -i '/pixelweb.*&$/a\    # Start DOFLinx for in-game effects (waits for pixelweb internally)\n    /etc/init.d/doflinx/doflinx.sh \&' "$RECALBOX_STARTUP"
+            sed -i '/pixelweb.*&$/a\    # Start DOFLinx for in-game effects (waits for pixelweb internally)\n    /recalbox/share/bootvideos/doflinx/doflinx.sh \&' "$RECALBOX_STARTUP"
 
             if [ $? -eq 0 ]; then
                 echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RECALBOX_STARTUP"
@@ -264,18 +264,18 @@ if [[ -f "$RECALBOX_STARTUP" ]]; then
             else
                 echo -e "${yellow}[WARNING]${nc} Failed to modify $RECALBOX_STARTUP automatically"
                 echo -e "${yellow}[INFO]${nc} Please add the following line manually to $RECALBOX_STARTUP after the pixelweb line:"
-                echo -e "    /etc/init.d/doflinx/doflinx.sh &"
+                echo -e "    /recalbox/share/bootvideos/doflinx/doflinx.sh &"
             fi
         else
             echo -e "${yellow}[WARNING]${nc} pixelweb not found in $RECALBOX_STARTUP"
             echo -e "${yellow}[INFO]${nc} Please add the following line manually to $RECALBOX_STARTUP after pixelweb starts:"
-            echo -e "    /etc/init.d/doflinx/doflinx.sh &"
+            echo -e "    /recalbox/share/bootvideos/doflinx/doflinx.sh &"
         fi
     fi
 else
     echo -e "${yellow}[WARNING]${nc} $RECALBOX_STARTUP not found"
     echo -e "${yellow}[INFO]${nc} DOFLinx will need to be started manually or added to your startup script"
-    echo -e "${yellow}[INFO]${nc} To start manually (after pixelweb is running): /etc/init.d/doflinx/doflinx.sh"
+    echo -e "${yellow}[INFO]${nc} To start manually (after pixelweb is running): /recalbox/share/bootvideos/doflinx/doflinx.sh"
 fi
 
 # Download RecalBox-specific DOFLinx.ini if available
