@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.2.8",
+    "version": "7.2.9",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -63,7 +63,10 @@
       "7.2.8  Added updater for DOFLinx in game effects core files in the Updates section of Companion",
       "7.2.8  Added DOFLinx help and supported games link to the DOFLinx update section in Companion",
       "7.2.8  Update check is much faster and added animation while checking for updates",
-      "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time"
+      "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time",
+      "7.2.9  Changed Playlist name to Pixelcade Attract Mode",
+      "7.2.9  Added /minilcdonly param to /arcade that will only display on mini LCD sub-displays and skip dot matrix and 7segment displays",
+      "7.2.9  Improved font for the Pixelcade Pulse dot matrix display"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
