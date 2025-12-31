@@ -248,10 +248,6 @@ if [[ -f "$RECALBOX_STARTUP" ]]; then
     else
         echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RECALBOX_STARTUP..."
 
-        # Create a backup first
-        cp "$RECALBOX_STARTUP" "${RECALBOX_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
-        echo -e "${green}[INFO]${nc} Backup created"
-
         # Check if pixelweb is in the startup script
         if grep -q "pixelweb" "$RECALBOX_STARTUP"; then
             # Add DOFLinx startup after pixelweb line
