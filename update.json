@@ -68,7 +68,7 @@
       "7.2.9  Added /minilcdonly param to /arcade that will only display on mini LCD sub-displays and skip dot matrix and 7segment displays",
       "7.2.9  Improved font for the Pixelcade Pulse dot matrix display",
       "7.2.9  nointerrupt fix for widgets called from Pixelcade Attract Mode",
-      "7.3.0. added progress status during software updates",
+      "7.3.0. added progress status during Pixelcade software updates",
       "7.3.0. fixed return code mismatches in /ministats and other handlers that were reporting failing but really succeeding"
     ]
   },
