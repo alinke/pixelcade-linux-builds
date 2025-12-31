@@ -265,8 +265,6 @@ if [[ ! -f ${INSTALLPATH}S99MyScript.py ]]; then #S99MyScript.py is not there al
      wget -O ${INSTALLPATH}S99MyScript.py https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/S99MyScript.py
 else    #S99MyScript.py is already there so let's check if old java pixelweb is there
   if cat ${INSTALLPATH}S99MyScript.py | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
-      echo "Backing up S99MyScript.py to S99MyScript.bak"
-      cp S99MyScript.py S99MyScript.bak
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i S99MyScript.py #comment out the line
       echo "Adding pixelweb to startup"
