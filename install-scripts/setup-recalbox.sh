@@ -295,6 +295,21 @@ install_succesful=true
 echo "Pausing for 5 seconds..."
 sleep 5
 
+# Configure pixelcade.ini to use port 7070
+PIXELCADE_INI="${ARTPATH}pixelcade.ini"
+if [[ -f "$PIXELCADE_INI" ]]; then
+    echo "Configuring pixelcade.ini to use port 7070..."
+    # Remove all bindPort lines (both commented and uncommented)
+    sed -i '/bindPort/d' "$PIXELCADE_INI"
+    # Add bindPort = 7070 after the [server] section if it exists, otherwise at the end
+    if grep -q '^\[server\]' "$PIXELCADE_INI"; then
+        sed -i '/^\[server\]/a bindPort = 7070' "$PIXELCADE_INI"
+    else
+        echo "bindPort = 7070" >> "$PIXELCADE_INI"
+    fi
+    echo "Port 7070 configured in pixelcade.ini"
+fi
+
 echo " "
 echo "[INFO] An LED art pack is available at https://pixelcade.org/artpack/"
 echo "[INFO] The LED art pack adds additional animated marquees for select games"
