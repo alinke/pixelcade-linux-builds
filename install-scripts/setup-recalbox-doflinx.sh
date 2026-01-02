@@ -2,10 +2,17 @@
 # DOFLinx installer for RecalBox
 # Supports both arm64 and x64 architectures
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
+# Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=1
+version=3
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
+
+# Check for beta flag
+beta=false
+if [[ "$1" == "beta" ]]; then
+    beta=true
+fi
 
 NEWLINE=$'\n'
 cyan='\033[0;36m'
@@ -30,7 +37,11 @@ cat << "EOF"
 EOF
 
 echo -e ""
-echo -e "       ${cyan}DOFLinx for RecalBox : Installer Version $version${nc}    "
+if [[ "$beta" == "true" ]]; then
+    echo -e "       ${cyan}DOFLinx for RecalBox : Installer Version $version ${yellow}[BETA]${nc}    "
+else
+    echo -e "       ${cyan}DOFLinx for RecalBox : Installer Version $version${nc}    "
+fi
 echo -e ""
 echo -e "This script will install and configure DOFLinx for in-game effects on RecalBox"
 echo -e "DOFLinx will be installed in /recalbox/share/bootvideos/doflinx"
@@ -47,8 +58,7 @@ pause
 
 # Paths for RecalBox
 # DOFLinx installs to /recalbox/share/bootvideos/doflinx (has more space than /etc/init.d)
-INSTALLPATH="/recalbox/share/bootvideos/"
-DOFLINX_PATH="${INSTALLPATH}doflinx"
+DOFLINX_PATH="/etc/init.d/doflinx"
 PIXELCADE_PATH="/etc/init.d/pixelcade"
 ARTPATH="/recalbox/share/pixelcade-art/"
 
@@ -59,8 +69,8 @@ if [[ ! -f "${PIXELCADE_PATH}/pixelweb" ]]; then
 fi
 
 # Check if we have write permissions to the install path
-if [[ ! -w "/recalbox/share/bootvideos" ]]; then
-    echo -e "${red}[ERROR]${nc} No write permission to /recalbox/share/bootvideos."
+if [[ ! -w "${DOFLINX_PATH}" ]]; then
+    echo -e "${red}[ERROR]${nc} No write permission to $DOFLINX_PATH"
     echo -e "${yellow}[INFO]${nc} Try running: mount -o remount,rw /"
     exit 1
 fi
@@ -155,57 +165,117 @@ if [[ ! -d "${DOFLINX_PATH}" ]]; then
    mkdir -p ${DOFLINX_PATH}
 fi
 
-if [[ ! -d "${DOFLINX_PATH}/temp" ]]; then
-   mkdir -p ${DOFLINX_PATH}/temp
+# Create config directory
+if [[ ! -d "${DOFLINX_PATH}/config" ]]; then
+   mkdir -p ${DOFLINX_PATH}/config
 fi
 
 echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
 
-cd ${DOFLINX_PATH}/temp
+# Determine the correct folder based on architecture and beta flag
+# Repository: https://github.com/DOFLinx/CurrentExecutable
+# Folders: Linux_arm64, Linux_arm64_beta, Linux_x64, Linux_x64_beta
+if [[ $machine_arch == "arm64" ]]; then
+    if [[ "$beta" == "true" ]]; then
+        doflinx_folder="Linux_arm64_beta"
+    else
+        doflinx_folder="Linux_arm64"
+    fi
+elif [[ $machine_arch == "x64" ]]; then
+    if [[ "$beta" == "true" ]]; then
+        doflinx_folder="Linux_x64_beta"
+    else
+        doflinx_folder="Linux_x64"
+    fi
+fi
 
-# Download Base DOFLinx
-doflinx_url="https://github.com/DOFLinx/DOFLinx-for-Linux/releases/download/doflinx/doflinx.zip"
-echo -e "${green}[INFO]${nc} Downloading DOFLinx..."
-wget -O "${DOFLINX_PATH}/temp/doflinx.zip" "$doflinx_url"
+echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${doflinx_folder}..."
 
+# Base URL for downloads
+base_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${doflinx_folder}"
+
+# Download all DOFLinx files from the folder
+# Files: DOFLinx, DOFLinxMsg, DOFLinx.pdb, DOFLinxMsg.pdb, keycodes, HELP.txt, DONATE.txt, DOFLinx Update Notes.txt
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
+wget -O "${DOFLINX_PATH}/DOFLinx" "${base_url}/DOFLinx"
 if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx"
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
    install_successful=false
-else
-   echo -e "${green}[INFO]${nc} Extracting DOFLinx (overwriting existing files)..."
-   unzip -o doflinx.zip -d ${DOFLINX_PATH}
+fi
 
-   if [ $? -ne 0 ]; then
-      echo -e "${red}[ERROR]${nc} Failed to unzip DOFLinx"
-      install_successful=false
-   else
-      echo -e "${green}[INFO]${nc} Copying architecture-specific files (${machine_arch})..."
-      cp -rf ${DOFLINX_PATH}/${machine_arch}/* ${DOFLINX_PATH}/
+echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
+wget -O "${DOFLINX_PATH}/DOFLinxMsg" "${base_url}/DOFLinxMsg"
+if [ $? -ne 0 ]; then
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
+   install_successful=false
+fi
 
-      if [ $? -ne 0 ]; then
-         echo -e "${red}[ERROR]${nc} Failed to copy DOFLinx files"
-         install_successful=false
-      fi
-   fi
+echo -e "${green}[INFO]${nc} Downloading keycodes..."
+wget -O "${DOFLINX_PATH}/keycodes" "${base_url}/keycodes"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
+wget -O "${DOFLINX_PATH}/HELP.txt" "${base_url}/HELP.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
+wget -O "${DOFLINX_PATH}/DONATE.txt" "${base_url}/DONATE.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
+wget -O "${DOFLINX_PATH}/DOFLinx Update Notes.txt" "${base_url}/DOFLinx%20Update%20Notes.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
+wget -O "${DOFLINX_PATH}/DOFLinx.pdb" "${base_url}/DOFLinx.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
+wget -O "${DOFLINX_PATH}/DOFLinxMsg.pdb" "${base_url}/DOFLinxMsg.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
 fi
 
 # Set execute permissions
 echo -e "${green}[INFO]${nc} Setting permissions..."
 chmod a+x ${DOFLINX_PATH}/DOFLinx
 chmod a+x ${DOFLINX_PATH}/DOFLinxMsg
+chmod a+x ${DOFLINX_PATH}/keycodes 2>/dev/null
 
-# Update DOFLinx.ini with correct paths for RecalBox
-echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for RecalBox..."
-if [[ -f "${DOFLINX_PATH}/config/DOFLinx.ini" ]]; then
-    # Replace default paths with RecalBox paths
-    sed -i -e "s|/home/arcade/doflinx|${DOFLINX_PATH}|g" ${DOFLINX_PATH}/config/DOFLinx.ini
-    sed -i -e "s|/home/arcade/pixelcade|${ARTPATH}|g" ${DOFLINX_PATH}/config/DOFLinx.ini
-    if [ $? -ne 0 ]; then
-       echo -e "${red}[ERROR]${nc} Failed to edit DOFLinx.ini"
-       install_successful=false
-    fi
+# Download configuration files from pixelcade-linux-builds
+echo -e "${green}[INFO]${nc} Downloading configuration files..."
+
+# Download DOFLinx.ini
+doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/DOFLinx.ini"
+echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
+wget -O "${DOFLINX_PATH}/config/DOFLinx.ini" "$doflinx_ini_url"
+
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
 else
-    echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found"
+   echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+fi
+
+# Download colours.ini
+colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/colours.ini"
+echo -e "${green}[INFO]${nc} Downloading colours.ini..."
+wget -O "${DOFLINX_PATH}/config/colours.ini" "$colours_ini_url"
+
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+else
+   echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
 fi
 
 # Create DOFLinx startup script
@@ -274,21 +344,6 @@ else
     echo -e "${yellow}[INFO]${nc} To start manually (after pixelweb is running): /recalbox/share/bootvideos/doflinx/doflinx.sh"
 fi
 
-# Download RecalBox-specific DOFLinx.ini if available
-echo -e "${green}[INFO]${nc} Checking for RecalBox-specific DOFLinx configuration..."
-doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/DOFLinx.ini"
-if wget --spider "$doflinx_ini_url" 2>/dev/null; then
-    echo -e "${green}[INFO]${nc} Downloading RecalBox-specific DOFLinx.ini..."
-    wget -O "${DOFLINX_PATH}/config/DOFLinx.ini" "$doflinx_ini_url"
-    if [ $? -eq 0 ]; then
-        echo -e "${green}[SUCCESS]${nc} DOFLinx.ini configured for RecalBox"
-    else
-        echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini - using default configuration"
-    fi
-else
-    echo -e "${yellow}[INFO]${nc} No RecalBox-specific DOFLinx.ini available - using default with path substitutions"
-fi
-
 # Update DOFLinx .MAME files via pixelweb
 echo -e "${green}[INFO]${nc} Updating DOFLinx .MAME files..."
 cd ${PIXELCADE_PATH}
@@ -301,20 +356,22 @@ else
     echo -e "${yellow}[INFO]${nc} You can manually run: cd ${PIXELCADE_PATH} && ./pixelweb -p ${ARTPATH} -update-doflinx"
 fi
 
-# Cleanup
-echo -e "${green}[INFO]${nc} Cleaning up temporary files..."
-rm -rf ${DOFLINX_PATH}/temp
-# Clean up architecture folders that are no longer needed
-rm -rf ${DOFLINX_PATH}/arm64
-rm -rf ${DOFLINX_PATH}/x64
-rm -rf ${DOFLINX_PATH}/arm
+# No cleanup needed - we downloaded files directly without temp folders
 
 if [[ $install_successful == "true" ]]; then
    echo -e ""
    if [[ $reinstall == "true" ]]; then
-       echo -e "${green}[SUCCESS]${nc} DOFLinx reinstalled successfully for RecalBox!"
+       if [[ "$beta" == "true" ]]; then
+           echo -e "${green}[SUCCESS]${nc} DOFLinx ${yellow}BETA${nc} reinstalled successfully for RecalBox!"
+       else
+           echo -e "${green}[SUCCESS]${nc} DOFLinx reinstalled successfully for RecalBox!"
+       fi
    else
-       echo -e "${green}[SUCCESS]${nc} DOFLinx installed successfully for RecalBox!"
+       if [[ "$beta" == "true" ]]; then
+           echo -e "${green}[SUCCESS]${nc} DOFLinx ${yellow}BETA${nc} installed successfully for RecalBox!"
+       else
+           echo -e "${green}[SUCCESS]${nc} DOFLinx installed successfully for RecalBox!"
+       fi
    fi
    echo -e ""
    echo -e "Installation Details:"
@@ -322,6 +379,11 @@ if [[ $install_successful == "true" ]]; then
    echo -e "  Executable: ${DOFLINX_PATH}/DOFLinx"
    echo -e "  Config: ${DOFLINX_PATH}/config/DOFLinx.ini"
    echo -e "  Startup Script: ${DOFLINX_PATH}/doflinx.sh"
+   if [[ "$beta" == "true" ]]; then
+       echo -e "  Version: ${yellow}BETA${nc} (${doflinx_folder})"
+   else
+       echo -e "  Version: Stable (${doflinx_folder})"
+   fi
    echo -e ""
    echo -e "${green}[INFO]${nc} Architecture: $machine_arch"
    echo -e "${green}[INFO]${nc} DOFLinx will start automatically after pixelweb is running"
@@ -339,6 +401,12 @@ if [[ $install_successful == "true" ]]; then
    echo -e "  ${cyan}http://recalbox.local:7070${nc}"
    echo -e "  or"
    echo -e "  ${cyan}http://<Your RecalBox IP Address>:7070${nc}"
+   echo -e ""
+
+   # Remount filesystem as read-only for protection
+   echo -e "${green}[INFO]${nc} Remounting filesystem as read-only..."
+   mount -o remount,ro /
+   echo -e "${green}[SUCCESS]${nc} Filesystem remounted as read-only"
    echo -e ""
 
    # Ask user if they want to start DOFLinx now (only if pixelweb is already running)
