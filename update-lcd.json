@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "6.3.0",
-  "latestArtworkVersion": 17,
+  "latestArtworkVersion": 18,
   "betaFirmwareVersion": "7.3.0",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -69,7 +69,10 @@
     "7.2.8: Custom artwork upload works now from the Pixelcade Android app (requires versions 2.5+ of the app)",
     "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time",
     "7.3.0  Add text param to /arcade handler, will scroll the game title or alt text if the dot matrix display is connected",
-    "7.3.0  Added ?nomini (don’t send metadata to the pulse displays), ?clearmini (clear pulse dislays), and ?minilcdonly (show only on miniLCD only, not dot matrix or 7segment) options to /arcade handler"
+    "7.3.0  Added ?nomini (don’t send metadata to the pulse displays), ?clearmini (clear pulse dislays), and ?minilcdonly (show only on miniLCD only, not dot matrix or 7segment) options to /arcade handler",
+    "7.3.1  New Widgets: Plex Now Playing, Yahoo Fantasy, Daily Horoscope, Commute Traffic (using google maps data source), Netflix Top 10, World Clock",
+    "7.3.1  Added missing 1player and 2player marquees for LCD Only DOFLinx in game effects users",
+    "7.3.1  Fixed bug Google Photos widget not always loading photos"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
