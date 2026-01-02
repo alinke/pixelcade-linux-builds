@@ -4,7 +4,7 @@
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
 # Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=4
+version=5
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -171,79 +171,83 @@ fi
 
 echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
 
-# Determine the correct folder based on architecture and beta flag
+# Determine folders based on architecture
 # Repository: https://github.com/DOFLinx/CurrentExecutable
-# Folders: Linux_arm64, Linux_arm64_beta, Linux_x64, Linux_x64_beta
+# Beta folder only contains DOFLinx and DOFLinx.pdb - all other files come from stable
 if [[ $machine_arch == "arm64" ]]; then
-    if [[ "$beta" == "true" ]]; then
-        doflinx_folder="Linux_arm64_beta"
-    else
-        doflinx_folder="Linux_arm64"
-    fi
+    stable_folder="Linux_arm64"
+    beta_folder="Linux_arm64_beta"
 elif [[ $machine_arch == "x64" ]]; then
-    if [[ "$beta" == "true" ]]; then
-        doflinx_folder="Linux_x64_beta"
-    else
-        doflinx_folder="Linux_x64"
-    fi
+    stable_folder="Linux_x64"
+    beta_folder="Linux_x64_beta"
 fi
 
-echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${doflinx_folder}..."
+# Base URLs for downloads
+stable_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${stable_folder}"
+beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
 
-# Base URL for downloads
-base_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${doflinx_folder}"
+# Beta folder only contains DOFLinx and DOFLinx.pdb
+# All other supporting files come from stable folder
+if [[ "$beta" == "true" ]]; then
+    main_url="$beta_url"
+    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${beta_folder} (beta)..."
+else
+    main_url="$stable_url"
+    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
+fi
 
-# Download all DOFLinx files from the folder
-# Files: DOFLinx, DOFLinxMsg, DOFLinx.pdb, DOFLinxMsg.pdb, keycodes, HELP.txt, DONATE.txt, DOFLinx Update Notes.txt
-
+# Download main DOFLinx executable (from beta or stable based on flag)
 echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -O "${DOFLINX_PATH}/DOFLinx" "${base_url}/DOFLinx"
+wget -O "${DOFLINX_PATH}/DOFLinx" "${main_url}/DOFLinx"
 if [ $? -ne 0 ]; then
    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
    install_successful=false
 fi
 
+echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
+wget -O "${DOFLINX_PATH}/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
+fi
+
+# Download supporting files from stable folder (these don't exist in beta folder)
+echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
+
 echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
-wget -O "${DOFLINX_PATH}/DOFLinxMsg" "${base_url}/DOFLinxMsg"
+wget -O "${DOFLINX_PATH}/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
 if [ $? -ne 0 ]; then
    echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
    install_successful=false
 fi
 
+echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
+wget -O "${DOFLINX_PATH}/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
+fi
+
 echo -e "${green}[INFO]${nc} Downloading keycodes..."
-wget -O "${DOFLINX_PATH}/keycodes" "${base_url}/keycodes"
+wget -O "${DOFLINX_PATH}/keycodes" "${stable_url}/keycodes"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
-wget -O "${DOFLINX_PATH}/HELP.txt" "${base_url}/HELP.txt"
+wget -O "${DOFLINX_PATH}/HELP.txt" "${stable_url}/HELP.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
-wget -O "${DOFLINX_PATH}/DONATE.txt" "${base_url}/DONATE.txt"
+wget -O "${DOFLINX_PATH}/DONATE.txt" "${stable_url}/DONATE.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
-wget -O "${DOFLINX_PATH}/DOFLinx Update Notes.txt" "${base_url}/DOFLinx%20Update%20Notes.txt"
+wget -O "${DOFLINX_PATH}/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
-wget -O "${DOFLINX_PATH}/DOFLinx.pdb" "${base_url}/DOFLinx.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
-wget -O "${DOFLINX_PATH}/DOFLinxMsg.pdb" "${base_url}/DOFLinxMsg.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
 fi
 
 # Set execute permissions
