@@ -1,7 +1,12 @@
 #!/bin/bash
 # DOFLinx installer for R-Cade
+#
+# This script is organized to minimize overlay usage:
+# 1. System space changes (/usr/bin, /etc) happen first
+# 2. Overlay is saved with rcade-save.sh
+# 3. User space changes (/rcade/share/) happen after overlay save
 
-version=4
+version=6
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -130,135 +135,21 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=x64
 fi
 
-# Create necessary directories
-if [[ ! -d "${INSTALLPATH}doflinx" ]]; then
-   echo -e "${green}[INFO]${nc} Creating DOFLinx directory..."
-   mkdir -p ${INSTALLPATH}doflinx
-fi
-
-if [[ ! -d "${INSTALLPATH}doflinx/temp" ]]; then
-   mkdir -p ${INSTALLPATH}doflinx/temp
-fi
-
-echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
-
-cd ${INSTALLPATH}doflinx/temp
-
-# Download Base DOFLinx
-doflinx_url=https://github.com/DOFLinx/DOFLinx-for-Linux/releases/download/doflinx/doflinx.zip
-echo -e "${green}[INFO]${nc} Downloading DOFLinx..."
-wget -O "${INSTALLPATH}doflinx/temp/doflinx.zip" "$doflinx_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx"
-   install_successful=false
-else
-   echo -e "${green}[INFO]${nc} Extracting DOFLinx (overwriting existing files)..."
-   unzip -o doflinx.zip -d ${INSTALLPATH}doflinx
-   
-   if [ $? -ne 0 ]; then
-      echo -e "${red}[ERROR]${nc} Failed to unzip DOFLinx"
-      install_successful=false
-   else
-      echo -e "${green}[INFO]${nc} Copying architecture-specific files (${machine_arch})..."
-      cp -rf ${INSTALLPATH}doflinx/${machine_arch}/* ${INSTALLPATH}doflinx/
-      
-      if [ $? -ne 0 ]; then
-         echo -e "${red}[ERROR]${nc} Failed to copy DOFLinx files"
-         install_successful=false
-      fi
-   fi
-fi
-
-# Set execute permissions
-echo -e "${green}[INFO]${nc} Setting permissions..."
-chmod a+x ${INSTALLPATH}doflinx/DOFLinx
-chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
-
-# Update DOFLinx.ini with correct paths for R-Cade
-echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for R-Cade..."
-if [[ -f "${INSTALLPATH}doflinx/config/DOFLinx.ini" ]]; then
-    sed -i -e "s|/home/arcade/|${INSTALLPATH}|g" ${INSTALLPATH}doflinx/config/DOFLinx.ini
-    if [ $? -ne 0 ]; then
-       echo -e "${red}[ERROR]${nc} Failed to edit DOFLinx.ini"
-       install_successful=false
-    fi
-else
-    echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found"
-fi
-
-# Create DOFLinx startup script only if it doesn't exist
-if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
-    echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
-    cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
-#!/bin/bash
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /rcade/share/doflinx && ./DOFLinx &
-EOF
-    chmod +x ${INSTALLPATH}doflinx/doflinx.sh
-else
-    echo -e "${green}[INFO]${nc} DOFLinx startup script already exists, skipping creation..."
-fi
-
-# Lastly add doflinx to RCade startup
-# /etc/init.d/S10animationscreens
-
-# Check if the S10animationscreens file exists
-if [[ -f "$RCADE_STARTUP" ]]; then
-    # Check if DOFLinx code is already present
-    if grep -q "Launch DOFLinx if pixelcade was started" "$RCADE_STARTUP"; then
-        echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
-    else
-        echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
-        
-        # Create a backup first
-        cp "$RCADE_STARTUP" "${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
-        echo -e "${green}[INFO]${nc} Backup created: ${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
-        
-        # Use awk to insert the DOFLinx code after the pixelweb startup block
-        awk '
-        /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
-            in_pixelweb_block=1
-        }
-        {
-            print
-        }
-        in_pixelweb_block && /^[ \t]*fi[ \t]*$/ {
-            print ""
-            print "\t# Launch DOFLinx if pixelcade was started"
-            print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
-            print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
-            print "\t\tsleep 2"
-            print "\t\t/rcade/share/doflinx/doflinx.sh &"
-            print "\tfi"
-            in_pixelweb_block=0
-        }
-        ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
-        
-        # Check if the awk command succeeded and the output file is not empty
-        if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
-            # Replace the original file with the modified version
-            mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
-            
-            # Make sure the file is executable
-            chmod +x "$RCADE_STARTUP"
-            
-            echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RCADE_STARTUP"
-        else
-            echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_STARTUP - DOFLinx will need to be started manually"
-            rm -f "${RCADE_STARTUP}.tmp"
-        fi
-    fi
-else
-    echo -e "${yellow}[WARNING]${nc} $RCADE_STARTUP not found - DOFLinx will need to be started manually"
-fi
+# ============================================================================
+# PHASE 1: SYSTEM SPACE CHANGES (saved to overlay)
+# These changes go to /usr/bin and /etc which are in the overlay filesystem
+# ============================================================================
+echo -e ""
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+echo -e "${cyan}[PHASE 1]${nc} System space changes (will be saved to overlay)"
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 
 # Stop Pixelcade before updating
 echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
 curl -s localhost:8080/quit >/dev/null 2>&1
 sleep 2
 
-# Update pixelweb binary
+# Update pixelweb binary in /usr/bin (SYSTEM SPACE)
 echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
 cd /usr/bin
 
@@ -302,7 +193,146 @@ else
     fi
 fi
 
-#Download and replace DOFLinx.ini with an R-Cade specific version
+# Update startup script in /etc/init.d (SYSTEM SPACE)
+# Check if the S10animationscreens file exists
+if [[ -f "$RCADE_STARTUP" ]]; then
+    # Check if DOFLinx code is already present
+    if grep -q "Launch DOFLinx if pixelcade was started" "$RCADE_STARTUP"; then
+        echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
+    else
+        echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
+
+        # Create a backup first
+        cp "$RCADE_STARTUP" "${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
+        echo -e "${green}[INFO]${nc} Backup created: ${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
+
+        # Use awk to insert the DOFLinx code after the pixelweb startup block
+        awk '
+        /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
+            in_pixelweb_block=1
+        }
+        {
+            print
+        }
+        in_pixelweb_block && /^[ \t]*fi[ \t]*$/ {
+            print ""
+            print "\t# Launch DOFLinx if pixelcade was started"
+            print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
+            print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
+            print "\t\tsleep 2"
+            print "\t\t/rcade/share/doflinx/doflinx.sh &"
+            print "\tfi"
+            in_pixelweb_block=0
+        }
+        ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+
+        # Check if the awk command succeeded and the output file is not empty
+        if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
+            # Replace the original file with the modified version
+            mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
+
+            # Make sure the file is executable
+            chmod +x "$RCADE_STARTUP"
+
+            echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RCADE_STARTUP"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_STARTUP - DOFLinx will need to be started manually"
+            rm -f "${RCADE_STARTUP}.tmp"
+        fi
+    fi
+else
+    echo -e "${yellow}[WARNING]${nc} $RCADE_STARTUP not found - DOFLinx will need to be started manually"
+fi
+
+# ============================================================================
+# SAVE OVERLAY - Commit system space changes
+# ============================================================================
+echo -e ""
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+echo -e "${cyan}[OVERLAY]${nc} Saving system changes to overlay..."
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+/rcade/scripts/rcade-save.sh
+
+# ============================================================================
+# PHASE 2: USER SPACE CHANGES (in /rcade/share/ - not saved to overlay)
+# These changes go to /rcade/share which is user space and persists separately
+# ============================================================================
+echo -e ""
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+echo -e "${cyan}[PHASE 2]${nc} User space changes (/rcade/share/ - persists separately)"
+echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+
+# Create necessary directories in user space
+if [[ ! -d "${INSTALLPATH}doflinx" ]]; then
+   echo -e "${green}[INFO]${nc} Creating DOFLinx directory..."
+   mkdir -p ${INSTALLPATH}doflinx
+fi
+
+if [[ ! -d "${INSTALLPATH}doflinx/temp" ]]; then
+   mkdir -p ${INSTALLPATH}doflinx/temp
+fi
+
+echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
+
+cd ${INSTALLPATH}doflinx/temp
+
+# Download Base DOFLinx
+doflinx_url=https://github.com/DOFLinx/DOFLinx-for-Linux/releases/download/doflinx/doflinx.zip
+echo -e "${green}[INFO]${nc} Downloading DOFLinx..."
+wget -O "${INSTALLPATH}doflinx/temp/doflinx.zip" "$doflinx_url"
+
+if [ $? -ne 0 ]; then
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx"
+   install_successful=false
+else
+   echo -e "${green}[INFO]${nc} Extracting DOFLinx (overwriting existing files)..."
+   unzip -o doflinx.zip -d ${INSTALLPATH}doflinx
+
+   if [ $? -ne 0 ]; then
+      echo -e "${red}[ERROR]${nc} Failed to unzip DOFLinx"
+      install_successful=false
+   else
+      echo -e "${green}[INFO]${nc} Copying architecture-specific files (${machine_arch})..."
+      cp -rf ${INSTALLPATH}doflinx/${machine_arch}/* ${INSTALLPATH}doflinx/
+
+      if [ $? -ne 0 ]; then
+         echo -e "${red}[ERROR]${nc} Failed to copy DOFLinx files"
+         install_successful=false
+      fi
+   fi
+fi
+
+# Set execute permissions
+echo -e "${green}[INFO]${nc} Setting permissions..."
+chmod a+x ${INSTALLPATH}doflinx/DOFLinx
+chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
+
+# Update DOFLinx.ini with correct paths for R-Cade
+echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for R-Cade..."
+if [[ -f "${INSTALLPATH}doflinx/config/DOFLinx.ini" ]]; then
+    sed -i -e "s|/home/arcade/|${INSTALLPATH}|g" ${INSTALLPATH}doflinx/config/DOFLinx.ini
+    if [ $? -ne 0 ]; then
+       echo -e "${red}[ERROR]${nc} Failed to edit DOFLinx.ini"
+       install_successful=false
+    fi
+else
+    echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found"
+fi
+
+# Create DOFLinx startup script only if it doesn't exist
+if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+    echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
+    cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
+#!/bin/bash
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+cd /rcade/share/doflinx && ./DOFLinx &
+EOF
+    chmod +x ${INSTALLPATH}doflinx/doflinx.sh
+else
+    echo -e "${green}[INFO]${nc} DOFLinx startup script already exists, skipping creation..."
+fi
+
+# Download and replace DOFLinx.ini with an R-Cade specific version
 echo -e "${green}[INFO]${nc} Downloading default DOFLinx.ini configuration for R-Cade..."
 doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/DOFLinx.ini"
 
@@ -325,20 +355,20 @@ else
     echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: ./pixelweb -p /rcade/share/pixelcade -update-artwork"
 fi
 
-# Update RetroArch configuration for RetroAchievements
+# Update RetroArch configuration for RetroAchievements (in user space)
 echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
 RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
 
 if [[ -f "$RETROARCH_CFG" ]]; then
     # Create a backup
     cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
-    
+
     # Function to update or add a setting
     update_setting() {
         local setting="$1"
         local value="$2"
         local file="$3"
-        
+
         if grep -q "^${setting} =" "$file"; then
             # Setting exists, update it
             sed -i "s|^${setting} =.*|${setting} = ${value}|" "$file"
@@ -347,12 +377,12 @@ if [[ -f "$RETROARCH_CFG" ]]; then
             echo "${setting} = ${value}" >> "$file"
         fi
     }
-    
+
     # Update the three RetroAchievements settings
     update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
     update_setting "cheevos_hardcore_mode_enable" '"false"' "$RETROARCH_CFG"
     update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
-    
+
     echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
@@ -362,10 +392,6 @@ fi
 echo -e "${green}[INFO]${nc} Cleaning up temporary files..."
 cd ${INSTALLPATH}
 rm -rf ${INSTALLPATH}doflinx/temp
-
-# Update the overlay
-echo -e "${green}[INFO]${nc} Updating R-Cade overlay..."
-/rcade/scripts/rcade-save.sh
 
 if [[ $install_successful == "true" ]]; then
    echo -e ""
