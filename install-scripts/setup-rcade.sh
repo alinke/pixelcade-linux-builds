@@ -6,7 +6,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=6
+version=7
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -196,15 +196,25 @@ fi
 # Update startup script in /etc/init.d (SYSTEM SPACE)
 # Check if the S10animationscreens file exists
 if [[ -f "$RCADE_STARTUP" ]]; then
+    # Clean up any old backups in /etc/init.d (they waste overlay space)
+    for backup in /etc/init.d/S10animationscreens.backup.*; do
+        if [[ -f "$backup" ]]; then
+            echo -e "${green}[INFO]${nc} Removing old backup from overlay: $backup"
+            rm -f "$backup"
+        fi
+    done
+
     # Check if DOFLinx code is already present
     if grep -q "Launch DOFLinx if pixelcade was started" "$RCADE_STARTUP"; then
         echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
     else
         echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
 
-        # Create a backup first
-        cp "$RCADE_STARTUP" "${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
-        echo -e "${green}[INFO]${nc} Backup created: ${RCADE_STARTUP}.backup.$(date +%Y%m%d_%H%M%S)"
+        # Create a backup in user space (not overlay) to save overlay space
+        mkdir -p ${INSTALLPATH}pixelcade/backups
+        BACKUP_FILE="${INSTALLPATH}pixelcade/backups/S10animationscreens.backup.$(date +%Y%m%d_%H%M%S)"
+        cp "$RCADE_STARTUP" "$BACKUP_FILE"
+        echo -e "${green}[INFO]${nc} Backup created: $BACKUP_FILE"
 
         # Use awk to insert the DOFLinx code after the pixelweb startup block
         awk '
