@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=15  #increment this as the script is updated
+version=16  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -167,29 +167,29 @@ JDKDEST="${INSTALLPATH}pixelcade/jdk"
 
 if [[ ! -d $JDKDEST ]]; then #does Java exist already
     if [[ $machine_arch == "arm64" ]]; then
-          echo "${yellow}Installing Compact Java JRE 11 64-Bit for aarch64...${white}" #these will unzip and create the jdk folder
-          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip #this is a 64-bit small JRE , same one used on the ALU
+          echo "${yellow}Installing Compact Java JRE 11 64-Bit for aarch64...${white}"
+          curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip
           unzip jdk-aarch64.zip
-          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
-          rm ${INSTALLPATH}pixelcade/jdk-aarch64.zip
+          chmod +x jdk/bin/java
+          rm jdk-aarch64.zip
     elif [ $machine_arch == "arm_v7" ]; then
           echo "${yellow}Installing Compact Java JRE 11 32-Bit for aarch32...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch32.zip
           unzip jdk-aarch32.zip
-          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
-          rm ${INSTALLPATH}pixelcade/jdk-aarch32.zip
-    elif [ $machine_arch == "386" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
+          chmod +x jdk/bin/java
+          rm jdk-aarch32.zip
+    elif [ $machine_arch == "386" ]; then
           echo "${yellow}Installing Compact Java JRE 11 32-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-32.zip
           unzip jdk-x86-32.zip
-          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
-          rm ${INSTALLPATH}pixelcade/jdk-x86-32.zip
-    elif [ $machine_arch == "amd64" ]; then #pi zero is arm6 and cannot run the normal java :-( so have to get this special one
+          chmod +x jdk/bin/java
+          rm jdk-x86-32.zip
+    elif [ $machine_arch == "amd64" ]; then
           echo "${yellow}Installing Compact Java JRE 11 64-Bit for X86...${white}"
           curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-x86-64.zip
           unzip jdk-x86-64.zip
-          chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
-          rm ${INSTALLPATH}pixelcade/jdk-x86-64.zip
+          chmod +x jdk/bin/java
+          rm jdk-x86-64.zip
     else
       echo "${red}Sorry, do not have a Java JDK for your platform.${NEWLINE}You'll need to install a Java JDK or JRE manually under ${INSTALLPATH}pixelcade/jdk/bin/java${NEWLINE}Note Java is only needed for high score functionality so you can also skip it"
     fi
@@ -316,8 +316,11 @@ echo "[INFO] The LED art pack adds additional animated marquees for select games
 echo "[INFO] After purchase, you'll receive a serial code and then install with this command:"
 echo "[INFO] cd /etc/init.d/pixelcade && ./pixelweb -p ${ARTPATH} --install-artpack <serial code>"
 
-# mount -o remount,ro / #put back into read only
-
+# Remount filesystem as read-only for protection
+echo ""
+echo "[INFO] Remounting filesystem as read-only..."
+mount -o remount,ro /
+echo "[SUCCESS] Filesystem remounted as read-only"
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
