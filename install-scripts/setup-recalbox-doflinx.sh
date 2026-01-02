@@ -4,7 +4,7 @@
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
 # Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=3
+version=4
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -44,7 +44,7 @@ else
 fi
 echo -e ""
 echo -e "This script will install and configure DOFLinx for in-game effects on RecalBox"
-echo -e "DOFLinx will be installed in /recalbox/share/bootvideos/doflinx"
+echo -e "DOFLinx will be installed in /etc/init.d/doflinx"
 echo -e ""
 echo -e "${yellow}Prerequisites:${nc}"
 echo -e "  - Pixelcade must already be installed (run setup-recalbox.sh first)"
@@ -57,7 +57,6 @@ echo -e ""
 pause
 
 # Paths for RecalBox
-# DOFLinx installs to /recalbox/share/bootvideos/doflinx (has more space than /etc/init.d)
 DOFLINX_PATH="/etc/init.d/doflinx"
 PIXELCADE_PATH="/etc/init.d/pixelcade"
 ARTPATH="/recalbox/share/pixelcade-art/"
@@ -68,9 +67,9 @@ if [[ ! -f "${PIXELCADE_PATH}/pixelweb" ]]; then
     exit 1
 fi
 
-# Check if we have write permissions to the install path
-if [[ ! -w "${DOFLINX_PATH}" ]]; then
-    echo -e "${red}[ERROR]${nc} No write permission to $DOFLINX_PATH"
+# Check if we have write permissions (check parent directory since target may not exist yet)
+if [[ ! -w "/etc/init.d" ]]; then
+    echo -e "${red}[ERROR]${nc} No write permission to /etc/init.d"
     echo -e "${yellow}[INFO]${nc} Try running: mount -o remount,rw /"
     exit 1
 fi
