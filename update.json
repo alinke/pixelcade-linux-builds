@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.3.1",
+    "version": "7.3.2",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -70,7 +70,10 @@
       "7.2.9  nointerrupt fix for widgets called from Pixelcade Attract Mode",
       "7.3.0. added progress status during Pixelcade software updates",
       "7.3.0. fixed return code mismatches in /ministats and other handlers that were reporting failing but really succeeding",
-      "7.3.1  New Widgets: Plex Now Playing, Yahoo Fantasy, Daily Horoscope, Commute Traffic (using google maps data source), Netflix Top 10, World Clock"
+      "7.3.1  New Widgets: Plex Now Playing, Yahoo Fantasy, Daily Horoscope, Commute Traffic (using google maps data source), Netflix Top 10, World Clock",
+      "7.3.2  Atract mode wasn't being interrupted correctly",
+      "7.3.2  Fixed DOFLinx version tracking on Linux & Updated DOFLinx update location for RecalBox",
+      "7.3.2  Added widget that simply shows the marquee of the current/last selected game"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
