@@ -4,7 +4,7 @@
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
 # Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=8
+version=9
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -188,15 +188,26 @@ beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
 
 # Beta folder only contains DOFLinx and DOFLinx.pdb
 # All other supporting files come from stable folder
+# If beta mode is requested but beta folder doesn't exist, fall back to stable
+using_beta=false
 if [[ "$beta" == "true" ]]; then
-    main_url="$beta_url"
-    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${beta_folder} (beta)..."
+    echo -e "${yellow}[BETA]${nc} Checking for beta version..."
+    # Try to download from beta folder first
+    wget -q --spider "${beta_url}/DOFLinx"
+    if [ $? -eq 0 ]; then
+        main_url="$beta_url"
+        using_beta=true
+        echo -e "${green}[INFO]${nc} Beta version found - downloading DOFLinx from ${beta_folder}..."
+    else
+        main_url="$stable_url"
+        echo -e "${yellow}[INFO]${nc} Beta version not available - falling back to stable ${stable_folder}..."
+    fi
 else
     main_url="$stable_url"
     echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
 fi
 
-# Download main DOFLinx executable (from beta or stable based on flag)
+# Download main DOFLinx executable (from beta or stable based on availability)
 echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
 wget -O "${DOFLINX_PATH}/DOFLinx" "${main_url}/DOFLinx"
 if [ $? -ne 0 ]; then
@@ -437,13 +448,13 @@ fi
 if [[ $install_successful == "true" ]]; then
    echo -e ""
    if [[ $reinstall == "true" ]]; then
-       if [[ "$beta" == "true" ]]; then
+       if [[ "$using_beta" == "true" ]]; then
            echo -e "${green}[SUCCESS]${nc} DOFLinx ${yellow}BETA${nc} reinstalled successfully for RecalBox!"
        else
            echo -e "${green}[SUCCESS]${nc} DOFLinx reinstalled successfully for RecalBox!"
        fi
    else
-       if [[ "$beta" == "true" ]]; then
+       if [[ "$using_beta" == "true" ]]; then
            echo -e "${green}[SUCCESS]${nc} DOFLinx ${yellow}BETA${nc} installed successfully for RecalBox!"
        else
            echo -e "${green}[SUCCESS]${nc} DOFLinx installed successfully for RecalBox!"
@@ -455,10 +466,10 @@ if [[ $install_successful == "true" ]]; then
    echo -e "  Executable: ${DOFLINX_PATH}/DOFLinx"
    echo -e "  Config: ${DOFLINX_PATH}/config/DOFLinx.ini"
    echo -e "  Startup Script: ${DOFLINX_PATH}/doflinx.sh"
-   if [[ "$beta" == "true" ]]; then
-       echo -e "  Version: ${yellow}BETA${nc} (${doflinx_folder})"
+   if [[ "$using_beta" == "true" ]]; then
+       echo -e "  Version: ${yellow}BETA${nc} (${beta_folder})"
    else
-       echo -e "  Version: Stable (${doflinx_folder})"
+       echo -e "  Version: Stable (${stable_folder})"
    fi
    echo -e ""
    echo -e "${green}[INFO]${nc} Architecture: $machine_arch"
