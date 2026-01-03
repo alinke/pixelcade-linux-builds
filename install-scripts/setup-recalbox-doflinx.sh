@@ -4,7 +4,7 @@
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
 # Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=9
+version=10
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -414,21 +414,21 @@ if [[ -f "$RETROARCH_CFG" ]]; then
     echo -e "${green}[INFO]${nc} Configuring RetroArch for DOFLinx network commands..."
 
     # Update RetroArch settings for DOFLinx
-    update_setting "network_cmd_enable" '"true"' "$RETROARCH_CFG"
-    update_setting "network_cmd_port" '"55355"' "$RETROARCH_CFG"
-    update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
-    update_setting "cheevos_hardcore_mode_enable" '"true"' "$RETROARCH_CFG"
-    update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
+    update_setting "network_cmd_enable" "true" "$RETROARCH_CFG"
+    update_setting "network_cmd_port" "55355" "$RETROARCH_CFG"
+    update_setting "cheevos_enable" "true" "$RETROARCH_CFG"
+    update_setting "cheevos_hardcore_mode_enable" "true" "$RETROARCH_CFG"
+    update_setting "cheevos_start_active" "true" "$RETROARCH_CFG"
 
     echo -e "${green}[SUCCESS]${nc} RetroArch configured for DOFLinx"
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config not found at $RETROARCH_CFG"
     echo -e "${yellow}[INFO]${nc} You may need to manually add the following settings to your retroarchcustom.cfg:"
-    echo -e "    network_cmd_enable = \"true\""
-    echo -e "    network_cmd_port = \"55355\""
-    echo -e "    cheevos_enable = \"true\""
-    echo -e "    cheevos_hardcore_mode_enable = \"true\""
-    echo -e "    cheevos_start_active = \"true\""
+    echo -e "    network_cmd_enable = true"
+    echo -e "    network_cmd_port = 55355"
+    echo -e "    cheevos_enable = true"
+    echo -e "    cheevos_hardcore_mode_enable = true"
+    echo -e "    cheevos_start_active = true"
 fi
 
 # Update DOFLinx .MAME files via pixelweb
