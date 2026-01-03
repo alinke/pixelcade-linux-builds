@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 18,
-  "betaFirmwareVersion": "7.3.1",
+  "betaFirmwareVersion": "7.3.2",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -72,7 +72,13 @@
     "7.3.0  Added ?nomini (don’t send metadata to the pulse displays), ?clearmini (clear pulse dislays), and ?minilcdonly (show only on miniLCD only, not dot matrix or 7segment) options to /arcade handler",
     "7.3.1  New Widgets: Plex Now Playing, Yahoo Fantasy, Daily Horoscope, Commute Traffic (using google maps data source), Netflix Top 10, World Clock",
     "7.3.1  Added missing 1player and 2player marquees for LCD Only DOFLinx in game effects users",
-    "7.3.1  Fixed bug Google Photos widget not always loading photos"
+    "7.3.1  Fixed bug Google Photos widget not always loading photos",
+    "7.3.2  Google photos not always loading fix continued",
+    "7.3.2  Attract mode was not being interrupted correctly",
+    "7.3.2  Shuffle default option for news ticket and google photos so they don't always start from the same sources",
+    "7.3.2  Faster load time for news feed",
+    "7.3.2  Added widget that simply shows the marquee of the current/last selected game"
+
   ],
   "minimumRequiredVersion": "5.0.0"
 }
