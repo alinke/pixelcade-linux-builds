@@ -4,7 +4,7 @@
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
 # Usage: ./setup-recalbox-doflinx.sh [beta]
 
-version=7
+version=8
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -312,13 +312,37 @@ cd /recalbox/share/bootvideos/doflinx && ./DOFLinx PATH_INI=/recalbox/share/boot
 EOFSCRIPT
 chmod +x ${DOFLINX_PATH}/doflinx.sh
 
-# Add DOFLinx to RecalBox startup (S99MyScript.py)
-# DOFLinx must start AFTER pixelweb
-if [[ -f "$RECALBOX_STARTUP" ]]; then
-    # Check if DOFLinx code is already present
-    if grep -q "doflinx" "$RECALBOX_STARTUP"; then
-        echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RECALBOX_STARTUP"
-    else
+# Determine if we need to modify system files (requires read-write mount)
+need_startup_modification=false
+need_beta_retroarch=false
+
+if [[ -f "$RECALBOX_STARTUP" ]] && ! grep -q "doflinx" "$RECALBOX_STARTUP"; then
+    need_startup_modification=true
+fi
+
+if [[ "$beta" == "true" ]]; then
+    need_beta_retroarch=true
+fi
+
+# If we need to modify system files, do it all in one read-write session
+if [[ "$need_startup_modification" == "true" ]] || [[ "$need_beta_retroarch" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Remounting filesystem as read-write for system modifications..."
+    mount -o remount,rw /
+
+    # Beta mode: Download and install custom RetroArch binary
+    if [[ "$need_beta_retroarch" == "true" ]]; then
+        echo -e "${yellow}[BETA]${nc} Downloading custom RetroArch binary..."
+        wget -O /usr/bin/retroarch "https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/retroarch"
+        if [ $? -eq 0 ]; then
+            chmod 755 /usr/bin/retroarch
+            echo -e "${green}[SUCCESS]${nc} Custom RetroArch binary installed"
+        else
+            echo -e "${red}[ERROR]${nc} Failed to download custom RetroArch binary"
+        fi
+    fi
+
+    # Add DOFLinx to RecalBox startup (S99MyScript.py)
+    if [[ "$need_startup_modification" == "true" ]]; then
         echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RECALBOX_STARTUP..."
 
         # Check if pixelweb is in the startup script
@@ -341,10 +365,59 @@ if [[ -f "$RECALBOX_STARTUP" ]]; then
             echo -e "    /recalbox/share/bootvideos/doflinx/doflinx.sh &"
         fi
     fi
+
+    # Sync and remount filesystem as read-only for protection
+    sync
+    echo -e "${green}[INFO]${nc} Remounting filesystem as read-only..."
+    mount -o remount,ro /
 else
-    echo -e "${yellow}[WARNING]${nc} $RECALBOX_STARTUP not found"
-    echo -e "${yellow}[INFO]${nc} DOFLinx will need to be started manually or added to your startup script"
-    echo -e "${yellow}[INFO]${nc} To start manually (after pixelweb is running): /recalbox/share/bootvideos/doflinx/doflinx.sh"
+    # Check if startup file exists but already has doflinx
+    if [[ -f "$RECALBOX_STARTUP" ]]; then
+        echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RECALBOX_STARTUP"
+    else
+        echo -e "${yellow}[WARNING]${nc} $RECALBOX_STARTUP not found"
+        echo -e "${yellow}[INFO]${nc} DOFLinx will need to be started manually or added to your startup script"
+        echo -e "${yellow}[INFO]${nc} To start manually (after pixelweb is running): /recalbox/share/bootvideos/doflinx/doflinx.sh"
+    fi
+fi
+
+# Configure RetroArch for DOFLinx network commands
+RETROARCH_CFG="/recalbox/share/system/configs/retroarch/retroarchcustom.cfg"
+
+# Function to update or add a setting in a config file
+update_setting() {
+    local key="$1"
+    local value="$2"
+    local file="$3"
+
+    if grep -q "^${key}" "$file" 2>/dev/null; then
+        # Key exists, update it
+        sed -i "s|^${key}.*|${key} = ${value}|" "$file"
+    else
+        # Key doesn't exist, add it
+        echo "${key} = ${value}" >> "$file"
+    fi
+}
+
+if [[ -f "$RETROARCH_CFG" ]]; then
+    echo -e "${green}[INFO]${nc} Configuring RetroArch for DOFLinx network commands..."
+
+    # Update RetroArch settings for DOFLinx
+    update_setting "network_cmd_enable" '"true"' "$RETROARCH_CFG"
+    update_setting "network_cmd_port" '"55355"' "$RETROARCH_CFG"
+    update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
+    update_setting "cheevos_hardcore_mode_enable" '"true"' "$RETROARCH_CFG"
+    update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
+
+    echo -e "${green}[SUCCESS]${nc} RetroArch configured for DOFLinx"
+else
+    echo -e "${yellow}[WARNING]${nc} RetroArch config not found at $RETROARCH_CFG"
+    echo -e "${yellow}[INFO]${nc} You may need to manually add the following settings to your retroarchcustom.cfg:"
+    echo -e "    network_cmd_enable = \"true\""
+    echo -e "    network_cmd_port = \"55355\""
+    echo -e "    cheevos_enable = \"true\""
+    echo -e "    cheevos_hardcore_mode_enable = \"true\""
+    echo -e "    cheevos_start_active = \"true\""
 fi
 
 # Update DOFLinx .MAME files via pixelweb
