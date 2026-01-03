@@ -268,13 +268,13 @@ else    #S99MyScript.py is already there so let's check if old java pixelweb is 
       echo "Commenting out old java pixelweb version"
       sed -e '/java/ s/^#*/#/' -i S99MyScript.py #comment out the line
       echo "Adding pixelweb to startup"
-      echo -e "cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &\n" >> ${INSTALLPATH}S99MyScript.py #we'll just need to assume startup flag is needed now even though  may not have been in the past
+      echo -e "    sleep 5\n    cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &\n" >> ${INSTALLPATH}S99MyScript.py #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
   if cat ${INSTALLPATH}S99MyScript.py | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
       echo "Pixelcade already added to S99MyScript.py, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing S99MyScript.py ..."  #if we got here, then the user already has a S99MyScript.py but there is not pixelcade in there yet
-      sed -i "/^"before")/a cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before" , note 7070 is needed as something else already using 8080
+      sed -i "/^"before")/a\    sleep 5\n    cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &" ${INSTALLPATH}S99MyScript.py  #insert this line after "before" , note 7070 is needed as something else already using 8080
   fi
 fi
 
