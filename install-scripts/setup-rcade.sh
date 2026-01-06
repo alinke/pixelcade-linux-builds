@@ -6,7 +6,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=7
+version=8
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -278,56 +278,111 @@ if [[ ! -d "${INSTALLPATH}doflinx" ]]; then
    mkdir -p ${INSTALLPATH}doflinx
 fi
 
-if [[ ! -d "${INSTALLPATH}doflinx/temp" ]]; then
-   mkdir -p ${INSTALLPATH}doflinx/temp
-fi
-
 echo -e "${cyan}[INFO]${nc} Installing DOFLinx Software..."
 
-cd ${INSTALLPATH}doflinx/temp
+# Create config directory
+if [[ ! -d "${INSTALLPATH}doflinx/config" ]]; then
+   mkdir -p ${INSTALLPATH}doflinx/config
+fi
 
-# Download Base DOFLinx
-doflinx_url=https://github.com/DOFLinx/DOFLinx-for-Linux/releases/download/doflinx/doflinx.zip
-echo -e "${green}[INFO]${nc} Downloading DOFLinx..."
-wget -O "${INSTALLPATH}doflinx/temp/doflinx.zip" "$doflinx_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx"
-   install_successful=false
+# Determine folders based on architecture
+# Repository: https://github.com/DOFLinx/CurrentExecutable
+# Beta folder only contains DOFLinx and DOFLinx.pdb - all other files come from stable
+if [[ $machine_arch == "arm64" ]]; then
+    stable_folder="Linux_arm64"
+    beta_folder="Linux_arm64_beta"
+elif [[ $machine_arch == "x64" ]]; then
+    stable_folder="Linux_x64"
+    beta_folder="Linux_x64_beta"
 else
-   echo -e "${green}[INFO]${nc} Extracting DOFLinx (overwriting existing files)..."
-   unzip -o doflinx.zip -d ${INSTALLPATH}doflinx
+    echo -e "${red}[ERROR]${nc} Unsupported architecture: $machine_arch"
+    install_successful=false
+fi
 
-   if [ $? -ne 0 ]; then
-      echo -e "${red}[ERROR]${nc} Failed to unzip DOFLinx"
-      install_successful=false
-   else
-      echo -e "${green}[INFO]${nc} Copying architecture-specific files (${machine_arch})..."
-      cp -rf ${INSTALLPATH}doflinx/${machine_arch}/* ${INSTALLPATH}doflinx/
+# Base URLs for downloads
+stable_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${stable_folder}"
+beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
 
-      if [ $? -ne 0 ]; then
-         echo -e "${red}[ERROR]${nc} Failed to copy DOFLinx files"
-         install_successful=false
-      fi
-   fi
+# Beta folder only contains DOFLinx and DOFLinx.pdb
+# All other supporting files come from stable folder
+# If beta mode is requested but beta folder doesn't exist, fall back to stable
+using_beta=false
+if [[ "$beta" == "true" ]]; then
+    echo -e "${yellow}[BETA]${nc} Checking for beta version..."
+    # Try to download from beta folder first
+    wget -q --spider "${beta_url}/DOFLinx"
+    if [ $? -eq 0 ]; then
+        main_url="$beta_url"
+        using_beta=true
+        echo -e "${green}[INFO]${nc} Beta version found - downloading DOFLinx from ${beta_folder}..."
+    else
+        main_url="$stable_url"
+        echo -e "${yellow}[INFO]${nc} Beta version not available - falling back to stable ${stable_folder}..."
+    fi
+else
+    main_url="$stable_url"
+    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
+fi
+
+# Download main DOFLinx executable (from beta or stable based on availability)
+echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
+wget -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
+if [ $? -ne 0 ]; then
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
+   install_successful=false
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
+wget -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
+fi
+
+# Download supporting files from stable folder (these don't exist in beta folder)
+echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
+wget -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
+if [ $? -ne 0 ]; then
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
+   install_successful=false
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
+wget -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading keycodes..."
+wget -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
+wget -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
+wget -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
+fi
+
+echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
+wget -O "${INSTALLPATH}doflinx/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
 fi
 
 # Set execute permissions
 echo -e "${green}[INFO]${nc} Setting permissions..."
 chmod a+x ${INSTALLPATH}doflinx/DOFLinx
 chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
-
-# Update DOFLinx.ini with correct paths for R-Cade
-echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for R-Cade..."
-if [[ -f "${INSTALLPATH}doflinx/config/DOFLinx.ini" ]]; then
-    sed -i -e "s|/home/arcade/|${INSTALLPATH}|g" ${INSTALLPATH}doflinx/config/DOFLinx.ini
-    if [ $? -ne 0 ]; then
-       echo -e "${red}[ERROR]${nc} Failed to edit DOFLinx.ini"
-       install_successful=false
-    fi
-else
-    echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found"
-fi
+chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null
 
 # Create DOFLinx startup script only if it doesn't exist
 if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
@@ -342,14 +397,29 @@ else
     echo -e "${green}[INFO]${nc} DOFLinx startup script already exists, skipping creation..."
 fi
 
-# Download and replace DOFLinx.ini with an R-Cade specific version
-echo -e "${green}[INFO]${nc} Downloading default DOFLinx.ini configuration for R-Cade..."
-doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/DOFLinx.ini"
+# Download configuration files from pixelcade-linux-builds
+echo -e "${green}[INFO]${nc} Downloading configuration files..."
 
-if wget -O "${INSTALLPATH}doflinx/config/DOFLinx.ini" "$doflinx_ini_url" 2>/dev/null; then
-    echo -e "${green}[SUCCESS]${nc} DOFLinx.ini configured for R-Cade"
+# Download DOFLinx.ini
+doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/DOFLinx.ini"
+echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
+wget -O "${INSTALLPATH}doflinx/config/DOFLinx.ini" "$doflinx_ini_url"
+
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
 else
-    echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini - you may need to configure it manually"
+   echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+fi
+
+# Download colours.ini
+colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/colours.ini"
+echo -e "${green}[INFO]${nc} Downloading colours.ini..."
+wget -O "${INSTALLPATH}doflinx/config/colours.ini" "$colours_ini_url"
+
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+else
+   echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
 fi
 
 # Update Pixelcade artwork and DOFLinx .MAME files
@@ -397,11 +467,6 @@ if [[ -f "$RETROARCH_CFG" ]]; then
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
 fi
-
-# Cleanup
-echo -e "${green}[INFO]${nc} Cleaning up temporary files..."
-cd ${INSTALLPATH}
-rm -rf ${INSTALLPATH}doflinx/temp
 
 if [[ $install_successful == "true" ]]; then
    echo -e ""
