@@ -6,7 +6,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=8
+version=9
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -400,26 +400,42 @@ fi
 # Download configuration files from pixelcade-linux-builds
 echo -e "${green}[INFO]${nc} Downloading configuration files..."
 
-# Download DOFLinx.ini
+# Download DOFLinx.ini - but only if it doesn't already exist (preserve user customizations)
 doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/DOFLinx.ini"
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
-wget -O "${INSTALLPATH}doflinx/config/DOFLinx.ini" "$doflinx_ini_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+if [[ -f "${INSTALLPATH}doflinx/config/DOFLinx.ini" ]]; then
+   echo -e ""
+   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+   echo -e "${yellow}[NOTICE]${nc} Existing DOFLinx.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
+   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${INSTALLPATH}doflinx/config/DOFLinx.ini${nc}"
+   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
+   echo -e "         ${cyan}${doflinx_ini_url}${nc}"
+   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+   echo -e ""
 else
-   echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+   echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
+   wget -O "${INSTALLPATH}doflinx/config/DOFLinx.ini" "$doflinx_ini_url"
+   if [ $? -ne 0 ]; then
+      echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+   else
+      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+   fi
 fi
 
-# Download colours.ini
+# Download colours.ini - but only if it doesn't already exist (preserve user customizations)
 colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/colours.ini"
-echo -e "${green}[INFO]${nc} Downloading colours.ini..."
-wget -O "${INSTALLPATH}doflinx/config/colours.ini" "$colours_ini_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+if [[ -f "${INSTALLPATH}doflinx/config/colours.ini" ]]; then
+   echo -e "${yellow}[NOTICE]${nc} Existing colours.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
+   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${INSTALLPATH}doflinx/config/colours.ini${nc}"
+   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
+   echo -e "         ${cyan}${colours_ini_url}${nc}"
 else
-   echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
+   echo -e "${green}[INFO]${nc} Downloading colours.ini..."
+   wget -O "${INSTALLPATH}doflinx/config/colours.ini" "$colours_ini_url"
+   if [ $? -ne 0 ]; then
+      echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+   else
+      echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
+   fi
 fi
 
 # Update Pixelcade artwork and DOFLinx .MAME files
@@ -484,6 +500,11 @@ if [[ $install_successful == "true" ]]; then
    echo -e "  Executable: ${INSTALLPATH}doflinx/DOFLinx"
    echo -e "  Config: ${INSTALLPATH}doflinx/config/DOFLinx.ini"
    echo -e "  Startup Script: ${INSTALLPATH}doflinx/doflinx.sh"
+   if [[ "$using_beta" == "true" ]]; then
+       echo -e "  DOFLinx Version: ${yellow}BETA${nc} (${beta_folder})"
+   else
+       echo -e "  DOFLinx Version: Stable (${stable_folder})"
+   fi
    echo -e ""
    echo -e "${green}[INFO]${nc} Architecture: $machine_arch"
    echo -e "${green}[INFO]${nc} DOFLinx will be started automatically when Pixelcade is enabled"
