@@ -270,26 +270,42 @@ chmod a+x ${DOFLINX_PATH}/keycodes 2>/dev/null
 # Download configuration files from pixelcade-linux-builds
 echo -e "${green}[INFO]${nc} Downloading configuration files..."
 
-# Download DOFLinx.ini
+# Download DOFLinx.ini - but only if it doesn't already exist (preserve user customizations)
 doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/DOFLinx.ini"
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
-wget -O "${DOFLINX_PATH}/config/DOFLinx.ini" "$doflinx_ini_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+if [[ -f "${DOFLINX_PATH}/config/DOFLinx.ini" ]]; then
+   echo -e ""
+   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+   echo -e "${yellow}[NOTICE]${nc} Existing DOFLinx.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
+   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${DOFLINX_PATH}/config/DOFLinx.ini${nc}"
+   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
+   echo -e "         ${cyan}${doflinx_ini_url}${nc}"
+   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+   echo -e ""
 else
-   echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+   echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
+   wget -O "${DOFLINX_PATH}/config/DOFLinx.ini" "$doflinx_ini_url"
+   if [ $? -ne 0 ]; then
+      echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+   else
+      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+   fi
 fi
 
-# Download colours.ini
+# Download colours.ini - but only if it doesn't already exist (preserve user customizations)
 colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/colours.ini"
-echo -e "${green}[INFO]${nc} Downloading colours.ini..."
-wget -O "${DOFLINX_PATH}/config/colours.ini" "$colours_ini_url"
-
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+if [[ -f "${DOFLINX_PATH}/config/colours.ini" ]]; then
+   echo -e "${yellow}[NOTICE]${nc} Existing colours.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
+   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${DOFLINX_PATH}/config/colours.ini${nc}"
+   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
+   echo -e "         ${cyan}${colours_ini_url}${nc}"
 else
-   echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
+   echo -e "${green}[INFO]${nc} Downloading colours.ini..."
+   wget -O "${DOFLINX_PATH}/config/colours.ini" "$colours_ini_url"
+   if [ $? -ne 0 ]; then
+      echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+   else
+      echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
+   fi
 fi
 
 # Create DOFLinx startup script
