@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.3.3",
+    "version": "7.3.4",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -77,7 +77,8 @@
       "7.3.3  Made Pixelcade Pulse zone setup more mobile friendly so you can do from your phone while setting up and testing zones, added direction test button too",
       "7.3.3  Added auto backup of pixelcade.ini in the event of corruption, if correctupon is detected upon startup it will restore from backup",
       "7.3.3  Fixed bug where some settings were not gettings saved intermittently",
-      "7.3.3  Fixed bug where clock settings were not being applied in Pixelcade Attract Mode"
+      "7.3.3  Fixed bug where clock settings were not being applied in Pixelcade Attract Mode",
+      "7.3.4  Finds a connected Pixelcade USB that is connected over USB on Linux now"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
