@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=10
+version=11
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
