@@ -2,17 +2,36 @@
 # DOFLinx installer for RecalBox
 # Supports both arm64 and x64 architectures
 # Note: Pixelcade (pixelweb) must be installed and running before DOFLinx
-# Usage: ./setup-recalbox-doflinx.sh [beta]
+#
+# Usage: ./setup-recalbox-doflinx.sh [options]
+#
+# Options:
+#   beta, --beta, -beta    Install beta version of DOFLinx
+#   force, --force, -force Overwrite existing DOFLinx.ini and colours.ini config files
+#                          (by default, existing config files are preserved)
 
-version=10
+version=11
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
-# Check for beta flag
+# Parse command line arguments
 beta=false
-if [[ "$1" == "beta" ]]; then
-    beta=true
-fi
+force=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        beta|--beta|-beta)
+            beta=true
+            shift
+            ;;
+        force|--force|-force)
+            force=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
 
 NEWLINE=$'\n'
 cyan='\033[0;36m'
@@ -270,41 +289,103 @@ chmod a+x ${DOFLINX_PATH}/keycodes 2>/dev/null
 # Download configuration files from pixelcade-linux-builds
 echo -e "${green}[INFO]${nc} Downloading configuration files..."
 
-# Download DOFLinx.ini - but only if it doesn't already exist (preserve user customizations)
+# Smart update for DOFLinx.ini
+# - If user never modified their config, update to latest version automatically
+# - If user has customizations, preserve them and save new version as .latest
+# - --force flag overrides and always overwrites
 doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/DOFLinx.ini"
-if [[ -f "${DOFLINX_PATH}/config/DOFLinx.ini" ]]; then
-   echo -e ""
-   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-   echo -e "${yellow}[NOTICE]${nc} Existing DOFLinx.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
-   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${DOFLINX_PATH}/config/DOFLinx.ini${nc}"
-   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
-   echo -e "         ${cyan}${doflinx_ini_url}${nc}"
-   echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-   echo -e ""
+config_dir="${DOFLINX_PATH}/config"
+doflinx_ini="${config_dir}/DOFLinx.ini"
+doflinx_ini_hash="${config_dir}/.DOFLinx.ini.original.md5"
+doflinx_ini_tmp="${config_dir}/DOFLinx.ini.tmp"
+
+echo -e "${green}[INFO]${nc} Checking DOFLinx.ini..."
+wget -q -O "$doflinx_ini_tmp" "$doflinx_ini_url"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+   rm -f "$doflinx_ini_tmp"
 else
-   echo -e "${green}[INFO]${nc} Downloading DOFLinx.ini..."
-   wget -O "${DOFLINX_PATH}/config/DOFLinx.ini" "$doflinx_ini_url"
-   if [ $? -ne 0 ]; then
-      echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+   new_hash=$(md5sum "$doflinx_ini_tmp" 2>/dev/null | cut -d' ' -f1)
+   current_hash=$(md5sum "$doflinx_ini" 2>/dev/null | cut -d' ' -f1)
+   original_hash=$(cat "$doflinx_ini_hash" 2>/dev/null)
+
+   if [[ "$force" == "true" ]]; then
+      # Force flag - always overwrite
+      echo -e "${yellow}[FORCE]${nc} Overwriting DOFLinx.ini..."
+      mv "$doflinx_ini_tmp" "$doflinx_ini"
+      echo "$new_hash" > "$doflinx_ini_hash"
+      rm -f "${config_dir}/DOFLinx.ini.latest"  # Clean up any old .latest file
+      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini updated"
+   elif [[ ! -f "$doflinx_ini" ]]; then
+      # Fresh install - no existing file
+      echo -e "${green}[INFO]${nc} Installing DOFLinx.ini..."
+      mv "$doflinx_ini_tmp" "$doflinx_ini"
+      echo "$new_hash" > "$doflinx_ini_hash"
+      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini installed"
+   elif [[ "$new_hash" == "$current_hash" ]]; then
+      # Already up to date
+      echo -e "${green}[INFO]${nc} DOFLinx.ini is already up to date"
+      rm -f "$doflinx_ini_tmp"
+   elif [[ "$current_hash" == "$original_hash" ]]; then
+      # User never modified - safe to update
+      echo -e "${green}[INFO]${nc} Updating DOFLinx.ini to latest version..."
+      mv "$doflinx_ini_tmp" "$doflinx_ini"
+      echo "$new_hash" > "$doflinx_ini_hash"
+      rm -f "${config_dir}/DOFLinx.ini.latest"  # Clean up any old .latest file
+      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini updated"
    else
-      echo -e "${green}[SUCCESS]${nc} DOFLinx.ini downloaded"
+      # User has customizations - preserve them
+      echo -e ""
+      echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+      echo -e "${yellow}[NOTICE]${nc} You have customized DOFLinx.ini - ${green}preserving your changes${nc}"
+      echo -e "${yellow}[NOTICE]${nc} New version saved as: ${cyan}${config_dir}/DOFLinx.ini.latest${nc}"
+      echo -e "${yellow}[NOTICE]${nc} Compare and merge any new settings you need"
+      echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+      echo -e ""
+      mv "$doflinx_ini_tmp" "${config_dir}/DOFLinx.ini.latest"
    fi
 fi
 
-# Download colours.ini - but only if it doesn't already exist (preserve user customizations)
+# Smart update for colours.ini (same logic as DOFLinx.ini)
 colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/colours.ini"
-if [[ -f "${DOFLINX_PATH}/config/colours.ini" ]]; then
-   echo -e "${yellow}[NOTICE]${nc} Existing colours.ini found - ${green}NOT overwriting${nc} to preserve your customizations"
-   echo -e "${yellow}[NOTICE]${nc} Your config file: ${cyan}${DOFLINX_PATH}/config/colours.ini${nc}"
-   echo -e "${yellow}[NOTICE]${nc} To get the latest default config, manually download from:"
-   echo -e "         ${cyan}${colours_ini_url}${nc}"
+colours_ini="${config_dir}/colours.ini"
+colours_ini_hash="${config_dir}/.colours.ini.original.md5"
+colours_ini_tmp="${config_dir}/colours.ini.tmp"
+
+echo -e "${green}[INFO]${nc} Checking colours.ini..."
+wget -q -O "$colours_ini_tmp" "$colours_ini_url"
+if [ $? -ne 0 ]; then
+   echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+   rm -f "$colours_ini_tmp"
 else
-   echo -e "${green}[INFO]${nc} Downloading colours.ini..."
-   wget -O "${DOFLINX_PATH}/config/colours.ini" "$colours_ini_url"
-   if [ $? -ne 0 ]; then
-      echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+   new_hash=$(md5sum "$colours_ini_tmp" 2>/dev/null | cut -d' ' -f1)
+   current_hash=$(md5sum "$colours_ini" 2>/dev/null | cut -d' ' -f1)
+   original_hash=$(cat "$colours_ini_hash" 2>/dev/null)
+
+   if [[ "$force" == "true" ]]; then
+      echo -e "${yellow}[FORCE]${nc} Overwriting colours.ini..."
+      mv "$colours_ini_tmp" "$colours_ini"
+      echo "$new_hash" > "$colours_ini_hash"
+      rm -f "${config_dir}/colours.ini.latest"
+      echo -e "${green}[SUCCESS]${nc} colours.ini updated"
+   elif [[ ! -f "$colours_ini" ]]; then
+      echo -e "${green}[INFO]${nc} Installing colours.ini..."
+      mv "$colours_ini_tmp" "$colours_ini"
+      echo "$new_hash" > "$colours_ini_hash"
+      echo -e "${green}[SUCCESS]${nc} colours.ini installed"
+   elif [[ "$new_hash" == "$current_hash" ]]; then
+      echo -e "${green}[INFO]${nc} colours.ini is already up to date"
+      rm -f "$colours_ini_tmp"
+   elif [[ "$current_hash" == "$original_hash" ]]; then
+      echo -e "${green}[INFO]${nc} Updating colours.ini to latest version..."
+      mv "$colours_ini_tmp" "$colours_ini"
+      echo "$new_hash" > "$colours_ini_hash"
+      rm -f "${config_dir}/colours.ini.latest"
+      echo -e "${green}[SUCCESS]${nc} colours.ini updated"
    else
-      echo -e "${green}[SUCCESS]${nc} colours.ini downloaded"
+      echo -e "${yellow}[NOTICE]${nc} You have customized colours.ini - ${green}preserving your changes${nc}"
+      echo -e "${yellow}[NOTICE]${nc} New version saved as: ${cyan}${config_dir}/colours.ini.latest${nc}"
+      mv "$colours_ini_tmp" "${config_dir}/colours.ini.latest"
    fi
 fi
 
