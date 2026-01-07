@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=11
+version=12
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -71,16 +71,28 @@ fi
 # If this is an existing installation then DOFLinx could already be running
 if test -f ${INSTALLPATH}doflinx/DOFLinx; then
    echo -e "${yellow}[INFO]${nc} Existing DOFLinx installation found - will overwrite and reinstall"
-   if pgrep -x "DOFLinx" > /dev/null; then
-     echo -e "${green}[INFO]${nc} Stopping running DOFLinx process"
-     ${INSTALLPATH}doflinx/DOFLinxMsg QUIT 2>/dev/null
-     sleep 2  # Give it time to stop
+   # Use pidof instead of pgrep (more reliable on R-Cade)
+   doflinx_pids=$(pidof DOFLinx 2>/dev/null)
+   if [[ -n "$doflinx_pids" ]]; then
+     echo -e "${green}[INFO]${nc} Stopping running DOFLinx process(es): $doflinx_pids"
+     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 ${INSTALLPATH}doflinx/DOFLinxMsg QUIT 2>/dev/null
+     sleep 2  # Give it time to stop gracefully
      # Force kill if still running
-     if pgrep -x "DOFLinx" > /dev/null; then
+     doflinx_pids=$(pidof DOFLinx 2>/dev/null)
+     if [[ -n "$doflinx_pids" ]]; then
          echo -e "${yellow}[INFO]${nc} DOFLinx still running - force killing..."
-         killall -9 DOFLinx 2>/dev/null
+         kill -9 $doflinx_pids 2>/dev/null
          sleep 1  # Give system time to release the file
      fi
+     # Final check
+     doflinx_pids=$(pidof DOFLinx 2>/dev/null)
+     if [[ -n "$doflinx_pids" ]]; then
+         echo -e "${red}[WARNING]${nc} Could not stop DOFLinx (PIDs: $doflinx_pids) - installation may fail"
+     else
+         echo -e "${green}[INFO]${nc} DOFLinx stopped successfully"
+     fi
+   else
+     echo -e "${green}[INFO]${nc} DOFLinx is not currently running"
    fi
    echo -e "${green}[INFO]${nc} Proceeding with overwrite installation..."
    reinstall=true
