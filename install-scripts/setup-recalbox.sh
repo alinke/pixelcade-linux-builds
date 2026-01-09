@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=16  #increment this as the script is updated
+version=17  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -234,12 +234,19 @@ fi
 #pixelcade scripts for emulationstation events
 #copy over the custom scripts
 echo "${yellow}Installing Pixelcade EmulationStation Scripts...${white}"
-wget -O ${ESSCRIPTS}systembrowse[systembrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/systembrowse%5Bsystembrowsing%5D.sh
-wget -O ${ESSCRIPTS}gamescroll[gamelistbrowsing].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bgamelistbrowsing%5D.sh
-wget -O ${ESSCRIPTS}gamelaunch[rungame].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamelaunch%5Brungame%5D.sh
-wget -O ${ESSCRIPTS}esquit[start].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esquit%5Bstart%5D.sh
-wget -O ${ESSCRIPTS}gamescroll[startgameclip].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bstartgameclip%5D.sh
-wget -O ${ESSCRIPTS}gamescroll[rundemo].sh https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Brundemo%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[configurationchanged].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bconfigurationchanged%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[reboot].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Breboot%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[scrapstart].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bscrapstart%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[scrapstop].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bscrapstop%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[shutdown].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bshutdown%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[sleep].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bsleep%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[stop].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bstop%5D.sh
+wget -O "${ESSCRIPTS}Pixelcade_Recalbox[wakeup].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/Pixelcade_Recalbox%5Bwakeup%5D.sh
+wget -O "${ESSCRIPTS}esquit[stop,shutdown,reboot].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/esquit%5Bstop%2Cshutdown%2Creboot%5D.sh
+wget -O "${ESSCRIPTS}gamelaunch[rungame].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamelaunch%5Brungame%5D.sh
+wget -O "${ESSCRIPTS}gamescroll[gamelistbrowsing,rundemo,startgameclip].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/gamescroll%5Bgamelistbrowsing%2Crundemo%2Cstartgameclip%5D.sh
+wget -O "${ESSCRIPTS}rcheevos_watcher[rungame,endgame].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/rcheevos_watcher%5Brungame%2Cendgame%5D.sh
+wget -O "${ESSCRIPTS}systembrowse[systembrowsing].sh" https://raw.githubusercontent.com/alinke/pixelcade-linux/main/recalbox/scripts/systembrowse%5Bsystembrowsing%5D.sh
 
 find ${ESSCRIPTS} -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble but this may not actually be necessary with RecalBox ?
 #hi2txt for high score scrolling
