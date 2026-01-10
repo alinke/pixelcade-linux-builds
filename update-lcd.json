@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
   "latestArtworkVersion": 18,
-  "betaFirmwareVersion": "7.3.3",
+  "betaFirmwareVersion": "7.3.7",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -79,7 +79,8 @@
     "7.3.2  Faster load time for news feed",
     "7.3.2  Added widget that simply shows the marquee of the current/last selected game",
     "7.3.3. Fixed crash when there is an invalid news feed, added buffer spacing for the first news scroll",
-    "7.3.3. Last game widget will display now when Attract mode is in no interrupt mode"
+    "7.3.3  Last game widget will display now when Attract mode is in no interrupt mode",
+    "7.3.7  Weather widget UI and load time improvements"
 
   ],
   "minimumRequiredVersion": "5.0.0"
