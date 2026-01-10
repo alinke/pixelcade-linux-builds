@@ -7,7 +7,7 @@
     ]
   },
   "beta": {
-    "version": "7.3.6",
+    "version": "7.3.7",
     "artworkUpdate": true,
     "releaseNotes": [
       "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -85,7 +85,8 @@
       "7.3.5  Added /text params for no scrolling with 2 lines, 3 lines, or 4 lines along with a blinking option and infinite loop for text scrolling https://pixelcade.org/developers/#text-display-scrolling",
       "7.3.6  Much more user friendly setup for Pixelcase Pulse zones",
       "7.3.6  Bug fix in attract mode where gifs were not playing correclty resulting in some blank screens",
-      "7.3.6  Weather widget will load faster"
+      "7.3.6  Weather widget will load faster",
+      "7.3.7  Weather widget units display fix and settings preserved during attract mode"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
