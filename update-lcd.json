@@ -81,10 +81,10 @@
     "7.3.3. Fixed crash when there is an invalid news feed, added buffer spacing for the first news scroll",
     "7.3.3  Last game widget will display now when Attract mode is in no interrupt mode",
     "7.3.7  Weather widget UI and load time improvements",
-    "7.4.0  Artwork update with 1,500 new marquees",
-    "7.4.0  Added incremental artwork updates so only new or changed artwork is downloaded vs. the whole repo every time",
-    "7.4.0  Fixed bug where weather in Attract Mode wasn't using the settings",
-    "7.4.0  Fixed AI marquee widget"
+    "7.3.8  Artwork update with 1,500+ new marquees",
+    "7.3.8  Added incremental artwork updates so only new or changed artwork is downloaded vs. the whole repo every time",
+    "7.3.8  Fixed bug where weather in Attract Mode wasn't using the settings",
+    "7.3.8  Fixed AI marquee widget"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
