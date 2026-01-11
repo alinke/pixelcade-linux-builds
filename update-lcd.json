@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "6.3.0",
-  "latestArtworkVersion": 20,
-  "betaFirmwareVersion": "7.3.7",
+  "latestArtworkVersion": 22,
+  "betaFirmwareVersion": "7.3.8",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -45,8 +45,8 @@
     "7.2.0: Fixed new USB formatting issue when hot swapping a new USB drive without a reboot",
     "7.2.0: Added clear button to log",
     "7.2.0: If no connectivity, show the QR code for the mobile apps to setup WiFi on startup",
-    "7.2.0: Added eject button for safe USB eject",  
-    "7.2.1: Added attract mode option to playlist that if on will prevent interruption during arcade scrolling and game launches", 
+    "7.2.0: Added eject button for safe USB eject",
+    "7.2.1: Added attract mode option to playlist that if on will prevent interruption during arcade scrolling and game launches",
     "7.2.1: Added drag icons to playlist items",
     "7.2.2: Added plumbing for arcade front end Attract Mode/screen saver integration",
     "7.2.3: Added Youtube channel stats widget",
@@ -69,7 +69,7 @@
     "7.2.8: Custom artwork upload works now from the Pixelcade Android app (requires versions 2.5+ of the app)",
     "7.2.8  Fixed bug with Playlist on dual Pixelcade LED and LCD setups where the LCD playlist was getting mutliple widget calls at the same time",
     "7.3.0  Add text param to /arcade handler, will scroll the game title or alt text if the dot matrix display is connected",
-    "7.3.0  Added ?nomini (don’t send metadata to the pulse displays), ?clearmini (clear pulse dislays), and ?minilcdonly (show only on miniLCD only, not dot matrix or 7segment) options to /arcade handler",
+    "7.3.0  Added ?nomini (don\u2019t send metadata to the pulse displays), ?clearmini (clear pulse dislays), and ?minilcdonly (show only on miniLCD only, not dot matrix or 7segment) options to /arcade handler",
     "7.3.1  New Widgets: Plex Now Playing, Yahoo Fantasy, Daily Horoscope, Commute Traffic (using google maps data source), Netflix Top 10, World Clock",
     "7.3.1  Added missing 1player and 2player marquees for LCD Only DOFLinx in game effects users",
     "7.3.1  Fixed bug Google Photos widget not always loading photos",
@@ -80,11 +80,11 @@
     "7.3.2  Added widget that simply shows the marquee of the current/last selected game",
     "7.3.3. Fixed crash when there is an invalid news feed, added buffer spacing for the first news scroll",
     "7.3.3  Last game widget will display now when Attract mode is in no interrupt mode",
-    "7.3.7  Weather widget UI and load time improvements"
-
+    "7.3.7  Weather widget UI and load time improvements",
+    "7.4.0  Artwork update with 1,500 new marquees",
+    "7.4.0  Added incremental artwork updates so only new or changed artwork is downloaded vs. the whole repo every time",
+    "7.4.0  Fixed bug where weather in Attract Mode wasn't using the settings",
+    "7.4.0  Fixed AI marquee widget"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
-
-
-
