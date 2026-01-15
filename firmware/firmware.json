@@ -16,16 +16,9 @@
   },
   "beta": {
     "version": 23,
-    "subversion": 6,
+    "subversion": 7,
     "releaseNotes": [
-      "All Pulse effects now have both a loops and duration param that will clear when done",
-      "Added color params to all 8x8 matrix explosions",
-      "Fixed intermittent crash with clear all zones button in Companion",
-      "Added flip support for Pulse matrix devices in user installed them upside down",
-      "All 8x32 matrix effects will now scale on a 8x48 matrix",
-      "Added graphic equalizer effects fo Pulse devices for Spotify and Last.fm widgets",
-      "Changed to improved, single pixel font for Pixelcade Pulse dot matrix display",
-      "Smooth scrolling for the Pulse dot matrix display"
+      "Added zone based flood commands"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
