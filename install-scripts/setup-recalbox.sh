@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=18  #increment this as the script is updated
+version=19  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -313,7 +313,10 @@ chmod +x ${INSTALLPATH}S99MyScript.py
 cd ${INSTALLPATH}pixelcade
 
 #now let's run pixelweb and let the user know things are working
-cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &
+# If DOFLinx is being installed, delay starting pixelweb until after DOFLinx setup completes
+if [[ "$install_doflinx" != "true" ]]; then
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &
+fi
 
 echo "Cleaning Up..."
 rm ${SCRIPTPATH}/setup-recalbox.sh
@@ -358,6 +361,10 @@ if [[ "$install_doflinx" == "true" ]]; then
     echo ""
     echo "[INFO] Installing DOFLinx for in-game effects..."
     cd /recalbox/share/bootvideos && curl -kLO -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-recalbox-doflinx.sh && chmod +x setup-recalbox-doflinx.sh && ./setup-recalbox-doflinx.sh beta
+    # Now start pixelweb after DOFLinx setup is complete
+    echo ""
+    echo "[INFO] Starting Pixelweb..."
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &
 fi
 
 while true; do
