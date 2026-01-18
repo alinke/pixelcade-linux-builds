@@ -1,7 +1,7 @@
 {
   "production": {
     "version": 23,
-    "subversion": 6,
+    "subversion": 7,
     "releaseNotes": [
       "Fixed intermittent bug when deleting zones",
       "All Pulse effects now have both a loops and duration param that will clear when done",
@@ -11,15 +11,14 @@
       "All 8x32 matrix effects will now scale on a 8x48 matrix",
       "Added graphic equalizer effects fo Pulse devices for Spotify and Last.fm widgets",
       "Changed to improved, single pixel font for Pixelcade Pulse dot matrix display",
-      "Smooth scrolling for the Pulse dot matrix display"
+      "Smooth scrolling for the Pulse dot matrix display",
+      "Added zone based flood commands"
     ]
   },
   "beta": {
-    "version": 23,
-    "subversion": 7,
-    "releaseNotes": [
-      "Added zone based flood commands"
-    ]
+    "version": 0,
+    "subversion": 0,
+    "releaseNotes": []
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
   "baseUrls": {
