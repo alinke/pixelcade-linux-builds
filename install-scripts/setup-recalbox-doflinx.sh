@@ -73,7 +73,6 @@ echo -e "${yellow}Important:${nc}"
 echo -e "  - Pixelweb must be running before DOFLinx starts"
 echo -e "  - This script will configure DOFLinx to start after pixelweb with a delay"
 echo -e ""
-pause
 
 # Paths for RecalBox
 # DOFLinx installs to /recalbox/share/bootvideos/doflinx (writable, persistent, allows exec)
