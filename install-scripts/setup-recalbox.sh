@@ -59,6 +59,7 @@ echo ""
 install_doflinx=false
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "[OPTIONAL] Enable in-game effects powered by DOFLinx and RetroAchievements"
+echo "[FACULTATIF] Activer les effets en jeu propulsés par DOFLinx et RetroAchievements"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 while true; do
     read -p "Enable In-Game Effects with DOFLinx and RetroAchievements? (y/n) " yn
