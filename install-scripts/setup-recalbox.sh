@@ -66,11 +66,11 @@ while true; do
     case $yn in
         [Yy]* )
             install_doflinx=true
-            echo "[INFO] DOFLinx will be installed after Pixelcade setup completes"
+            echo "[INFO] In game effects powered by DOFLinx and RetroAchievements will be installed after Pixelcade setup completes"
             break
             ;;
         [Nn]* )
-            echo "[INFO] Skipping DOFLinx installation"
+            echo "[INFO] Skipping In game effects installation"
             break
             ;;
         * ) echo "Please answer yes or no.";;
