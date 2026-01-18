@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=17  #increment this as the script is updated
+version=18  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -53,6 +53,30 @@ echo "Plese ensure you have at least 800 MB of free disk space in /recalbox/shar
 echo "You'll need to have Pixelcade plugged into a free USB port on your RecalBox device"
 echo "Ensure the toggle switch on the Pixelcade board is pointing towards USB and not BT"
 echo "Grab a coffee or tea as this installer will take around 20-30 minutes depending on your Internet connection speed"
+echo ""
+
+# Ask about DOFLinx installation for in-game effects upfront
+install_doflinx=false
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "[OPTIONAL] DOFLinx enables in-game LED effects with RetroAchievements"
+echo "           Requires Pixelcade Pulse hardware for LED effects"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+while true; do
+    read -p "Enable In-Game Effects with DOFLinx and RetroAchievements? (y/n) " yn
+    case $yn in
+        [Yy]* )
+            install_doflinx=true
+            echo "[INFO] DOFLinx will be installed after Pixelcade setup completes"
+            break
+            ;;
+        [Nn]* )
+            echo "[INFO] Skipping DOFLinx installation"
+            break
+            ;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+echo ""
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
@@ -329,27 +353,12 @@ echo "[INFO] Remounting filesystem as read-only..."
 mount -o remount,ro /
 echo "[SUCCESS] Filesystem remounted as read-only"
 
-# Ask about DOFLinx installation for in-game effects
-echo ""
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "[OPTIONAL] DOFLinx enables in-game LED effects with RetroAchievements"
-echo "           Requires Pixelcade Pulse hardware for LED effects"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-while true; do
-    read -p "Enable In-Game Effects with DOFLinx and RetroAchievements? (y/n) " yn
-    case $yn in
-        [Yy]* )
-            echo "[INFO] Installing DOFLinx..."
-            cd /recalbox/share/bootvideos && curl -kLO -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-recalbox-doflinx.sh && chmod +x setup-recalbox-doflinx.sh && ./setup-recalbox-doflinx.sh beta
-            break
-            ;;
-        [Nn]* )
-            echo "[INFO] Skipping DOFLinx installation"
-            break
-            ;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+# Install DOFLinx if user opted in at the beginning
+if [[ "$install_doflinx" == "true" ]]; then
+    echo ""
+    echo "[INFO] Installing DOFLinx for in-game effects..."
+    cd /recalbox/share/bootvideos && curl -kLO -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-recalbox-doflinx.sh && chmod +x setup-recalbox-doflinx.sh && ./setup-recalbox-doflinx.sh beta
+fi
 
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
