@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.3.8",
+    "version": "7.4.0",
     "artworkUpdate": false,
     "releaseNotes": [
      "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -79,15 +79,15 @@
       "7.3.6  Much more user friendly setup for Pixelcase Pulse zones",
       "7.3.6  Bug fix in attract mode where gifs were not playing correclty resulting in some blank screens",
       "7.3.6  Weather widget will load faster",
-      "7.3.8  Weather widget units display fix and settings preserved during attract mode"
+      "7.3.8  Weather widget units display fix and settings preserved during attract mode",
+      "7.3.9  Added zone flood commands",
+      "7.4.0  Fixed reboot loop on System ->Reboot from Companion"
     ]
   },
   "beta": {
-    "version": "7.3.9",
+    "version": "",
     "artworkUpdate": true,
-    "releaseNotes": [
-      "7.3.9  Added zone flood commands"
-    ]
+    "releaseNotes": []
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
   "baseUrls": {
