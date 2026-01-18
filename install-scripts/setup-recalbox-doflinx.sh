@@ -530,6 +530,8 @@ if [[ -f "$RETROARCH_CFG" ]]; then
     update_setting "cheevos_enable" "true" "$RETROARCH_CFG"
     update_setting "cheevos_hardcore_mode_enable" "true" "$RETROARCH_CFG"
     update_setting "cheevos_start_active" "true" "$RETROARCH_CFG"
+    update_setting "log_to_file" "\"true\"" "$RETROARCH_CFG"
+    update_setting "frontend_log_level" "1" "$RETROARCH_CFG"
 
     echo -e "${green}[SUCCESS]${nc} RetroArch configured for DOFLinx"
 else
@@ -540,6 +542,8 @@ else
     echo -e "    cheevos_enable = true"
     echo -e "    cheevos_hardcore_mode_enable = true"
     echo -e "    cheevos_start_active = true"
+    echo -e "    log_to_file = \"true\""
+    echo -e "    frontend_log_level = 1"
 fi
 
 # Update DOFLinx .MAME files via pixelweb

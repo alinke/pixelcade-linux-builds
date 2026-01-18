@@ -329,6 +329,28 @@ echo "[INFO] Remounting filesystem as read-only..."
 mount -o remount,ro /
 echo "[SUCCESS] Filesystem remounted as read-only"
 
+# Ask about DOFLinx installation for in-game effects
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "[OPTIONAL] DOFLinx enables in-game LED effects with RetroAchievements"
+echo "           Requires Pixelcade Pulse hardware for LED effects"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+while true; do
+    read -p "Enable In-Game Effects with DOFLinx and RetroAchievements? (y/n) " yn
+    case $yn in
+        [Yy]* )
+            echo "[INFO] Installing DOFLinx..."
+            cd /recalbox/share/bootvideos && curl -kLO -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/setup-recalbox-doflinx.sh && chmod +x setup-recalbox-doflinx.sh && ./setup-recalbox-doflinx.sh beta
+            break
+            ;;
+        [Nn]* )
+            echo "[INFO] Skipping DOFLinx installation"
+            break
+            ;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 while true; do
     read -p "Is Pixelcade Up and Running? (y/n)" yn
     case $yn in
@@ -340,7 +362,7 @@ done
 
 if [ "$install_succesful" = true ] ; then
   while true; do
-      read -p "Reboot Now? (y/n)" yn
+      read -p "Reboot Now? (y/n) " yn
       case $yn in
           [Yy]* ) reboot; break;;
           [Nn]* ) echo "Please reboot when you get a chance" && exit;;
