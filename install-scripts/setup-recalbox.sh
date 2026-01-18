@@ -58,8 +58,7 @@ echo ""
 # Ask about DOFLinx installation for in-game effects upfront
 install_doflinx=false
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "[OPTIONAL] DOFLinx enables in-game LED effects with RetroAchievements"
-echo "           Requires Pixelcade Pulse hardware for LED effects"
+echo "[OPTIONAL] Enable in-game effects powered by DOFLinx and RetroAchievements"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 while true; do
     read -p "Enable In-Game Effects with DOFLinx and RetroAchievements? (y/n) " yn
