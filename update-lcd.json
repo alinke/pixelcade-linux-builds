@@ -1,5 +1,5 @@
 {
-  "latestFirmwareVersion": "7.4.0",
+  "latestFirmwareVersion": "7.4.1",
   "latestArtworkVersion": 22,
   "betaFirmwareVersion": "",
   "updateScriptVersion": 42,
@@ -80,7 +80,8 @@
     "7.3.8  Added incremental artwork updates so only new or changed artwork is downloaded vs. the whole repo every time",
     "7.3.8  Fixed bug where weather in Attract Mode wasn't using the settings",
     "7.3.8  Fixed AI marquee widget",
-    "7.4.0  Added default attract mode playlist and widget usability improvements"
+    "7.4.0  Added default attract mode playlist and widget usability improvements",
+    "7.4.1  Added ?nogif and ?novideo params to /arcade handler to prevent sending video marquees for that call"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
