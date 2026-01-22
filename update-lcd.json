@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.1",
   "latestArtworkVersion": 22,
-  "betaFirmwareVersion": "7.4.2",
+  "betaFirmwareVersion": "7.4.3",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -84,7 +84,8 @@
     "7.4.1  Added ?nogif and ?novideo params to /arcade handler to prevent sending video marquees for that call"
   ],
   "betaReleaseNotes": [
-    "7.4.2 Added settings option to support BitLCD hardware using the external HDMI input"
+    "7.4.2 Added settings option to support BitLCD hardware using the external HDMI input",
+    "7.4.3 Added progress bar in the Pixelcade app and Companion during firmware updates"
     ],
   "minimumRequiredVersion": "5.0.0"
 }
