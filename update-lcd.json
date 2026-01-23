@@ -85,7 +85,9 @@
   ],
   "betaReleaseNotes": [
     "7.4.2 Added settings option to support BitLCD hardware using the external HDMI input",
-    "7.4.3 Added progress bar in the Pixelcade app and Companion during firmware updates"
+    "7.4.3 Added progress bar in the Pixelcade app and Companion during firmware updates",
+    "7.4.3 USB search fix for large number of files on USB (thousands)",
+    "7.4.3 Added video only filter on browse marquees"
     ],
   "minimumRequiredVersion": "5.0.0"
 }
