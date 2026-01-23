@@ -1,7 +1,7 @@
 {
-  "latestFirmwareVersion": "7.4.1",
+  "latestFirmwareVersion": "7.4.3",
   "latestArtworkVersion": 22,
-  "betaFirmwareVersion": "7.4.3",
+  "betaFirmwareVersion": "",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -81,13 +81,12 @@
     "7.3.8  Fixed bug where weather in Attract Mode wasn't using the settings",
     "7.3.8  Fixed AI marquee widget",
     "7.4.0  Added default attract mode playlist and widget usability improvements",
-    "7.4.1  Added ?nogif and ?novideo params to /arcade handler to prevent sending video marquees for that call"
-  ],
-  "betaReleaseNotes": [
+    "7.4.1  Added ?nogif and ?novideo params to /arcade handler to prevent sending video marquees for that call",
     "7.4.2 Added settings option to support BitLCD hardware using the external HDMI input",
     "7.4.3 Added progress bar in the Pixelcade app and Companion during firmware updates",
     "7.4.3 USB search fix for large number of files on USB (thousands)",
     "7.4.3 Added video only filter on browse marquees"
-    ],
+  ],
+  "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
 }
