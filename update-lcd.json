@@ -87,6 +87,6 @@
     "7.4.3 USB search fix for large number of files on USB (thousands)",
     "7.4.3 Added video only filter on browse marquees"
   ],
-  "betaReleaseNotes": [],
+  "betaReleaseNotes": ["7.4.3 Added video only filter on browse marquees"],
   "minimumRequiredVersion": "5.0.0"
 }
