@@ -1,5 +1,5 @@
 {
-  "latestFirmwareVersion": "7.4.4",
+  "latestFirmwareVersion": "7.4.5",
   "latestArtworkVersion": 22,
   "betaFirmwareVersion": "",
   "updateScriptVersion": 42,
@@ -87,7 +87,8 @@
     "7.4.3 USB search fix for large number of files on USB (thousands)",
     "7.4.3 Added video only filter on browse marquees",
     "7.4.4 Added more clock types: Pac-Man, Space Invaders, Tetris, Pong, Retro CRT, Donkey Kong, Frogger, Arkanoid, Galaga, Street Fighter, Dig Dug, and Rectangle",
-    "7.4.4 Multiple clock types can now be added to Attract Mode"
+    "7.4.4 Multiple clock types can now be added to Attract Mode",
+    "7.4.5 Minor clock face improvements and you can change the clock face from Attact Mode"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
