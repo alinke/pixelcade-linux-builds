@@ -427,28 +427,31 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
     #
     # Download from GitHub Releases (more reliable than workflow artifacts)
+    # TEMPORARILY BYPASSED - current VPinball release has issues
     #
 
-    if download_vpinball_release; then
-        #
-        # Install symlink
-        #
+    echo -e "${yellow}[INFO] VPinball download temporarily bypassed - will be restored in a future update${nc}"
 
-        rm -rf /usr/bin/vpinball
-        ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
-        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-* 2>/dev/null
-        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so 2>/dev/null
-
-        #
-        # Save overlay
-        #
-
-        batocera-save-overlay 200
-
-        echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
-    else
-        echo -e "${cyan}[INFO] Continuing with Pixelcade installation without VPinball...${nc}"
-    fi
+    # if download_vpinball_release; then
+    #     #
+    #     # Install symlink
+    #     #
+    #
+    #     rm -rf /usr/bin/vpinball
+    #     ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
+    #     rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-* 2>/dev/null
+    #     rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so 2>/dev/null
+    #
+    #     #
+    #     # Save overlay
+    #     #
+    #
+    #     batocera-save-overlay 200
+    #
+    #     echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
+    # else
+    #     echo -e "${cyan}[INFO] Continuing with Pixelcade installation without VPinball...${nc}"
+    # fi
 
     # Cleanup
     unset ARTIFACT_NAME VPINBALL_INSTALL_SUCCESS
