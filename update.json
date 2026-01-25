@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.4.0",
+    "version": "7.4.1",
     "artworkUpdate": false,
     "releaseNotes": [
      "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -81,7 +81,10 @@
       "7.3.6  Weather widget will load faster",
       "7.3.8  Weather widget units display fix and settings preserved during attract mode",
       "7.3.9  Added zone flood commands",
-      "7.4.0  Fixed reboot loop on System ->Reboot from Companion"
+      "7.4.0  Fixed reboot loop on System ->Reboot from Companion",
+      "7.4.1  Logos for custom added systems will display in browse marquees if /console/default-x exists where x is the custom system name",
+      "7.4.1  Added new clock faces: Galaga 2, Arkanoid 2, Donkey Kong 2, Frogger 2, Tetris 2, and Street Fighter",
+      "7.4.1  Autoupdates for DOFLinx in game effects configuration files (.MAME files)"
     ]
   },
   "beta": {
