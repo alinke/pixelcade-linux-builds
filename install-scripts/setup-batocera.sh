@@ -368,33 +368,13 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
     download_vpinball_release()
     {
-        local REPO="vpinball/vpinball"
-
-        echo -e "${cyan}[INFO] Fetching latest VPinball release from GitHub...${nc}"
-
-        # Get latest release info (no auth needed for public releases)
-        local RELEASE_DATA=$(curl -s "https://api.github.com/repos/$REPO/releases/latest")
-
-        if [[ -z "$RELEASE_DATA" ]] || echo "$RELEASE_DATA" | grep -q '"message"'; then
-            echo -e "${yellow}[WARN] Failed to fetch VPinball release info. Skipping VPinball installation.${nc}"
-            return 1
-        fi
-
-        # Find the linux-x64 Release asset (using startswith/contains/endswith instead of regex for jq compatibility)
-        local ASSET_URL=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("Release-linux-x64")) and (.name | endswith(".zip"))) | .browser_download_url' | head -1)
-        local ASSET_NAME=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("Release-linux-x64")) and (.name | endswith(".zip"))) | .name' | head -1)
-        local TAG_NAME=$(echo "$RELEASE_DATA" | jq -r '.tag_name')
-
-        if [[ -z "$ASSET_URL" || "$ASSET_URL" == "null" ]]; then
-            echo -e "${yellow}[WARN] No VPinball linux-x64 release asset found. Skipping VPinball installation.${nc}"
-            return 1
-        fi
-
-        # Extract version info from asset name (e.g., VPinballX_GL-10.8.1-3788-2151290-linux-x64-Release.zip)
+        # VPinball 10.8.0-2077 hosted on pixelcade-linux-builds (known-good version for Batocera + Pixelcade)
+        # Official vpinball releases 10.8.1+ have compatibility issues
+        local ASSET_NAME="VPinballX_GL-10.8.0-2077-afc7c38-Release-linux-x64.zip"
+        local ASSET_URL="https://github.com/alinke/pixelcade-linux-builds/releases/download/vpinball-10.8.0-2077/${ASSET_NAME}"
         ARTIFACT_NAME="${ASSET_NAME%.zip}"
 
-        echo -e "${cyan}[INFO] Found VPinball release: ${TAG_NAME}${nc}"
-        echo -e "${cyan}[INFO] Asset: ${ASSET_NAME}${nc}"
+        echo -e "${cyan}[INFO] Downloading VPinball 10.8.0-2077 for Batocera...${nc}"
 
         mkdir -p /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
         cd /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
@@ -427,31 +407,29 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
     #
     # Download from GitHub Releases (more reliable than workflow artifacts)
-    # TEMPORARILY BYPASSED - current VPinball release has issues
+    # Pinned to v10.8.0 stable release for Batocera compatibility
     #
 
-    echo -e "${yellow}[INFO] VPinball download temporarily bypassed - will be restored in a future update${nc}"
+    if download_vpinball_release; then
+        #
+        # Install symlink
+        #
 
-    # if download_vpinball_release; then
-    #     #
-    #     # Install symlink
-    #     #
-    #
-    #     rm -rf /usr/bin/vpinball
-    #     ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
-    #     rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-* 2>/dev/null
-    #     rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so 2>/dev/null
-    #
-    #     #
-    #     # Save overlay
-    #     #
-    #
-    #     batocera-save-overlay 200
-    #
-    #     echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
-    # else
-    #     echo -e "${cyan}[INFO] Continuing with Pixelcade installation without VPinball...${nc}"
-    # fi
+        rm -rf /usr/bin/vpinball
+        ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
+        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-* 2>/dev/null
+        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so 2>/dev/null
+
+        #
+        # Save overlay
+        #
+
+        batocera-save-overlay 200
+
+        echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
+    else
+        echo -e "${cyan}[INFO] Continuing with Pixelcade installation without VPinball...${nc}"
+    fi
 
     # Cleanup
     unset ARTIFACT_NAME VPINBALL_INSTALL_SUCCESS
