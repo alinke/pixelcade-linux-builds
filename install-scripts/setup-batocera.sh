@@ -400,6 +400,18 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
             return 1
         fi
 
+        # Check if there's a tar.gz inside (GitHub Actions artifact format)
+        local TAR_FILE="${ARTIFACT_NAME}.tar.gz"
+        if [[ -f "$TAR_FILE" ]]; then
+            echo "Extracting ${TAR_FILE}..."
+            if ! tar xzf "$TAR_FILE"; then
+                echo -e "${yellow}[WARN] Failed to extract tar.gz. Skipping VPinball installation.${nc}"
+                rm -f "${ASSET_NAME}" "$TAR_FILE"
+                return 1
+            fi
+            rm -f "$TAR_FILE"
+        fi
+
         rm -f "${ASSET_NAME}"
         VPINBALL_INSTALL_SUCCESS=true
         return 0
