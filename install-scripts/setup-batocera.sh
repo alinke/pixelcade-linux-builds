@@ -380,9 +380,9 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
             return 1
         fi
 
-        # Find the linux-x64-Release asset (using startswith/contains/endswith instead of regex for jq compatibility)
-        local ASSET_URL=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("linux-x64-Release")) and (.name | endswith(".zip"))) | .browser_download_url' | head -1)
-        local ASSET_NAME=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("linux-x64-Release")) and (.name | endswith(".zip"))) | .name' | head -1)
+        # Find the linux-x64 Release asset (using startswith/contains/endswith instead of regex for jq compatibility)
+        local ASSET_URL=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("Release-linux-x64")) and (.name | endswith(".zip"))) | .browser_download_url' | head -1)
+        local ASSET_NAME=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select((.name | startswith("VPinballX_GL")) and (.name | contains("Release-linux-x64")) and (.name | endswith(".zip"))) | .name' | head -1)
         local TAG_NAME=$(echo "$RELEASE_DATA" | jq -r '.tag_name')
 
         if [[ -z "$ASSET_URL" || "$ASSET_URL" == "null" ]]; then
