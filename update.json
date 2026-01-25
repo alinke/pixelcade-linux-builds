@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.4.1",
+    "version": "7.4.3",
     "artworkUpdate": false,
     "releaseNotes": [
      "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -85,7 +85,8 @@
       "7.4.1  Logos for custom added systems will display in browse marquees if /console/default-x exists where x is the custom system name",
       "7.4.1  Added new clock faces: Galaga 2, Arkanoid 2, Donkey Kong 2, Frogger 2, Tetris 2, and Street Fighter",
       "7.4.1  Autoupdates for DOFLinx in game effects configuration files (.MAME files)",
-      "7.4.1  Fixed DOFLinx core not showing updated on Batocera"
+      "7.4.1  Fixed DOFLinx core not showing updated on Batocera",
+      "7.4.3  Attract mode fixes, will now properly not interrupt during a screensaver and stop when the screensaver ends, tested on Batocera thus far",
     ]
   },
   "beta": {
