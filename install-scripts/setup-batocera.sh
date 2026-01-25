@@ -4,9 +4,11 @@ auto_update=false
 pizero=false
 pi4=false
 pi3=false
+pi5=false
+install_doflinx=false
 odroidn2=false
 machine_arch=default
-version=25  #increment this as the script is updated
+version=26  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -108,6 +110,41 @@ echo -e "${cyan}This script will install the Pixelcade software in $HOME/pixelca
 echo -e "${cyan}Plese ensure you have at least 800 MB of free disk space in $HOME${nc}"
 echo -e "${cyan}Now connect your Pixelcade marquee(s) to free USB port(s) on your device${nc}"
 echo -e "${cyan}Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed${nc}"
+echo ""
+
+# Ask about DOFLinx installation for in-game effects
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo -e "${cyan}Optional: In-Game Effects powered by DOFLinx${nc}"
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo ""
+echo -e "${cyan}DOFLinx provides in-game LED effects for MAME arcade games${nc}"
+echo -e "${cyan}(e.g., gun flash, explosions, led strip effects with Pixelcade Pulse devices)${nc}"
+echo ""
+echo -e "${yellow}Important considerations:${nc}"
+echo -e "${yellow}  - This will switch your default MAME emulator from RetroArch to MAME standalone${nc}"
+echo -e "${yellow}  - Your MAME ROMs must be compatible with MAME standalone${nc}"
+echo -e "${yellow}  - Some games that work in RetroArch may not load in MAME standalone${nc}"
+echo -e "${red}  - NOT recommended for Pi 3 or older hardware (MAME standalone is slow)${nc}"
+echo ""
+echo -e "${cyan}  Uninstaller available at: https://pixelcade.org/batocerav2/${nc}"
+echo ""
+while true; do
+    read -p "Would you like to install DOFLinx for in-game effects? (y/n) " yn
+    case $yn in
+        [Yy]* )
+            install_doflinx=true
+            echo -e "${green}[INFO] DOFLinx will be installed after Pixelcade setup completes${nc}"
+            break
+            ;;
+        [Nn]* )
+            install_doflinx=false
+            echo -e "${cyan}[INFO] Skipping DOFLinx installation${nc}"
+            break
+            ;;
+        * ) echo "Please answer y or n";;
+    esac
+done
+echo ""
 
 #let's see if Pixelcade LCD is there using lsusb and if not, ask the user a question as not all Pixelcade LCDs have the USB ID set, that is only with firmware 6.3 and above
 if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
@@ -292,6 +329,11 @@ fi
 if cat /proc/device-tree/model | grep -q 'Pi 4'; then
    printf "${yellow}Raspberry Pi 4 detected...\n"
    pi4=true
+fi
+
+if cat /proc/device-tree/model | grep -q 'Pi 5'; then
+   printf "${yellow}Raspberry Pi 5 detected...\n"
+   pi5=true
 fi
 
 if cat /proc/device-tree/model | grep -q 'Pi Zero W'; then
@@ -631,6 +673,25 @@ if [[ "$pixelcade_lcd_usb" == "true" ]]; then
     else
         echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
     fi
+fi
+
+# Install DOFLinx if user opted in
+if [[ "$install_doflinx" == "true" ]]; then
+    echo ""
+    echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+    echo -e "${cyan}Installing DOFLinx for In-Game Effects...${nc}"
+    echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+    echo ""
+    cd ${INSTALLPATH}
+    wget https://raw.githubusercontent.com/alinke/DOFLinx-for-Linux/refs/heads/main/setup-doflinx.sh && chmod +x setup-doflinx.sh && ./setup-doflinx.sh
+    if [ $? -eq 0 ]; then
+        echo -e "${green}[SUCCESS] DOFLinx installation complete${nc}"
+    else
+        echo -e "${yellow}[WARNING] DOFLinx installation may have encountered issues${nc}"
+    fi
+    # Clean up the DOFLinx setup script
+    rm -f ${INSTALLPATH}setup-doflinx.sh
+    echo ""
 fi
 
 echo "Cleaning Up..."
