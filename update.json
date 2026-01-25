@@ -3,7 +3,7 @@
     "version": "7.4.3",
     "artworkUpdate": false,
     "releaseNotes": [
-     "Added native and impproved iOS and Android mobile apps http://pixelcade.org/apps",     
+     "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
       "Added Playlist feature which allows you to define a slideshow of marquees and widgets and set the duration for each item",
       "Added drag and drop to Playlist and attract mode toggle which prevents the playlist being interrupted when in arcade mode (not on by default",
       "mDNS discovery fix for Linux, tested working on RCade",
@@ -86,7 +86,7 @@
       "7.4.1  Added new clock faces: Galaga 2, Arkanoid 2, Donkey Kong 2, Frogger 2, Tetris 2, and Street Fighter",
       "7.4.1  Autoupdates for DOFLinx in game effects configuration files (.MAME files)",
       "7.4.1  Fixed DOFLinx core not showing updated on Batocera",
-      "7.4.3  Attract mode fixes, will now properly not interrupt during a screensaver and stop when the screensaver ends, tested on Batocera thus far",
+      "7.4.3  Attract mode fixes, will now properly not interrupt during a screensaver and stop when the screensaver ends, tested on Batocera thus far"
     ]
   },
   "beta": {
