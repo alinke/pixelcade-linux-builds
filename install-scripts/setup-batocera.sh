@@ -364,100 +364,94 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo ""
     
-    X5="6T4SJ4X3nZAZFj"
-    X2="11AALEPUY0"
-    X4="3LpbKA6XFvJBggqcW1hhLdjjcFc4z4HbnD50iGlP6sYJU"
-    X1="_tap_buhtig"
-    X3="6JzfJYcH1FmL_"
-    PAT="$(echo "$X1" | rev)${X2}${X3}${X4}${X5}"
-    
-    download_artifact()
+    VPINBALL_INSTALL_SUCCESS=false
+
+    download_vpinball_release()
     {
-        local REPO="$1"
-        local TOKEN="$2"
-        local BRANCH="$3"
-        local WORKFLOW_NAME="$4"
-        local KEY="$5"
+        local REPO="vpinball/vpinball"
 
-        local RUN_IDS=$(curl -s -H "Authorization: token $TOKEN" \
-                          -H "Accept: application/vnd.github.v3+json" \
-                          "https://api.github.com/repos/$REPO/actions/runs?branch=$BRANCH" | \
-                          jq --arg workflow "$WORKFLOW_NAME" -r '
-                            .workflow_runs[]
-                            | select(.name==$workflow)
-                            | .id
-                          ')
+        echo -e "${cyan}[INFO] Fetching latest VPinball release from GitHub...${nc}"
 
-        if [[ -z "$RUN_IDS" ]]; then
-            echo "No successful runs for branch $BRANCH and workflow $WORKFLOW_NAME."
-            exit 1
+        # Get latest release info (no auth needed for public releases)
+        local RELEASE_DATA=$(curl -s "https://api.github.com/repos/$REPO/releases/latest")
+
+        if [[ -z "$RELEASE_DATA" ]] || echo "$RELEASE_DATA" | grep -q '"message"'; then
+            echo -e "${yellow}[WARN] Failed to fetch VPinball release info. Skipping VPinball installation.${nc}"
+            return 1
         fi
 
-        local FOUND_ARTIFACT=""
-        local FOUND_RUN_ID=""
+        # Find the linux-x64-Release asset
+        local ASSET_URL=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select(.name | test("VPinballX_GL.*linux-x64-Release\\.zip$")) | .browser_download_url' | head -1)
+        local ASSET_NAME=$(echo "$RELEASE_DATA" | jq -r '.assets[] | select(.name | test("VPinballX_GL.*linux-x64-Release\\.zip$")) | .name' | head -1)
+        local TAG_NAME=$(echo "$RELEASE_DATA" | jq -r '.tag_name')
 
-        for RUN_ID in $RUN_IDS; do
-            ARTIFACT_DATA=$(curl -s -H "Authorization: token $TOKEN" \
-                              -H "Accept: application/vnd.github.v3+json" \
-                              "https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/artifacts" | \
-                              jq --arg key "$KEY" '
-                                .artifacts[]
-                                | select(.name==$key or (.name | contains($key)))
-                              ')
-
-            if [[ -n "$ARTIFACT_DATA" && "$ARTIFACT_DATA" != "null" ]]; then
-                FOUND_ARTIFACT="$ARTIFACT_DATA"
-                FOUND_RUN_ID="$RUN_ID"
-                break
-            fi
-        done
-
-        if [[ -z "$FOUND_ARTIFACT" ]]; then
-            echo "No artifact matching \"$KEY\" found in any recent successful run."
-            exit 1
+        if [[ -z "$ASSET_URL" || "$ASSET_URL" == "null" ]]; then
+            echo -e "${yellow}[WARN] No VPinball linux-x64 release asset found. Skipping VPinball installation.${nc}"
+            return 1
         fi
 
-        ARTIFACT_NAME=$(echo "$FOUND_ARTIFACT" | jq -r '.name')
-        local ARTIFACT_URL=$(echo "$FOUND_ARTIFACT" | jq -r '.archive_download_url')
+        # Extract version info from asset name (e.g., VPinballX_GL-10.8.1-3788-2151290-linux-x64-Release.zip)
+        ARTIFACT_NAME="${ASSET_NAME%.zip}"
+
+        echo -e "${cyan}[INFO] Found VPinball release: ${TAG_NAME}${nc}"
+        echo -e "${cyan}[INFO] Asset: ${ASSET_NAME}${nc}"
 
         mkdir -p /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
         cd /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
 
-        echo "Downloading ${ARTIFACT_NAME} from run $FOUND_RUN_ID..."
-        curl -L -o "${ARTIFACT_NAME}.zip" -H "Authorization: token $TOKEN" "$ARTIFACT_URL"
+        echo "Downloading ${ASSET_NAME}..."
+        curl -L -o "${ASSET_NAME}" "$ASSET_URL"
 
-        echo "Uncompressing ${ARTIFACT_NAME}..."
-        unzip -q "${ARTIFACT_NAME}.zip"
-        tar xzvf "${ARTIFACT_NAME}.tar.gz"
+        # Verify the download was successful (check file size > 1MB for a real binary)
+        local FILE_SIZE=$(stat -c%s "${ASSET_NAME}" 2>/dev/null || echo "0")
+        if [[ "$FILE_SIZE" -lt 1048576 ]]; then
+            echo -e "${yellow}[WARN] VPinball download failed (received ${FILE_SIZE} bytes, expected >1MB).${nc}"
+            echo -e "${cyan}[INFO] Skipping VPinball installation - this does not affect Pixelcade.${nc}"
+            rm -f "${ASSET_NAME}"
+            cd /userdata/system
+            rm -rf /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
+            return 1
+        fi
 
-        rm "${ARTIFACT_NAME}.zip" "${ARTIFACT_NAME}.tar.gz"
+        echo "Uncompressing ${ASSET_NAME}..."
+        if ! unzip -q "${ASSET_NAME}"; then
+            echo -e "${yellow}[WARN] Failed to unzip VPinball. Skipping VPinball installation.${nc}"
+            rm -f "${ASSET_NAME}"
+            return 1
+        fi
+
+        rm -f "${ASSET_NAME}"
+        VPINBALL_INSTALL_SUCCESS=true
+        return 0
     }
 
     #
-    # Download
+    # Download from GitHub Releases (more reliable than workflow artifacts)
     #
 
-    download_artifact "vpinball/vpinball" "$PAT" "standalone" "vpinball" "Release-linux-x64"
+    if download_vpinball_release; then
+        #
+        # Install symlink
+        #
 
-    #
-    # Install symlink
-    #
+        rm -rf /usr/bin/vpinball
+        ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
+        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-* 2>/dev/null
+        rm -f /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so 2>/dev/null
 
-    rm -rf /usr/bin/vpinball
-    ln -s "/userdata/system/configs/vpinball/${ARTIFACT_NAME}" /usr/bin/vpinball
-    rm /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2-*
-    rm /userdata/system/configs/vpinball/${ARTIFACT_NAME}/libSDL2.so
+        #
+        # Save overlay
+        #
 
-    #
-    # Save overlay
-    #
+        batocera-save-overlay 200
 
-    batocera-save-overlay 200
-    
-    echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
-    
+        echo -e "${green}[SUCCESS] VPinball installation complete for Batocera V${batocera_version}${nc}"
+    else
+        echo -e "${cyan}[INFO] Continuing with Pixelcade installation without VPinball...${nc}"
+    fi
+
     # Cleanup
-    unset PAT X1 X2 X3 X4 X5 ARTIFACT_NAME
+    unset ARTIFACT_NAME VPINBALL_INSTALL_SUCCESS
     
 elif [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" != "amd64" ]]; then
     echo -e "${yellow}[WARN] VPinball is only available for linux_amd64 (detected: linux_${machine_arch})${nc}"
