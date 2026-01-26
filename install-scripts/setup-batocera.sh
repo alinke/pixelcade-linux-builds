@@ -518,46 +518,21 @@ UDEVRULE
 fi
 
 # ============================================================================
-# Configure VPinballX.ini for Pixelcade (if VPinball is installed)
+# Configure VPinballX.ini for Pixelcade (if it exists)
 # ============================================================================
 VPINBALL_INI="/userdata/system/configs/vpinball/VPinballX.ini"
 
+# Only configure if VPinballX.ini exists
 if [[ -f "$VPINBALL_INI" ]]; then
     echo -e "${cyan}[INFO] Configuring VPinballX.ini for Pixelcade...${nc}"
 
-    # Update or add PixelcadeDevice setting
-    if grep -q "^PixelcadeDevice" "$VPINBALL_INI"; then
-        # Update existing setting
-        sed -i 's|^PixelcadeDevice.*|PixelcadeDevice = /dev/pixelcade|' "$VPINBALL_INI"
-    else
-        # Add setting after [Standalone] section
-        if grep -q "\[Standalone\]" "$VPINBALL_INI"; then
-            sed -i '/\[Standalone\]/a PixelcadeDevice = /dev/pixelcade' "$VPINBALL_INI"
-        fi
-    fi
+    # Update Pixelcade enabled setting (use specific pattern that won't match PixelcadeDevice)
+    sed -i 's|^Pixelcade =.*|Pixelcade = 1|' "$VPINBALL_INI"
 
-    # Update or add Pixelcade enabled setting
-    if grep -q "^Pixelcade " "$VPINBALL_INI" || grep -q "^Pixelcade=" "$VPINBALL_INI"; then
-        # Update existing setting to ensure it's enabled
-        sed -i 's|^Pixelcade.*|Pixelcade = 1|' "$VPINBALL_INI"
-    else
-        # Add setting after [Standalone] section
-        if grep -q "\[Standalone\]" "$VPINBALL_INI"; then
-            sed -i '/\[Standalone\]/a Pixelcade = 1' "$VPINBALL_INI"
-        fi
-    fi
+    # Update PixelcadeDevice setting
+    sed -i 's|^PixelcadeDevice.*|PixelcadeDevice = /dev/pixelcade|' "$VPINBALL_INI"
 
     echo -e "${green}[SUCCESS] VPinballX.ini configured to use /dev/pixelcade${nc}"
-elif [[ -d "/userdata/system/configs/vpinball" ]]; then
-    # VPinball directory exists but no ini file yet - create minimal config
-    echo -e "${cyan}[INFO] Creating VPinballX.ini with Pixelcade settings...${nc}"
-    mkdir -p "/userdata/system/configs/vpinball"
-    cat > "$VPINBALL_INI" << 'VPINI'
-[Standalone]
-Pixelcade = 1
-PixelcadeDevice = /dev/pixelcade
-VPINI
-    echo -e "${green}[SUCCESS] VPinballX.ini created with Pixelcade settings${nc}"
 fi
 
 # Save overlay to persist udev rule and ini changes
