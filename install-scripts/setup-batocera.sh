@@ -360,10 +360,24 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
     echo ""
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo -e "${cyan}[INFO] Batocera V${batocera_version} on linux_amd64 detected${nc}"
-    echo -e "${cyan}[INFO] Installing VPinball...${nc}"
+    echo -e "${cyan}[INFO] Checking VPinball installation...${nc}"
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo ""
-    
+
+    # Check if VPinball is already installed
+    VPINBALL_DIR="/userdata/system/configs/vpinball/VPinballX_GL-10.8.0-2077-afc7c38-Release-linux-x64"
+    VPINBALL_BINARY="${VPINBALL_DIR}/VPinballX_GL"
+
+    if [[ -f "$VPINBALL_BINARY" ]]; then
+        echo -e "${green}[INFO] VPinball 10.8.0-2077 is already installed${nc}"
+        # Ensure symlink exists
+        if [[ ! -L /usr/bin/vpinball ]]; then
+            ln -s "$VPINBALL_DIR" /usr/bin/vpinball
+            echo -e "${green}[INFO] Restored /usr/bin/vpinball symlink${nc}"
+        fi
+    else
+        echo -e "${cyan}[INFO] Installing VPinball...${nc}"
+
     VPINBALL_INSTALL_SUCCESS=false
 
     download_vpinball_release()
@@ -448,7 +462,9 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
     # Cleanup
     unset ARTIFACT_NAME VPINBALL_INSTALL_SUCCESS
-    
+
+    fi  # end of "else" block for VPinball not already installed
+
 elif [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" != "amd64" ]]; then
     echo -e "${yellow}[WARN] VPinball is only available for linux_amd64 (detected: linux_${machine_arch})${nc}"
     echo -e "${cyan}[INFO] Skipping VPinball installation${nc}"
