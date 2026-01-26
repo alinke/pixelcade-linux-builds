@@ -376,8 +376,12 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
         echo -e "${cyan}[INFO] Downloading VPinball 10.8.0-2077 for Batocera...${nc}"
 
-        mkdir -p /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
-        cd /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
+        # Extract to parent directory - the ZIP already contains the ARTIFACT_NAME folder
+        mkdir -p /userdata/system/configs/vpinball
+        cd /userdata/system/configs/vpinball
+
+        # Clean up any previous installation
+        rm -rf "$ARTIFACT_NAME"
 
         echo "Downloading ${ASSET_NAME}..."
         curl -L -o "${ASSET_NAME}" "$ASSET_URL"
@@ -389,7 +393,6 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
             echo -e "${cyan}[INFO] Skipping VPinball installation - this does not affect Pixelcade.${nc}"
             rm -f "${ASSET_NAME}"
             cd /userdata/system
-            rm -rf /userdata/system/configs/vpinball/"$ARTIFACT_NAME"
             return 1
         fi
 
