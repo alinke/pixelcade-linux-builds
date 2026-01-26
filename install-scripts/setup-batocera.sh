@@ -457,6 +457,100 @@ fi
 # End VPinball Installation
 # ============================================================================
 
+# ============================================================================
+# udev Rule for Pixelcade - Creates stable /dev/pixelcade symlink
+# ============================================================================
+echo ""
+echo -e "${cyan}[INFO] Setting up udev rule for Pixelcade...${nc}"
+
+UDEV_RULE_FILE="/etc/udev/rules.d/99-pixelcade.rules"
+
+# Check if udev rule needs to be created or updated
+# Old format used %n for enumeration (pixelcade0, pixelcade1) - we need simple /dev/pixelcade for VPinball
+NEED_UDEV_UPDATE="no"
+
+if [[ ! -f "$UDEV_RULE_FILE" ]]; then
+    NEED_UDEV_UPDATE="yes"
+    echo -e "${cyan}[INFO] Creating udev rule for Pixelcade...${nc}"
+elif grep -q '%n' "$UDEV_RULE_FILE" || grep -q '%N' "$UDEV_RULE_FILE"; then
+    # Old format with enumeration - need to replace
+    NEED_UDEV_UPDATE="yes"
+    echo -e "${cyan}[INFO] Updating udev rule to use simple /dev/pixelcade symlink...${nc}"
+elif ! grep -q 'SYMLINK+="pixelcade"' "$UDEV_RULE_FILE"; then
+    # Rule exists but doesn't have correct symlink format
+    NEED_UDEV_UPDATE="yes"
+    echo -e "${cyan}[INFO] Updating udev rule with correct symlink format...${nc}"
+else
+    echo -e "${green}[INFO] udev rule for /dev/pixelcade already configured correctly${nc}"
+fi
+
+if [[ "$NEED_UDEV_UPDATE" == "yes" ]]; then
+    # Create udev rule for Pixelcade V2 (RP2040-based) and V1
+    # This creates a stable /dev/pixelcade symlink regardless of which ttyACM port is assigned
+    cat > "$UDEV_RULE_FILE" << 'UDEVRULE'
+# Pixelcade V2 (RP2040) - create stable symlink
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="1050", SYMLINK+="pixelcade", MODE="0666"
+# Pixelcade V1 (Arduino/SparkFun) - create stable symlink
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1b4f", ATTRS{idProduct}=="0008", SYMLINK+="pixelcade", MODE="0666"
+UDEVRULE
+
+    # Reload udev rules
+    udevadm control --reload-rules 2>/dev/null || true
+    udevadm trigger 2>/dev/null || true
+
+    echo -e "${green}[SUCCESS] udev rule installed - Pixelcade will be available at /dev/pixelcade${nc}"
+fi
+
+# ============================================================================
+# Configure VPinballX.ini for Pixelcade (if VPinball is installed)
+# ============================================================================
+VPINBALL_INI="/userdata/system/configs/vpinball/VPinballX.ini"
+
+if [[ -f "$VPINBALL_INI" ]]; then
+    echo -e "${cyan}[INFO] Configuring VPinballX.ini for Pixelcade...${nc}"
+
+    # Update or add PixelcadeDevice setting
+    if grep -q "^PixelcadeDevice" "$VPINBALL_INI"; then
+        # Update existing setting
+        sed -i 's|^PixelcadeDevice.*|PixelcadeDevice = /dev/pixelcade|' "$VPINBALL_INI"
+    else
+        # Add setting after [Standalone] section
+        if grep -q "\[Standalone\]" "$VPINBALL_INI"; then
+            sed -i '/\[Standalone\]/a PixelcadeDevice = /dev/pixelcade' "$VPINBALL_INI"
+        fi
+    fi
+
+    # Update or add Pixelcade enabled setting
+    if grep -q "^Pixelcade " "$VPINBALL_INI" || grep -q "^Pixelcade=" "$VPINBALL_INI"; then
+        # Update existing setting to ensure it's enabled
+        sed -i 's|^Pixelcade.*|Pixelcade = 1|' "$VPINBALL_INI"
+    else
+        # Add setting after [Standalone] section
+        if grep -q "\[Standalone\]" "$VPINBALL_INI"; then
+            sed -i '/\[Standalone\]/a Pixelcade = 1' "$VPINBALL_INI"
+        fi
+    fi
+
+    echo -e "${green}[SUCCESS] VPinballX.ini configured to use /dev/pixelcade${nc}"
+elif [[ -d "/userdata/system/configs/vpinball" ]]; then
+    # VPinball directory exists but no ini file yet - create minimal config
+    echo -e "${cyan}[INFO] Creating VPinballX.ini with Pixelcade settings...${nc}"
+    mkdir -p "/userdata/system/configs/vpinball"
+    cat > "$VPINBALL_INI" << 'VPINI'
+[Standalone]
+Pixelcade = 1
+PixelcadeDevice = /dev/pixelcade
+VPINI
+    echo -e "${green}[SUCCESS] VPinballX.ini created with Pixelcade settings${nc}"
+fi
+
+# Save overlay to persist udev rule and ini changes
+batocera-save-overlay 2>/dev/null || true
+
+# ============================================================================
+# End udev and VPinball Configuration
+# ============================================================================
+
 if [[ ! -d "${INSTALLPATH}pixelcade" ]]; then #create the pixelcade folder if it's not there
    mkdir ${INSTALLPATH}pixelcade
 fi
