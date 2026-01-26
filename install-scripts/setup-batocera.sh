@@ -369,7 +369,7 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
     VPINBALL_BINARY="${VPINBALL_DIR}/VPinballX_GL"
 
     if [[ -f "$VPINBALL_BINARY" ]]; then
-        echo -e "${green}[INFO] VPinball 10.8.0-2077 is already installed${nc}"
+        echo -e "${green}[INFO] VPinball 10.8.0-2077 Patch is already installed${nc}"
         # Ensure symlink exists
         if [[ ! -L /usr/bin/vpinball ]]; then
             ln -s "$VPINBALL_DIR" /usr/bin/vpinball
