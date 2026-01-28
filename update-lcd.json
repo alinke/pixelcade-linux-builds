@@ -1,5 +1,5 @@
 {
-  "latestFirmwareVersion": "7.4.6",
+  "latestFirmwareVersion": "7.4.7",
   "latestArtworkVersion": 22,
   "betaFirmwareVersion": "",
   "updateScriptVersion": 42,
@@ -89,7 +89,8 @@
     "7.4.4 Added more clock types: Pac-Man, Space Invaders, Tetris, Pong, Retro CRT, Donkey Kong, Frogger, Arkanoid, Galaga, Street Fighter, Dig Dug, and Rectangle",
     "7.4.4 Multiple clock types can now be added to Attract Mode",
     "7.4.5 Minor clock face improvements and you can change the clock face from Attact Mode",
-    "7.4.6 Added additional resolutions in Companion settings including for 14.9 1280 x390 screens"
+    "7.4.6 Added additional resolutions in Companion settings including for 14.9 1280 x390 screens",
+    "7.4.7 Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
