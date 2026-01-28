@@ -1,1 +1,1 @@
-ping pixelcadedx-67793a14.local
+ping pixelcadedx-f0f37baa.local

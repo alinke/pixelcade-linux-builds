@@ -1,1 +1,1 @@
-pixelcade://?mode=power&device=67793a14
+pixelcade://?mode=power&device=f0f37baa
