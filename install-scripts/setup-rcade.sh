@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=14
+version=15
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -272,11 +272,8 @@ if [[ -f "$RCADE_STARTUP" ]]; then
             in_start_case && /start_screens/ {
                 found_start_screens=1
             }
-            {
-                print
-            }
             found_start_screens && /;;/ {
-                # Insert DOFLinx startup before the ;;
+                # Insert DOFLinx startup BEFORE the ;;
                 print ""
                 print "        # Launch DOFLinx after pixelweb starts"
                 print "        if [[ -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
@@ -294,8 +291,8 @@ if [[ -f "$RCADE_STARTUP" ]]; then
                 print "        fi"
                 in_start_case=0
                 found_start_screens=0
-                next
             }
+            { print }
             ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
         else
             # OLD VERSION: Insert after pixelweb startup block
