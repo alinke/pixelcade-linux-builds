@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.4.6",
+    "version": "7.4.7",
     "artworkUpdate": false,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -91,7 +91,8 @@
       "7.4.6  Fixed crash for V1 boards when DOFLinx in game effects are enabled",
       "7.4.6  Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000",
       "7.4.6  Added user defined Google API key for commmute traffic widget",
-      "7.4.6  Fixed Companion updater for RetroPie which needs a special build"
+      "7.4.6  Fixed Companion updater for RetroPie which needs a special build",
+      "7.4.7  Score display comma fix"
     ]
   },
   "beta": {
