@@ -1,5 +1,5 @@
 {
-  "latestFirmwareVersion": "7.4.7",
+  "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 22,
   "betaFirmwareVersion": "",
   "updateScriptVersion": 42,
@@ -90,7 +90,9 @@
     "7.4.4 Multiple clock types can now be added to Attract Mode",
     "7.4.5 Minor clock face improvements and you can change the clock face from Attact Mode",
     "7.4.6 Added additional resolutions in Companion settings including for 14.9 1280 x390 screens",
-    "7.4.7 Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000"
+    "7.4.7 Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000",
+    "7.4.7 Added user defined Google API key for commmute traffic widget",
+    "7.4.8 score display comma fix"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
