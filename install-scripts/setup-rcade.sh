@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=12
+version=14
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -224,8 +224,24 @@ else
 fi
 
 # Update startup script in /etc/init.d (SYSTEM SPACE)
-# Check if the S10animationscreens file exists
+# R-Cade has two different versions of S10animationscreens:
+#   OLD: Contains pixelweb startup block directly (has "grep pixelweb")
+#   NEW: Delegates to rcade-commands.sh start_screens (has "start_screens")
+# We detect based on content, not filename
+
 if [[ -f "$RCADE_STARTUP" ]]; then
+    # Detect which version based on content
+    if grep -q "start_screens" "$RCADE_STARTUP"; then
+        startup_version="new"
+        echo -e "${green}[INFO]${nc} Detected NEW R-Cade startup script (delegates to start_screens)"
+    elif grep -q "grep pixelweb" "$RCADE_STARTUP"; then
+        startup_version="old"
+        echo -e "${green}[INFO]${nc} Detected OLD R-Cade startup script (contains pixelweb block)"
+    else
+        startup_version="unknown"
+        echo -e "${yellow}[WARNING]${nc} Unknown R-Cade startup script format"
+    fi
+
     # Clean up any old backups in /etc/init.d (they waste overlay space)
     for backup in /etc/init.d/S10animationscreens.backup.*; do
         if [[ -f "$backup" ]]; then
@@ -235,9 +251,9 @@ if [[ -f "$RCADE_STARTUP" ]]; then
     done
 
     # Check if DOFLinx code is already present
-    if grep -q "Launch DOFLinx if pixelcade was started" "$RCADE_STARTUP"; then
+    if grep -q "Launch DOFLinx" "$RCADE_STARTUP" || grep -q "doflinx.sh" "$RCADE_STARTUP"; then
         echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
-    else
+    elif [[ "$startup_version" != "unknown" ]]; then
         echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
 
         # Create a backup in user space (not overlay) to save overlay space
@@ -246,25 +262,62 @@ if [[ -f "$RCADE_STARTUP" ]]; then
         cp "$RCADE_STARTUP" "$BACKUP_FILE"
         echo -e "${green}[INFO]${nc} Backup created: $BACKUP_FILE"
 
-        # Use awk to insert the DOFLinx code after the pixelweb startup block
-        awk '
-        /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
-            in_pixelweb_block=1
-        }
-        {
-            print
-        }
-        in_pixelweb_block && /^[ \t]*fi[ \t]*$/ {
-            print ""
-            print "\t# Launch DOFLinx if pixelcade was started"
-            print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
-            print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
-            print "\t\tsleep 2"
-            print "\t\t/rcade/share/doflinx/doflinx.sh &"
-            print "\tfi"
-            in_pixelweb_block=0
-        }
-        ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+        if [[ "$startup_version" == "new" ]]; then
+            # NEW VERSION: Add DOFLinx startup after start_screens call in start) case
+            # The start_screens runs in background, so we wait for pixelweb to be running
+            awk '
+            /start\)/ {
+                in_start_case=1
+            }
+            in_start_case && /start_screens/ {
+                found_start_screens=1
+            }
+            {
+                print
+            }
+            found_start_screens && /;;/ {
+                # Insert DOFLinx startup before the ;;
+                print ""
+                print "        # Launch DOFLinx after pixelweb starts"
+                print "        if [[ -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
+                print "            ("
+                print "                # Wait for pixelweb to be running (up to 30 seconds)"
+                print "                for i in {1..30}; do"
+                print "                    if pidof pixelweb >/dev/null 2>&1; then"
+                print "                        sleep 2"
+                print "                        /rcade/share/doflinx/doflinx.sh &"
+                print "                        break"
+                print "                    fi"
+                print "                    sleep 1"
+                print "                done"
+                print "            ) &"
+                print "        fi"
+                in_start_case=0
+                found_start_screens=0
+                next
+            }
+            ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+        else
+            # OLD VERSION: Insert after pixelweb startup block
+            awk '
+            /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
+                in_pixelweb_block=1
+            }
+            {
+                print
+            }
+            in_pixelweb_block && /^[ \t]*fi[ \t]*$/ {
+                print ""
+                print "\t# Launch DOFLinx if pixelcade was started"
+                print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
+                print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
+                print "\t\tsleep 2"
+                print "\t\t/rcade/share/doflinx/doflinx.sh &"
+                print "\tfi"
+                in_pixelweb_block=0
+            }
+            ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+        fi
 
         # Check if the awk command succeeded and the output file is not empty
         if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
@@ -279,6 +332,8 @@ if [[ -f "$RCADE_STARTUP" ]]; then
             echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_STARTUP - DOFLinx will need to be started manually"
             rm -f "${RCADE_STARTUP}.tmp"
         fi
+    else
+        echo -e "${yellow}[WARNING]${nc} Could not determine startup script format - DOFLinx will need to be started manually"
     fi
 else
     echo -e "${yellow}[WARNING]${nc} $RCADE_STARTUP not found - DOFLinx will need to be started manually"
