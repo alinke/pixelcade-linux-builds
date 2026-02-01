@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=15
+version=16
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -223,17 +223,20 @@ else
     fi
 fi
 
-# Update startup script in /etc/init.d (SYSTEM SPACE)
-# R-Cade has two different versions of S10animationscreens:
-#   OLD: Contains pixelweb startup block directly (has "grep pixelweb")
-#   NEW: Delegates to rcade-commands.sh start_screens (has "start_screens")
+# Update startup scripts (SYSTEM SPACE)
+# R-Cade has two different versions:
+#   OLD: S10animationscreens contains pixelweb startup block directly (has "grep pixelweb")
+#   NEW: S10animationscreens delegates to rcade-commands.sh start_screens (has "start_screens")
+#        In NEW version, we modify rcade-commands.sh directly where pixelweb is launched
 # We detect based on content, not filename
+
+RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
 
 if [[ -f "$RCADE_STARTUP" ]]; then
     # Detect which version based on content
     if grep -q "start_screens" "$RCADE_STARTUP"; then
         startup_version="new"
-        echo -e "${green}[INFO]${nc} Detected NEW R-Cade startup script (delegates to start_screens)"
+        echo -e "${green}[INFO]${nc} Detected NEW R-Cade startup script (delegates to rcade-commands.sh)"
     elif grep -q "grep pixelweb" "$RCADE_STARTUP"; then
         startup_version="old"
         echo -e "${green}[INFO]${nc} Detected OLD R-Cade startup script (contains pixelweb block)"
@@ -250,84 +253,98 @@ if [[ -f "$RCADE_STARTUP" ]]; then
         fi
     done
 
-    # Check if DOFLinx code is already present
-    if grep -q "Launch DOFLinx" "$RCADE_STARTUP" || grep -q "doflinx.sh" "$RCADE_STARTUP"; then
-        echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
-    elif [[ "$startup_version" != "unknown" ]]; then
-        echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
+    if [[ "$startup_version" == "new" ]]; then
+        # NEW VERSION: Modify rcade-commands.sh where pixelweb is actually launched
+        if [[ -f "$RCADE_COMMANDS" ]]; then
+            # Check if DOFLinx code is already present in rcade-commands.sh
+            if grep -q "Launch DOFLinx" "$RCADE_COMMANDS" || grep -q "doflinx.sh" "$RCADE_COMMANDS"; then
+                echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_COMMANDS"
+            else
+                echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_COMMANDS..."
 
-        # Create a backup in user space (not overlay) to save overlay space
-        mkdir -p ${INSTALLPATH}pixelcade/backups
-        BACKUP_FILE="${INSTALLPATH}pixelcade/backups/S10animationscreens.backup.$(date +%Y%m%d_%H%M%S)"
-        cp "$RCADE_STARTUP" "$BACKUP_FILE"
-        echo -e "${green}[INFO]${nc} Backup created: $BACKUP_FILE"
+                # Create a backup in user space (not overlay) to save overlay space
+                mkdir -p ${INSTALLPATH}pixelcade/backups
+                BACKUP_FILE="${INSTALLPATH}pixelcade/backups/rcade-commands.sh.backup.$(date +%Y%m%d_%H%M%S)"
+                cp "$RCADE_COMMANDS" "$BACKUP_FILE"
+                echo -e "${green}[INFO]${nc} Backup created: $BACKUP_FILE"
 
-        if [[ "$startup_version" == "new" ]]; then
-            # NEW VERSION: Add DOFLinx startup after start_screens call in start) case
-            # The start_screens runs in background, so we wait for pixelweb to be running
-            awk '
-            /start\)/ {
-                in_start_case=1
-            }
-            in_start_case && /start_screens/ {
-                found_start_screens=1
-            }
-            found_start_screens && /;;/ {
-                # Insert DOFLinx startup BEFORE the ;;
-                print ""
-                print "        # Launch DOFLinx after pixelweb starts"
-                print "        if [[ -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
-                print "            ("
-                print "                # Wait for pixelweb to be running (up to 30 seconds)"
-                print "                for i in {1..30}; do"
-                print "                    if pidof pixelweb >/dev/null 2>&1; then"
-                print "                        sleep 2"
-                print "                        /rcade/share/doflinx/doflinx.sh &"
-                print "                        break"
-                print "                    fi"
-                print "                    sleep 1"
-                print "                done"
-                print "            ) &"
-                print "        fi"
-                in_start_case=0
-                found_start_screens=0
-            }
-            { print }
-            ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+                # Insert DOFLinx startup after the pixelweb startup block
+                # Match the fi that closes the pixelweb block and add DOFLinx after it
+                awk '
+                /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
+                    in_pixelweb_block=1
+                }
+                in_pixelweb_block && /^[[:space:]]*fi[[:space:]]*$/ {
+                    print
+                    print ""
+                    print "\t# Launch DOFLinx after pixelweb starts"
+                    print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
+                    print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
+                    print "\t\tsleep 2"
+                    print "\t\t/rcade/share/doflinx/doflinx.sh &"
+                    print "\tfi"
+                    in_pixelweb_block=0
+                    next
+                }
+                { print }
+                ' "$RCADE_COMMANDS" > "${RCADE_COMMANDS}.tmp"
+
+                # Check if the awk command succeeded and the output file is not empty
+                if [[ -s "${RCADE_COMMANDS}.tmp" ]]; then
+                    mv "${RCADE_COMMANDS}.tmp" "$RCADE_COMMANDS"
+                    chmod +x "$RCADE_COMMANDS"
+                    echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RCADE_COMMANDS"
+                else
+                    echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_COMMANDS - DOFLinx will need to be started manually"
+                    rm -f "${RCADE_COMMANDS}.tmp"
+                fi
+            fi
         else
-            # OLD VERSION: Insert after pixelweb startup block
+            echo -e "${yellow}[WARNING]${nc} $RCADE_COMMANDS not found - DOFLinx will need to be started manually"
+        fi
+    elif [[ "$startup_version" == "old" ]]; then
+        # OLD VERSION: Modify S10animationscreens directly
+        # Check if DOFLinx code is already present
+        if grep -q "Launch DOFLinx" "$RCADE_STARTUP" || grep -q "doflinx.sh" "$RCADE_STARTUP"; then
+            echo -e "${green}[INFO]${nc} DOFLinx startup code already present in $RCADE_STARTUP"
+        else
+            echo -e "${green}[INFO]${nc} Adding DOFLinx startup code to $RCADE_STARTUP..."
+
+            # Create a backup in user space (not overlay) to save overlay space
+            mkdir -p ${INSTALLPATH}pixelcade/backups
+            BACKUP_FILE="${INSTALLPATH}pixelcade/backups/S10animationscreens.backup.$(date +%Y%m%d_%H%M%S)"
+            cp "$RCADE_STARTUP" "$BACKUP_FILE"
+            echo -e "${green}[INFO]${nc} Backup created: $BACKUP_FILE"
+
+            # Insert after pixelweb startup block
             awk '
             /if \[\[ "\$pixelcade" == "true" && -z \$\(ps \| grep pixelweb \| grep -v .grep.\) \]\]; then/ {
                 in_pixelweb_block=1
             }
-            {
+            in_pixelweb_block && /^[[:space:]]*fi[[:space:]]*$/ {
                 print
-            }
-            in_pixelweb_block && /^[ \t]*fi[ \t]*$/ {
                 print ""
-                print "\t# Launch DOFLinx if pixelcade was started"
+                print "\t# Launch DOFLinx after pixelweb starts"
                 print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
                 print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
                 print "\t\tsleep 2"
                 print "\t\t/rcade/share/doflinx/doflinx.sh &"
                 print "\tfi"
                 in_pixelweb_block=0
+                next
             }
+            { print }
             ' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
-        fi
 
-        # Check if the awk command succeeded and the output file is not empty
-        if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
-            # Replace the original file with the modified version
-            mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
-
-            # Make sure the file is executable
-            chmod +x "$RCADE_STARTUP"
-
-            echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RCADE_STARTUP"
-        else
-            echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_STARTUP - DOFLinx will need to be started manually"
-            rm -f "${RCADE_STARTUP}.tmp"
+            # Check if the awk command succeeded and the output file is not empty
+            if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
+                mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
+                chmod +x "$RCADE_STARTUP"
+                echo -e "${green}[SUCCESS]${nc} DOFLinx startup code added to $RCADE_STARTUP"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to modify $RCADE_STARTUP - DOFLinx will need to be started manually"
+                rm -f "${RCADE_STARTUP}.tmp"
+            fi
         fi
     else
         echo -e "${yellow}[WARNING]${nc} Could not determine startup script format - DOFLinx will need to be started manually"
