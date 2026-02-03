@@ -96,9 +96,9 @@
     ]
   },
   "beta": {
-    "version": "",
+    "version": "7.4.8",
     "artworkUpdate": true,
-    "releaseNotes": []
+    "releaseNotes": [ "7.4.8  Console mapping display fix"]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
   "baseUrls": {
