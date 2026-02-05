@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 22,
-  "betaFirmwareVersion": "",
+  "betaFirmwareVersion": "7.4.9",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -94,6 +94,6 @@
     "7.4.7 Added user defined Google API key for commmute traffic widget",
     "7.4.8 score display comma fix"
   ],
-  "betaReleaseNotes": [],
+  "betaReleaseNotes": ["7.4.9 shuffle option added to attract mode"],
   "minimumRequiredVersion": "5.0.0"
 }
