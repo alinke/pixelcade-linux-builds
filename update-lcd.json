@@ -99,7 +99,8 @@
   "7.5.0 adding support for Orange Pi Zero 3 boards",
   "7.5.0 pre-rendering for sports, news, and stocks widgets now much faster",
   "7.5.0 fixed score formatting on sports scoreboard when running in 1280 x 390 mode",
-  "7.5.0 Removed pop up message when updating marquees from companion, instead each marquee turns grey briefly as it is updated"
+  "7.5.0 Removed pop up message when updating marquees from companion, instead each marquee turns grey briefly as it is updated",
+  "7.5.0 Added error message for Netflix Top 10 widget if API times out"
 ],
   "minimumRequiredVersion": "5.0.0"
 }
