@@ -96,11 +96,13 @@
     ]
   },
   "beta": {
-    "version": "7.4.9",
+    "version": "7.5.0",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
-    "7.4.9  Shuffle added to attract mode"
+    "7.4.9  Shuffle added to attract mode",
+    "7.5.0  Bug fix, ?l param now fixed for /text",
+    "7.5.0  added -dmdserver flag that will send frames direct to DMDServer on Batocera, not tested yet"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
