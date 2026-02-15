@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=16
+version=17
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -351,6 +351,21 @@ if [[ -f "$RCADE_STARTUP" ]]; then
     fi
 else
     echo -e "${yellow}[WARNING]${nc} $RCADE_STARTUP not found - DOFLinx will need to be started manually"
+fi
+
+# Install udev rule to rename Pixelcade LCD USB RNDIS interface to pixelcade0.
+# rcade-commands.sh start_network looks for "pixelcade" in ifconfig output and
+# assigns a static IP, so this rename is required for LCD USB setups.
+if lsusb | grep -q '1d6b:3232'; then
+    echo -e "${green}[INFO]${nc} Installing Pixelcade LCD udev rule..."
+    cat > /etc/udev/rules.d/99-pixelcade-lcd.rules << 'RULEEOF'
+# Rename Pixelcade LCD USB RNDIS interface to pixelcade0 and bring it up with static IP.
+# No DHCP (avoids default gateway leak), no gateway advertised.
+ACTION=="add", SUBSYSTEM=="net", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="3232", NAME="pixelcade0", RUN+="/bin/sh -c 'ip link set pixelcade0 up && ip addr add 169.254.100.2/24 dev pixelcade0 2>/dev/null && ip route add 169.254.100.1/32 dev pixelcade0 2>/dev/null'"
+RULEEOF
+    # Remove any old setup script from previous installs
+    rm -f /usr/lib/udev/pixelcade-net-setup.sh
+    echo -e "${green}[SUCCESS]${nc} Pixelcade LCD udev rule installed"
 fi
 
 # ============================================================================

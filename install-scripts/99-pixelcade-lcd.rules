@@ -1,0 +1,4 @@
+# Rename Pixelcade LCD USB RNDIS interface to pixelcade0 and bring it up with static IP.
+# No DHCP (avoids default gateway leak), no gateway advertised.
+# VID 1d6b (Linux Foundation), PID 3232 (Pixelcade LCD Marquee)
+ACTION=="add", SUBSYSTEM=="net", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="3232", NAME="pixelcade0", RUN+="/bin/sh -c 'ip link set pixelcade0 up && ip addr add 169.254.100.2/24 dev pixelcade0 2>/dev/null && ip route add 169.254.100.1/32 dev pixelcade0 2>/dev/null'"
