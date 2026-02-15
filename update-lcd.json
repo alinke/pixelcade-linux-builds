@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 22,
-  "betaFirmwareVersion": "7.5.1",
+  "betaFirmwareVersion": "7.5.2",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -102,7 +102,8 @@
   "7.5.0 Removed pop up message when updating marquees from companion, instead each marquee turns grey briefly as it is updated",
   "7.5.0 Added error message for Netflix Top 10 widget if API times out",
   "7.5.1 WiFi setup fix for Orange Pi Zero 3 boards",
-  "7.5.1 Added user messages during startup when no Ethernet or USB connectivity"
+  "7.5.1 Added user messages during startup when no Ethernet or USB connectivity",
+  "7.5.2 Network detection startup optimizations for Orange Pi Zero 2 boards"
 ],
   "minimumRequiredVersion": "5.0.0"
 }
