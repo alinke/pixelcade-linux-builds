@@ -103,7 +103,9 @@
   "7.5.0 Added error message for Netflix Top 10 widget if API times out",
   "7.5.1 WiFi setup fix for Orange Pi Zero 3 boards",
   "7.5.1 Added user messages during startup when no Ethernet or USB connectivity",
-  "7.5.2 Network detection startup optimizations for Orange Pi Zero 2 boards"
+  "7.5.2 Network detection startup optimizations for Orange Pi Zero 2 boards",
+  "7.5.2 Fixed bug where clock settings (24-hour or second hand) weren't being saved",
+  "7.5.2 You can now add multiple sports tickers, each with different leagues to Pixelcade Attract Mode"
 ],
   "minimumRequiredVersion": "5.0.0"
 }
