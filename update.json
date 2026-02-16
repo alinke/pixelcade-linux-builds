@@ -103,7 +103,8 @@
     "7.4.9  Shuffle added to attract mode",
     "7.5.0  Bug fix, ?l param now fixed for /text",
     "7.5.0  added -dmdserver flag that will send frames direct to DMDServer on Batocera, not tested yet",
-    "7.5.1  Queue fixes, /text calls were not getting queued correctly"
+    "7.5.1  Queue fixes, /text calls were not getting queued correctly",
+    "7.5.2  Non scrolling text will display for x seconds for loop = x"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
