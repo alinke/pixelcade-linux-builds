@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.5.1",
+    "version": "7.5.3",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
