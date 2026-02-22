@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=18
+version=19
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -739,10 +739,12 @@ if lsusb | grep -q '1d6b:3232'; then
 
     if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
         read -p "WiFi SSID: " wifi_ssid
+        wifi_ssid="${wifi_ssid%$'\r'}"
         if [[ -z "$wifi_ssid" ]]; then
             echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
         else
             read -p "WiFi Password (leave blank for open network): " wifi_password
+            wifi_password="${wifi_password%$'\r'}"
 
             # Escape backslash and double-quote for JSON
             wifi_ssid_json="${wifi_ssid//\\/\\\\}"
