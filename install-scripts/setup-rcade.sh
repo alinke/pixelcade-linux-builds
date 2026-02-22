@@ -724,7 +724,7 @@ if lsusb | grep -q '1d6b:3232'; then
     wifi_status_json=$(curl -s --connect-timeout 5 --max-time 10 \
         "http://169.254.100.1:8080/v2/wifi/status" 2>/dev/null)
     wifi_currently_connected=$(echo "$wifi_status_json" | grep -o '"connected":true' 2>/dev/null)
-    wifi_current_ssid=$(echo "$wifi_status_json" | sed 's/.*"ssid":"\([^"]*\)".*/\1/' 2>/dev/null)
+    wifi_current_ssid=$(echo "$wifi_status_json" | grep -o '"ssid":"[^"]*"' | sed 's/"ssid":"//;s/"//' 2>/dev/null)
 
     if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
         echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
@@ -733,6 +733,9 @@ if lsusb | grep -q '1d6b:3232'; then
         echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
         read -p "Configure WiFi? [y/N]: " wifi_choice
     fi
+
+    # Strip carriage return (present when running over SSH from Windows or with CRLF scripts)
+    wifi_choice="${wifi_choice%$'\r'}"
 
     if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
         read -p "WiFi SSID: " wifi_ssid
