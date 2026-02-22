@@ -683,8 +683,10 @@ if lsusb | grep -q '1d6b:3232'; then
     done
 
     # AtGames Legends Ultimate detection - configure BitLCD and DOFLinx automatically
-    if grep -q "Vendor=0838 Product=8918" /proc/bus/input/devices 2>/dev/null; then
-        echo -e "${green}[INFO]${nc} AtGames Legends Ultimate detected"
+    # rk3328-ha8801 = Legends 1.1, rk3399-legends = Legends 1.0
+    board_model=$(/rcade/scripts/rcade-commands.sh boardmodel 2>/dev/null)
+    if [[ "$board_model" == "rk3328-ha8801" || "$board_model" == "rk3399-legends" ]]; then
+        echo -e "${green}[INFO]${nc} AtGames Legends cabinet detected (${board_model})"
 
         # Set BitLCD screen mode on the LCD
         echo -e "${green}[INFO]${nc} Setting BitLCD screen mode..."
