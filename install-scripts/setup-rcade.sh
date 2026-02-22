@@ -702,8 +702,7 @@ if lsusb | grep -q '1d6b:3232'; then
         if [[ -z "$wifi_ssid" ]]; then
             echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
         else
-            read -s -p "WiFi Password (leave blank for open network): " wifi_password
-            echo ""
+            read -p "WiFi Password (leave blank for open network): " wifi_password
 
             # Escape backslash and double-quote for JSON
             wifi_ssid_json="${wifi_ssid//\\/\\\\}"
