@@ -728,12 +728,11 @@ if lsusb | grep -q '1d6b:3232'; then
 
     if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
         echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
-        echo -e "Would you like to connect to a different WiFi network?"
+        read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
     else
         echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
+        read -p "Configure WiFi? [y/N]: " wifi_choice
     fi
-    echo -e "${yellow}[NOTE]${nc} The LCD must be powered on and connected via USB"
-    read -p "Configure WiFi? [y/N]: " wifi_choice
 
     if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
         read -p "WiFi SSID: " wifi_ssid
