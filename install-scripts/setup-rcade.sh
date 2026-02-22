@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=17
+version=18
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -658,6 +658,89 @@ if [[ -f "$RETROARCH_CFG" ]]; then
     echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
+fi
+
+# ============================================================================
+# WiFi SETUP (Pixelcade LCD only - skip for Pixelcade LED)
+# Only prompt if the Pixelcade LCD USB gadget is detected
+# ============================================================================
+if lsusb | grep -q '1d6b:3232'; then
+    echo -e ""
+    echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+    echo -e "${cyan}[WiFi SETUP]${nc} Pixelcade LCD detected via USB"
+    echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+    echo -e ""
+
+    # Ensure the LCD USB interface is configured (the udev rule may not have
+    # fired yet on a first install since the interface was added before the rule).
+    for iface in pixelcade0 usb0 usb1 usb2; do
+        if ip link show "$iface" &>/dev/null 2>&1; then
+            ip link set "$iface" up 2>/dev/null
+            ip addr add 169.254.100.2/24 dev "$iface" 2>/dev/null
+            ip route add 169.254.100.1/32 dev "$iface" 2>/dev/null
+            break
+        fi
+    done
+
+    # Check current WiFi status on the LCD
+    wifi_status_json=$(curl -s --connect-timeout 5 --max-time 10 \
+        "http://169.254.100.1:8080/v2/wifi/status" 2>/dev/null)
+    wifi_currently_connected=$(echo "$wifi_status_json" | grep -o '"connected":true' 2>/dev/null)
+    wifi_current_ssid=$(echo "$wifi_status_json" | sed 's/.*"ssid":"\([^"]*\)".*/\1/' 2>/dev/null)
+
+    if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
+        echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
+        echo -e "Would you like to connect to a different WiFi network?"
+    else
+        echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
+    fi
+    echo -e "${yellow}[NOTE]${nc} The LCD must be powered on and connected via USB"
+    read -p "Configure WiFi? [y/N]: " wifi_choice
+
+    if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
+        read -p "WiFi SSID: " wifi_ssid
+        if [[ -z "$wifi_ssid" ]]; then
+            echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
+        else
+            read -s -p "WiFi Password (leave blank for open network): " wifi_password
+            echo ""
+
+            # Escape backslash and double-quote for JSON
+            wifi_ssid_json="${wifi_ssid//\\/\\\\}"
+            wifi_ssid_json="${wifi_ssid_json//\"/\\\"}"
+            wifi_pass_json="${wifi_password//\\/\\\\}"
+            wifi_pass_json="${wifi_pass_json//\"/\\\"}"
+
+            echo -e "${green}[INFO]${nc} Connecting Pixelcade LCD to: ${wifi_ssid}"
+            echo -e "${yellow}[NOTE]${nc} This may take up to 30 seconds..."
+
+            # Call the LCD's WiFi connect endpoint (synchronous - returns success/failure)
+            http_code=$(curl -s -o /tmp/pixelcade_wifi_resp.json -w "%{http_code}" \
+                -X POST \
+                -H "Content-Type: application/json" \
+                -d "{\"ssid\":\"${wifi_ssid_json}\",\"password\":\"${wifi_pass_json}\"}" \
+                --connect-timeout 10 \
+                --max-time 60 \
+                "http://169.254.100.1:8080/v2/wifi/connect" 2>/dev/null)
+
+            if [[ "$http_code" == "200" ]]; then
+                if grep -q '"success":true' /tmp/pixelcade_wifi_resp.json 2>/dev/null; then
+                    message=$(sed 's/.*"message":"\([^"]*\)".*/\1/' /tmp/pixelcade_wifi_resp.json 2>/dev/null)
+                    echo -e "${green}[SUCCESS]${nc} WiFi configured successfully! (${message})"
+                else
+                    message=$(sed 's/.*"message":"\([^"]*\)".*/\1/' /tmp/pixelcade_wifi_resp.json 2>/dev/null)
+                    echo -e "${red}[ERROR]${nc} WiFi connection failed: ${message}"
+                    echo -e "${yellow}[INFO]${nc} You can configure WiFi later via the Pixelcade app"
+                fi
+            else
+                echo -e "${red}[ERROR]${nc} Could not reach Pixelcade LCD (response: ${http_code})"
+                echo -e "${yellow}[INFO]${nc} After rebooting, you can configure WiFi via the Pixelcade app"
+            fi
+            rm -f /tmp/pixelcade_wifi_resp.json
+        fi
+    else
+        echo -e "${green}[INFO]${nc} Skipping WiFi setup - configure it later via the Pixelcade app"
+    fi
 fi
 
 if [[ $install_successful == "true" ]]; then
