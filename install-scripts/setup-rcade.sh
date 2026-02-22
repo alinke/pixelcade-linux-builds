@@ -661,13 +661,13 @@ else
 fi
 
 # ============================================================================
-# WiFi SETUP (Pixelcade LCD only - skip for Pixelcade LED)
-# Only prompt if the Pixelcade LCD USB gadget is detected
+# PIXELCADE LCD SETUP (skip for Pixelcade LED)
+# All steps below only run when the Pixelcade LCD USB gadget is detected
 # ============================================================================
 if lsusb | grep -q '1d6b:3232'; then
     echo -e ""
     echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-    echo -e "${cyan}[WiFi SETUP]${nc} Pixelcade LCD detected via USB"
+    echo -e "${cyan}[LCD SETUP]${nc} Pixelcade LCD detected via USB"
     echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
     echo -e ""
 
@@ -681,6 +681,42 @@ if lsusb | grep -q '1d6b:3232'; then
             break
         fi
     done
+
+    # AtGames Legends Ultimate detection - configure BitLCD and DOFLinx automatically
+    if grep -q "Vendor=0838 Product=8918" /proc/bus/input/devices 2>/dev/null; then
+        echo -e "${green}[INFO]${nc} AtGames Legends Ultimate detected"
+
+        # Set BitLCD screen mode on the LCD
+        echo -e "${green}[INFO]${nc} Setting BitLCD screen mode..."
+        alu_response=$(curl -s --connect-timeout 5 --max-time 15 \
+            "http://169.254.100.1:8080/settings?key=screenMode&value=bitlcd" 2>/dev/null)
+        if [[ -n "$alu_response" ]]; then
+            echo -e "${green}[SUCCESS]${nc} BitLCD screen mode configured"
+        else
+            echo -e "${yellow}[WARNING]${nc} Could not set BitLCD screen mode - configure it later in the Pixelcade app"
+        fi
+
+        # Configure DOFLinx.ini button mappings for ALU
+        doflinx_ini="${INSTALLPATH}doflinx/config/DOFLinx.ini"
+        if [[ -f "$doflinx_ini" ]]; then
+            echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for AtGames Legends Ultimate..."
+            for entry in \
+                "LINK_BUT_CN=0000,Orange,J0106,0000,MONO,J0306" \
+                "LINK_BUT_P1=0000,Cyan,J0109,0000,MONO,J0309" \
+                "LINK_BUT_P2=0000,Orchid,J0209,0000,MONO,J0409"; do
+                key="${entry%%=*}"
+                value="${entry#*=}"
+                if grep -q "^${key}[[:space:]]*=" "$doflinx_ini"; then
+                    sed -i "s|^${key}[[:space:]]*=.*|${key}=${value}|" "$doflinx_ini"
+                else
+                    echo "${key}=${value}" >> "$doflinx_ini"
+                fi
+            done
+            echo -e "${green}[SUCCESS]${nc} DOFLinx.ini configured for AtGames Legends Ultimate"
+        else
+            echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found, skipping ALU button configuration"
+        fi
+    fi
 
     # Check current WiFi status on the LCD
     wifi_status_json=$(curl -s --connect-timeout 5 --max-time 10 \
