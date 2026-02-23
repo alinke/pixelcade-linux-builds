@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.5.3",
+    "version": "7.5.5",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
@@ -108,7 +108,8 @@
     "7.5.2  Added scroll=true param which will force text scrolling even if text does fit on display like 'bye' for example",
     "7.5.3  Multiple league sport tickers can now be added to Pixelcade Attract Mode",
     "7.5.3  Added My Favorite teams to sports ticket allowing you to select your favorite teams across different leauges",
-    "7.5.4  Fixed bug where the score handler for 7segment or dot matrix needed ws2812B zones to be enabled in order to work"
+    "7.5.4  Fixed bug where the score handler for 7segment or dot matrix needed ws2812B zones to be enabled in order to work",
+    "7.5.5  Added toggle for users running Pixelcade Pulse but without an LED matrix connected which then will redirect in game DOFLinx effects to a Pixelcade LCD if connected"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
