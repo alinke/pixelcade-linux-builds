@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 22,
-  "betaFirmwareVersion": "7.5.5",
+  "betaFirmwareVersion": "7.5.6",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -107,7 +107,8 @@
   "7.5.2 Fixed bug where clock settings (24-hour or second hand) weren't being saved",
   "7.5.2 You can now add multiple sports tickers, each with different leagues to Pixelcade Attract Mode",
   "7.5.4 WiFi setup hotspot will not appear if USB is connected (but will not appear if Ethernet is connected)",
-  "7.5.5 Adding LCD explosion and other effects for DOFLinx in game https://pixelcade.org/developers/#effects-lcd-only"
+  "7.5.5 Adding LCD explosion and other effects for DOFLinx in game https://pixelcade.org/developers/#effects-lcd-only",
+  "7.5.6 More LCD explosion and other effects for DOFLinx in game and naming convention match to LED effects"
 ],
   "minimumRequiredVersion": "5.0.0"
 }
