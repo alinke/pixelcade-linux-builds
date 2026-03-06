@@ -279,8 +279,8 @@ if [[ -f "$RCADE_STARTUP" ]]; then
                     print ""
                     print "\t# Launch DOFLinx after pixelweb starts"
                     print "\tif [[ \"$pixelcade\" == \"true\" && -f \"/rcade/share/doflinx/doflinx.sh\" ]]; then"
-                    print "\t\techo \"Starting DOFLinx with 2 second delay...\" >> /tmp/pixelweb.log"
-                    print "\t\tsleep 2"
+                    print "\t\techo \"Starting DOFLinx with 30 second delay...\" >> /tmp/pixelweb.log"
+                    print "\t\tsleep 30"
                     print "\t\t/rcade/share/doflinx/doflinx.sh &"
                     print "\tfi"
                     in_pixelweb_block=0
