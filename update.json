@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.5.8",
+    "version": "7.5.9",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
@@ -112,7 +112,9 @@
     "7.5.5  Added toggle for users running Pixelcade Pulse but without an LED matrix connected which then will redirect in game DOFLinx effects to a Pixelcade LCD if connected",
     "7.5.6  Added In Game Effects Powered by DOFLinx settings section",
     "7.5.7  In Game Effects tab tweaks and edge case Attract Mode fix after screen saver exit",
-    "7.5.8  Adding advanced score display settings to In Game Effects tab in Companion"
+    "7.5.8  Adding advanced score display settings to In Game Effects tab in Companion",
+    "7.5.9  Fixed Attract mode bug, grey out certain Companion tiles if in Pulse mode only with no LED panel connected",
+    "7.5.9. Fixed Custom System Mappings slow to load"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
