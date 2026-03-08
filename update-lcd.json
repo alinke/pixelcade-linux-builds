@@ -115,7 +115,8 @@
   "7.5.9 Added tabs to settings in Companion for better organization and easier navigation",
   "7.5.9 Fixed bug where uploading network was requiring a reboot, now its immediately available",
   "7.5.9 Added a new artwork theme selection that will change the default system & console marquees",
-  "7.5.9 Improved marquees for: Game Boy, Game Boy Advanced, Game Gear, and Sony PSP"
+  "7.5.9 Improved marquees for: Game Boy, Game Boy Advanced, Game Gear, Game Gear Japan, and Sony PSP",
+  "7.5.9 System marquee thumbnails now shown in Companion's Browse Marquees console list; marquee display no longer blocked by thumbnail loading"
 ],
   "minimumRequiredVersion": "5.0.0"
 }
