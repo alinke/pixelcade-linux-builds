@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.5.9",
+    "version": "7.6.0",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
@@ -114,7 +114,8 @@
     "7.5.7  In Game Effects tab tweaks and edge case Attract Mode fix after screen saver exit",
     "7.5.8  Adding advanced score display settings to In Game Effects tab in Companion",
     "7.5.9  Fixed Attract mode bug, grey out certain Companion tiles if in Pulse mode only with no LED panel connected",
-    "7.5.9. Fixed Custom System Mappings slow to load"
+    "7.5.9  Fixed Custom System Mappings slow to load",
+    "7.6.0  Added In Game Effects and Attract Mode tabs to Settings that check and automate if DOFLinx is runnning and if LEDBlinky and fronts ends are correctly configured for Pixlecade Attract Mode"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
