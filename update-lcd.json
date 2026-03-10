@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "7.4.8",
-  "latestArtworkVersion": 27,
+  "latestArtworkVersion": 28,
   "betaFirmwareVersion": "7.6.1",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -118,7 +118,7 @@
     "7.5.9 Improved marquees for: Game Boy, Game Boy Advanced, Game Gear, Game Gear Japan, and Sony PSP",
     "7.5.9 System marquee thumbnails now shown in Companion's Browse Marquees console list; marquee display no longer blocked by thumbnail loading",
     "7.6.0 Added settings links to relevant Pixelcade LED settings pages (in game effects and custom system mappings)",
-    "7.6.1 Marquee download and alias bug fixed from Companion" 
+    "7.6.1 Marquee download and alias bug fixed from Companion"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
