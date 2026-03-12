@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 28,
-  "betaFirmwareVersion": "7.6.1",
+  "betaFirmwareVersion": "7.6.3",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -118,7 +118,12 @@
     "7.5.9 Improved marquees for: Game Boy, Game Boy Advanced, Game Gear, Game Gear Japan, and Sony PSP",
     "7.5.9 System marquee thumbnails now shown in Companion's Browse Marquees console list; marquee display no longer blocked by thumbnail loading",
     "7.6.0 Added settings links to relevant Pixelcade LED settings pages (in game effects and custom system mappings)",
-    "7.6.1 Marquee download and alias bug fixed from Companion"
+    "7.6.1 Marquee download and alias bug fixed from Companion",
+    "7.6.2 Added mame output coin and start button effects for DOFLinx users",
+    "7.6.3 Adding an alias now does not require a restart and is immediately available in the system, alias can also be deleted",
+    "7.6.3 Added support for custom system names in aliases, so you can have an alias for a game that is different than the system marquee name",
+    "7.6.3 User added marquees can now be deleted and will fall back to the system marquee if it exists",
+    "7.6.3 Individual marquees can be replaced from the individual marquee info dialog"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
