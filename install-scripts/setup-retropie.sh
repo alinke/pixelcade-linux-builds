@@ -50,34 +50,21 @@ echo "Grab a coffee or tea as this installer will take between 10 and 20 minutes
 INSTALLPATH=$HOME"/"
 
 # let's see what installation we have
-if lsb_release -a | grep -qi 'stretch'; then
-        echo "${yellow}Linux Stretch Detected${white}"
-        stretch_os=true
-        echo "Installing curl..."
-        sudo apt install -y curl
-elif cat /etc/os-release | grep -qi 'stretch'; then
-       echo "${yellow}Linux Stretch Detected${white}"
-       stretch_os=true
-       echo "Installing curl..."
-       sudo apt install -y curl
-elif cat /etc/os-release | grep -qi 'jessie'; then
+if lsb_release -a 2>/dev/null | grep -qi 'stretch' || cat /etc/os-release | grep -qi 'stretch'; then
+      echo "${yellow}Linux Stretch Detected${white}"
+      stretch_os=true
+elif lsb_release -a 2>/dev/null | grep -qi 'jessie' || cat /etc/os-release | grep -qi 'jessie'; then
       echo "${yellow}Linux Jessie Detected${white}"
       jessie_os=true
-      echo "Installing curl..."
-      sudo apt install -y curl
-elif lsb_release -a | grep -qi 'buster'; then
+elif lsb_release -a 2>/dev/null | grep -qi 'buster' || cat /etc/os-release | grep -qi 'buster'; then
       echo "${yellow}Linux Buster Detected${white}"
       buster_os=true
-      echo "Installing curl..."
-      sudo apt install -y curl
-elif cat /etc/os-release | grep -qi 'buster'; then
-      echo "${yellow}Linux Buster Detected${white}"
-      buster_os=true
-      echo "Installing curl..."
-      sudo apt install -y curl
-elif lsb_release -a | grep -qi 'ubuntu'; then
+elif lsb_release -a 2>/dev/null | grep -qi 'ubuntu' || cat /etc/os-release | grep -qi 'ubuntu'; then
       echo "${yellow}Ubuntu Linux Detected${white}"
       ubuntu_os=true
+fi
+
+if ! command -v curl &>/dev/null; then
       echo "Installing curl..."
       sudo apt install -y curl
 fi
