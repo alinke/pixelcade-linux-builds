@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 30,
-  "betaFirmwareVersion": "7.6.3",
+  "betaFirmwareVersion": "7.6.4",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -123,7 +123,8 @@
     "7.6.3 Adding an alias now does not require a restart and is immediately available in the system, alias can also be deleted",
     "7.6.3 Added support for custom system names in aliases, so you can have an alias for a game that is different than the system marquee name",
     "7.6.3 User added marquees can now be deleted and will fall back to the system marquee if it exists",
-    "7.6.3 Individual marquees can be replaced from the individual marquee info dialog"
+    "7.6.3 Individual marquees can be replaced from the individual marquee info dialog",
+    "7.6.4 /arcade endpoint now supports a queue system and loopinp, just like LED does"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
