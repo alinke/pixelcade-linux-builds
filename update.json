@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.6.0",
+    "version": "7.6.1",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
@@ -116,7 +116,12 @@
     "7.5.9  Fixed Attract mode bug, grey out certain Companion tiles if in Pulse mode only with no LED panel connected",
     "7.5.9  Fixed Custom System Mappings slow to load",
     "7.6.0  Added In Game Effects and Attract Mode tabs to Settings that check and automate if DOFLinx is runnning and if LEDBlinky and fronts ends are correctly configured for Pixlecade Attract Mode",
-    "7.6.0  GameStart and a rapid scroll event will now also stop Pixelcade Attract Mode (fail safe in case front end does not send screen saver stop event)"
+    "7.6.0  GameStart and a rapid scroll event will now also stop Pixelcade Attract Mode (fail safe in case front end does not send screen saver stop event)",
+    "7.6.1  Mapping logic change for FBNEO",
+    "7.6.1  Settings tabs in Companion easier to see",
+    "7.6.1  For Windows users, Companion will now add the DOFLinx MAME plugin if not detected and check for a compatible version of MAME for in game effects, see the new In Game Effects section in settings",
+    "7.6.1  Added Support tab in Settings which gives information about current setup in one page"
+
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",

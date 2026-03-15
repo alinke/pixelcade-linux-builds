@@ -627,6 +627,45 @@ else
     echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: ./pixelweb -p /rcade/share/pixelcade -update-artwork"
 fi
 
+# Java needed for high scores, hi2txt
+cd ${INSTALLPATH}pixelcade
+JDKDEST="${INSTALLPATH}pixelcade/jdk"
+
+if [[ ! -d $JDKDEST ]]; then
+    if [[ $machine_arch == "arm64" ]]; then
+        echo -e "${green}[INFO]${nc} Installing Java JRE 11 64-Bit for aarch64..."
+        curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip
+        unzip jdk-aarch64.zip
+        chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+        echo -e "${green}[SUCCESS]${nc} Java JRE installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} No Java JDK available for architecture ${machine_arch} - high score functionality will not be available"
+    fi
+fi
+
+# hi2txt for high scores
+HI2TXTDEST="${INSTALLPATH}pixelcade/hi2txt"
+mkdir -p ${HI2TXTDEST}
+echo -e "${green}[INFO]${nc} Installing hi2txt for High Scores..."
+wget -O "${HI2TXTDEST}/hi2txt.jar" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.jar"
+wget -O "${HI2TXTDEST}/hi2txt.zip" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.zip"
+if [ $? -eq 0 ]; then
+    echo -e "${green}[SUCCESS]${nc} hi2txt installed"
+else
+    echo -e "${yellow}[WARNING]${nc} Failed to download hi2txt - high score functionality may not be available"
+fi
+
+# Install pixelcade game-start script
+echo -e "${green}[INFO]${nc} Installing pixelcade game-start script..."
+mkdir -p /rcade/share/userscripts/game-start
+wget -O "/rcade/share/userscripts/game-start/pixelcade.sh" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/scripts/game-start/pixelcade.sh"
+if [ $? -eq 0 ]; then
+    chmod +x /rcade/share/userscripts/game-start/pixelcade.sh
+    echo -e "${green}[SUCCESS]${nc} pixelcade.sh installed to /rcade/share/userscripts/game-start"
+else
+    echo -e "${yellow}[WARNING]${nc} Failed to download pixelcade game-start script"
+fi
+
 # Update RetroArch configuration for RetroAchievements (in user space)
 echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
 RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
