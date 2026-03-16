@@ -126,7 +126,8 @@
     "7.6.3 Individual marquees can be replaced from the individual marquee info dialog",
     "7.6.4 /arcade endpoint now supports a queue system with looping, just like LED does",
     "7.6.4  Settings tabs in Companion easier to see",
-    "7.6.4  Added Support tab in Settings which gives information about current setup in one page"
+    "7.6.4  Added Support tab in Settings which gives information about current setup in one page",
+    "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
