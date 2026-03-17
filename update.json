@@ -96,7 +96,7 @@
     ]
   },
   "beta": {
-    "version": "7.6.1",
+    "version": "7.6.5",
     "artworkUpdate": true,
     "releaseNotes": [ "7.4.9  Console mapping display fix",
     "7.4.9  Animated filter on browse marquees",
@@ -120,7 +120,8 @@
     "7.6.1  Mapping logic change for FBNEO",
     "7.6.1  Settings tabs in Companion easier to see",
     "7.6.1  For Windows users, Companion will now add the DOFLinx MAME plugin if not detected and check for a compatible version of MAME for in game effects, see the new In Game Effects section in settings",
-    "7.6.1  Added Support tab in Settings which gives information about current setup in one page"
+    "7.6.1  Added Support tab in Settings which gives information about current setup in one page",
+    "7.6.5  Logging clean up and added support info on the Log page too in Companion"
 
     ]
   },
