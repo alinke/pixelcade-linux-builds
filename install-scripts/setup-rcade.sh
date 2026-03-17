@@ -253,6 +253,20 @@ if [[ -f "$RCADE_STARTUP" ]]; then
         fi
     done
 
+    # If doflinx exists in BOTH S10animationscreens and rcade-commands.sh, remove it from S10animationscreens
+    if grep -q "doflinx" "$RCADE_STARTUP" && [[ -f "$RCADE_COMMANDS" ]] && grep -q "doflinx" "$RCADE_COMMANDS"; then
+        echo -e "${yellow}[INFO]${nc} DOFLinx found in both S10animationscreens and rcade-commands.sh - removing from S10animationscreens..."
+        awk '/# Launch DOFLinx/{skip=1; next} skip && /^[[:space:]]*;;/{skip=0; print; next} !skip{print}' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+        if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
+            mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
+            chmod +x "$RCADE_STARTUP"
+            echo -e "${green}[SUCCESS]${nc} DOFLinx removed from S10animationscreens"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to clean up S10animationscreens"
+            rm -f "${RCADE_STARTUP}.tmp"
+        fi
+    fi
+
     if [[ "$startup_version" == "new" ]]; then
         # NEW VERSION: Modify rcade-commands.sh where pixelweb is actually launched
         if [[ -f "$RCADE_COMMANDS" ]]; then
