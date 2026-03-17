@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.4.8",
   "latestArtworkVersion": 33,
-  "betaFirmwareVersion": "7.6.4",
+  "betaFirmwareVersion": "7.6.5",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -127,7 +127,8 @@
     "7.6.4 /arcade endpoint now supports a queue system with looping, just like LED does",
     "7.6.4  Settings tabs in Companion easier to see",
     "7.6.4  Added Support tab in Settings which gives information about current setup in one page",
-    "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example"
+    "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example",
+    "7.6.5  Logging clean up and system info box added to the Log page in Companion"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
