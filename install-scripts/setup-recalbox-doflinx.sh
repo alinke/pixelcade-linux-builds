@@ -10,7 +10,7 @@
 #   force, --force, -force Overwrite existing DOFLinx.ini and colours.ini config files
 #                          (by default, existing config files are preserved)
 
-version=11
+version=12
 install_successful=true
 RECALBOX_STARTUP="/etc/init.d/S99MyScript.py"
 
@@ -435,32 +435,16 @@ chmod +x ${DOFLINX_PATH}/doflinx.sh
 
 # Determine if we need to modify system files (requires read-write mount)
 need_startup_modification=false
-need_beta_retroarch=false
 
 if [[ -f "$RECALBOX_STARTUP" ]] && ! grep -q "doflinx" "$RECALBOX_STARTUP"; then
     need_startup_modification=true
 fi
 
-if [[ "$beta" == "true" ]]; then
-    need_beta_retroarch=true
-fi
-
 # If we need to modify system files, do it all in one read-write session
-if [[ "$need_startup_modification" == "true" ]] || [[ "$need_beta_retroarch" == "true" ]]; then
+if [[ "$need_startup_modification" == "true" ]]; then
     echo -e "${green}[INFO]${nc} Remounting filesystem as read-write for system modifications..."
     mount -o remount,rw /
 
-    # Beta mode: Download and install custom RetroArch binary
-    if [[ "$need_beta_retroarch" == "true" ]]; then
-        echo -e "${yellow}[BETA]${nc} Downloading custom RetroArch binary..."
-        wget -O /usr/bin/retroarch "https://github.com/alinke/pixelcade-linux-builds/raw/main/recalbox/retroarch"
-        if [ $? -eq 0 ]; then
-            chmod 755 /usr/bin/retroarch
-            echo -e "${green}[SUCCESS]${nc} Custom RetroArch binary installed"
-        else
-            echo -e "${red}[ERROR]${nc} Failed to download custom RetroArch binary"
-        fi
-    fi
 
     # Add DOFLinx to RecalBox startup (S99MyScript.py)
     if [[ "$need_startup_modification" == "true" ]]; then
