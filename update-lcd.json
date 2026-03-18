@@ -1,32 +1,11 @@
 {
-  "latestFirmwareVersion": "7.4.8",
+  "latestFirmwareVersion": "7.6.5",
   "latestArtworkVersion": 33,
   "betaFirmwareVersion": "7.6.5",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
   "releaseNotesList": [
-    "Added static marquees only option in settings (will skip video marquees)",
-    "Lookup cache auto-refreshes on uploads with manual refresh button",
-    "Added Favorites and slideshow feature (includes video marquees)",
-    "Added copy button to log",
-    "/list handler for third party integration",
-    "Fixed intermittent 'not connected' boot screen",
-    "Changed video icon indicator",
-    "Ability to delete user-added system/console names",
-    "Fixed wifi reconnect issue on some networks",
-    "Fixed intermittent sports scoreboard not configured message",
-    "USB formatting for a blank thumb drive fixed and works from mobile app too",
-    "Added bulk upload support from Custom Upload in Companion, takes around 10 minutes to process 2000+ marquees and shows a progress update",
-    "Fixed intermittent marquees showing up without images in Companion",
-    "Browse marquees in Pixelcade Companion is much faster now",
-    "Added variations filter in Companion so by default we don't show all the rom name variations, mainly for MAME",
-    "User added systems in Companion will show up in a different color and sorted at",
-    "Time zone can be set in seettings which is needed for log time stamps and clock widget",
-    "MP4 video will now upload to the right location in the mp4marquees folder",
-    "Device info in Companion shows total numbrer of marquees in system, intenral, and USB storage",
-    "USB marquees are now found immediately during boot even while cache is still scanning",
-    "Marquee info page in Companion shows more details including if from USB or internal storage",
     "7.1.5: The uploader in Companion now shows the progress and activity for each file",
     "7.1.5: Some users were geting WiFi connected but no Internet",
     "7.1.5: Files uploaded to internal storage weren't getting picked up",
@@ -92,10 +71,8 @@
     "7.4.6 Added additional resolutions in Companion settings including for 14.9 1280 x390 screens",
     "7.4.7 Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000",
     "7.4.7 Added user defined Google API key for commmute traffic widget",
-    "7.4.8 score display comma fix"
-  ],
-  "betaReleaseNotes": [
-    "7.4.9 shuffle option added to attract mode",
+    "7.4.8 score display comma fix",
+     "7.4.9 shuffle option added to attract mode",
     "7.5.0 Added support for Orange Pi Zero 3 boards",
     "7.5.0 pre-rendering for sports, news, and stocks widgets now much faster",
     "7.5.0 fixed score formatting on sports scoreboard when running in 1280 x 390 mode",
@@ -130,5 +107,6 @@
     "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example",
     "7.6.5  Logging clean up and system info box added to the Log page in Companion"
   ],
+  "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
 }
