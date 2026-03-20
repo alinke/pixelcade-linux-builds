@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "7.6.5",
-  "latestArtworkVersion": 33,
+  "latestArtworkVersion": 34,
   "betaFirmwareVersion": "7.6.5",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -72,7 +72,7 @@
     "7.4.7 Added &nocomma param to the score display, remove comma automatically if score is over 1,000,000",
     "7.4.7 Added user defined Google API key for commmute traffic widget",
     "7.4.8 score display comma fix",
-     "7.4.9 shuffle option added to attract mode",
+    "7.4.9 shuffle option added to attract mode",
     "7.5.0 Added support for Orange Pi Zero 3 boards",
     "7.5.0 pre-rendering for sports, news, and stocks widgets now much faster",
     "7.5.0 fixed score formatting on sports scoreboard when running in 1280 x 390 mode",
