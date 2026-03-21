@@ -17,9 +17,10 @@
   },
   "beta": {
     "version": 23,
-    "subversion": 8,
+    "subversion": 9,
     "releaseNotes": [
-      "Batocera VPinball fixes"
+      "Batocera VPinball fixes",
+      "Pulse 7Segment, Dot Matrix, and miniLCD startup init fixs"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
