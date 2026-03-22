@@ -1,5 +1,5 @@
 {
-  "latestFirmwareVersion": "7.6.5",
+  "latestFirmwareVersion": "7.6.6",
   "latestArtworkVersion": 36,
   "betaFirmwareVersion": "7.6.5",
   "updateScriptVersion": 42,
@@ -105,7 +105,9 @@
     "7.6.4  Settings tabs in Companion easier to see",
     "7.6.4  Added Support tab in Settings which gives information about current setup in one page",
     "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example",
-    "7.6.5  Logging clean up and system info box added to the Log page in Companion"
+    "7.6.5  Logging clean up and system info box added to the Log page in Companion",
+    "7.6.6  Added branding tab to settings that will display builder specific default logos",
+    "7.6.6  Added text filter on log page in Companion to make it easier to find specific log messages"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
