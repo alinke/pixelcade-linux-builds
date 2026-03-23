@@ -117,13 +117,16 @@
       "7.6.1  For Windows users, Companion will now add the DOFLinx MAME plugin if not detected and check for a compatible version of MAME for in game effects, see the new In Game Effects section in settings",
       "7.6.1  Added Support tab in Settings which gives information about current setup in one page",
       "7.6.5  Logging clean up and added support info on the Log page too in Companion"
+
     ]
   },
   "beta": {
-    "version": "7.6.6",
+    "version": "7.6.7",
     "artworkUpdate": false,
     "releaseNotes": [
-      "7.6.6  Added 7Segment init on startup"
+      "7.6.6 Added 7Segment init on startup",
+      "7.6.6 Added text filter to the Log page in Companion",
+      "7.6.7 Improved Pulse display startup inits"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
