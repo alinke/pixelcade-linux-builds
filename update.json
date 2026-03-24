@@ -126,7 +126,8 @@
     "releaseNotes": [
       "7.6.6 Added 7Segment init on startup",
       "7.6.6 Added text filter to the Log page in Companion",
-      "7.6.7 Improved Pulse display startup inits"
+      "7.6.7 Improved Pulse display startup inits",
+      "7.6.7 Enhancements to the ministat endpoint used by the Pulse mini LCD display"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",

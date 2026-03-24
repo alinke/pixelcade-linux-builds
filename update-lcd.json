@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.6.7",
   "latestArtworkVersion": 37,
-  "betaFirmwareVersion": "7.6.7",
+  "betaFirmwareVersion": "7.6.8",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -109,6 +109,8 @@
     "7.6.7  Added branding tab to settings that will display builder specific default logos",
     "7.6.7  Added text filter on log page in Companion to make it easier to find specific log messages"
   ],
-  "betaReleaseNotes": [],
+  "betaReleaseNotes": [
+    "7.6.8  Enhancements to the ministat endpoint used by the Pulse mini LCD display"
+  ],
   "minimumRequiredVersion": "5.0.0"
 }
