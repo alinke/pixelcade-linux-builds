@@ -1,7 +1,7 @@
 {
-  "latestFirmwareVersion": "7.6.7",
+  "latestFirmwareVersion": "7.6.9",
   "latestArtworkVersion": 39,
-  "betaFirmwareVersion": "7.6.8",
+  "betaFirmwareVersion": "7.6.9",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -107,10 +107,11 @@
     "7.6.4  Bug fix when uploading a marquee with a hyphen in the name from Companion like Double Dragon V - The Shadow Falls (World).jpg for example",
     "7.6.5  Logging clean up and system info box added to the Log page in Companion",
     "7.6.7  Added branding tab to settings that will display builder specific default logos",
-    "7.6.7  Added text filter on log page in Companion to make it easier to find specific log messages"
+    "7.6.7  Added text filter on log page in Companion to make it easier to find specific log messages",
+    "7.6.8  Enhancements to the ministat endpoint used by the Pulse mini LCD display",
+    "7.6.9  Bug fixes to the theme switcher"
   ],
   "betaReleaseNotes": [
-    "7.6.8  Enhancements to the ministat endpoint used by the Pulse mini LCD display"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
