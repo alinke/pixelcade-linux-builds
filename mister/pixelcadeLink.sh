@@ -9,6 +9,7 @@ touch /tmp/FULLPATH
 DEBOUNCE=$(cat /media/fat/pixelcade/debounce.txt 2>/dev/null | tr -d '[:space:]')
 if [ -z "${DEBOUNCE}" ]; then
   DEBOUNCE=0.3
+  echo "0.3" > /media/fat/pixelcade/debounce.txt
 fi
 
 lastCall=""  # moved outside the function so it persists between calls
