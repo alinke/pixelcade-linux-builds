@@ -1,0 +1,2894 @@
+[
+  {
+    "misterConsole": "Arcade",
+    "displayName": "280Z-ZZAP (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "280zzzap"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "4D Warriors (315-5162)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "4dwarrio"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "ASO",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "aso"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Adventure Canoe",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "advcanoe"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ah Eikou no Koshien (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "koshien"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Air Assault (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "airasslt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Air Duel (World, M72 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "airduel"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Alcon Bootleg",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "alconb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ali Baba and 40 Thieves",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "alibaba"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Alien Arena (Stargate upgrade)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "alienar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Alpine Ski",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "alpine"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Amazing Maze",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "amaze"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Amidar (Scramble)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "amidars"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Anteater",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "anteater"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Arkanoid (JP)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "arkanoidj"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Arkanoid (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "arkanoidu"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Arkanoid (Unl. Lives, slower) [hb]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "arkanoidhb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Arkanoid (Unl. lives) [hb]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "arkanoidha"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Arkanoid (W)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "arkanoid"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Armored Car",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "armorcar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Asteroids",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "asteroid"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Asteroids Deluxe",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "astdelux"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Astra SuperStars (J 980514 V1.002)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "astrass"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Astro Flash (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "venus"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Athena",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "athena"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Attack Force",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "attackf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Azurian Attack",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "azurian"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Back Fire (Tecmo)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "backfire"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bagman",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bagman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Baku Baku Animal (J 950407 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bakubaku"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Balloon Bomber",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ballbomb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "BankPanic",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bankp"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Batman Forever (JUE 960507 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "batmanfr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Battle Zone rev 2",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bzone"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Battle of Atlantis",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "battlnts"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Berzerk",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "berzerk"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Billiard",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "billiard"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bio Attack",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bioatack"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Birdiy",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "birdiy"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Black Hole",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blkhole"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Black Widow",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bwidow"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Blade Master (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blademaster"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Blasto",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blasto"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Block Gal",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blockgal"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Blockade",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blockade"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Blue Print (Midway)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blueprnt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Blue Shark",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "blueshrk"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bomb Jack",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bombjack"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bomber Man - Dyna Blaster",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bombrman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bomber Man World - New Dyna Blaster - Global Quest",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bmanwrld"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Boot Hill",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "boothill"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bosconian - Star Destroyer (new version)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bosco"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Botanic (English, Spanish, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "botanic"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bradley Trainer",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bradleyc"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Breakout (TTL)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "breakout"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bubbles",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bubbles"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Bull Fight (315-5056)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "bullfgt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Burger Time (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "btime"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Burnin' Rubber",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "burningf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Calipso",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "calipso"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cameltry (World, YM2610)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cameltry"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Canyon Bomber",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "canyon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Carnival",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "carnival"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Catacomb",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "catacomb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Centipede (Rev 4)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "centiped"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Chameleon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "chameleo"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Clean Sweep",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "clsweep"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Clean Sweep (TTL)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "clsweep"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Clowns",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "clowns"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "CoMotion",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "comotion"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Colony 7 (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "colony7"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Columns '97 (JET 961209 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "colmns97"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Combat Hawk",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "combatsc"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Computer Space",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cspace"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Congo Bongo",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "congbong"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cosmic Alien",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cosmica"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cosmic Avenger",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cosmcavg"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cosmic Guerilla",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cosmguer"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cosmo",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cosmo"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cosmo Police Galivan (12-26-1985)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "galivan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cotton 2 (JUET 970902 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cotton2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Cotton Boomerang (JUET 980709 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cottonbm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Country Club",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cclub"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crater Raider",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "craterrd"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crayon Shinchan Orato Asobo (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "shinchan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crazy Balloon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "crazybln"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crazy Climber",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cclimber"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crazy Kong (Kyoei)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ckong"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crazy Kong Part II (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ckongpt2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crush Roller (Set 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "crushrll"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crystal Castles",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ccastles"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Danchi de Hanafuda (J 990607 V1.400)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "danchih"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Danchi de Quiz Okusan Yontaku Desuyo! (J 001128 V1.200)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "danchiq"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dark Planet",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "darkplnt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dead Connection (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "deadconx"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Decathlete (JUET 960709 V1.001)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "decathlt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Defender (Red Label)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "defender"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Demolition Derby (MCR-3 Mono Board Version)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "demoderb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Devil Fish (Galaxian Hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "devilfsh"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Devil Zone",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "devzone"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Die Hard Arcade (UET 960515 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "diehard"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dig Dug (Rev 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "digdug"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dig Dug II (New Ver)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "digdug2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dino Rex (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dinorex"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Discs of Tron",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dotron"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "DoDonPachi",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ddonpach"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Domino Man",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dominom"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dominos",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dominos"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Don Doko Don (World, rev 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dondokod"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "DonPachi",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "donpachi"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Donkey Kong (US, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dkong"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Donkey Kong 3 (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dkong3"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Donkey Kong Junior (US, Set F-2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dkongjr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dorodon (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dorodon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dottori-Kun (new)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dotrikun"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dragon Breed (Japan, M72 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dbreedm72"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dream Shopper",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "drmshopr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Dream Soccer '94 (World, M107 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dsoccr94"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Drift Out (Europe)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "drifto94"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "ESP Ra.De.",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "esprade"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Eggor",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "eggor"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ejihon Tantei Jimusyo (J 950613 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ejihon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Elevator Action",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "elevator"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Euro Champ '92 (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "euroch92"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Exerion (Taito)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "exerion"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Express Raider",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "exprraid"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Extra Bases",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "xbases"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Eyes (US, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "eyes"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Fantasy Zone II - The Tears of Opa-Opa",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "fantzn2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Faster, Harder, More Challenging Q`Bert (prototype)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "fhmqbert"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Fever SOS",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "feversos"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Fighting Golf",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "fghtgolf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Final Blow (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "finalb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Final Fight Revenge - Final Revenge (JUET 990930 V1.100)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ffreveng"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Finalizer - Super Transformation (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "finalizr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Finalizer - Super Transformation (Set 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "finalizrb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Finalizer - Super Transformation (Set 2) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "finalizrb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Find Love (J 971212 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "findlove"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Flicky (128k Version, 315-5051)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "flicky"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Food Fight (Rev 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "foodf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Football Champ - Euro Football Champ (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "footchmp"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Freeze",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "freeze"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Frenzy (Rev RA1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "frenzy"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Frogger (Konami Bugfixed)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "frogger"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Front Line",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "frntline"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Funky Head Boxers (JUETBKAL 951218 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "fhboxers"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Future Spy (315-5061)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "futspy"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gaia Crusaders",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gaiacrus"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Galactic Warriors",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "galactic"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Galaga (Midway, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "galaga"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Galaga 3 - Gaplus (GP2 Rev B)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gaplus"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Galaxian (Namco, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "galaxian"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Galaxy Wars (Universal, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "galxwars"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gallop - Armed Police Unit (Japan, M72 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gallop"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gauntlet (rev 14)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gauntlet"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gauntlet II",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gaunt2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gemini Wing",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gemini"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Golden Axe - The Duel (JUETL 950117 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gaxeduel"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gorf",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gorf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gorodki",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gorodki"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gradius",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gradius"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Grasspin (Jaleco)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "grasspin"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gravitar (Ver 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gravitar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Grobda (W, New Ver.)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "grobda"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Groove on Fight - Gouketsuji Ichizoku 3 (J 970416 V1.001)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "groovef"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Growl (World, Rev 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "growl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Guardian Force (JUET 980318 V0.105)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "guardian"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gun & Frontier (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gunfront"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gun Fight",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gunfight"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gun Force II (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gunforc2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gunforce - Battle Fire Engulfed Terror Island (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gunforce"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Guwange",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "guwange"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Gyruss",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gyruss"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hammerin' Harry (US, M84 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hharry"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hanagumi Taisen Columns - Sakura Wars (J 971007 V1.010)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hanagumi"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hang On Jr",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hangonjr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hard Hat",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hardhat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "High Way Race",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hwrace"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hook (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hook"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Horizon (Irem)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "horizon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Hustle",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "hustle"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "I'm Sorry (US, 315-5110)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "imsorry"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ikari Warriors",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ikari"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Image Fight (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "imgfight"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "In The Hunt (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "inthunt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Indiana Jones (set 4)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "indyjones"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Inferno (Williams)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "inferno"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Iron Horse (Ver. K)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ironhors"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jack the Giantkiller (set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jackgntl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jackal (W)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jackal"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jackal (W) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jackalbl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jackal (W, Rotary)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jackalr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jailbreak",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jailbrek"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jin",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jin"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Journey",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "journey"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Joust",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "joust"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Joust 2 - Survival of the Fittest (revision 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "joust2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jump Shot",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jumpshot"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jungle Hunt US",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jungleh"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Jungle King Japan",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "junglek"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Juno First",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "junofrst"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Karaoke Quiz Intro Don Don! (J 960213 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "introdon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kick",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kick"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kick And Run",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kicknrun"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kid Niki - Radical Ninja (W)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kidniki"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "King and Balloon (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kingball"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Konek Gorbunok",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "konek"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kot-Rybolov",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kotrybol"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kozmik Krooz'r",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kozmikzr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Kung-Fu Master (W)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kungfum"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lady Bug",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ladybug"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Laguna Racer",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lagunar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Legend of Hero Tonma (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tonma"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lethal Thunder (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lethalth"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lifeforce (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lifefrcej"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Liquid Kids (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "liquidk"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lizard Wizard",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lizwiz"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lode Runner (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "loderun"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lode Runner II - The Bungeling Strikes Back",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lodernii"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lode Runner III - The Golden Labyrinth",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "loderun3"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lode Runner IV - Teikoku Karano Dasshutsu (JP)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "loderun4"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lost Tomb",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "losttomb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lucky Today",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "luckytod"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lunar Battle (Prototype)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lunarbat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lunar Lander",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "llander"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lunar Rescue",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lrescue"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Lupin III (Set 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "lupin3"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mad Planets",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "madplnts"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Magical Spot",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "magspot"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Major Title 2 (World, set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "majort2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mappy (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mappy"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Marble Madness (set 5 - LSI)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "marble"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mario Bros. (US, Rev G)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mario"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mars",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mars"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Maru-Chan de Goo! (J 971216 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "maruchan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mausuke no Ojama the World (J 960314 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mausuke"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Max RPM (v2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "maxrpm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mayday (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mayday"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mega Blast (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "megablst"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Megumi Rescue (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "megrescu"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mighty Monkey (Scramble Hardware) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mightymj"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Minefield",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "minefld"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Missile Command (rev 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "missile"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mister Viking (315-5041)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrviking"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Moon Cresta (Galaxian Hardware) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mooncrst"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Moon Patrol",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "moonpatrol"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Moon Quasar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "moonqsr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Moon War",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "moonwar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Motos",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "motos"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mouse Trap",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mtrap"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. Do Nightmare",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dosnowbr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. Do!",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrdo"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. Goemon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrgoemon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. HELI no Daibouken (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrheli"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. Jong",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrjong"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mr. TNT",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mrtnt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ms. Pac-Man",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mspacman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "My Hero (US, not Encrypted)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "myhero"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mystic Marathon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mysticm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mystic Riders (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "mysticri"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Naughty Boy (Jaleco)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "naughtyb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "New Rally-X",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "nrallyx"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ninja Baseball Bat Man (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "nbbatman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ninja Spirit (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "nspirit"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ninjakun",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ninjakun"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "No Mans Land",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "nomnlnd"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Nova 2001",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "nova2001"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Number Crash",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "numcrash"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Omega [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "omegab"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Opa Opa",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "opaopa"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Orbitron",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "orbitron"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Othello Shiyouyo (J 980423 V1.002)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "othello"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pac & Pal",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pacnpal"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pac-Man - Puck Man (JP, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "puckman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pac-Man Club- Club Lambada (AR)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pacmanclub"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pac-Man Plus",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pacplus"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pac-Manic Miner",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pacmanic"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pebble Beach - The Great Shot (JUE 950913 V0.990)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pbchamps"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pengo (Set 1, Rev C)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pengo"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Penguin-Kun Wars",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "penguink"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pepper II",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pepper2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Performan (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "performn"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Peter Pack Rat",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "peterpak"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Phoenix (Amstar, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "phoenix"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pickin'",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pickin"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pirate Pete",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "piratpet"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pisces",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pisces"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pitfall II",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pitfall2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Planet Probe",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "planpro"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Playball (Prototype)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "playball"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pleiads (Tehkan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pleiads"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Polaris",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "polaris"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Poly Play",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "polyplay"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Poly Play 2",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "polyplay2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pong (Rev E)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pong"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ponpoko",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ponpoko"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pooyan",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pooyan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pop Flamer (Bootleg conversion)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "popflame"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Popeye (Rev D)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "popeye"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Port Man (bootleg on Moon Cresta hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "portman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Power Drive",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "powrdrvb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Princess Clara Daisakusen (J 960910 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pclara"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pro Mahjong Kiwame S (J 951020 V1.208)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "kiwames"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Psychic 5 (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "psychic5"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "PuLiRuLa (World, dual PCB)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pulirula"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Pulsar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "pulsar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Puyo Puyo Sun (J 961115 V0.001)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "puyosun"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Puzzle & Action- Sando-R (J 951114 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sandor"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Puzzle Uo Poko",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "uopoko"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Q'bert (US, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qbert"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "QBert Qubes",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qbertqub"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Chikyu Bouei Gun (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qchibou"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Crayon Shinchan (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qcrayon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz H.Q. (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "quizhq"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Jinsei Gekijoh (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qjinsei"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Quest - Hime to Yuusha no Monogatari (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "quizquest"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Torimonochou (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qtorimon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "R-Type (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rtype"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "R-Type II (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rtype2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "R-Type Leo (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rtypeleo"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Radar Scope",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "radarscp"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Radar Scope (rev. D)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "radarscpd"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Radiant Silvergun (JUET 980523 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "radiants"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rafflesia (315-5162)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rafflesia"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Raiders5",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "raiders5"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rally-X (32k Ver)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rallyx"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rampage (Rev 3, 860827)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rampage"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Reactor",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "reactor"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Red Baron",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "redbaron"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Regulus (315-5033, Rev A)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "regulus"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rescue",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rescue"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Riddle of Pythagoras (Japan)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ridleofp"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Risky Challenge",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "riskchal"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "River Patrol (JP, Unprotected)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "riverpatp"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Road Blasters (upright, rev 4)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "roadblst"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Road Runner (rev 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "roadrunn"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Robotron 2084",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "robotron"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rush'n Attack - Green Beret",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gberet"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Rygar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "rygar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "S.O.S.",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sos"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Salamander (version J)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "salamand"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sarge",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sarge"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Satan's Hollow (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "satansat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Saturn (Zilec)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "saturn"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Scooter Shooter",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "scootershoter"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Scramble (Stern, Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "scramble"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sea Bass Fishing (JUET 971110 V0.001)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "seabass"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sea Fighter Poseidon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "seaposnd"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sea Wolf (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "seawolf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sea Wolf II",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "seawolf2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sega Ninja (315-5102)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "seganinj"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Shanghai - The Great Wall - Shanghai Triple Threat (JUE 950623 V1.005)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "shangha3"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Shienryu (JUET 961226 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "shienryu"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Shot Rider (B-Board 89624B-1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "shotrider"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Shuffleboard",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "shuffbrd"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Silkworm",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "silkworm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Silver Land",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "silvland"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sinistar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sinistar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sky Skipper",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "skysklpr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Slap Shooter",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "slapsht"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "SlapFight Bootleg",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "slapfight"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Snap Jack",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "snapjack"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Solar Fox",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "solarfox"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Solitary Fighter (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "solfight"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Solomon's Key",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "solomon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "SonSon",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sonson"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Soukyugurentai - Terra Diver (JUET 960821 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "soukyugn"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Chaser",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "schaser"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Cruiser",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spacecr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Encounters",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spaceenc"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Invaders",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "invaders"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Invaders Part II (Taito, Bigger ROMs)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "invadpt2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Panic",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spacepan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Race [TTL]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spacerace"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Seeker",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sseeker"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Space Zap",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spacezap"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Spatter (315-5xxx)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spatter"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Spectar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spectar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Speed Coin",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "speedcoin"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Spelunker",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spelunkr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Spelunker II - 23 no Kagi (JP)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spelunk2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Splat!",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "splat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sprint 1",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sprint1"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Sprint 2",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sprint2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Spy Hunter",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "spyhunt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Squash",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "squash"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Star Guards",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "stargrds"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Star Jacker",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "starjack"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Stargate",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "stargate"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Steep Slope Sliders (JUET 981110 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sss"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Strategy X",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "stratgyx"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Subs",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "subs"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Suikoenbu - Outlaws of the Lost Dynasty (JUETL 950314 V2.001)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "suikoenb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Bagman",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sbagman"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Breakout (Rev 04)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sbrkout"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Casino",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "scasino"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Cobra",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "scobra"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Glob (Pac-Man, German) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "suprglob"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Locomotive",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "suprloco"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Major League (U 960108 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "smlball"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Pac-Man",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "superpac"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Space Invaders '91 (World, revised code, Rev 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sspaceat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Xevious",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sxevious"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Super Zaxxon (315-5013)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "szaxxon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Superior Soldiers (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "suprsldr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Swat (315-5048)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "swat"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TARG",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "targ"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TNKIII",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tnk3"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Taisen Tanto-R Sashissu!! (J 980216 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tantor"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TankBattalion",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tankbatt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tapper (Budweiser, 840127)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tapper"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tazz-Mania (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tazmania"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tecmo World Cup '98 (JUET 980410 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "twcup98"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TeddyBoy Blues (315-5115, New Ver)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "teddybb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tetris",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tetris"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tetris (Japan, System E)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tetrisse"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Adventures of Robby Roto!",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "robby"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Battle-Road",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "battroad"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The End",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "theend"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Ninja Kids (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ninjak"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Tin Star",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tinstar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Tower of Druaga",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "todruaga"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Thunder Fox (World, rev 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "thundfox"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Thunder Heroes",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "thundhro"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tiger Heli Bootleg",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tigerhb1"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Timber",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "timber"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Time Pilot",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "timeplt"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Time Pilot '84 (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tp84"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Time Pilot '84 (Set 2)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tp84a"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Time Pilot '84 (Set 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tp84b"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Time Tunnel",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "timetunl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tip Top (3 board stack)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tiptop"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tokushu Butai Jackal (JP)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "jackalj"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Top Gunner (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "topgunnr"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Top Gunner (US) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "topgunbl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Touryuu Densetsu Elan-Doree - Elan Doree - Legend of Dragoon (JUET 980922 V1.006)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "elandore"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Transformer",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "transfrm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Traverse USA- Zippy Race (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "trvrusa"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tri-Pool (Casino Tech)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tripool"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tron",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tron"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tropical Angel",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tropang"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Turbo Tag (Prototype)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "turbotag"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Turkey Shoot - The Day They Took Over",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "turkeysh"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Turtles",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "turtles"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Tutankham",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tutankhm"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TwinBee",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "twinbee"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "TwinBee (Bubble System)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "twinbeeb"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Two Tigers (Tron Conversion)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "twotiger"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ufo Robo Dangar (4-07-1987)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "dangar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Ultra Tank",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "ultratnk"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Undercover Cops (World)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "undercop"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "UniWar S",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "uniwars"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Up'n Down",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "upndown"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "V'Ball (US)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vball"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Van-Van Car",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vanvan"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Vastar",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vastar"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Venture Revision 5",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "venture"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Victory",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "victory"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Victory Road",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "victroad"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Vindicators Part II (rev 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vindictr2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Virtua Fighter Kids (JUET 960319 V0.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vfkids"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Virtua Fighter Remix (JUETBKAL 950428 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vf"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Virtual Mahjong 2 - My Fair Lady (J 980608 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vmj2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Vortex",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vortex"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Wacko",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "wacko"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "War of the Bugs",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "warofbug"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Water Match (315-5064)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "watermatch"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Water Ski",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "waterski"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Western Express (Japan, rev 4)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "wexpress"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Wild Western",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "wwestern"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Winter Heat (JUET 971012 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "winterht"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Wizard of Wor",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "wiz"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Wonder Boy (Set 1, 315-5177)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "wboy"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Woodpecker (Set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "woodpeck"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "X Multiply (Japan, M72 hardware)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "xmultipl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Xain'd Sleena (bootleg, bugfixed)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "xsleenab"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Xevious",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "xevious"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Youjyuden (JP)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "youjyudn"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Zaxxon (Set 1, Rev D)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "zaxxon"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Zen Nippon Pro-Wrestling Featuring Virtua (J 971123 V1.000)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "znpwfv"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Zig Zag (Dig Dug Conversion) [bl]",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "zigzag"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Zzyzzyxx (set 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "zzyzzyxx"
+  }
+]
