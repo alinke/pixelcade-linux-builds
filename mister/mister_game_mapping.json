@@ -87,25 +87,25 @@
     "misterConsole": "Arcade",
     "displayName": "Arkanoid (JP)",
     "pixelcadeConsole": "mame",
-    "pixelcadeGame": "arkanoidj"
+    "pixelcadeGame": "arkanoid"
   },
   {
     "misterConsole": "Arcade",
     "displayName": "Arkanoid (US)",
     "pixelcadeConsole": "mame",
-    "pixelcadeGame": "arkanoidu"
+    "pixelcadeGame": "arkanoid"
   },
   {
     "misterConsole": "Arcade",
     "displayName": "Arkanoid (Unl. Lives, slower) [hb]",
     "pixelcadeConsole": "mame",
-    "pixelcadeGame": "arkanoidhb"
+    "pixelcadeGame": "arkanoid"
   },
   {
     "misterConsole": "Arcade",
     "displayName": "Arkanoid (Unl. lives) [hb]",
     "pixelcadeConsole": "mame",
-    "pixelcadeGame": "arkanoidha"
+    "pixelcadeGame": "arkanoid"
   },
   {
     "misterConsole": "Arcade",
