@@ -3,6 +3,14 @@ touch /tmp/CURRENTPATH
 touch /tmp/CORENAME
 touch /tmp/FULLPATH
 
+# Debounce delay in seconds — how long to wait after scrolling stops before sending to Pixelcade.
+# Recommended values: 0.2 (fast), 0.3 (default), 0.5 (relaxed), 1.0 (slow/original)
+# Override by writing a number to /media/fat/pixelcade/debounce.txt
+DEBOUNCE=$(cat /media/fat/pixelcade/debounce.txt 2>/dev/null | tr -d '[:space:]')
+if [ -z "${DEBOUNCE}" ]; then
+  DEBOUNCE=0.3
+fi
+
 lastCall=""  # moved outside the function so it persists between calls
 debounceJob=""  # tracks the current debounce background job
 
@@ -88,7 +96,7 @@ pixelcadeIP=`cat /media/fat/pixelcade/ip.txt 2>/dev/null`
 echo ":::::::::::::::::::"
 echo "::               ::"
 echo ":: PixelcadeLink ::"
-echo ":: v1.5         ::"
+echo ":: v1.6         ::"
 echo "::               ::"
 echo ":::::::::::::::::::"
 echo "/IP: ${pixelcadeIP}"
@@ -107,8 +115,8 @@ inotifywait -qm  --timefmt '%Y-%m-%dT%H:%M:%S' --event close_write --format '%T 
         kill "${debounceJob}" 2>/dev/null
       fi
 
-      # Start a new debounce: only send to Pixelcade after 1 second of no new scroll events
-      ( sleep 1 && echo "Settled on: ${current}" && lastCall="" && urlencode ${pixelcadeIP} ) &
+      # Start a new debounce: only send to Pixelcade after DEBOUNCE seconds of no new scroll events
+      ( sleep ${DEBOUNCE} && echo "Settled on: ${current}" && lastCall="" && urlencode ${pixelcadeIP} ) &
       debounceJob=$!
     fi
   fi
