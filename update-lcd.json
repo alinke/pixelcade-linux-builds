@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "7.6.9",
-  "latestArtworkVersion": 39,
+  "latestArtworkVersion": 40,
   "betaFirmwareVersion": "7.7.0",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -112,7 +112,8 @@
     "7.6.9  Bug fixes to the theme switcher"
   ],
   "betaReleaseNotes": [
-    "7.7.0  Added Galaga tractor beam, scared pacman blue ghosts, and pacman eyes in game animations"
+    "7.7.0  Added Galaga tractor beam, scared pacman blue ghosts, and pacman eyes in game animations",
+    "7.7.1  Added a new theme called Chroma that has a more colorful and vibrant look to it"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
