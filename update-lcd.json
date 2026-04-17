@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.6.9",
   "latestArtworkVersion": 40,
-  "betaFirmwareVersion": "7.7.0",
+  "betaFirmwareVersion": "7.7.1",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
