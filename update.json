@@ -121,7 +121,7 @@
     ]
   },
   "beta": {
-    "version": "7.6.9",
+    "version": "7.7.1",
     "artworkUpdate": false,
     "releaseNotes": [
       "7.6.6 Added 7Segment init on startup",
@@ -130,7 +130,7 @@
       "7.6.7 Enhancements to the ministat endpoint used by the Pulse mini LCD display",
       "7.6.8 Added a new tab in settings called MiSTer, game mappings for MiSter are now pulled from an online repo and added MiSTer setup checks, added message DOFLinx not available on MiSter",
       "7.6.9 Added brightness control by Pixelcade Pulse zone",
-      "7.7.0 Added Zaparoo Setup (NFC game changes) to MiSTer tab in settings"
+      "7.7.1 Added Zaparoo Setup (NFC game changes) to MiSTer tab in settings. Will check if right version of Zaparoo is installed and if the Pixelcade publisher block is in config.toml, if not will give the option to add it. When enabled, Zaparoo notifies Pixelcade in real time on each NFC scan so game art updates from Zaparoo scans only. When disabled, the standard Pixelcade MiSTer front end integration is automatically re-enabled but requires a reboot to take effect."
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
