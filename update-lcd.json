@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.6.9",
   "latestArtworkVersion": 49,
-  "betaFirmwareVersion": "7.7.1",
+  "betaFirmwareVersion": "7.7.2",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -113,7 +113,8 @@
   ],
   "betaReleaseNotes": [
     "7.7.0  Added Galaga tractor beam, scared pacman blue ghosts, and pacman eyes in game animations",
-    "7.7.1  Added a new theme called Chroma that has a more colorful and vibrant look to it"
+    "7.7.1  Added a new theme called Chroma, many thanks to Viking & Jason for contributing",
+    "7.7.2  Added a theme refresh icon allowing you to refresh the theme after an artwork update"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
