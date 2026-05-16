@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.7.2",
+    "version": "7.7.3",
     "artworkUpdate": true,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -132,9 +132,10 @@
     ]
   },
   "beta": {
-    "version": "7.7.3",
+    "version": "7.7.4",
     "artworkUpdate": false,
     "releaseNotes": [ 
+      "7.7.4. Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
