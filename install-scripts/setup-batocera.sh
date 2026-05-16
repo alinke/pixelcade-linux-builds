@@ -8,7 +8,7 @@ pi5=false
 install_doflinx=false
 odroidn2=false
 machine_arch=default
-version=29  #increment this as the script is updated
+version=30  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -266,13 +266,27 @@ elif ! command -v lsusb  &> /dev/null; then
 else
    if lsusb | grep -q '1b4f:0008'; then
       echo -e "${magenta}Pixelcade LED Marquee V1 Detected${white}"
-   elif lsusb | grep -q '2e8a:1050'; then 
+   elif lsusb | grep -q '2e8a:1050'; then
       echo -e "${magenta}[INFO] Pixelcade LED Marquee V2 Detected${white}"
    elif [[ "$pixelcade_lcd_usb" == "true" ]]; then
       echo -e "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
-   else  
-      echo -e "${red}[ERROR] Sorry, Pixelcade LED or LCD Marquee was not detected, please ensure Pixelcade LED or LCD is USB connected to your Pi, exiting...${white}"
-      exit 1
+   else
+      echo -e "${yellow}[WARNING] No Pixelcade LED or USB-connected LCD Marquee was detected${white}"
+      echo ""
+      while true; do
+         read -p "Do you have a Pixelcade LCD connected over the network (not USB)? (y/n) " yn
+         case $yn in
+            [Yy]* )
+               echo -e "${cyan}[INFO] Continuing installation for network-connected LCD...${nc}"
+               break
+               ;;
+            [Nn]* )
+               echo -e "${red}[ERROR] Please ensure your Pixelcade LED or LCD is connected and run the installer again${nc}"
+               exit 1
+               ;;
+            * ) echo "Please answer y or n";;
+         esac
+      done
    fi
 fi
 
