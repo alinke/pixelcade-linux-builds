@@ -125,14 +125,16 @@
       "7.6.9  Added brightness control by Pixelcade Pulse zone",
       "7.7.1  Added Zaparoo Setup (NFC game changes) to MiSTer tab in settings. Will check if right version of Zaparoo is installed and if the Pixelcade publisher block is in config.toml, if not will give the option to add it. When enabled, Zaparoo notifies Pixelcade in real time on each NFC scan so game art updates from Zaparoo scans only. When disabled, the standard Pixelcade MiSTer front end integration is automatically re-enabled but requires a reboot to take effect.",
       "7.7.2  Added console fallback logic for mame categories like 'fighting games', will check the mame folder for a match, other fallback folders can be specified too by adding a comma separated list in pixelcade.ini: consoleFallback=mame,x where x could be nes for example",
-      "7.7.2  Bug fix: retroachivements now works in LCD only mode"
+      "7.7.2  Bug fix: retroachivements now works in LCD only mode",
+      "7.7.3  Adding front end setup in settings to make it easier to set up front end integrations for things like Big Box, HyperSpin,  etc. This will also include checks to make sure everything is set up correctly and give the user instructions on how to fix if not.",
+      "7.7.3. Restart and Shutdown options in Companion now will reboot and shutdown on Windows"
 
     ]
   },
   "beta": {
     "version": "7.7.3",
     "artworkUpdate": false,
-    "releaseNotes": [ "7.7.3  Adding front end setup in settings to make it easier to set up front end integrations for things like Big Box, HyperSpin,  etc. This will also include checks to make sure everything is set up correctly and give the user instructions on how to fix if not."
+    "releaseNotes": [ 
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
