@@ -110,8 +110,7 @@ havehighscore() {
   		PIXELCADEURL="console/stream/black"
   		curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null & #this was causing an issue on new pixelweb
 			sleep 1 #TO DO for some reason, doesn't always work without this, in theory it should not be needed
-      PIXELCADEURL="/attract/stop"
-  		curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null & #stop attract mode just in case it's running
+      curl -s "${PIXELCADEBASEURL}attract/stop" >> /dev/null 2>/dev/null
 			URLENCODED_GAMENAME=$(rawurlencode "$GAMENAME")
       URLENCODED_TITLE=$(rawurlencode "$GAMETITLE")
       #let's make a call here if this game has high scores
@@ -120,8 +119,6 @@ havehighscore() {
       if [ -f $HI2TXT_JAR ] && [ -f $HI2TXT_DATA ] && [ $DISPLAYHIGHSCORES == "yes" ]; then
 
       #let's locate the .hi file which is tricky as we don't know which folder it's in so we'll use this logic
-      #if rom path is mame, then we'll get it from /storage/roms/mame/hi
-      #if rom path is arcade,then we'll get it from /storage/roms/arcade/mame2003-plus/hi
             #echo "system is "$SYSTEM
             if [ $SYSTEM == "mame" ]; then
                   HIPATH=/rcade/share/saves/mame2003-plus/hi
