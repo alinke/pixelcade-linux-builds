@@ -135,7 +135,9 @@
     "version": "7.7.4",
     "artworkUpdate": false,
     "releaseNotes": [ 
-      "7.7.4. Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly"
+      "7.7.4. Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly",
+      "7.7.4. Added RCade checks to the front end setup tab in settings to make sure the Scripts scripts for front end integration are installed and configured correctly",
+      "7.7.4. Attract mode can be enabled and disabled for RCade and Batocera from Pixelcade Companion"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
