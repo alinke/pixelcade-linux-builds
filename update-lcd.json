@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "7.7.3",
-  "latestArtworkVersion": 52,
+  "latestArtworkVersion": 53,
   "betaFirmwareVersion": "7.7.3",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -115,7 +115,6 @@
     "7.7.2  Added a theme refresh icon allowing you to refresh the theme after an artwork update",
     "7.7.3  This call now works too for mameoutputs http://pixelcadedx-xxxxxxxx.local:8080/arcade/stream/mameoutput/galaga_beam?l=3&notext&nomini&nostrip"
   ],
-  "betaReleaseNotes": [
-  ],
+  "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
 }
