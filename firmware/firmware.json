@@ -19,8 +19,9 @@
   },
   "beta": {
     "version": 23,
-    "subversion": 9,
+    "subversion": 10,
     "releaseNotes": [
+      "Added char support to 7segment api and perf improvement"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
