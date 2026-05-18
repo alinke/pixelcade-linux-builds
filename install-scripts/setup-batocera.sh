@@ -659,8 +659,8 @@ echo -e "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...$
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
 #remove the attract mode scripts so they are not there by default
-rm ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
-rm ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
+rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
 #hi2txt for high score scrolling
 
 echo -e "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
