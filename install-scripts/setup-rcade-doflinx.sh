@@ -8,7 +8,7 @@
 #   beta, --beta, -beta    Install beta version of DOFLinx
 #   force, --force, -force Overwrite existing DOFLinx.ini and colours.ini config files
 
-version=1
+version=2
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
@@ -354,6 +354,32 @@ echo -e "${green}[INFO]${nc} Checking colours.ini..."
 _smart_update_ini \
     "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/colours.ini" \
     "${config_dir}/colours.ini"
+
+# ALU board detection — configure DOFLinx.ini button mappings if needed
+# TO DO update this later for the FU Cab
+board_model=$(/rcade/scripts/rcade-commands.sh boardmodel 2>/dev/null)
+if [[ "$board_model" == "rk3328-ha8801" || "$board_model" == "rk3399-legends" ]]; then
+    echo -e "${green}[INFO]${nc} AtGames Legends cabinet detected (${board_model})"
+    doflinx_ini="${config_dir}/DOFLinx.ini"
+    if [[ -f "$doflinx_ini" ]]; then
+        echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for AtGames Legends Ultimate..."
+        for entry in \
+            "LINK_BUT_CN=0000,Orange,J0106,0000,MONO,J0306" \
+            "LINK_BUT_P1=0000,Cyan,J0109,0000,MONO,J0309" \
+            "LINK_BUT_P2=0000,Orchid,J0209,0000,MONO,J0409"; do
+            key="${entry%%=*}"
+            value="${entry#*=}"
+            if grep -q "^${key}[[:space:]]*=" "$doflinx_ini"; then
+                sed -i "s|^${key}[[:space:]]*=.*|${key}=${value}|" "$doflinx_ini"
+            else
+                echo "${key}=${value}" >> "$doflinx_ini"
+            fi
+        done
+        echo -e "${green}[SUCCESS]${nc} DOFLinx.ini configured for AtGames Legends Ultimate"
+    else
+        echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found, skipping ALU button configuration"
+    fi
+fi
 
 # Update DOFLinx MAME files via pixelweb
 echo -e "${green}[INFO]${nc} Updating DOFLinx MAME files..."
