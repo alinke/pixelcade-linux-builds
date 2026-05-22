@@ -8,7 +8,7 @@
 #   beta, --beta, -beta    Install beta version of DOFLinx
 #   force, --force, -force Overwrite existing DOFLinx.ini and colours.ini config files
 
-version=2
+version=3
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
