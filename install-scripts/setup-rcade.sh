@@ -187,7 +187,7 @@ if [[ "$beta" == "true" ]]; then
     pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
     if wget --spider "$pixelweb_url" 2>/dev/null; then
         echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
-        wget -O /usr/bin/pixelweb "$pixelweb_url"
+        wget -q -O /usr/bin/pixelweb "$pixelweb_url"
         if [ $? -eq 0 ]; then
             chmod a+x /usr/bin/pixelweb
             echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
@@ -198,7 +198,7 @@ if [[ "$beta" == "true" ]]; then
         echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
         pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
         if wget --spider "$pixelweb_url" 2>/dev/null; then
-            wget -O /usr/bin/pixelweb "$pixelweb_url"
+            wget -q -O /usr/bin/pixelweb "$pixelweb_url"
             if [ $? -eq 0 ]; then
                 chmod a+x /usr/bin/pixelweb
                 echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
@@ -211,7 +211,7 @@ else
     pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
     if wget --spider "$pixelweb_url" 2>/dev/null; then
         echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
-        wget -O /usr/bin/pixelweb "$pixelweb_url"
+        wget -q -O /usr/bin/pixelweb "$pixelweb_url"
         if [ $? -eq 0 ]; then
             chmod a+x /usr/bin/pixelweb
             echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
@@ -454,14 +454,14 @@ fi
 
 # Download main DOFLinx executable (from beta or stable based on availability)
 echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
 if [ $? -ne 0 ]; then
    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
    install_successful=false
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
 fi
@@ -470,38 +470,38 @@ fi
 echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
 
 echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
-wget -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
 if [ $? -ne 0 ]; then
    echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
    install_successful=false
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
-wget -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading keycodes..."
-wget -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes"
+wget -q -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
-wget -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt"
+wget -q -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
-wget -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt"
+wget -q -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
 fi
 
 echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
 if [ $? -ne 0 ]; then
    echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
 fi
@@ -661,8 +661,8 @@ fi
 HI2TXTDEST="${INSTALLPATH}pixelcade/hi2txt"
 mkdir -p ${HI2TXTDEST}
 echo -e "${green}[INFO]${nc} Installing hi2txt for High Scores..."
-wget -O "${HI2TXTDEST}/hi2txt.jar" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.jar"
-wget -O "${HI2TXTDEST}/hi2txt.zip" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.zip"
+wget -q -O "${HI2TXTDEST}/hi2txt.jar" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.jar"
+wget -q -O "${HI2TXTDEST}/hi2txt.zip" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.zip"
 if [ $? -eq 0 ]; then
     echo -e "${green}[SUCCESS]${nc} hi2txt installed"
 else
@@ -672,7 +672,7 @@ fi
 # Install pixelcade game-start script
 echo -e "${green}[INFO]${nc} Installing pixelcade game-start script..."
 mkdir -p /rcade/share/userscripts/game-start
-wget -O "/rcade/share/userscripts/game-start/pixelcade.sh" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/scripts/game-start/pixelcade.sh"
+wget -q -O "/rcade/share/userscripts/game-start/pixelcade.sh" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/scripts/game-start/pixelcade.sh"
 if [ $? -eq 0 ]; then
     chmod +x /rcade/share/userscripts/game-start/pixelcade.sh
     echo -e "${green}[SUCCESS]${nc} pixelcade.sh installed to /rcade/share/userscripts/game-start"
@@ -836,6 +836,12 @@ if lsusb | grep -q '1d6b:3232'; then
         echo -e "${green}[INFO]${nc} Skipping WiFi setup - configure it later via the Pixelcade app"
     fi
 fi
+
+# Restart pixelweb in background so companion UI is accessible immediately
+echo -e "${green}[INFO]${nc} Starting Pixelcade..."
+/usr/bin/pixelweb -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
+sleep 2
+echo -e "${green}[INFO]${nc} Pixelcade companion accessible at http://rcade.local:8080"
 
 if [[ $install_successful == "true" ]]; then
    echo -e ""
