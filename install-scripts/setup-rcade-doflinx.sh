@@ -258,7 +258,7 @@ fi
 
 # DOFLinx executable
 echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
 if [ $? -ne 0 ]; then
     echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
     install_successful=false
@@ -268,7 +268,7 @@ wget -q -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb" || true
 
 # Supporting files (always from stable)
 echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg..."
-wget -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
+wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
 if [ $? -ne 0 ]; then
     echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg"
     install_successful=false
