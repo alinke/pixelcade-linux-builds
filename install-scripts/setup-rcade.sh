@@ -685,30 +685,74 @@ echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
 RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
 
 if [[ -f "$RETROARCH_CFG" ]]; then
-    # Create a backup
-    cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
+    # Strip null bytes (^@ corruption from interrupted writes) before processing
+    tmp_clean=$(mktemp)
+    tr -d '\0' < "$RETROARCH_CFG" > "$tmp_clean"
+    if [[ -s "$tmp_clean" ]]; then
+        orig_size=$(wc -c < "$RETROARCH_CFG")
+        clean_size=$(wc -c < "$tmp_clean")
+        if [[ "$orig_size" != "$clean_size" ]]; then
+            echo -e "${yellow}[WARNING]${nc} Null bytes found in retroarch.cfg - cleaning before update"
+            cat "$tmp_clean" > "$RETROARCH_CFG"
+        fi
+        rm -f "$tmp_clean"
+    else
+        rm -f "$tmp_clean"
+        echo -e "${red}[WARNING]${nc} retroarch.cfg appears empty after null-byte cleanup - skipping"
+        RETROARCH_CFG=""
+    fi
+fi
 
-    # Function to update or add a setting
+if [[ -f "$RETROARCH_CFG" ]]; then
+    # Create a backup, keeping only the 3 most recent
+    cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
+    ls -t "${RETROARCH_CFG}.backup."* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
+
+    # Update a setting in retroarch.cfg (safe: writes via temp file)
     update_setting() {
         local setting="$1"
         local value="$2"
         local file="$3"
-
+        local tmp_file
+        tmp_file=$(mktemp)
         if grep -q "^${setting} =" "$file"; then
-            # Setting exists, update it
-            sed -i "s|^${setting} =.*|${setting} = ${value}|" "$file"
+            sed "s|^${setting} =.*|${setting} = ${value}|" "$file" > "$tmp_file"
         else
-            # Setting doesn't exist, append it
-            echo "${setting} = ${value}" >> "$file"
+            cp "$file" "$tmp_file"
+            echo "${setting} = ${value}" >> "$tmp_file"
         fi
+        if [[ -s "$tmp_file" ]]; then
+            cat "$tmp_file" > "$file"
+        fi
+        rm -f "$tmp_file"
     }
 
-    # Update the three RetroAchievements settings
+    # Enable RetroAchievements
     update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
     update_setting "cheevos_hardcore_mode_enable" '"false"' "$RETROARCH_CFG"
     update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
 
     echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
+
+    # Prompt for credentials
+    echo -e ""
+    echo -e "${cyan}[RetroAchievements]${nc} Create a free account at: ${cyan}https://retroachievements.org/${nc}"
+    read -p "RetroAchievements username (leave blank to skip): " ra_username
+    ra_username="${ra_username%$'\r'}"
+    if [[ -n "$ra_username" ]]; then
+        read -s -p "RetroAchievements password: " ra_password
+        echo ""
+        ra_password="${ra_password%$'\r'}"
+        if [[ -n "$ra_password" ]]; then
+            update_setting "cheevos_username" "\"${ra_username}\"" "$RETROARCH_CFG"
+            update_setting "cheevos_password" "\"${ra_password}\"" "$RETROARCH_CFG"
+            echo -e "${green}[SUCCESS]${nc} RetroAchievements credentials saved"
+        else
+            echo -e "${yellow}[INFO]${nc} No password entered - skipping credentials"
+        fi
+    else
+        echo -e "${green}[INFO]${nc} Skipping credentials - set them later via the Pixelcade Companion"
+    fi
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
 fi
