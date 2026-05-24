@@ -4,7 +4,9 @@
       "Bash(chmod +x /Users/al/Documents/code/pixelcade-linux-builds/install-scripts/setup-rcade-lcd.sh)",
       "Bash(chmod +x /Users/al/Documents/code/pixelcade-linux-builds/install-scripts/setup-rcade-doflinx-disable.sh /Users/al/Documents/code/pixelcade-linux-builds/install-scripts/setup-rcade-doflinx-uninstall.sh)",
       "Bash(git -C /Users/al/Documents/code/pixelcadeusbtools status --short)",
-      "Bash(grep -n \"/>;$\" /Users/al/Documents/code/pixelcadeusbtools/pixelweb/companion/src/components/settings/FrontEndSetupSettings.tsx)"
+      "Bash(grep -n \"/>;$\" /Users/al/Documents/code/pixelcadeusbtools/pixelweb/companion/src/components/settings/FrontEndSetupSettings.tsx)",
+      "Bash(bash deploy-rcade.sh)",
+      "Bash(docker buildx *)"
     ]
   }
 }
