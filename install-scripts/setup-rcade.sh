@@ -727,32 +727,14 @@ if [[ -f "$RETROARCH_CFG" ]]; then
         rm -f "$tmp_file"
     }
 
-    # Enable RetroAchievements
-    update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
-    update_setting "cheevos_hardcore_mode_enable" '"false"' "$RETROARCH_CFG"
+    # Enable Encore Mode (cheevos_start_active) — the only setting we control here.
+    # cheevos_enable, cheevos_hardcore_mode_enable, username, and password are
+    # managed via R-Cade Main Menu -> Game Settings -> RetroArch Settings.
     update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
 
-    echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
-
-    # Prompt for credentials
-    echo -e ""
-    echo -e "${cyan}[RetroAchievements]${nc} Create a free account at: ${cyan}https://retroachievements.org/${nc}"
-    read -p "RetroAchievements username (leave blank to skip): " ra_username
-    ra_username="${ra_username%$'\r'}"
-    if [[ -n "$ra_username" ]]; then
-        read -s -p "RetroAchievements password: " ra_password
-        echo ""
-        ra_password="${ra_password%$'\r'}"
-        if [[ -n "$ra_password" ]]; then
-            update_setting "cheevos_username" "\"${ra_username}\"" "$RETROARCH_CFG"
-            update_setting "cheevos_password" "\"${ra_password}\"" "$RETROARCH_CFG"
-            echo -e "${green}[SUCCESS]${nc} RetroAchievements credentials saved"
-        else
-            echo -e "${yellow}[INFO]${nc} No password entered - skipping credentials"
-        fi
-    else
-        echo -e "${green}[INFO]${nc} Skipping credentials - set them later via the Pixelcade Companion"
-    fi
+    echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements Encore Mode"
+    echo -e "${cyan}[NOTE]${nc} Set your username, password, and enable RetroAchievements via"
+    echo -e "       R-Cade Main Menu -> Game Settings -> RetroArch Settings."
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
 fi
