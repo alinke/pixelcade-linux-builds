@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.7.4",
   "latestArtworkVersion": 55,
-  "betaFirmwareVersion": "7.7.4",
+  "betaFirmwareVersion": "7.7.5",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -115,7 +115,12 @@
     "7.7.2  Added a theme refresh icon allowing you to refresh the theme after an artwork update",
     "7.7.3  This call now works too for mameoutputs http://pixelcadedx-xxxxxxxx.local:8080/arcade/stream/mameoutput/galaga_beam?l=3&notext&nomini&nostrip",
     "7.7.4  Artwork update fixes for 1280 x 390 Pixelcades"
+
   ],
-  "betaReleaseNotes": [],
+  "betaReleaseNotes": [
+        "7.7.5  Sorting release notes now by most recent first and limit to top 50 with an expand all option",
+        "7.7.5  New widges: What to Watch, Twitch Live, Countdown Timer",
+        "7.7.5  Fixed broken widgets: NetFlix Top 10, Horrorscope"
+  ],
   "minimumRequiredVersion": "5.0.0"
 }
