@@ -127,18 +127,21 @@
       "7.7.2  Added console fallback logic for mame categories like 'fighting games', will check the mame folder for a match, other fallback folders can be specified too by adding a comma separated list in pixelcade.ini: consoleFallback=mame,x where x could be nes for example",
       "7.7.2  Bug fix: retroachivements now works in LCD only mode",
       "7.7.3  Adding front end setup in settings to make it easier to set up front end integrations for things like Big Box, HyperSpin,  etc. This will also include checks to make sure everything is set up correctly and give the user instructions on how to fix if not.",
-      "7.7.3. Restart and Shutdown options in Companion now will reboot and shutdown on Windows"
+      "7.7.3  Restart and Shutdown options in Companion now will reboot and shutdown on Windows"
 
     ]
   },
   "beta": {
-    "version": "7.7.5",
+    "version": "7.7.6",
     "artworkUpdate": false,
     "releaseNotes": [ 
-      "7.7.4. Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly",
-      "7.7.4. Added RCade checks to the front end setup tab in settings to make sure the Scripts scripts for front end integration are installed and configured correctly",
-      "7.7.4. Attract mode can be enabled and disabled for RCade and Batocera from Pixelcade Companion",
-      "7.7.5. Added DOFLinx install, RetroAchievements install, and LCD USB install for RCade in the front end setup tab in settings"
+      "7.7.4  Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly",
+      "7.7.4  Added RCade checks to the front end setup tab in settings to make sure the Scripts scripts for front end integration are installed and configured correctly",
+      "7.7.4  Attract mode can be enabled and disabled for RCade and Batocera from Pixelcade Companion",
+      "7.7.5  Added DOFLinx install, RetroAchievements install, and LCD USB install for RCade in the front end setup tab in settings",
+      "7.7.6  New widges: What to Watch, Twitch Live, Countdown Timer",
+      "7.7.6  Fixed broken widgets: Netflix Top 10, Horrorscope",
+      "7.7.6  Restyled the Widget tiles"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
