@@ -9,7 +9,7 @@
 
 #*************************************************
 # These are parameters you can customize
-INSTALLPATH=${HOME}/  # /rcade/share
+INSTALLPATH=/rcade/share/
 DISPLAYHIGHSCORES=yes
 DISPLAYSCROLLINGTEXT=yes
 DISPLAYANIMATIONS=no # if the game has both a PNG and a GIF, it will only play the PNG if this is set to no
@@ -128,8 +128,8 @@ havehighscore() {
                   HIPATH=/rcade/share/saves/mame2003-plus/hi
             fi
 
-            if [[ -f "${HIPATH}$GAMENAME.hi" ]]; then
-                HIGHSCORE=$(${INSTALLPATH}pixelcade/jdk/bin/java -jar ${HI2TXT_JAR} -r ${HIPATH}$GAMENAME -max-lines $NUMBERHIGHSCORES -max-columns 3 -keep-field "SCORE" -keep-field "NAME" -keep-field "RANK")
+            if [[ -f "${HIPATH}/${GAMENAME}.hi" ]]; then
+                HIGHSCORE=$(${INSTALLPATH}pixelcade/jdk/bin/java -jar ${HI2TXT_JAR} -r ${HIPATH}/${GAMENAME} -max-lines $NUMBERHIGHSCORES -max-columns 3 -keep-field "SCORE" -keep-field "NAME" -keep-field "RANK")
                 if [ "$HIGHSCORE" == "" ]; then
                     #echo "[ERROR] This game does not have high scores or does not support high scores"
                     nohighscore
