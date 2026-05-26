@@ -22,6 +22,9 @@ HI2TXT_DATA=${INSTALLPATH}pixelcade/hi2txt/hi2txt.zip
 
 PIXELCADEBASEURL="http://127.0.0.1:8080/"  # BASE URL for RESTful calls to Pixelcade, note localhost won't work if the user is not ethernet or wifi connected
 
+# Stop attract mode on every game launch, regardless of emulator or whether args are present
+curl -s "${PIXELCADEBASEURL}attract/stop" >> /dev/null 2>/dev/null
+
 SYSTEM=$(basename $(dirname "$1")) #get just the console / system name like mame, nes, etc.
 GAMENAME="$2"
 if [ "$3" != "" ]; then
@@ -110,7 +113,6 @@ havehighscore() {
   		PIXELCADEURL="console/stream/black"
   		curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null & #this was causing an issue on new pixelweb
 			sleep 1 #TO DO for some reason, doesn't always work without this, in theory it should not be needed
-      curl -s "${PIXELCADEBASEURL}attract/stop" >> /dev/null 2>/dev/null
 			URLENCODED_GAMENAME=$(rawurlencode "$GAMENAME")
       URLENCODED_TITLE=$(rawurlencode "$GAMETITLE")
       #let's make a call here if this game has high scores
