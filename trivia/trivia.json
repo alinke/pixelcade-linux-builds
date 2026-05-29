@@ -1,0 +1,622 @@
+"category": "trivia",
+"facts": [
+    {
+      "id": "trivia_001",
+      "text": "Pac-Man was originally called 'Puck-Man' in Japan before being renamed for Western release.",
+      "system": "mame",
+      "rom": "pacman"
+    },
+    {
+      "id": "trivia_002",
+      "text": "Donkey Kong was one of the first games to feature a jumping mechanic as core gameplay.",
+      "system": "mame",
+      "rom": "dkong"
+    },
+    {
+      "id": "trivia_003",
+      "text": "The original Street Fighter had pressure-sensitive punch and kick pads in the arcade cabinet.",
+      "system": "mame",
+      "rom": "sf"
+    },
+    {
+      "id": "trivia_004",
+      "text": "Galaga was a sequel to Galaxian and introduced the ability to capture your own ship.",
+      "system": "mame",
+      "rom": "galaga"
+    },
+    {
+      "id": "trivia_005",
+      "text": "Space Invaders was so popular it caused a shortage of 100-yen coins in Japan.",
+      "system": "mame",
+      "rom": "invaders"
+    },
+
+    {
+      "id": "trivia_006",
+      "text": "The NES was known as the Famicom in Japan, short for Family Computer.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_007",
+      "text": "The Nintendo Entertainment System helped revive the video game industry after the 1983 crash.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_008",
+      "text": "Super Mario Bros. helped define side-scrolling platform games.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_009",
+      "text": "The NES controller helped popularize the D-pad design.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_010",
+      "text": "The Legend of Zelda introduced battery-backed saving in cartridges.",
+      "system": "nes",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_011",
+      "text": "The Sega Genesis was known as the Mega Drive outside North America.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_012",
+      "text": "Sonic the Hedgehog was designed to compete directly with Mario’s popularity.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_013",
+      "text": "The Genesis used a Motorola 68000 CPU similar to early home computers.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_014",
+      "text": "The Sega Genesis marketing slogan was 'Genesis does what Nintendon’t'.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_015",
+      "text": "Mortal Kombat on Genesis was famous for having uncensored blood via a cheat code.",
+      "system": "genesis",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_016",
+      "text": "The Atari 2600 helped establish interchangeable game cartridges as the standard.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_017",
+      "text": "Pitfall! was one of the earliest platform adventure games on home consoles.",
+      "system": "atari2600",
+      "rom": "pitfall"
+    },
+    {
+      "id": "trivia_018",
+      "text": "The Atari 2600 joystick had a single button and a digital directional stick.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_019",
+      "text": "E.T. for Atari 2600 is often cited as part of the 1983 video game crash.",
+      "system": "atari2600",
+      "rom": "et"
+    },
+    {
+      "id": "trivia_020",
+      "text": "The Atari 2600 had only 128 bytes of RAM.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_021",
+      "text": "The PlayStation was originally a failed Nintendo collaboration project.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_022",
+      "text": "Final Fantasy VII helped establish cinematic storytelling in RPGs.",
+      "system": "psx",
+      "rom": "ff7"
+    },
+    {
+      "id": "trivia_023",
+      "text": "Metal Gear Solid pioneered stealth gameplay on consoles.",
+      "system": "psx",
+      "rom": "mgs"
+    },
+    {
+      "id": "trivia_024",
+      "text": "The PlayStation used CD-ROMs instead of cartridges to reduce production costs.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_025",
+      "text": "The original PlayStation sold over 100 million units worldwide.",
+      "system": "psx",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_026",
+      "text": "The Nintendo 64 introduced analog control with its unique controller design.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_027",
+      "text": "Super Mario 64 was one of the first fully 3D platform games.",
+      "system": "n64",
+      "rom": "sm64"
+    },
+    {
+      "id": "trivia_028",
+      "text": "The Nintendo 64 used cartridges instead of CDs, limiting storage but improving load times.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_029",
+      "text": "GoldenEye 007 helped define console multiplayer FPS gaming.",
+      "system": "n64",
+      "rom": "goldeneye"
+    },
+    {
+      "id": "trivia_030",
+      "text": "The Nintendo 64 was named after its 64-bit processor architecture.",
+      "system": "n64",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_031",
+      "text": "The Game Boy helped define portable gaming as a mainstream market.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_032",
+      "text": "Pokémon Red and Blue became cultural phenomena on the Game Boy.",
+      "system": "gb",
+      "rom": "pokemon"
+    },
+    {
+      "id": "trivia_033",
+      "text": "The Game Boy had a famously long battery life compared to competitors.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_034",
+      "text": "The Game Boy’s monochrome screen was chosen to maximize battery life.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_035",
+      "text": "Tetris became one of the most iconic pack-in games in history.",
+      "system": "gb",
+      "rom": "tetris"
+    },
+
+    {
+      "id": "trivia_036",
+      "text": "The SNES introduced Mode 7 graphics for pseudo-3D effects.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_037",
+      "text": "Super Metroid is considered one of the best action-adventure games ever made.",
+      "system": "snes",
+      "rom": "metroid"
+    },
+    {
+      "id": "trivia_038",
+      "text": "The SNES controller introduced the X and Y face buttons.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_039",
+      "text": "Chrono Trigger featured multiple endings based on player choices.",
+      "system": "snes",
+      "rom": "ct"
+    },
+    {
+      "id": "trivia_040",
+      "text": "The SNES is widely considered one of Nintendo’s greatest consoles.",
+      "system": "snes",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_041",
+      "text": "The Dreamcast was the first console with built-in online play.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_042",
+      "text": "Sonic Adventure was a flagship launch title for the Dreamcast.",
+      "system": "dreamcast",
+      "rom": "sonic"
+    },
+    {
+      "id": "trivia_043",
+      "text": "The Dreamcast VMU had a built-in screen for mini-games and stats.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_044",
+      "text": "The Dreamcast was Sega’s final home console.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_045",
+      "text": "Crazy Taxi became one of the Dreamcast’s most iconic arcade-style games.",
+      "system": "dreamcast",
+      "rom": "crazytaxi"
+    },
+
+    {
+      "id": "trivia_046",
+      "text": "The PS2 could play DVDs, making it a popular home entertainment device.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_047",
+      "text": "Grand Theft Auto: San Andreas became one of the best-selling PS2 games.",
+      "system": "ps2",
+      "rom": "gtasa"
+    },
+    {
+      "id": "trivia_048",
+      "text": "The PS2 had a massive game library with over 3,800 titles.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_049",
+      "text": "Shadow of the Colossus was praised for its artistic minimalist design.",
+      "system": "ps2",
+      "rom": "sotc"
+    },
+    {
+      "id": "trivia_050",
+      "text": "The PS2 remains the best-selling console of all time.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_051",
+      "text": "Pac-Man was designed to appeal to a wider audience, including women, which was rare for arcade games at the time.",
+      "system": "mame",
+      "rom": "pacman"
+    },
+    {
+      "id": "trivia_052",
+      "text": "Donkey Kong was one of Nintendo’s first major arcade hits and introduced Mario as 'Jumpman'.",
+      "system": "mame",
+      "rom": "dkong"
+    },
+    {
+      "id": "trivia_053",
+      "text": "Space Invaders introduced the concept of increasing difficulty as enemies speed up.",
+      "system": "mame",
+      "rom": "invaders"
+    },
+    {
+      "id": "trivia_054",
+      "text": "Asteroids used vector graphics instead of sprite-based rendering.",
+      "system": "mame",
+      "rom": "asteroids"
+    },
+    {
+      "id": "trivia_055",
+      "text": "Ms. Pac-Man was originally created as an unofficial enhancement kit for Pac-Man.",
+      "system": "mame",
+      "rom": "mspacman"
+    },
+
+    {
+      "id": "trivia_056",
+      "text": "Street Fighter II popularized the fighting game genre worldwide.",
+      "system": "mame",
+      "rom": "sf2"
+    },
+    {
+      "id": "trivia_057",
+      "text": "Mortal Kombat used digitized actors for its character sprites.",
+      "system": "mame",
+      "rom": "mk"
+    },
+    {
+      "id": "trivia_058",
+      "text": "Final Fight helped define the side-scrolling beat-em-up genre.",
+      "system": "mame",
+      "rom": "ffight"
+    },
+    {
+      "id": "trivia_059",
+      "text": "NBA Jam became famous for its exaggerated arcade-style basketball gameplay.",
+      "system": "mame",
+      "rom": "nbajam"
+    },
+    {
+      "id": "trivia_060",
+      "text": "Pac-Land was one of the first arcade games to feature side-scrolling movement.",
+      "system": "mame",
+      "rom": "pacland"
+    },
+
+    {
+      "id": "trivia_061",
+      "text": "The Sega Saturn had strong 2D capabilities that made it popular for arcade ports.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_062",
+      "text": "Nights into Dreams showcased the Saturn’s graphical capabilities.",
+      "system": "saturn",
+      "rom": "nights"
+    },
+    {
+      "id": "trivia_063",
+      "text": "The Saturn’s dual-CPU design made it difficult for developers to optimize games.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_064",
+      "text": "The Saturn was released earlier than the PlayStation in North America, hurting its market performance.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_065",
+      "text": "Virtua Fighter helped establish 3D fighting games on consoles.",
+      "system": "saturn",
+      "rom": "vf"
+    },
+
+    {
+      "id": "trivia_066",
+      "text": "The Atari Jaguar was marketed as a 64-bit system despite debate over its architecture.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_067",
+      "text": "Alien vs Predator is one of the most notable Atari Jaguar games.",
+      "system": "atarijaguar",
+      "rom": "avp"
+    },
+    {
+      "id": "trivia_068",
+      "text": "The Jaguar controller included a numeric keypad for extended input.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_069",
+      "text": "The Atari Jaguar struggled due to a small game library.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_070",
+      "text": "Tempest 2000 was a standout title showcasing the Jaguar’s capabilities.",
+      "system": "atarijaguar",
+      "rom": "tempest"
+    },
+
+    {
+      "id": "trivia_071",
+      "text": "The Neo Geo AES was considered a luxury console due to extremely expensive cartridges.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_072",
+      "text": "The King of Fighters series became one of SNK’s most iconic franchises.",
+      "system": "neogeo",
+      "rom": "kof"
+    },
+    {
+      "id": "trivia_073",
+      "text": "Metal Slug is famous for its detailed pixel art and animation.",
+      "system": "neogeo",
+      "rom": "mslug"
+    },
+    {
+      "id": "trivia_074",
+      "text": "Neo Geo hardware was essentially arcade-perfect at home.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_075",
+      "text": "Samurai Shodown helped define weapon-based fighting games.",
+      "system": "neogeo",
+      "rom": "samsho"
+    },
+
+    {
+      "id": "trivia_076",
+      "text": "The Game Boy Camera allowed users to take and edit black-and-white photos.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_077",
+      "text": "The Game Boy Printer let users print images from the Game Boy Camera.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_078",
+      "text": "The Game Boy Pocket was a smaller, lighter revision of the original Game Boy.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_079",
+      "text": "The original Game Boy screen had no backlight, relying on ambient light.",
+      "system": "gb",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_080",
+      "text": "The Game Boy helped establish portable gaming as a global phenomenon.",
+      "system": "gb",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_081",
+      "text": "The PSP was one of the first handhelds to support full motion video playback.",
+      "system": "psp",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_082",
+      "text": "God of War: Chains of Olympus was a major PSP exclusive.",
+      "system": "psp",
+      "rom": "gow"
+    },
+    {
+      "id": "trivia_083",
+      "text": "The PSP had Wi-Fi connectivity for online multiplayer gaming.",
+      "system": "psp",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_084",
+      "text": "The PSP Go was the first major Sony handheld to go fully digital.",
+      "system": "psp",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_085",
+      "text": "Monster Hunter became extremely popular on PSP in Japan.",
+      "system": "psp",
+      "rom": "mh"
+    },
+
+    {
+      "id": "trivia_086",
+      "text": "The PlayStation Vita featured dual analog sticks, a first for Sony handhelds.",
+      "system": "psvita",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_087",
+      "text": "Uncharted: Golden Abyss was a flagship PS Vita launch title.",
+      "system": "psvita",
+      "rom": "uncharted"
+    },
+    {
+      "id": "trivia_088",
+      "text": "The PS Vita had a rear touchpad for unique control schemes.",
+      "system": "psvita",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_089",
+      "text": "The PS Vita could connect to the PS3 and PS4 for remote play.",
+      "system": "psvita",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_090",
+      "text": "Persona 4 Golden is widely considered one of the best PS Vita games.",
+      "system": "psvita",
+      "rom": "p4g"
+    },
+
+    {
+      "id": "trivia_091",
+      "text": "The Nintendo DS introduced PictoChat for local messaging between devices.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_092",
+      "text": "Mario Kart DS helped popularize online handheld racing games.",
+      "system": "nintendo_ds",
+      "rom": "mkds"
+    },
+    {
+      "id": "trivia_093",
+      "text": "The DS had two separate screens that enabled unique gameplay mechanics.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_094",
+      "text": "Brain Age became a surprise hit that expanded the DS audience.",
+      "system": "nintendo_ds",
+      "rom": "brainage"
+    },
+    {
+      "id": "trivia_095",
+      "text": "The Nintendo DS helped bring casual gaming into the mainstream.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+
+    {
+      "id": "trivia_096",
+      "text": "The Nintendo 3DS initially launched with a high price before a rapid price cut.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_097",
+      "text": "Animal Crossing: New Leaf became a defining 3DS title.",
+      "system": "nintendo_3ds",
+      "rom": "acnl"
+    },
+    {
+      "id": "trivia_098",
+      "text": "The 3DS introduced augmented reality cards for interactive gameplay.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_099",
+      "text": "The New Nintendo 3DS improved performance for more demanding games.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "trivia_100",
+      "text": "The Nintendo 3DS succeeded despite competition from smartphones.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    }
+  ]
+}

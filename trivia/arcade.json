@@ -1,0 +1,1241 @@
+{
+  "category": "arcade",
+  "facts": [
+    {
+      "id": "arc_001",
+      "text": "Pac-Man was originally released as 'Puck-Man' in Japan in 1980 before being renamed for Western markets.",
+      "system": "mame",
+      "rom": "pacman"
+    },
+    {
+      "id": "arc_002",
+      "text": "Space Invaders (1978) helped define the fixed shooter genre and became a global arcade phenomenon.",
+      "system": "mame",
+      "rom": "spaceinvaders"
+    },
+    {
+      "id": "arc_003",
+      "text": "Donkey Kong (1981) introduced Mario under the original name 'Jumpman'.",
+      "system": "mame",
+      "rom": "dkong"
+    },
+    {
+      "id": "arc_004",
+      "text": "Galaga (1981) introduced enemy capture mechanics that doubled player firepower when rescued.",
+      "system": "mame",
+      "rom": "galaga"
+    },
+    {
+      "id": "arc_005",
+      "text": "Asteroids (1979) used vector graphics instead of raster-based sprite rendering.",
+      "system": "mame",
+      "rom": "asteroid",
+      "art": { "system": "mame", "key": "asteroids", "type": "marquee" }
+    },
+    {
+      "id": "arc_006",
+      "text": "Frogger (1981) challenged players to guide frogs across traffic and rivers safely.",
+      "system": "mame",
+      "rom": "frogger",
+      "art": { "system": "mame", "key": "frogger", "type": "marquee" }
+    },
+    {
+      "id": "arc_007",
+      "text": "Centipede (1980) used a trackball control system instead of a joystick.",
+      "system": "mame",
+      "rom": "centiped"
+    },
+    {
+      "id": "arc_008",
+      "text": "Defender (1981) introduced a mini-map radar showing enemy positions.",
+      "system": "mame",
+      "rom": "defender"
+    },
+    {
+      "id": "arc_009",
+      "text": "Ms. Pac-Man began as an unauthorized modification of Pac-Man before becoming official.",
+      "system": "mame",
+      "rom": "mspacman"
+    },
+    {
+      "id": "arc_010",
+      "text": "Pong (1972) is one of the earliest commercially successful arcade games.",
+      "system": "mame",
+      "rom": "pong"
+    },
+
+    {
+      "id": "arc_011",
+      "text": "Galaxian (1979) was one of the first arcade games to use full-color RGB sprites.",
+      "system": "mame",
+      "rom": "galaxian"
+    },
+    {
+      "id": "arc_012",
+      "text": "Q*bert (1982) used an isometric pyramid perspective and unique jump-based movement.",
+      "system": "mame",
+      "rom": "qbert"
+    },
+    {
+      "id": "arc_013",
+      "text": "Tempest (1981) featured early 3D vector graphics inside a geometric tube.",
+      "system": "mame",
+      "rom": "tempest"
+    },
+    {
+      "id": "arc_014",
+      "text": "Joust (1982) featured flying ostrich-mounted knights battling in mid-air.",
+      "system": "mame",
+      "rom": "joust"
+    },
+    {
+      "id": "arc_015",
+      "text": "Robotron: 2084 pioneered the twin-stick shooter control scheme.",
+      "system": "mame",
+      "rom": "robotron"
+    },
+    {
+      "id": "arc_016",
+      "text": "Dig Dug (1982) allowed players to defeat enemies by inflating them until they popped.",
+      "system": "mame",
+      "rom": "digdug"
+    },
+    {
+      "id": "arc_017",
+      "text": "BurgerTime (1982) involved assembling giant burgers while avoiding enemies.",
+      "system": "mame",
+      "rom": "btime"
+    },
+    {
+      "id": "arc_018",
+      "text": "Tron (1982) was one of the earliest arcade games based on a licensed film.",
+      "system": "mame",
+      "rom": "tron"
+    },
+    {
+      "id": "arc_019",
+      "text": "Battlezone (1980) is considered one of the first true 3D arcade games.",
+      "system": "mame",
+      "rom": "bzone"
+    },
+    {
+      "id": "arc_020",
+      "text": "Missile Command (1980) was inspired by Cold War nuclear defense fears.",
+      "system": "mame",
+      "rom": "missile"
+    },
+
+    {
+      "id": "arc_021",
+      "text": "Berzerk (1980) featured early digitized speech in arcade gaming.",
+      "system": "mame",
+      "rom": "berzerk"
+    },
+    {
+      "id": "arc_022",
+      "text": "Sinistar (1982) became famous for its AI voice shouting 'I am Sinistar!'",
+      "system": "mame",
+      "rom": "sinistar"
+    },
+    {
+      "id": "arc_023",
+      "text": "Spy Hunter (1983) featured a built-in steering wheel arcade cabinet.",
+      "system": "mame",
+      "rom": "spyhunt"
+    },
+    {
+      "id": "arc_024",
+      "text": "Paperboy (1985) simulated newspaper delivery through suburban streets.",
+      "system": "mame",
+      "rom": "paperboy"
+    },
+    {
+      "id": "arc_025",
+      "text": "Track & Field (1983) popularized competitive button-mashing gameplay.",
+      "system": "mame",
+      "rom": "trackfld"
+    },
+
+    {
+      "id": "arc_026",
+      "text": "Kung-Fu Master (1984) helped establish the side-scrolling beat-em-up genre.",
+      "system": "mame",
+      "rom": "kungfum"
+    },
+    {
+      "id": "arc_027",
+      "text": "Gauntlet (1985) was one of the first multiplayer dungeon crawler arcade games.",
+      "system": "mame",
+      "rom": "gauntlet"
+    },
+    {
+      "id": "arc_028",
+      "text": "Bubble Bobble (1986) featured cooperative gameplay with two dragon characters.",
+      "system": "mame",
+      "rom": "bublbobl"
+    },
+    {
+      "id": "arc_029",
+      "text": "Out Run (1986) introduced branching paths and a dynamic soundtrack experience.",
+      "system": "mame",
+      "rom": "outrun"
+    },
+    {
+      "id": "arc_030",
+      "text": "Gradius (1985) introduced a selectable power-up system for ship upgrades.",
+      "system": "mame",
+      "rom": "gradius"
+    },
+
+    {
+      "id": "arc_031",
+      "text": "Dragon's Lair (1983) used laserdisc animation instead of sprite graphics.",
+      "system": "daphne",
+      "rom": "dle11"
+    },
+    {
+      "id": "arc_032",
+      "text": "Pole Position (1982) was one of the first realistic racing arcade games.",
+      "system": "mame",
+      "rom": "polepos"
+    },
+    {
+      "id": "arc_033",
+      "text": "Asteroids became one of Atari’s most commercially successful arcade titles.",
+      "system": "mame",
+      "rom": "asteroid"
+    },
+    {
+      "id": "arc_034",
+      "text": "Space Invaders caused a shortage of 100-yen coins in Japan due to popularity.",
+      "system": "mame",
+      "rom": "invaders"
+    },
+    {
+      "id": "arc_035",
+      "text": "Pac-Man’s ghost AI uses distinct behavioral patterns for each enemy.",
+      "system": "mame",
+      "rom": "pacman"
+    },
+
+    {
+      "id": "arc_036",
+      "text": "Donkey Kong Jr. is the only Mario game where Mario appears as the antagonist.",
+      "system": "mame",
+      "rom": "dkongjr"
+    },
+    {
+      "id": "arc_037",
+      "text": "Frogger became iconic for its simple controls and high difficulty curve.",
+      "system": "mame",
+      "rom": "frogger"
+    },
+    {
+      "id": "arc_038",
+      "text": "Galaga is often included in arcade compilation cabinets due to popularity.",
+      "system": "mame",
+      "rom": "galaga"
+    },
+    {
+      "id": "arc_039",
+      "text": "Centipede was one of the first arcade games to use a trackball controller.",
+      "system": "mame",
+      "rom": "centiped"
+    },
+    {
+      "id": "arc_040",
+      "text": "Pac-Man remains one of the most recognizable video game characters ever created.",
+      "system": "mame",
+      "rom": "pacman"
+    },
+
+    {
+      "id": "arc_041",
+      "text": "Defender introduced fast-paced scrolling and complex multi-button controls.",
+      "system": "mame",
+      "rom": "defender"
+    },
+    {
+      "id": "arc_042",
+      "text": "Q*bert used audio synthesis techniques to create speech-like sound effects.",
+      "system": "mame"
+    },
+    {
+      "id": "arc_043",
+      "text": "Robotron: 2084 heavily influenced modern twin-stick shooter design.",
+      "system": "mame",
+      "rom": "robotron"
+    },
+    {
+      "id": "arc_044",
+      "text": "Joust featured physics based on flapping movement and momentum control.",
+      "system": "mame",
+      "rom": "joust"
+    },
+    {
+      "id": "arc_045",
+      "text": "Galaga improved upon Galaxian by introducing enemy dive patterns and formations.",
+      "system": "mame",
+      "rom": "galaga"
+    },
+
+    {
+      "id": "arc_046",
+      "text": "Dig Dug became known for its inflation-based enemy defeat mechanic.",
+      "system": "mame",
+      "rom": "digdug"
+    },
+    {
+      "id": "arc_047",
+      "text": "BurgerTime requires assembling giant burgers while avoiding enemy chefs.",
+      "system": "mame",
+      "rom": "btime",
+      "art": { "system": "mame", "key": "burgertime", "type": "marquee" }
+    },
+    {
+      "id": "arc_048",
+      "text": "Missile Command was inspired by Cold War nuclear anxiety and defense systems.",
+      "system": "mame",
+      "rom": "missile"
+    },
+    {
+      "id": "arc_049",
+      "text": "Berzerk was one of the first arcade games to feature digitized speech.",
+      "system": "mame",
+      "rom": "berzerk"
+    },
+    {
+      "id": "arc_050",
+      "text": "Sinistar became famous for its menacing voice declaring 'I am Sinistar!'",
+      "system": "mame",
+      "rom": "sinistar"
+    },
+    {
+      "id": "arc_051",
+      "text": "Street Fighter II (1991) defined the modern competitive fighting game genre.",
+      "system": "mame",
+      "rom": "sf2"
+    },
+    {
+      "id": "arc_052",
+      "text": "Final Fight (1989) helped establish the side-scrolling beat-em-up formula.",
+      "system": "mame",
+      "rom": "ffight"
+    },
+    {
+      "id": "arc_053",
+      "text": "Mortal Kombat (1992) became famous for its digitized actors and fatalities.",
+      "system": "mame",
+      "rom": "mk"
+    },
+    {
+      "id": "arc_054",
+      "text": "NBA Jam (1993) introduced exaggerated basketball action and catchphrases.",
+      "system": "mame",
+      "rom": "nbajam"
+    },
+    {
+      "id": "arc_055",
+      "text": "The Simpsons arcade game (1991) supported four-player co-op gameplay.",
+      "system": "mame",
+      "rom": "simpsons"
+    },
+
+    {
+      "id": "arc_056",
+      "text": "X-Men arcade (1992) allowed up to six players simultaneously.",
+      "system": "mame",
+      "rom": "xmen"
+    },
+    {
+      "id": "arc_057",
+      "text": "Teenage Mutant Ninja Turtles (1989) became a major arcade co-op hit.",
+      "system": "mame",
+      "rom": "tmnt"
+    },
+    {
+      "id": "arc_058",
+      "text": "Time Crisis (1995) introduced foot pedal cover mechanics in light gun games.",
+      "system": "mame",
+      "rom": "timecris"
+    },
+    {
+      "id": "arc_059",
+      "text": "House of the Dead (1996) popularized modern zombie light gun shooters.",
+      "system": "mame",
+      "rom": "hotd"
+    },
+    {
+      "id": "arc_060",
+      "text": "Daytona USA (1994) became one of Sega’s most iconic racing arcade games.",
+      "system": "mame",
+      "rom": "daytona"
+    },
+
+    {
+      "id": "arc_061",
+      "text": "Cruis'n USA (1994) brought arcade racing into mainstream North American arcades.",
+      "system": "mame",
+      "rom": "crusnusa"
+    },
+    {
+      "id": "arc_062",
+      "text": "Dance Dance Revolution (1998) introduced rhythm-based footpad gameplay.",
+      "system": "mame",
+      "rom": "ddr"
+    },
+    {
+      "id": "arc_063",
+      "text": "Guitar Freaks (1999) inspired the later Guitar Hero franchise.",
+      "system": "mame",
+      "rom": "gtfrk"
+    },
+    {
+      "id": "arc_064",
+      "text": "Beatmania (1997) helped define modern rhythm arcade games.",
+      "system": "mame",
+      "rom": "beatmania"
+    },
+    {
+      "id": "arc_065",
+      "text": "Marvel vs Capcom (1998) introduced fast-paced crossover fighting gameplay.",
+      "system": "mame",
+      "rom": "mvsc"
+    },
+
+    {
+      "id": "arc_066",
+      "text": "The King of Fighters '98 is considered one of the most balanced SNK fighters.",
+      "system": "mame",
+      "rom": "kof98"
+    },
+    {
+      "id": "arc_067",
+      "text": "Metal Slug (1996) became known for its detailed pixel animation and humor.",
+      "system": "mame",
+      "rom": "mslug"
+    },
+    {
+      "id": "arc_068",
+      "text": "Neo Geo arcade systems were known for bringing console-quality games to arcades.",
+      "system": "neogeo",
+      "rom": "neogeo"
+    },
+    {
+      "id": "arc_069",
+      "text": "Capcom vs SNK (2000) was a major crossover fighting game release.",
+      "system": "mame",
+      "rom": "capsnk"
+    },
+    {
+      "id": "arc_070",
+      "text": "Marvel Super Heroes (1995) introduced gem-based power mechanics.",
+      "system": "mame",
+      "rom": "msh"
+    },
+
+    {
+      "id": "arc_071",
+      "text": "House of the Dead 2 expanded zombie shooter gameplay with cooperative play.",
+      "system": "mame",
+      "rom": "hotd2"
+    },
+    {
+      "id": "arc_072",
+      "text": "Virtua Fighter (1993) was one of the first 3D fighting games.",
+      "system": "sega_model_2",
+      "rom": "vf"
+    },
+    {
+      "id": "arc_073",
+      "text": "Virtua Racing (1992) showcased early real-time 3D polygon racing.",
+      "system": "mame",
+      "rom": "vrracing"
+    },
+    {
+      "id": "arc_074",
+      "text": "After Burner (1987) delivered fast-paced jet combat with motion cabinets.",
+      "system": "mame",
+      "rom": "aburner"
+    },
+    {
+      "id": "arc_075",
+      "text": "Space Harrier (1985) used pseudo-3D scaling sprite technology.",
+      "system": "mame",
+      "rom": "sharrier"
+    },
+
+    {
+      "id": "arc_076",
+      "text": "OutRun 2 brought drifting mechanics into arcade racing games.",
+      "system": "sega_model_2",
+      "rom": "outrun2"
+    },
+    {
+      "id": "arc_077",
+      "text": "Initial D Arcade Stage popularized drift racing in Japan.",
+      "system": "sega_naomi",
+      "rom": "initiald"
+    },
+    {
+      "id": "arc_078",
+      "text": "Soul Calibur (arcade) was praised for its weapon-based fighting system.",
+      "system": "namco_system_12",
+      "rom": "soulclbr"
+    },
+    {
+      "id": "arc_079",
+      "text": "Tekken 3 refined 3D fighting mechanics and became a massive arcade hit.",
+      "system": "mame",
+      "rom": "tekken3"
+    },
+    {
+      "id": "arc_080",
+      "text": "Pac-Man Championship Edition modernized the classic maze formula.",
+      "system": "steam",
+      "rom": "pacman_ce"
+    },
+
+    {
+      "id": "arc_081",
+      "text": "Crazy Taxi delivered chaotic arcade driving with time-based objectives.",
+      "system": "sega_naomi",
+      "rom": "crzytaxi"
+    },
+    {
+      "id": "arc_082",
+      "text": "House of the Dead III introduced shotgun mechanics and faster pacing.",
+      "system": "xbox",
+      "rom": "hotd3"
+    },
+    {
+      "id": "arc_083",
+      "text": "Virtua Cop (1994) helped define modern light gun shooters.",
+      "system": "mame",
+      "rom": "vcop"
+    },
+    {
+      "id": "arc_084",
+      "text": "Time Crisis II introduced dual gun cooperative gameplay.",
+      "system": "mame",
+      "rom": "timecris2"
+    },
+    {
+      "id": "arc_085",
+      "text": "The Fast and the Furious arcade series is based on the film franchise.",
+      "system": "teknoparrot",
+      "rom": "fastfurious"
+    },
+
+    {
+      "id": "arc_086",
+      "text": "Mario Kart Arcade GP combines Nintendo characters with arcade racing.",
+      "system": "nintendo_arcade_systems",
+      "rom": "mkartgp"
+    },
+    {
+      "id": "arc_087",
+      "text": "Luigi’s Mansion arcade version introduced cooperative ghost hunting.",
+      "system": "nintendo_arcade_systems",
+      "rom": "luigisarcade"
+    },
+    {
+      "id": "arc_088",
+      "text": "The Walking Dead arcade shooter uses a cooperative survival horror format.",
+      "system": "teknoparrot",
+      "rom": "walkingdead"
+    },
+    {
+      "id": "arc_089",
+      "text": "Aliens arcade (Konami) is considered one of the best licensed arcade shooters.",
+      "system": "mame",
+      "rom": "aliens"
+    },
+    {
+      "id": "arc_090",
+      "text": "Sunset Riders (1991) is a Wild West themed side-scrolling shooter.",
+      "system": "mame",
+      "rom": "sunsetr"
+    },
+
+    {
+      "id": "arc_091",
+      "text": "The Simpsons Bowling arcade game turned the series into a sports spinoff.",
+      "system": "mame",
+      "rom": "simpbowl"
+    },
+    {
+      "id": "arc_092",
+      "text": "Cruis'n World expanded arcade racing with global tracks.",
+      "system": "mame",
+      "rom": "crusnwld"
+    },
+    {
+      "id": "arc_093",
+      "text": "Hydro Thunder featured high-speed powerboat racing gameplay.",
+      "system": "mame",
+      "rom": "hyprdriv"
+    },
+    {
+      "id": "arc_094",
+      "text": "Daytona USA 2 improved physics and track variety over the original.",
+      "system": "sega_model_3",
+      "rom": "daytona2"
+    },
+    {
+      "id": "arc_095",
+      "text": "Virtua Tennis became a flagship sports arcade title for Sega.",
+      "system": "sega_naomi",
+      "rom": "vtennis"
+    },
+
+    {
+      "id": "arc_096",
+      "text": "Dance Dance Revolution Extreme added licensed pop music tracks.",
+      "system": "mame",
+      "rom": "ddrmax"
+    },
+    {
+      "id": "arc_097",
+      "text": "Pump It Up introduced diagonal dance pad layouts for rhythm games.",
+      "system": "mame",
+      "rom": "pumpitup"
+    },
+    {
+      "id": "arc_098",
+      "text": "Beatmania IIDX added DJ turntable controls for rhythm gameplay.",
+      "system": "mame",
+      "rom": "bm2ndmix"
+    },
+    {
+      "id": "arc_099",
+      "text": "Guilty Gear introduced anime-style fighting game visuals and speed.",
+      "system": "mame",
+      "rom": "ggx"
+    },
+    {
+      "id": "arc_100",
+      "text": "Marvel vs Capcom 2 became known for its massive roster and fast gameplay.",
+      "system": "mame",
+      "rom": "mvsc2"
+    },
+    {
+      "id": "arc_101",
+      "text": "The King of Fighters '97 introduced a darker storyline direction for the series.",
+      "system": "neogeo",
+      "rom": "kof97"
+    },
+    {
+      "id": "arc_102",
+      "text": "Samurai Shodown became known for its slower, weapon-based fighting system.",
+      "system": "neogeo",
+      "rom": "samsho"
+    },
+    {
+      "id": "arc_103",
+      "text": "Metal Slug 2 added branching paths and more chaotic gameplay.",
+      "system": "neogeo",
+      "rom": "mslug2"
+    },
+    {
+      "id": "arc_104",
+      "text": "Windjammers combined frisbee mechanics with competitive arcade sports gameplay.",
+      "system": "neogeo",
+      "rom": "wjammers"
+    },
+    {
+      "id": "arc_105",
+      "text": "Puzzle Bobble (Bust-A-Move) became one of the most addictive arcade puzzle games.",
+      "system": "mame",
+      "rom": "pbobble"
+    },
+
+    {
+      "id": "arc_106",
+      "text": "Marvel vs Capcom 2 featured one of the largest character rosters in arcade fighting games.",
+      "system": "mame",
+      "rom": "mvsc2"
+    },
+    {
+      "id": "arc_107",
+      "text": "Capcom’s Alien vs Predator arcade game supported three-player co-op.",
+      "system": "mame",
+      "rom": "avsp"
+    },
+    {
+      "id": "arc_108",
+      "text": "Dungeons & Dragons: Shadow over Mystara blended RPG mechanics with arcade action.",
+      "system": "mame",
+      "rom": "ddsom"
+    },
+    {
+      "id": "arc_109",
+      "text": "The Punisher arcade game was based on the Marvel comic character.",
+      "system": "mame",
+      "rom": "punisher"
+    },
+    {
+      "id": "arc_110",
+      "text": "Cadillacs and Dinosaurs combined beat-em-up action with prehistoric themes.",
+      "system": "mame",
+      "rom": "dino"
+    },
+
+    {
+      "id": "arc_111",
+      "text": "Sunset Riders featured cooperative Wild West run-and-gun gameplay.",
+      "system": "mame",
+      "rom": "sunsetr"
+    },
+    {
+      "id": "arc_112",
+      "text": "Alien Storm blended beat-em-up and shooting mechanics.",
+      "system": "mame",
+      "rom": "aliensyn"
+    },
+    {
+      "id": "arc_113",
+      "text": "Golden Axe popularized fantasy-themed arcade beat-em-ups.",
+      "system": "mame",
+      "rom": "goldnaxe"
+    },
+    {
+      "id": "arc_114",
+      "text": "Altered Beast was known for its transformation mechanic gameplay.",
+      "system": "mame",
+      "rom": "altbeast"
+    },
+    {
+      "id": "arc_115",
+      "text": "Double Dragon helped establish the modern beat-em-up genre.",
+      "system": "mame",
+      "rom": "ddragon"
+    },
+
+    {
+      "id": "arc_116",
+      "text": "Final Fight 2 expanded the original formula with new characters and stages.",
+      "system": "mame",
+      "rom": "ffight2"
+    },
+    {
+      "id": "arc_117",
+      "text": "Teenage Mutant Ninja Turtles: Turtles in Time is considered a classic arcade sequel.",
+      "system": "mame",
+      "rom": "tmnt2"
+    },
+    {
+      "id": "arc_118",
+      "text": "The Simpsons arcade game remains one of the most beloved licensed beat-em-ups.",
+      "system": "mame",
+      "rom": "simpsons"
+    },
+    {
+      "id": "arc_119",
+      "text": "X-Men arcade supported six-player simultaneous gameplay.",
+      "system": "mame",
+      "rom": "xmen"
+    },
+    {
+      "id": "arc_120",
+      "text": "Knights of the Round used Arthurian legend as its setting.",
+      "system": "mame",
+      "rom": "knights"
+    },
+
+    {
+      "id": "arc_121",
+      "text": "Ridge Racer helped define Namco’s arcade racing style.",
+      "system": "mame",
+      "rom": "ridgerac"
+    },
+    {
+      "id": "arc_122",
+      "text": "Rave Racer improved on Ridge Racer with better drift mechanics.",
+      "system": "mame",
+      "rom": "ravracer"
+    },
+    {
+      "id": "arc_123",
+      "text": "Initial D Arcade Stage popularized drift racing culture in arcades.",
+      "system": "sega_naomi",
+      "rom": "initiald"
+    },
+    {
+      "id": "arc_124",
+      "text": "Crazy Taxi emphasized arcade-style time attack driving gameplay.",
+      "system": "sega_naomi",
+      "rom": "crzytaxi"
+    },
+    {
+      "id": "arc_125",
+      "text": "Hydro Thunder featured exaggerated arcade-style boat racing physics.",
+      "system": "mame",
+      "rom": "hyprdriv"
+    },
+
+    {
+      "id": "arc_126",
+      "text": "Daytona USA became one of Sega’s most iconic racing arcade titles.",
+      "system": "sega_model_2",
+      "rom": "daytona"
+    },
+    {
+      "id": "arc_127",
+      "text": "Virtua Racing showcased early 3D polygon-based racing graphics.",
+      "system": "mame",
+      "rom": "vrracing"
+    },
+    {
+      "id": "arc_128",
+      "text": "OutRun is known for its branching path system and synth soundtrack.",
+      "system": "mame",
+      "rom": "outrun"
+    },
+    {
+      "id": "arc_129",
+      "text": "After Burner featured fast jet combat and motion cabinet support.",
+      "system": "mame",
+      "rom": "aburner"
+    },
+    {
+      "id": "arc_130",
+      "text": "Space Harrier used pseudo-3D scaling sprite technology.",
+      "system": "mame",
+      "rom": "sharrier"
+    },
+
+    {
+      "id": "arc_131",
+      "text": "Time Crisis introduced cover-based shooting mechanics using a foot pedal.",
+      "system": "mame",
+      "rom": "timecris"
+    },
+    {
+      "id": "arc_132",
+      "text": "House of the Dead popularized arcade zombie shooter gameplay.",
+      "system": "mame",
+      "rom": "hotd"
+    },
+    {
+      "id": "arc_133",
+      "text": "Virtua Cop helped define the modern light gun shooter genre.",
+      "system": "mame",
+      "rom": "vcop"
+    },
+    {
+      "id": "arc_134",
+      "text": "Silent Scope introduced sniper rifle arcade gameplay mechanics.",
+      "system": "mame",
+      "rom": "sscope"
+    },
+    {
+      "id": "arc_135",
+      "text": "Operation Wolf was one of the earliest military light gun shooters.",
+      "system": "mame",
+      "rom": "opwolf"
+    },
+
+    {
+      "id": "arc_136",
+      "text": "Dance Dance Revolution introduced rhythm gameplay using foot panels.",
+      "system": "mame",
+      "rom": "ddr"
+    },
+    {
+      "id": "arc_137",
+      "text": "Beatmania IIDX added DJ turntable controls for rhythm input.",
+      "system": "mame",
+      "rom": "bm2ndmix"
+    },
+    {
+      "id": "arc_138",
+      "text": "Guitar Freaks inspired the later Guitar Hero franchise.",
+      "system": "mame",
+      "rom": "gtfrk"
+    },
+    {
+      "id": "arc_139",
+      "text": "Pump It Up uses diagonal arrow panels instead of traditional DDR layout.",
+      "system": "mame",
+      "rom": "pumpitup"
+    },
+    {
+      "id": "arc_140",
+      "text": "Para Para Paradise uses upper-body motion sensors for gameplay.",
+      "system": "mame",
+      "rom": "parapar"
+    },
+
+    {
+      "id": "arc_141",
+      "text": "Marvel vs Capcom 2 is known for its fast-paced tag-team combat system.",
+      "system": "mame",
+      "rom": "mvsc2"
+    },
+    {
+      "id": "arc_142",
+      "text": "Street Fighter Alpha introduced anime-style visuals to the series.",
+      "system": "mame",
+      "rom": "sfz"
+    },
+    {
+      "id": "arc_143",
+      "text": "Tekken Tag Tournament allowed dual-character team battles.",
+      "system": "mame",
+      "rom": "tekken3"
+    },
+    {
+      "id": "arc_144",
+      "text": "Soul Calibur introduced weapon-based 3D fighting mechanics.",
+      "system": "namco_system_12",
+      "rom": "soulclbr"
+    },
+    {
+      "id": "arc_145",
+      "text": "Guilty Gear is known for its fast anime-style fighting gameplay.",
+      "system": "mame",
+      "rom": "ggx"
+    },
+
+    {
+      "id": "arc_146",
+      "text": "Neo Geo arcade hardware delivered console-quality graphics in arcades.",
+      "system": "neogeo",
+      "rom": "neogeo"
+    },
+    {
+      "id": "arc_147",
+      "text": "Metal Slug is famous for its detailed pixel animation and humor.",
+      "system": "neogeo",
+      "rom": "mslug"
+    },
+    {
+      "id": "arc_148",
+      "text": "The King of Fighters series became a staple of competitive arcade fighting.",
+      "system": "neogeo",
+      "rom": "kof"
+    },
+    {
+      "id": "arc_149",
+      "text": "Samurai Shodown emphasized weapon-based combat over hand-to-hand fighting.",
+      "system": "neogeo",
+      "rom": "samsho"
+    },
+    {
+      "id": "arc_150",
+      "text": "Windjammers combined frisbee mechanics with competitive arcade sports.",
+      "system": "neogeo",
+      "rom": "wjammers"
+    },
+       {
+      "id": "arc_151",
+      "text": "Pac-Man Championship Edition reimagined the classic maze formula with time-based scoring.",
+      "system": "steam",
+      "rom": "pacman_ce"
+    },
+    {
+      "id": "arc_152",
+      "text": "Pac-Man Battle Royale introduced four-player competitive maze gameplay.",
+      "system": "arcade1up",
+      "rom": "pacman_battle_royale"
+    },
+    {
+      "id": "arc_153",
+      "text": "Tekken 3 became one of the most successful 3D fighting games in arcades.",
+      "system": "mame",
+      "rom": "tekken3"
+    },
+    {
+      "id": "arc_154",
+      "text": "Virtua Fighter 2 advanced polygon animation and realistic martial arts physics.",
+      "system": "sega_model_2",
+      "rom": "vf2"
+    },
+    {
+      "id": "arc_155",
+      "text": "Soul Edge (Soul Blade) introduced weapon-based 3D fighting gameplay.",
+      "system": "namco_system_11",
+      "rom": "souledge"
+    },
+
+    {
+      "id": "arc_156",
+      "text": "Time Crisis II added simultaneous two-player light gun gameplay.",
+      "system": "mame",
+      "rom": "timecris2"
+    },
+    {
+      "id": "arc_157",
+      "text": "House of the Dead III introduced shotgun mechanics and faster pacing.",
+      "system": "xbox",
+      "rom": "hotd3"
+    },
+    {
+      "id": "arc_158",
+      "text": "The Walking Dead arcade shooter uses cooperative survival mechanics.",
+      "system": "teknoparrot",
+      "rom": "walkingdead"
+    },
+    {
+      "id": "arc_159",
+      "text": "Aliens arcade shooter is widely considered one of Konami’s best licensed games.",
+      "system": "mame",
+      "rom": "aliens"
+    },
+    {
+      "id": "arc_160",
+      "text": "Operation Wolf helped establish the military light gun shooter genre.",
+      "system": "mame",
+      "rom": "opwolf"
+    },
+
+    {
+      "id": "arc_161",
+      "text": "Dance Dance Revolution Extreme added licensed pop music tracks to arcade rhythm gaming.",
+      "system": "mame",
+      "rom": "ddrmax"
+    },
+    {
+      "id": "arc_162",
+      "text": "Pump It Up uses diagonal arrows instead of the traditional DDR layout.",
+      "system": "mame",
+      "rom": "pumpitup"
+    },
+    {
+      "id": "arc_163",
+      "text": "Beatmania IIDX introduced DJ turntable mechanics for rhythm gameplay.",
+      "system": "mame",
+      "rom": "bm2ndmix"
+    },
+    {
+      "id": "arc_164",
+      "text": "Guitar Freaks inspired the later Guitar Hero console franchise.",
+      "system": "mame",
+      "rom": "gtfrk"
+    },
+    {
+      "id": "arc_165",
+      "text": "Para Para Paradise used motion sensors for upper-body rhythm gameplay.",
+      "system": "mame",
+      "rom": "parapar"
+    },
+
+    {
+      "id": "arc_166",
+      "text": "Marvel vs Capcom 2 features one of the largest character rosters in fighting games.",
+      "system": "mame",
+      "rom": "mvsc2"
+    },
+    {
+      "id": "arc_167",
+      "text": "X-Men arcade allowed up to six players at once.",
+      "system": "mame",
+      "rom": "xmen"
+    },
+    {
+      "id": "arc_168",
+      "text": "The Simpsons arcade game remains a fan-favorite co-op beat-em-up.",
+      "system": "mame",
+      "rom": "simpsons"
+    },
+    {
+      "id": "arc_169",
+      "text": "Teenage Mutant Ninja Turtles arcade popularized 4-player co-op gameplay.",
+      "system": "mame",
+      "rom": "tmnt"
+    },
+    {
+      "id": "arc_170",
+      "text": "Cadillacs and Dinosaurs mixed dinosaurs with beat-em-up action.",
+      "system": "mame",
+      "rom": "dino"
+    },
+
+    {
+      "id": "arc_171",
+      "text": "Golden Axe helped define fantasy-themed arcade beat-em-ups.",
+      "system": "mame",
+      "rom": "goldnaxe"
+    },
+    {
+      "id": "arc_172",
+      "text": "Double Dragon is considered one of the first major beat-em-up arcade hits.",
+      "system": "mame",
+      "rom": "ddragon"
+    },
+    {
+      "id": "arc_173",
+      "text": "Final Fight helped establish side-scrolling urban combat games.",
+      "system": "mame",
+      "rom": "ffight"
+    },
+    {
+      "id": "arc_174",
+      "text": "Altered Beast is known for its transformation-based power-ups.",
+      "system": "mame",
+      "rom": "altbeast"
+    },
+    {
+      "id": "arc_175",
+      "text": "Alien Storm combined shooting and beat-em-up mechanics.",
+      "system": "mame",
+      "rom": "aliensyn"
+    },
+
+    {
+      "id": "arc_176",
+      "text": "Daytona USA became one of Sega’s most iconic racing arcade games.",
+      "system": "sega_model_2",
+      "rom": "daytona"
+    },
+    {
+      "id": "arc_177",
+      "text": "Daytona USA 2 improved track variety and driving physics.",
+      "system": "sega_model_3",
+      "rom": "daytona2"
+    },
+    {
+      "id": "arc_178",
+      "text": "Initial D Arcade Stage popularized drift racing in Japan.",
+      "system": "sega_naomi",
+      "rom": "initiald"
+    },
+    {
+      "id": "arc_179",
+      "text": "Crazy Taxi introduced chaotic arcade driving with time-based objectives.",
+      "system": "sega_naomi",
+      "rom": "crzytaxi"
+    },
+    {
+      "id": "arc_180",
+      "text": "Hydro Thunder featured high-speed arcade boat racing.",
+      "system": "mame",
+      "rom": "hyprdriv"
+    },
+
+    {
+      "id": "arc_181",
+      "text": "OutRun is known for its branching paths and iconic soundtrack.",
+      "system": "mame",
+      "rom": "outrun"
+    },
+    {
+      "id": "arc_182",
+      "text": "After Burner featured fast-paced jet combat and motion cabinet support.",
+      "system": "mame",
+      "rom": "aburner"
+    },
+    {
+      "id": "arc_183",
+      "text": "Space Harrier used pseudo-3D scaling sprite technology.",
+      "system": "mame",
+      "rom": "sharrier"
+    },
+    {
+      "id": "arc_184",
+      "text": "Virtua Cop helped define modern light gun shooter gameplay.",
+      "system": "mame",
+      "rom": "vcop"
+    },
+    {
+      "id": "arc_185",
+      "text": "Silent Scope introduced sniper rifle-style arcade gameplay.",
+      "system": "mame",
+      "rom": "sscope"
+    },
+
+    {
+      "id": "arc_186",
+      "text": "Time Crisis introduced cover-based shooting using a foot pedal system.",
+      "system": "mame",
+      "rom": "timecris"
+    },
+    {
+      "id": "arc_187",
+      "text": "House of the Dead popularized arcade zombie shooter gameplay.",
+      "system": "mame",
+      "rom": "hotd"
+    },
+    {
+      "id": "arc_188",
+      "text": "Guilty Gear is known for its fast anime-style fighting gameplay.",
+      "system": "mame",
+      "rom": "ggx"
+    },
+    {
+      "id": "arc_189",
+      "text": "Street Fighter Alpha introduced anime-style visuals to the franchise.",
+      "system": "mame",
+      "rom": "sfz"
+    },
+    {
+      "id": "arc_190",
+      "text": "Tekken Tag Tournament introduced team-based 3D fighting battles.",
+      "system": "mame",
+      "rom": "tekken3"
+    },
+
+    {
+      "id": "arc_191",
+      "text": "Soul Calibur became famous for its weapon-based 3D combat system.",
+      "system": "namco_system_12",
+      "rom": "soulclbr"
+    },
+    {
+      "id": "arc_192",
+      "text": "Windjammers combined frisbee sports with competitive arcade gameplay.",
+      "system": "neogeo",
+      "rom": "wjammers"
+    },
+    {
+      "id": "arc_193",
+      "text": "Metal Slug is famous for its detailed pixel animation and humor.",
+      "system": "neogeo",
+      "rom": "mslug"
+    },
+    {
+      "id": "arc_194",
+      "text": "The King of Fighters series became a staple of competitive arcade fighting.",
+      "system": "neogeo",
+      "rom": "kof"
+    },
+    {
+      "id": "arc_195",
+      "text": "Samurai Shodown emphasizes weapon-based dueling combat.",
+      "system": "neogeo",
+      "rom": "samsho"
+    },
+
+    {
+      "id": "arc_196",
+      "text": "Neo Geo arcade systems delivered console-quality graphics in arcades.",
+      "system": "neogeo",
+      "rom": "neogeo"
+    },
+    {
+      "id": "arc_197",
+      "text": "Marvel Super Heroes introduced gem-based power mechanics.",
+      "system": "mame",
+      "rom": "msh"
+    },
+    {
+      "id": "arc_198",
+      "text": "Capcom vs SNK was a major crossover fighting game release.",
+      "system": "mame",
+      "rom": "capsnk"
+    },
+    {
+      "id": "arc_199",
+      "text": "Sunset Riders is a Wild West themed run-and-gun arcade game.",
+      "system": "mame",
+      "rom": "sunsetr"
+    },
+    {
+      "id": "arc_200",
+      "text": "Pac-Man remains one of the most influential arcade games in history.",
+      "system": "mame",
+      "rom": "pacman"
+    }
+  ]
+}

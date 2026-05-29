@@ -1,0 +1,1241 @@
+{
+  "category": "console",
+  "facts": [
+    {
+      "id": "con_001",
+      "text": "The NES helped revive the video game industry in North America after the 1983 crash.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_002",
+      "text": "The NES was originally released in Japan as the Famicom in 1983.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_003",
+      "text": "The NES introduced the D-pad controller design that became an industry standard.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_004",
+      "text": "The NES used cartridges instead of floppy disks or CDs.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_005",
+      "text": "Nintendo implemented strict quality control with the 'Seal of Quality' on NES games.",
+      "system": "nes",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_006",
+      "text": "The Atari 2600 popularized home console gaming in the late 1970s.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_007",
+      "text": "The Atari 2600 used switch-based hardware controls on the console itself.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_008",
+      "text": "The Atari 2600 was one of the first consoles to use interchangeable cartridges.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_009",
+      "text": "The Atari 2600 helped define the concept of third-party game development.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_010",
+      "text": "The Atari 2600 hardware had only 128 bytes of RAM.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_011",
+      "text": "The SNES introduced Mode 7 graphics for rotation and scaling effects.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_012",
+      "text": "The SNES used a 16-bit CPU compared to the NES's 8-bit processor.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_013",
+      "text": "The SNES was released as the Super Famicom in Japan in 1990.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_014",
+      "text": "The SNES controller introduced shoulder buttons (L and R).",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_015",
+      "text": "The SNES had advanced audio capabilities via a dedicated sound chip.",
+      "system": "snes",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_016",
+      "text": "The Sega Genesis was marketed with the slogan 'Genesis does what Nintendon't'.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_017",
+      "text": "The Sega Genesis is a 16-bit console released in 1988 in Japan.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_018",
+      "text": "The Genesis had a faster CPU than the SNES but weaker graphics capabilities.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_019",
+      "text": "The Genesis helped popularize aggressive marketing in the console wars.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_020",
+      "text": "The Sega CD was an add-on that expanded Genesis capabilities using CD-ROMs.",
+      "system": "segacd",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_021",
+      "text": "The PlayStation 1 popularized CD-based gaming over cartridges.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_022",
+      "text": "The PS1 was originally developed as a Nintendo CD add-on before becoming standalone.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_023",
+      "text": "The PS1 used 3D polygon graphics at a time when most consoles were 2D.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_024",
+      "text": "The PlayStation brand became one of the most successful console lines in history.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_025",
+      "text": "The PS1 memory card allowed portable game saves for the first time for many players.",
+      "system": "psx",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_026",
+      "text": "The Nintendo 64 introduced analog stick control for 3D movement.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "con_027",
+      "text": "The N64 used cartridges instead of CDs, which limited storage but improved load times.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "con_028",
+      "text": "The N64 controller had an unusual three-prong design.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "con_029",
+      "text": "The Nintendo 64 was released in 1996 in North America.",
+      "system": "n64",
+      "rom": "default"
+    },
+    {
+      "id": "con_030",
+      "text": "The N64 was one of the first consoles to support four controller ports built-in.",
+      "system": "n64",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_031",
+      "text": "The Dreamcast was the first console with built-in online multiplayer capabilities.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_032",
+      "text": "The Dreamcast used proprietary GD-ROM discs instead of standard CDs.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_033",
+      "text": "The Dreamcast VMU functioned as both a memory card and a mini-screen device.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_034",
+      "text": "The Dreamcast was Sega’s final home console.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_035",
+      "text": "The Dreamcast had strong arcade-style hardware influences.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_036",
+      "text": "The PlayStation 2 is the best-selling console of all time.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_037",
+      "text": "The PS2 could play DVDs, making it a popular entertainment device.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_038",
+      "text": "The PS2 had a custom Emotion Engine CPU.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_039",
+      "text": "The PS2 had backward compatibility with most PS1 games.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_040",
+      "text": "The PS2 helped standardize DVD playback in living rooms.",
+      "system": "ps2",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_041",
+      "text": "The Xbox introduced Microsoft into the console market in 2001.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_042",
+      "text": "The original Xbox included a built-in hard drive.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_043",
+      "text": "Xbox Live helped establish modern console online services.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_044",
+      "text": "The Xbox controller was famously large and nicknamed 'The Duke'.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_045",
+      "text": "Halo: Combat Evolved was the Xbox’s breakout launch title.",
+      "system": "xbox",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_046",
+      "text": "The Nintendo Wii introduced motion-controlled gaming to a mainstream audience.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_047",
+      "text": "The Wii Remote used accelerometers to detect movement.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_048",
+      "text": "Wii Sports became one of the most popular bundled games in history.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_049",
+      "text": "The Wii was part of Nintendo’s strategy to expand beyond traditional gamers.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_050",
+      "text": "The Wii introduced a simplified, family-friendly gaming interface.",
+      "system": "wii",
+      "rom": "default"
+    },
+        {
+      "id": "con_051",
+      "text": "The PlayStation 2 is the best-selling console of all time with over 155 million units sold worldwide.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_052",
+      "text": "The PS2 doubled as a DVD player, which helped drive its massive adoption in living rooms.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_053",
+      "text": "The PS2 supported backward compatibility with most original PlayStation games.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_054",
+      "text": "The PlayStation 2 used the Emotion Engine CPU designed for advanced 3D graphics processing.",
+      "system": "ps2",
+      "rom": "default"
+    },
+    {
+      "id": "con_055",
+      "text": "The PS2 helped standardize DVD media as a core part of console entertainment.",
+      "system": "ps2",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_056",
+      "text": "The original PlayStation sold over 102 million units worldwide, making it a breakthrough success for Sony.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_057",
+      "text": "The PlayStation popularized CD-ROM gaming and reduced reliance on cartridges.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_058",
+      "text": "The PS1 helped establish Sony as a dominant force in the gaming industry.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_059",
+      "text": "The PlayStation introduced memory cards as a standard method for saving game progress.",
+      "system": "psx",
+      "rom": "default"
+    },
+    {
+      "id": "con_060",
+      "text": "The PS1 originated from a failed collaboration project between Sony and Nintendo.",
+      "system": "psx",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_061",
+      "text": "The Nintendo DS became the best-selling handheld system of all time with over 154 million units sold.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_062",
+      "text": "The Nintendo DS introduced dual screens with a resistive touchscreen on the bottom display.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_063",
+      "text": "The DS helped popularize touch-based gaming long before smartphones dominated the market.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_064",
+      "text": "The DS supported local wireless multiplayer without requiring internet access.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_065",
+      "text": "The Nintendo DS was backward compatible with Game Boy Advance cartridges.",
+      "system": "nintendo_ds",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_066",
+      "text": "The Nintendo Switch has sold over 140 million units worldwide.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_067",
+      "text": "The Switch is a hybrid console that functions as both a handheld and home console.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_068",
+      "text": "The Joy-Con controllers support motion controls and HD rumble feedback.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_069",
+      "text": "The Switch replaced the commercially unsuccessful Wii U in Nintendo’s lineup.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_070",
+      "text": "The Nintendo Switch became one of the fastest-selling consoles in Nintendo’s history.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_071",
+      "text": "The Xbox 360 sold over 84 million units worldwide and defined Microsoft’s early console success.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_072",
+      "text": "Xbox Live on the Xbox 360 helped establish modern online console ecosystems.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_073",
+      "text": "The Xbox 360 introduced achievements as a cross-game progression system.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_074",
+      "text": "The Xbox 360 became infamous for hardware failures known as the Red Ring of Death.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_075",
+      "text": "The Xbox 360 helped establish Microsoft as a major competitor in gaming.",
+      "system": "xbox",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_076",
+      "text": "The Nintendo Wii sold over 101 million units worldwide.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_077",
+      "text": "The Wii introduced motion-based gameplay to mainstream audiences.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_078",
+      "text": "Wii Sports became one of the most influential bundled games ever released.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_079",
+      "text": "The Wii targeted casual and non-traditional gamers with simplified controls.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_080",
+      "text": "The Wii Remote used accelerometers to detect motion and gestures.",
+      "system": "wii",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_081",
+      "text": "The Nintendo 3DS sold over 75 million units worldwide.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_082",
+      "text": "The Nintendo 3DS featured glasses-free stereoscopic 3D technology.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_083",
+      "text": "The 3DS included an analog Circle Pad for improved 3D gameplay control.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_084",
+      "text": "The 3DS was backward compatible with Nintendo DS games.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_085",
+      "text": "The Nintendo 3DS eShop enabled digital game downloads and indie titles.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_086",
+      "text": "The Sega Genesis sold over 30 million units worldwide and defined the 16-bit era.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_087",
+      "text": "The Genesis competed directly with the Super Nintendo during the console wars.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_088",
+      "text": "Sonic the Hedgehog was created as Sega’s answer to Mario.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_089",
+      "text": "The Sega Genesis used a Motorola 68000 CPU.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_090",
+      "text": "The Genesis became known for its aggressive marketing campaigns in the 1990s.",
+      "system": "genesis",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_091",
+      "text": "The Atari 2600 sold over 30 million units worldwide and popularized home gaming.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_092",
+      "text": "The Atari 2600 helped establish the cartridge-based home console model.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_093",
+      "text": "The Atari 2600 used a simple joystick with a single action button.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_094",
+      "text": "The Atari 2600 contained only 128 bytes of RAM.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_095",
+      "text": "The Atari 2600 played a major role in the early video game industry boom.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_096",
+      "text": "The Sega Dreamcast sold around 9 million units worldwide before being discontinued.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_097",
+      "text": "The Dreamcast was Sega’s final home console.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_098",
+      "text": "The Dreamcast included built-in online multiplayer support at launch.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_099",
+      "text": "The Dreamcast VMU acted as both a memory card and a mini LCD device.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_100",
+      "text": "The Dreamcast used GD-ROM discs to increase storage capacity over CDs.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+        {
+      "id": "con_101",
+      "text": "The PlayStation 3 sold over 87 million units worldwide.",
+      "system": "ps3",
+      "rom": "default"
+    },
+    {
+      "id": "con_102",
+      "text": "The PS3 introduced Blu-ray as a standard gaming media format.",
+      "system": "ps3",
+      "rom": "default"
+    },
+    {
+      "id": "con_103",
+      "text": "The PS3 launched with a high-end Cell processor architecture designed for parallel processing.",
+      "system": "ps3",
+      "rom": "default"
+    },
+    {
+      "id": "con_104",
+      "text": "The PlayStation Network enabled digital downloads and online multiplayer on PS3.",
+      "system": "ps3",
+      "rom": "default"
+    },
+    {
+      "id": "con_105",
+      "text": "The PS3 initially launched at a premium price point of $599 in the US.",
+      "system": "ps3",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_106",
+      "text": "The Xbox One sold over 58 million units worldwide.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_107",
+      "text": "The Xbox One initially focused heavily on multimedia and TV integration features.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_108",
+      "text": "The Xbox One originally required an always-online connection before policy changes were reversed.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_109",
+      "text": "The Xbox One launched with Kinect integration as a core feature.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_110",
+      "text": "Xbox Live helped establish Microsoft’s long-term online gaming ecosystem.",
+      "system": "xbox",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_111",
+      "text": "The Nintendo Switch has sold over 140 million units worldwide.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_112",
+      "text": "The Switch is a hybrid console that works as both a handheld and home system.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_113",
+      "text": "The Joy-Con controllers support motion controls and HD rumble feedback.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_114",
+      "text": "The Switch replaced the commercially unsuccessful Wii U.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+    {
+      "id": "con_115",
+      "text": "The Nintendo Switch became one of Nintendo’s fastest-selling consoles globally.",
+      "system": "nintendo_switch",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_116",
+      "text": "The Wii sold over 101 million units worldwide.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_117",
+      "text": "The Wii introduced motion-controlled gaming to a mainstream audience.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_118",
+      "text": "Wii Sports became one of the most influential bundled games in history.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_119",
+      "text": "The Wii was designed to appeal to non-traditional gamers and families.",
+      "system": "wii",
+      "rom": "default"
+    },
+    {
+      "id": "con_120",
+      "text": "The Wii Remote used accelerometer technology to detect motion.",
+      "system": "wii",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_121",
+      "text": "The Nintendo 3DS sold over 75 million units worldwide.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_122",
+      "text": "The Nintendo 3DS featured glasses-free stereoscopic 3D visuals.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_123",
+      "text": "The 3DS included a Circle Pad for analog control input.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_124",
+      "text": "The 3DS was backward compatible with Nintendo DS game cartridges.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+    {
+      "id": "con_125",
+      "text": "The Nintendo 3DS eShop allowed digital game purchases and indie titles.",
+      "system": "nintendo_3ds",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_126",
+      "text": "The Sega Genesis sold over 30 million units worldwide during the 16-bit era.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_127",
+      "text": "The Genesis competed directly with the Super Nintendo Entertainment System.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_128",
+      "text": "Sonic the Hedgehog was created as Sega’s mascot to rival Mario.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_129",
+      "text": "The Genesis used a Motorola 68000 CPU architecture.",
+      "system": "genesis",
+      "rom": "default"
+    },
+    {
+      "id": "con_130",
+      "text": "The Genesis is remembered for aggressive marketing during the console wars.",
+      "system": "genesis",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_131",
+      "text": "The Atari 2600 sold over 30 million units worldwide and defined early home gaming.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_132",
+      "text": "The Atari 2600 helped establish interchangeable cartridge gaming.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_133",
+      "text": "The Atari 2600 used a joystick with a single action button.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_134",
+      "text": "The Atari 2600 had only 128 bytes of RAM.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+    {
+      "id": "con_135",
+      "text": "The Atari 2600 played a major role in the early growth of the video game industry.",
+      "system": "atari2600",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_136",
+      "text": "The Sega Dreamcast sold around 9 million units worldwide before being discontinued.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_137",
+      "text": "The Dreamcast was Sega’s final home console system.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_138",
+      "text": "The Dreamcast supported online multiplayer gaming at launch.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_139",
+      "text": "The Dreamcast VMU acted as both a memory card and a mini display device.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+    {
+      "id": "con_140",
+      "text": "The Dreamcast used GD-ROM discs for higher storage capacity than CDs.",
+      "system": "dreamcast",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_141",
+      "text": "The PlayStation 4 sold over 117 million units worldwide.",
+      "system": "ps4",
+      "rom": "default"
+    },
+    {
+      "id": "con_142",
+      "text": "The PS4 emphasized social sharing, streaming, and online integration.",
+      "system": "ps4",
+      "rom": "default"
+    },
+    {
+      "id": "con_143",
+      "text": "The DualShock 4 introduced a built-in touchpad.",
+      "system": "ps4",
+      "rom": "default"
+    },
+    {
+      "id": "con_144",
+      "text": "The PS4 helped Sony regain dominance in the console market.",
+      "system": "ps4",
+      "rom": "default"
+    },
+    {
+      "id": "con_145",
+      "text": "The PS4 became a major platform for indie game development.",
+      "system": "ps4",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_146",
+      "text": "The PlayStation 5 has sold over 60 million units worldwide.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_147",
+      "text": "The PS5 features an ultra-fast SSD for near-instant load times.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_148",
+      "text": "The DualSense controller introduced adaptive triggers and advanced haptics.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_149",
+      "text": "The PS5 supports ray tracing for advanced lighting effects.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_150",
+      "text": "The PlayStation 5 continues Sony’s dominance in modern console gaming.",
+      "system": "ps5",
+      "rom": "default"
+    },
+        {
+      "id": "con_151",
+      "text": "The Xbox Series X sold over 25 million units worldwide in its early lifecycle.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_152",
+      "text": "The Xbox Series X was designed for high-performance 4K gaming.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_153",
+      "text": "The Xbox Series X features a custom SSD for fast load times.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_154",
+      "text": "The Xbox Series X supports backward compatibility with multiple generations of Xbox games.",
+      "system": "xbox",
+      "rom": "default"
+    },
+    {
+      "id": "con_155",
+      "text": "Xbox Game Pass became a defining feature of the Xbox ecosystem.",
+      "system": "xbox",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_156",
+      "text": "The Nintendo GameCube sold over 21 million units worldwide.",
+      "system": "gamecube",
+      "rom": "default"
+    },
+    {
+      "id": "con_157",
+      "text": "The GameCube used miniDVD discs instead of standard DVDs.",
+      "system": "gamecube",
+      "rom": "default"
+    },
+    {
+      "id": "con_158",
+      "text": "The GameCube controller design is still praised for its ergonomic feel.",
+      "system": "gamecube",
+      "rom": "default"
+    },
+    {
+      "id": "con_159",
+      "text": "The GameCube introduced a handle on the console for portability.",
+      "system": "gamecube",
+      "rom": "default"
+    },
+    {
+      "id": "con_160",
+      "text": "The GameCube was Nintendo’s first console to use optical discs exclusively.",
+      "system": "gamecube",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_161",
+      "text": "The Nintendo Entertainment System (NES) sold over 61 million units worldwide.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_162",
+      "text": "The NES revived the home video game industry after the 1983 crash.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_163",
+      "text": "The NES introduced iconic franchises like Super Mario Bros. and The Legend of Zelda.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_164",
+      "text": "The NES used a lockout chip to enforce game licensing control.",
+      "system": "nes",
+      "rom": "default"
+    },
+    {
+      "id": "con_165",
+      "text": "The NES controller design influenced decades of future gamepads.",
+      "system": "nes",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_166",
+      "text": "The Super Nintendo Entertainment System sold over 49 million units worldwide.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_167",
+      "text": "The SNES introduced Mode 7 graphics for rotation and scaling effects.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_168",
+      "text": "The SNES featured a 16-bit CPU and advanced audio hardware for its time.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_169",
+      "text": "The SNES controller introduced shoulder buttons that became standard.",
+      "system": "snes",
+      "rom": "default"
+    },
+    {
+      "id": "con_170",
+      "text": "The SNES is considered one of the greatest consoles of the 16-bit era.",
+      "system": "snes",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_171",
+      "text": "The Sega Saturn sold around 9 million units worldwide.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "con_172",
+      "text": "The Saturn struggled against the PlayStation due to complex architecture.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "con_173",
+      "text": "The Sega Saturn featured strong 2D capabilities for arcade-style games.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "con_174",
+      "text": "The Saturn had dual CPU architecture that made development difficult.",
+      "system": "saturn",
+      "rom": "default"
+    },
+    {
+      "id": "con_175",
+      "text": "The Saturn was popular in Japan but struggled in Western markets.",
+      "system": "saturn",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_176",
+      "text": "The Neo Geo AES was known as a luxury console with arcade-perfect ports.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "con_177",
+      "text": "The Neo Geo AES cartridges were extremely expensive compared to other systems.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "con_178",
+      "text": "The Neo Geo hardware was based on arcade machine architecture.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "con_179",
+      "text": "The Neo Geo is famous for fighting games like King of Fighters and Samurai Shodown.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+    {
+      "id": "con_180",
+      "text": "The Neo Geo AES is now a highly collectible retro console.",
+      "system": "neogeo",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_181",
+      "text": "The Atari Jaguar marketed itself as the first 64-bit console.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "con_182",
+      "text": "The Atari Jaguar struggled commercially despite technical ambitions.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "con_183",
+      "text": "The Jaguar controller featured a large number keypad.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "con_184",
+      "text": "The Atari Jaguar sold under 2 million units worldwide.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+    {
+      "id": "con_185",
+      "text": "The Jaguar CD add-on extended the console’s capabilities but had limited success.",
+      "system": "atarijaguar",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_186",
+      "text": "The Sega Master System sold over 13 million units worldwide.",
+      "system": "mastersystem",
+      "rom": "default"
+    },
+    {
+      "id": "con_187",
+      "text": "The Master System was more successful in Europe than in North America.",
+      "system": "mastersystem",
+      "rom": "default"
+    },
+    {
+      "id": "con_188",
+      "text": "The Master System had better hardware than the NES in some areas.",
+      "system": "mastersystem",
+      "rom": "default"
+    },
+    {
+      "id": "con_189",
+      "text": "The Master System used both cartridges and Sega Cards for games.",
+      "system": "mastersystem",
+      "rom": "default"
+    },
+    {
+      "id": "con_190",
+      "text": "The Master System helped establish Sega as a major console competitor.",
+      "system": "mastersystem",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_191",
+      "text": "The PlayStation 5 has sold over 60 million units worldwide.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_192",
+      "text": "The PS5 features an ultra-fast SSD that dramatically reduces load times.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_193",
+      "text": "The DualSense controller introduced adaptive triggers and advanced haptics.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_194",
+      "text": "The PS5 supports ray tracing for advanced lighting and reflections.",
+      "system": "ps5",
+      "rom": "default"
+    },
+    {
+      "id": "con_195",
+      "text": "The PS5 continues Sony’s leadership in modern console gaming.",
+      "system": "ps5",
+      "rom": "default"
+    },
+
+    {
+      "id": "con_196",
+      "text": "The Magnavox Odyssey was the first commercial home video game console.",
+      "system": "odyssey",
+      "rom": "default"
+    },
+    {
+      "id": "con_197",
+      "text": "The Magnavox Odyssey released in 1972 and had no sound capabilities.",
+      "system": "odyssey",
+      "rom": "default"
+    },
+    {
+      "id": "con_198",
+      "text": "The Odyssey used physical overlays on television screens for gameplay visuals.",
+      "system": "odyssey",
+      "rom": "default"
+    },
+    {
+      "id": "con_199",
+      "text": "The Magnavox Odyssey helped create the entire home console industry.",
+      "system": "odyssey",
+      "rom": "default"
+    },
+    {
+      "id": "con_200",
+      "text": "The Odyssey is considered the origin point of modern video game consoles.",
+      "system": "odyssey",
+      "rom": "default"
+    }
+  ]
+}

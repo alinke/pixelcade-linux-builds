@@ -139,7 +139,7 @@
       "7.7.4  Added RCade checks to the front end setup tab in settings to make sure the Scripts scripts for front end integration are installed and configured correctly",
       "7.7.4  Attract mode can be enabled and disabled for RCade and Batocera from Pixelcade Companion",
       "7.7.5  Added DOFLinx install, RetroAchievements install, and LCD USB install for RCade in the front end setup tab in settings",
-      "7.7.6  New widges: What to Watch, Twitch Live, Countdown Timer",
+      "7.7.6  New widges: What to Watch, Twitch Live, Countdown Timer, and Retro Trivia",
       "7.7.6  Fixed broken widgets: Netflix Top 10, Horrorscope",
       "7.7.6  Restyled the Widget tiles"
     ]
