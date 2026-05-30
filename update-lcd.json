@@ -118,8 +118,8 @@
   ],
   "betaReleaseNotes": [
     "7.7.5  Sorting release notes now by most recent first and limit to top 50 with an expand all option",
-    "7.7.5  New widges: What to Watch, Retro Trivia, Twitch Live, Countdown Timer",
-    "7.7.5  Fixed broken widgets: Netflix Top 10, Horrorscope",
+    "7.7.5  New widges: What to Watch, Retro Trivia, Recipes, Twitch Live, Countdown Timer",
+    "7.7.5  Fixed broken widgets: Netflix Top 10, Horrorscope, Google Tasks and Photos",
     "7.7.5  Restyled the Widget tiles"
   ],
   "minimumRequiredVersion": "5.0.0"
