@@ -141,7 +141,8 @@
       "7.7.5  Added DOFLinx install, RetroAchievements install, and LCD USB install for RCade in the front end setup tab in settings",
       "7.7.6  New widges: What to Watch, Retro Trivia, Twitch Live, and Countdown Timer",
       "7.7.6  Fixed broken widgets: Netflix Top 10, Horrorscope",
-      "7.7.6  Restyled the Widget tiles"
+      "7.7.6  Restyled the Widget tiles",
+      "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
