@@ -260,7 +260,7 @@ fi
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
 
 if [[ "$rcade_new_version" == "true" ]]; then
-    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: startup integration is pre-configured)"
+    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: Pixelcade is already configured for startup)"
 elif [[ -f "$RCADE_STARTUP" ]]; then
     # Detect which version based on content
     if grep -q "start_screens" "$RCADE_STARTUP"; then
@@ -434,6 +434,26 @@ echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 echo -e "${cyan}[PHASE 2]${nc} User space changes (/rcade/share/ - persists separately)"
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+
+# On RCade 2.0.8+, install beta pixelweb to user space if -beta flag was passed.
+# (Production pixelweb is pre-installed; only the beta case needs to override it here.)
+if [[ "$rcade_new_version" == "true" && "$beta" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Beta mode: updating pixelweb binary (user space)..."
+    mkdir -p "$(dirname "$pixelweb_install_path")"
+    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+    if wget --spider "$pixelweb_url" 2>/dev/null; then
+        echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+        wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+        if [ $? -eq 0 ]; then
+            chmod a+x "$pixelweb_install_path"
+            echo -e "${green}[SUCCESS]${nc} Beta pixelweb installed to $pixelweb_install_path"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+        fi
+    else
+        echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch} — pre-installed version will be used"
+    fi
+fi
 
 # Create necessary directories in user space
 if [[ ! -d "${INSTALLPATH}doflinx" ]]; then
@@ -794,6 +814,17 @@ if lsusb | grep -q '1d6b:3232'; then
             break
         fi
     done
+
+    # Enable LCD in pixelcade.ini
+    pixelcade_ini="/rcade/share/pixelcade/pixelcade.ini"
+    if [[ -f "$pixelcade_ini" ]]; then
+        echo -e "${green}[INFO]${nc} Updating pixelcade.ini for LCD USB connection..."
+        sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' "$pixelcade_ini"
+        sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' "$pixelcade_ini"
+        echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB"
+    else
+        echo -e "${yellow}[WARNING]${nc} pixelcade.ini not found at $pixelcade_ini — LCD settings could not be configured automatically"
+    fi
 
     # AtGames Legends Ultimate detection - configure BitLCD and DOFLinx automatically
     # rk3328-ha8801 = Legends 1.1, rk3399-legends = Legends 1.0
