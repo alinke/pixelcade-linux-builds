@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=19
+version=20
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -165,9 +165,32 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=x64
 fi
 
+# RCade version detection — determines where pixelweb lives and whether overlay save is needed.
+# RCade 2.0.8+ installs pixelweb to /rcade/share/pixelcade (user space, no overlay save needed).
+# Older versions install to /usr/bin (overlay space, requires rcade-save.sh).
+rcade_new_version=false
+es_ver=$(emulationstation --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+if [[ -n "$es_ver" ]]; then
+    IFS='.' read -r _es_major _es_minor _es_patch <<< "$es_ver"
+    if [[ "$_es_major" -gt 2 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -gt 0 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -ge 8 ]]; then
+        rcade_new_version=true
+    fi
+fi
+
+if [[ "$rcade_new_version" == "true" ]]; then
+    pixelweb_install_path="/rcade/share/pixelcade/pixelweb"
+    echo -e "${green}[INFO]${nc} RCade ${es_ver} detected — installing pixelweb to user space: ${pixelweb_install_path}"
+else
+    pixelweb_install_path="/usr/bin/pixelweb"
+    echo -e "${green}[INFO]${nc} RCade pre-2.0.8 detected — installing pixelweb to system space: ${pixelweb_install_path}"
+fi
+
 # ============================================================================
 # PHASE 1: SYSTEM SPACE CHANGES (saved to overlay)
 # These changes go to /usr/bin and /etc which are in the overlay filesystem
+# (On RCade 2.0.8+, only /etc changes happen here; pixelweb is installed in Phase 2)
 # ============================================================================
 echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
@@ -179,52 +202,56 @@ echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
 curl -s localhost:8080/quit >/dev/null 2>&1
 sleep 2
 
-# Update pixelweb binary in /usr/bin (SYSTEM SPACE)
-echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
-cd /usr/bin
+# Update pixelweb binary (system space for pre-2.0.8, user space for 2.0.8+)
+if [[ "$rcade_new_version" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
 
-if [[ "$beta" == "true" ]]; then
-    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
-    if wget --spider "$pixelweb_url" 2>/dev/null; then
-        echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
-        wget -q -O /usr/bin/pixelweb "$pixelweb_url"
-        if [ $? -eq 0 ]; then
-            chmod a+x /usr/bin/pixelweb
-            echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
+    if [[ "$beta" == "true" ]]; then
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+        if wget --spider "$pixelweb_url" 2>/dev/null; then
+            echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+            if [ $? -eq 0 ]; then
+                chmod a+x "$pixelweb_install_path"
+                echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            fi
         else
-            echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
+            pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+            if wget --spider "$pixelweb_url" 2>/dev/null; then
+                wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+                if [ $? -eq 0 ]; then
+                    chmod a+x "$pixelweb_install_path"
+                    echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
+                else
+                    echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
+                fi
+            fi
         fi
     else
-        echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
         pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
         if wget --spider "$pixelweb_url" 2>/dev/null; then
-            wget -q -O /usr/bin/pixelweb "$pixelweb_url"
+            echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
             if [ $? -eq 0 ]; then
-                chmod a+x /usr/bin/pixelweb
+                chmod a+x "$pixelweb_install_path"
                 echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
             else
                 echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
             fi
+        else
+            echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
         fi
     fi
 else
-    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
-    if wget --spider "$pixelweb_url" 2>/dev/null; then
-        echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
-        wget -q -O /usr/bin/pixelweb "$pixelweb_url"
-        if [ $? -eq 0 ]; then
-            chmod a+x /usr/bin/pixelweb
-            echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
-        else
-            echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
-        fi
-    else
-        echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
-    fi
+    echo -e "${green}[INFO]${nc} Skipping pixelweb install (RCade 2.0.8+: pixelweb is pre-installed at $pixelweb_install_path)"
 fi
 
 # Update startup scripts (SYSTEM SPACE)
-# R-Cade has two different versions:
+# Skipped on RCade 2.0.8+ — startup integration is handled by the RCade system itself.
+# R-Cade pre-2.0.8 has two different versions:
 #   OLD: S10animationscreens contains pixelweb startup block directly (has "grep pixelweb")
 #   NEW: S10animationscreens delegates to rcade-commands.sh start_screens (has "start_screens")
 #        In NEW version, we modify rcade-commands.sh directly where pixelweb is launched
@@ -232,7 +259,9 @@ fi
 
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
 
-if [[ -f "$RCADE_STARTUP" ]]; then
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: startup integration is pre-configured)"
+elif [[ -f "$RCADE_STARTUP" ]]; then
     # Detect which version based on content
     if grep -q "start_screens" "$RCADE_STARTUP"; then
         startup_version="new"
@@ -370,7 +399,8 @@ fi
 # Install udev rule to rename Pixelcade LCD USB RNDIS interface to pixelcade0.
 # rcade-commands.sh start_network looks for "pixelcade" in ifconfig output and
 # assigns a static IP, so this rename is required for LCD USB setups.
-if lsusb | grep -q '1d6b:3232'; then
+# Skipped on RCade 2.0.8+ — network configuration is handled by the RCade system itself.
+if [[ "$rcade_new_version" == "false" ]] && lsusb | grep -q '1d6b:3232'; then
     echo -e "${green}[INFO]${nc} Installing Pixelcade LCD udev rule..."
     cat > /etc/udev/rules.d/99-pixelcade-lcd.rules << 'RULEEOF'
 # Rename Pixelcade LCD USB RNDIS interface to pixelcade0 and bring it up with static IP.
@@ -384,12 +414,17 @@ fi
 
 # ============================================================================
 # SAVE OVERLAY - Commit system space changes
+# Not needed on RCade 2.0.8+ because pixelweb is in user space (/rcade/share)
 # ============================================================================
 echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-echo -e "${cyan}[OVERLAY]${nc} Saving system changes to overlay..."
-echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-/rcade/scripts/rcade-save.sh
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${cyan}[OVERLAY]${nc} Skipping overlay save (not needed on RCade 2.0.8+)"
+else
+    echo -e "${cyan}[OVERLAY]${nc} Saving system changes to overlay..."
+    echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+    /rcade/scripts/rcade-save.sh
+fi
 
 # ============================================================================
 # PHASE 2: USER SPACE CHANGES (in /rcade/share/ - not saved to overlay)
@@ -630,15 +665,14 @@ fi
 
 # Update Pixelcade artwork and DOFLinx .MAME files
 echo -e "${green}[INFO]${nc} Updating Pixelcade artwork and DOFLinx .MAME files..."
-cd /usr/bin
-./pixelweb -p /rcade/share/pixelcade -update-artwork
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-artwork
 # Let's also force and update the latest DOFLinx MAME files too because it'll skip if artwork is already up to date
-./pixelweb -p /rcade/share/pixelcade -update-doflinx
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-doflinx
 
 if [ $? -eq 0 ]; then
     echo -e "${green}[SUCCESS]${nc} Pixelcade artwork and DOFLinx .MAME files updated"
 else
-    echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: ./pixelweb -p /rcade/share/pixelcade -update-artwork"
+    echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: $pixelweb_install_path -p /rcade/share/pixelcade -update-artwork"
 fi
 
 # Java needed for high scores, hi2txt
@@ -865,7 +899,7 @@ fi
 
 # Restart pixelweb in background so companion UI is accessible immediately
 echo -e "${green}[INFO]${nc} Starting Pixelcade..."
-/usr/bin/pixelweb -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
+"$pixelweb_install_path" -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
 sleep 2
 echo -e "${green}[INFO]${nc} Pixelcade companion accessible at http://rcade.local:8080"
 
