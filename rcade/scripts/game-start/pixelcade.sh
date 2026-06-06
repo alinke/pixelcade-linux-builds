@@ -55,17 +55,15 @@ rawurlencode() {  #this is needed for rom names with spaces
 
 nohighscore() {
   if [[ $DISPLAYSCROLLINGTEXT == "yes" ]]; then
-    PIXELCADEURL="text?t=Now%20Playing%20"$URLENCODED_TITLE"&l=1&game="$URLENCODED_GAMENAME"&system="$SYSTEM"&event=GameStart"
+    PIXELCADEURL="text?t=Now%20Playing%20"$URLENCODED_TITLE"&ss=1&l=1&scroll=true&game="$URLENCODED_GAMENAME"&system="$SYSTEM"&event=GameStart"
     curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
-    sleep 1 #TO DO for some reason, doesn't always work without this, in theory it should not be needed
   fi
   #now let's display the game marquee
   if [[ $DISPLAYANIMATIONS == "yes" ]]; then
-      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&event=GameStart" # use this one if you want a generic system/console marquee if the game marquee doesn't exist
+      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&event=GameStart"
   else
-      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&nogif&event=GameStart" # adding the nogif param
+      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&nogif&event=GameStart"
   fi
-  #PIXELCADEURL="arcade/stream/"$SYSTEM"/"$URLENCODED_FILENAME"?t="$URLENCODED_TITLE"" # use this one if you want scrolling text if the game marquee doesn't exist
   curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
 }
 
@@ -93,16 +91,13 @@ havehighscore() {
     PIXELCADEURL="arcade/stream/"$SYSTEM"/"$URLENCODED_GAMENAME"?t=$URLENCODED_TITLE&l=${NUMBER_MARQUEE_LOOPS}&event=GameStart&cycle"
 		curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
   else
-		PIXELCADEURL="text?t="$URLENCODED_TITLE"&l=1&game="$URLENCODED_GAMENAME"&system="$SYSTEM"&event=GameStart"
+		PIXELCADEURL="text?t="$URLENCODED_TITLE"&ss=1&l=1&scroll=true&game="$URLENCODED_GAMENAME"&system="$SYSTEM"&event=GameStart"
 		curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
-    #now let's display the game marquee
-    sleep 1 #TO DO for some reason, doesn't always work without this, in theory it should not be needed
     if [[ $DISPLAYANIMATIONS == "yes" ]]; then
-      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&event=GameStart" # use this one if you want a generic system/console marquee if the game marquee doesn't exist
+      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&event=GameStart"
     else
-      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&nogif&event=GameStart" # adding the nogif param which will not play the gif if both the PNG and GIF are there
+      PIXELCADEURL="arcade/stream/$SYSTEM/$URLENCODED_GAMENAME?l=99999&nogif&event=GameStart"
     fi
-    #PIXELCADEURL="arcade/stream/"$SYSTEM"/"$URLENCODED_FILENAME"?t="$URLENCODED_TITLE"" # use this one if you want scrolling text if the game marquee doesn't exist
     curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
   fi
 }
