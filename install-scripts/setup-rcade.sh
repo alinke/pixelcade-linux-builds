@@ -246,7 +246,7 @@ if [[ "$rcade_new_version" == "false" ]]; then
         fi
     fi
 else
-    echo -e "${green}[INFO]${nc} Skipping pixelweb install (RCade 2.0.8+: pixelweb is pre-installed at $pixelweb_install_path)"
+    echo -e "${green}[INFO]${nc} Skipping pixelweb system-space install (RCade 2.0.8+: pixelweb installs to user space in Phase 2)"
 fi
 
 # Update startup scripts (SYSTEM SPACE)
@@ -435,23 +435,38 @@ echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "${cyan}[PHASE 2]${nc} User space changes (/rcade/share/ - persists separately)"
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 
-# On RCade 2.0.8+, install beta pixelweb to user space if -beta flag was passed.
-# (Production pixelweb is pre-installed; only the beta case needs to override it here.)
-if [[ "$rcade_new_version" == "true" && "$beta" == "true" ]]; then
-    echo -e "${green}[INFO]${nc} Beta mode: updating pixelweb binary (user space)..."
+# On RCade 2.0.8+, install pixelweb to user space (/rcade/share/pixelcade/pixelweb).
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Installing pixelweb binary to user space..."
     mkdir -p "$(dirname "$pixelweb_install_path")"
-    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
-    if wget --spider "$pixelweb_url" 2>/dev/null; then
-        echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+    if [[ "$beta" == "true" ]]; then
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+        if wget --spider "$pixelweb_url" 2>/dev/null; then
+            echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+            if [ $? -eq 0 ]; then
+                chmod a+x "$pixelweb_install_path"
+                echo -e "${green}[SUCCESS]${nc} Beta pixelweb installed to $pixelweb_install_path"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            fi
+        else
+            echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch} — falling back to production..."
+            pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url" && chmod a+x "$pixelweb_install_path" && \
+                echo -e "${green}[SUCCESS]${nc} Production pixelweb installed to $pixelweb_install_path" || \
+                echo -e "${yellow}[WARNING]${nc} Failed to download production pixelweb binary"
+        fi
+    else
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        echo -e "${green}[INFO]${nc} Downloading production pixelweb for ${machine_arch}..."
         wget -q -O "$pixelweb_install_path" "$pixelweb_url"
         if [ $? -eq 0 ]; then
             chmod a+x "$pixelweb_install_path"
-            echo -e "${green}[SUCCESS]${nc} Beta pixelweb installed to $pixelweb_install_path"
+            echo -e "${green}[SUCCESS]${nc} Production pixelweb installed to $pixelweb_install_path"
         else
-            echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            echo -e "${yellow}[WARNING]${nc} Failed to download production pixelweb binary"
         fi
-    else
-        echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch} — pre-installed version will be used"
     fi
 fi
 
