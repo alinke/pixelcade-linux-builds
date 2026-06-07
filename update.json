@@ -143,7 +143,8 @@
       "7.7.6  Fixed broken widgets: Netflix Top 10, Horrorscope",
       "7.7.6  Restyled the Widget tiles",
       "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
-      "7.7.7  Added Rcade install location change for 2.0.8 latest Rcade"
+      "7.7.7  Added Rcade install location change for 2.0.8 latest Rcade",
+      "7.7.8  DOFLinx install changes for RCade 2.0.8"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
