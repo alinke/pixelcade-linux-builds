@@ -96,6 +96,25 @@ if [[ $machine_arch == "default" ]]; then
     machine_arch=x64
 fi
 
+# RCade version detection — determines pixelweb path and whether startup injection is needed.
+# RCade 2.0.8+ handles DOFLinx startup via the system; no injection needed.
+rcade_new_version=false
+es_ver=$(emulationstation --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+if [[ -n "$es_ver" ]]; then
+    IFS='.' read -r _es_major _es_minor _es_patch <<< "$es_ver"
+    if [[ "$_es_major" -gt 2 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -gt 0 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -ge 8 ]]; then
+        rcade_new_version=true
+    fi
+fi
+
+if [[ "$rcade_new_version" == "true" ]]; then
+    pixelweb_path="/rcade/share/pixelcade/pixelweb"
+else
+    pixelweb_path="/usr/bin/pixelweb"
+fi
+
 # ============================================================================
 # PHASE 1: Wire DOFLinx into the startup script (system space if old-style)
 # ============================================================================
@@ -104,7 +123,9 @@ echo -e "${cyan}[PHASE 1]${nc} Configuring startup scripts..."
 
 startup_needs_overlay=false
 
-if [[ -f "$RCADE_STARTUP" ]]; then
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: Pixelcade and DOFLinx startup are already handled by the system)"
+elif [[ -f "$RCADE_STARTUP" ]]; then
     if grep -q "start_screens" "$RCADE_STARTUP"; then
         startup_version="new"
         echo -e "${green}[INFO]${nc} Detected NEW R-Cade startup (delegates to rcade-commands.sh)"
@@ -286,12 +307,16 @@ chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
 chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null || true
 
 # Startup wrapper script
-if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+if [[ -f "${INSTALLPATH}doflinx/doflinx-disabled.sh" && ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+    echo -e "${green}[INFO]${nc} Re-enabling DOFLinx (renaming doflinx-disabled.sh back to doflinx.sh)..."
+    mv "${INSTALLPATH}doflinx/doflinx-disabled.sh" "${INSTALLPATH}doflinx/doflinx.sh"
+    chmod +x ${INSTALLPATH}doflinx/doflinx.sh
+elif [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
     echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
     cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
 #!/bin/bash
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /rcade/share/doflinx && ./DOFLinx &
+cd /rcade/share/doflinx && ./DOFLinx
 EOF
     chmod +x ${INSTALLPATH}doflinx/doflinx.sh
 else
@@ -383,11 +408,11 @@ fi
 
 # Update DOFLinx MAME files via pixelweb
 echo -e "${green}[INFO]${nc} Updating DOFLinx MAME files..."
-/usr/bin/pixelweb -p /rcade/share/pixelcade -update-doflinx
+"$pixelweb_path" -p /rcade/share/pixelcade -update-doflinx
 if [ $? -eq 0 ]; then
     echo -e "${green}[SUCCESS]${nc} DOFLinx MAME files updated"
 else
-    echo -e "${yellow}[WARNING]${nc} Failed to update MAME files - run manually: pixelweb -p /rcade/share/pixelcade -update-doflinx"
+    echo -e "${yellow}[WARNING]${nc} Failed to update MAME files - run manually: $pixelweb_path -p /rcade/share/pixelcade -update-doflinx"
 fi
 
 # ============================================================================

@@ -13,7 +13,7 @@
 # 2. Overlay is saved with rcade-save.sh
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=20
+version=22
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -260,7 +260,7 @@ fi
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
 
 if [[ "$rcade_new_version" == "true" ]]; then
-    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: Pixelcade is already configured for startup)"
+    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: Pixelcade and DOFLinx startup are already handled by the system)"
 elif [[ -f "$RCADE_STARTUP" ]]; then
     # Detect which version based on content
     if grep -q "start_screens" "$RCADE_STARTUP"; then
@@ -588,7 +588,7 @@ if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
     cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
 #!/bin/bash
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /rcade/share/doflinx && ./DOFLinx &
+cd /rcade/share/doflinx && ./DOFLinx
 EOF
     chmod +x ${INSTALLPATH}doflinx/doflinx.sh
 else
