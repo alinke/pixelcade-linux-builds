@@ -132,7 +132,7 @@
     ]
   },
   "beta": {
-    "version": "7.7.7",
+    "version": "7.7.8",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.7.4  Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly",
@@ -143,8 +143,8 @@
       "7.7.6  Fixed broken widgets: Netflix Top 10, Horrorscope",
       "7.7.6  Restyled the Widget tiles",
       "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
-      "7.7.7  Added Rcade install location change for 2.0.8 latest Rcade",
-      "7.7.8  DOFLinx install changes for RCade 2.0.8"
+      "7.7.7  Pixelcade (pixelweb) path install change for RCade 2.0.8 and above",
+      "7.7.8  DOFLinx install changes for RCade 2.0.8 and above"
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
