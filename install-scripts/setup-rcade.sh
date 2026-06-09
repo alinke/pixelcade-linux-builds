@@ -176,6 +176,12 @@ if [[ -n "$es_ver" ]]; then
        [[ "$_es_major" -eq 2 && "$_es_minor" -gt 0 ]] || \
        [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -ge 8 ]]; then
         rcade_new_version=true
+    elif [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -eq 7 ]]; then
+        # Beta: 2.0.7 with kernel 6.19.0 behaves like 2.0.8+
+        _kernel_ver=$(uname -a | awk '{print $3}')
+        if [[ "$_kernel_ver" == "6.19.0" ]]; then
+            rcade_new_version=true
+        fi
     fi
 fi
 
