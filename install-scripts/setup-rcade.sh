@@ -741,15 +741,41 @@ else
 fi
 
 # Update Pixelcade artwork and DOFLinx .MAME files
-echo -e "${green}[INFO]${nc} Updating Pixelcade artwork and DOFLinx .MAME files..."
-"$pixelweb_install_path" -p /rcade/share/pixelcade -update-artwork
+echo -e "${green}[INFO]${nc} Updating Pixelcade artwork — this downloads thousands of files and may take several minutes..."
+
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-artwork &
+_artwork_pid=$!
+_artwork_elapsed=0
+while kill -0 "$_artwork_pid" 2>/dev/null; do
+    sleep 15
+    _artwork_elapsed=$(( _artwork_elapsed + 15 ))
+    echo -e "${green}[INFO]${nc} Still downloading artwork... (${_artwork_elapsed}s elapsed)"
+done
+wait "$_artwork_pid"
+_artwork_exit=$?
+
+if [ $_artwork_exit -eq 0 ]; then
+    echo -e "${green}[SUCCESS]${nc} Pixelcade artwork updated"
+else
+    echo -e "${yellow}[WARNING]${nc} Artwork update exited with code $_artwork_exit - you can retry later from the Update tab"
+fi
+
 # Let's also force and update the latest DOFLinx MAME files too because it'll skip if artwork is already up to date
-"$pixelweb_install_path" -p /rcade/share/pixelcade -update-doflinx
+echo -e "${green}[INFO]${nc} Updating DOFLinx .MAME files..."
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-doflinx &
+_doflinx_pid=$!
+_doflinx_elapsed=0
+while kill -0 "$_doflinx_pid" 2>/dev/null; do
+    sleep 10
+    _doflinx_elapsed=$(( _doflinx_elapsed + 10 ))
+    echo -e "${green}[INFO]${nc} Still downloading DOFLinx MAME files... (${_doflinx_elapsed}s elapsed)"
+done
+wait "$_doflinx_pid"
 
 if [ $? -eq 0 ]; then
-    echo -e "${green}[SUCCESS]${nc} Pixelcade artwork and DOFLinx .MAME files updated"
+    echo -e "${green}[SUCCESS]${nc} DOFLinx .MAME files updated"
 else
-    echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: $pixelweb_install_path -p /rcade/share/pixelcade -update-artwork"
+    echo -e "${yellow}[WARNING]${nc} DOFLinx MAME update failed - you can retry later from the Update tab"
 fi
 
 # Java needed for high scores, hi2txt
