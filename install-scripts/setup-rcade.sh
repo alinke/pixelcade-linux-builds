@@ -10,7 +10,7 @@
 #
 # This script is organized to minimize overlay usage:
 # 1. System space changes (/usr/bin, /etc) happen first
-# 2. Overlay is saved with rcade-save.sh
+# 2. Overlay is saved with rcade-save.sh, we only use overlay if below R-Cade 2.0.8 which requires pixelweb to be in system space
 # 3. User space changes (/rcade/share/) happen after overlay save
 
 version=22
