@@ -32,6 +32,7 @@ no_quit=false
 no_restart=false
 gui_wifi_ssid=""
 gui_wifi_password=""
+enable_attract_mode=""
 while [[ $# -gt 0 ]]; do
     case $1 in
         beta|--beta|-beta)
@@ -61,6 +62,14 @@ while [[ $# -gt 0 ]]; do
         --wifi-password)
             gui_wifi_password="$2"
             shift 2
+            ;;
+        --enable-attract-mode)
+            enable_attract_mode=true
+            shift
+            ;;
+        --no-attract-mode)
+            enable_attract_mode=false
+            shift
             ;;
         *)
             shift
@@ -780,6 +789,41 @@ if [ $? -eq 0 ]; then
     echo -e "${green}[SUCCESS]${nc} pixelcade.sh installed to /rcade/share/userscripts/game-start"
 else
     echo -e "${yellow}[WARNING]${nc} Failed to download pixelcade game-start script"
+fi
+
+# Attract mode: ask interactively when running standalone; respect flag when called from GUI
+if [[ -z "$enable_attract_mode" && "$no_pause" == "false" ]]; then
+    echo -e ""
+    echo -e "${cyan}[QUESTION]${nc} Would you like to enable Pixelcade Attract Mode?"
+    echo -e "           This automatically shows Pixelcade artwork and widgets when"
+    echo -e "           the R-Cade screensaver activates (idle screen)."
+    read -s -n 1 -p "           Enable Attract Mode? [y/N]: " _attract_answer
+    echo ""
+    if [[ "$_attract_answer" =~ ^[Yy]$ ]]; then
+        enable_attract_mode=true
+    else
+        enable_attract_mode=false
+    fi
+fi
+
+if [[ "$enable_attract_mode" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Installing Pixelcade Attract Mode screensaver scripts..."
+    mkdir -p /rcade/share/userscripts/screensaver-start
+    mkdir -p /rcade/share/userscripts/screensaver-stop
+    wget -q -O "/rcade/share/userscripts/screensaver-start/pixelcade.sh" "https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/rcade/scripts/screensaver-start/pixelcade.sh"
+    if [ $? -eq 0 ]; then
+        chmod +x /rcade/share/userscripts/screensaver-start/pixelcade.sh
+        echo -e "${green}[SUCCESS]${nc} screensaver-start/pixelcade.sh installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} Failed to download screensaver-start script"
+    fi
+    wget -q -O "/rcade/share/userscripts/screensaver-stop/pixelcade.sh" "https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/rcade/scripts/screensaver-stop/pixelcade.sh"
+    if [ $? -eq 0 ]; then
+        chmod +x /rcade/share/userscripts/screensaver-stop/pixelcade.sh
+        echo -e "${green}[SUCCESS]${nc} screensaver-stop/pixelcade.sh installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} Failed to download screensaver-stop script"
+    fi
 fi
 
 # Update RetroArch configuration for RetroAchievements (in user space)
