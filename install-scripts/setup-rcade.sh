@@ -27,6 +27,11 @@ nc='\033[0m'
 # Parse command line arguments
 beta=false
 force=false
+no_pause=false
+no_quit=false
+no_restart=false
+gui_wifi_ssid=""
+gui_wifi_password=""
 while [[ $# -gt 0 ]]; do
     case $1 in
         beta|--beta|-beta)
@@ -36,6 +41,26 @@ while [[ $# -gt 0 ]]; do
         force|--force|-force)
             force=true
             shift
+            ;;
+        --no-pause)
+            no_pause=true
+            shift
+            ;;
+        --no-quit)
+            no_quit=true
+            shift
+            ;;
+        --no-restart)
+            no_restart=true
+            shift
+            ;;
+        --wifi-ssid)
+            gui_wifi_ssid="$2"
+            shift 2
+            ;;
+        --wifi-password)
+            gui_wifi_password="$2"
+            shift 2
             ;;
         *)
             shift
@@ -58,7 +83,7 @@ echo -e "This script will install and configure Pixelcade & DOFLinx in game effe
 echo -e "Pixelcade artwork will be installed in /rcade/share/pixelcade"
 echo -e "DOFLinx will be installed in /rcade/share/doflinx"
 echo -e ""
-pause
+[[ "$no_pause" == "true" ]] || pause
 
 INSTALLPATH="/rcade/share/"
 
@@ -203,10 +228,12 @@ echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "${cyan}[PHASE 1]${nc} System space changes (will be saved to overlay)"
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 
-# Stop Pixelcade before updating
-echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
-curl -s localhost:8080/quit >/dev/null 2>&1
-sleep 2
+# Stop Pixelcade before updating (skipped when called from GUI — pixelweb stays running)
+if [[ "$no_quit" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
+    curl -s localhost:8080/quit >/dev/null 2>&1
+    sleep 2
+fi
 
 # Update pixelweb binary (system space for pre-2.0.8, user space for 2.0.8+)
 if [[ "$rcade_new_version" == "false" ]]; then
@@ -745,7 +772,7 @@ else
 fi
 
 # Install pixelcade game-start script
-echo -e "${green}[INFO]${nc} Installing pixelcade game-start script..."
+echo -e "${green}[INFO]${nc} Installing pixelcade game-start script for high scores..."
 mkdir -p /rcade/share/userscripts/game-start
 wget -q -O "/rcade/share/userscripts/game-start/pixelcade.sh" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/scripts/game-start/pixelcade.sh"
 if [ $? -eq 0 ]; then
@@ -891,25 +918,34 @@ if lsusb | grep -q '1d6b:3232'; then
     wifi_currently_connected=$(echo "$wifi_status_json" | grep -o '"connected":true' 2>/dev/null)
     wifi_current_ssid=$(echo "$wifi_status_json" | grep -o '"ssid":"[^"]*"' | sed 's/"ssid":"//;s/"//' 2>/dev/null)
 
-    if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
-        echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
-        read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
+    if [[ -n "$gui_wifi_ssid" ]]; then
+        # Called from GUI — use provided credentials, skip interactive prompts
+        wifi_ssid="$gui_wifi_ssid"
+        wifi_password="$gui_wifi_password"
+        wifi_choice="y"
     else
-        echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
-        read -p "Configure WiFi? [y/N]: " wifi_choice
+        if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
+            echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
+            read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
+        else
+            echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
+            read -p "Configure WiFi? [y/N]: " wifi_choice
+        fi
+        wifi_choice="${wifi_choice%$'\r'}"
     fi
 
-    # Strip carriage return (present when running over SSH from Windows or with CRLF scripts)
-    wifi_choice="${wifi_choice%$'\r'}"
-
     if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
-        read -p "WiFi SSID: " wifi_ssid
-        wifi_ssid="${wifi_ssid%$'\r'}"
+        if [[ -z "$gui_wifi_ssid" ]]; then
+            read -p "WiFi SSID: " wifi_ssid
+            wifi_ssid="${wifi_ssid%$'\r'}"
+        fi
         if [[ -z "$wifi_ssid" ]]; then
             echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
         else
-            read -p "WiFi Password (leave blank for open network): " wifi_password
-            wifi_password="${wifi_password%$'\r'}"
+            if [[ -z "$gui_wifi_ssid" ]]; then
+                read -p "WiFi Password (leave blank for open network): " wifi_password
+                wifi_password="${wifi_password%$'\r'}"
+            fi
 
             # Escape backslash and double-quote for JSON
             wifi_ssid_json="${wifi_ssid//\\/\\\\}"
@@ -950,10 +986,13 @@ if lsusb | grep -q '1d6b:3232'; then
 fi
 
 # Restart pixelweb in background so companion UI is accessible immediately
-echo -e "${green}[INFO]${nc} Starting Pixelcade..."
-"$pixelweb_install_path" -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
-sleep 2
-echo -e "${green}[INFO]${nc} Pixelcade companion accessible at http://rcade.local:8080"
+# (skipped when called from GUI — the caller manages the restart)
+if [[ "$no_restart" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Starting Pixelcade..."
+    "$pixelweb_install_path" -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
+    sleep 2
+    echo -e "${green}[INFO]${nc} Pixelcade companion accessible at http://rcade.local:8080"
+fi
 
 if [[ $install_successful == "true" ]]; then
    echo -e ""
