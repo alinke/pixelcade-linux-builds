@@ -27,6 +27,13 @@ curl -s "${PIXELCADEBASEURL}attract/stop" >> /dev/null 2>/dev/null
 
 SYSTEM=$(basename $(dirname "$1")) #get just the console / system name like mame, nes, etc.
 GAMENAME="$2"
+# .zip ROMs are extracted to a tmpfiles path before launch:
+#   /rcade/resources/share/tmpfiles/<system>/<emulator>/<sanitized-zip>/<file>
+# so $1's immediate parent is the sanitized zip name, not the system folder.
+# Recover the real system by parsing it directly from the tmpfiles path.
+if [[ "$1" == */tmpfiles/* ]]; then
+    SYSTEM=$(echo "$1" | sed 's|.*/tmpfiles/\([^/]*\)/.*|\1|')
+fi
 if [ "$3" != "" ]; then
 		GAMETITLE="$3"  #then game title is populated
 else
