@@ -457,6 +457,14 @@ RULEEOF
     # Remove any old setup script from previous installs
     rm -f /usr/lib/udev/pixelcade-net-setup.sh
     echo -e "${green}[SUCCESS]${nc} Pixelcade LCD udev rule installed"
+else
+    # RCade 2.0.8+ handles USB network natively — remove the rule if it was left by an older install
+    if [[ -f /etc/udev/rules.d/99-pixelcade-lcd.rules ]]; then
+        rm -f /etc/udev/rules.d/99-pixelcade-lcd.rules
+        rm -f /usr/lib/udev/pixelcade-net-setup.sh
+        udevadm control --reload-rules 2>/dev/null
+        echo -e "${green}[INFO]${nc} Removed legacy Pixelcade LCD udev rule (not needed on RCade 2.0.8+)"
+    fi
 fi
 
 # ============================================================================
