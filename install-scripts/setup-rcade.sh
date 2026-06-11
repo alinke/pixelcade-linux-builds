@@ -865,59 +865,6 @@ if [[ "$enable_attract_mode" == "true" ]]; then
     fi
 fi
 
-# Update RetroArch configuration for RetroAchievements (in user space)
-echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
-RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
-
-if [[ -f "$RETROARCH_CFG" ]]; then
-    # Strip null bytes (^@ corruption from interrupted writes) before processing
-    tmp_clean=$(mktemp)
-    tr -d '\0' < "$RETROARCH_CFG" > "$tmp_clean"
-    if [[ -s "$tmp_clean" ]]; then
-        orig_size=$(wc -c < "$RETROARCH_CFG")
-        clean_size=$(wc -c < "$tmp_clean")
-        if [[ "$orig_size" != "$clean_size" ]]; then
-            echo -e "${yellow}[WARNING]${nc} Null bytes found in retroarch.cfg - cleaning before update"
-            cat "$tmp_clean" > "$RETROARCH_CFG"
-        fi
-        rm -f "$tmp_clean"
-    else
-        rm -f "$tmp_clean"
-        echo -e "${red}[WARNING]${nc} retroarch.cfg appears empty after null-byte cleanup - skipping"
-        RETROARCH_CFG=""
-    fi
-fi
-
-if [[ -f "$RETROARCH_CFG" ]]; then
-    # Create a backup, keeping only the 3 most recent
-    cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
-    ls -t "${RETROARCH_CFG}.backup."* 2>/dev/null | tail -n +4 | xargs rm -f 2>/dev/null || true
-
-    # Update a setting in retroarch.cfg (safe: writes via temp file)
-    update_setting() {
-        local setting="$1"
-        local value="$2"
-        local file="$3"
-        local tmp_file
-        tmp_file=$(mktemp)
-        if grep -q "^${setting} =" "$file"; then
-            sed "s|^${setting} =.*|${setting} = ${value}|" "$file" > "$tmp_file"
-        else
-            cp "$file" "$tmp_file"
-            echo "${setting} = ${value}" >> "$tmp_file"
-        fi
-        if [[ -s "$tmp_file" ]]; then
-            cat "$tmp_file" > "$file"
-        fi
-        rm -f "$tmp_file"
-    }
-
-    echo -e "${green}[SUCCESS]${nc} RetroArch config verified"
-    echo -e "${cyan}[NOTE]${nc} Enable RetroAchievements and Encore Mode via"
-    echo -e "       R-Cade Main Menu -> Game Settings -> RetroArch Settings."
-else
-    echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
-fi
 
 # ============================================================================
 # PIXELCADE LCD SETUP (skip for Pixelcade LED)
