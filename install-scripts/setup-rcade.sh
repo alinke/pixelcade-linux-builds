@@ -215,13 +215,18 @@ if [[ -n "$es_ver" ]]; then
         _kernel_ver=$(uname -a | awk '{print $3}')
         if [[ "$_kernel_ver" == "6.19.0" ]]; then
             rcade_new_version=true
+            rcade_207_beta=true
         fi
     fi
 fi
 
 if [[ "$rcade_new_version" == "true" ]]; then
     pixelweb_install_path="/rcade/share/pixelcade/pixelweb"
-    echo -e "${green}[INFO]${nc} RCade ${es_ver} detected — installing pixelweb to user space: ${pixelweb_install_path}"
+    if [[ "$rcade_207_beta" == "true" ]]; then
+        echo -e "${green}[INFO]${nc} RCade 2.0.7 Beta detected — installing pixelweb to user space: ${pixelweb_install_path}"
+    else
+        echo -e "${green}[INFO]${nc} RCade ${es_ver} detected — installing pixelweb to user space: ${pixelweb_install_path}"
+    fi
 else
     pixelweb_install_path="/usr/bin/pixelweb"
     echo -e "${green}[INFO]${nc} RCade pre-2.0.8 detected — installing pixelweb to system space: ${pixelweb_install_path}"
