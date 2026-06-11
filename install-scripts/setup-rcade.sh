@@ -899,13 +899,8 @@ if [[ -f "$RETROARCH_CFG" ]]; then
         rm -f "$tmp_file"
     }
 
-    # Enable Encore Mode (cheevos_start_active) — the only setting we control here.
-    # cheevos_enable, cheevos_hardcore_mode_enable, username, and password are
-    # managed via R-Cade Main Menu -> Game Settings -> RetroArch Settings.
-    update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
-
-    echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements Encore Mode"
-    echo -e "${cyan}[NOTE]${nc} Set your username, password, and enable RetroAchievements via"
+    echo -e "${green}[SUCCESS]${nc} RetroArch config verified"
+    echo -e "${cyan}[NOTE]${nc} Enable RetroAchievements and Encore Mode via"
     echo -e "       R-Cade Main Menu -> Game Settings -> RetroArch Settings."
 else
     echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
