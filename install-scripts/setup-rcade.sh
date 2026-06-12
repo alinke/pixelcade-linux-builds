@@ -753,6 +753,14 @@ else
    fi
 fi
 
+# If the mame artwork folder is missing but a version file exists, remove the version file
+# so pixelweb performs a full re-download instead of skipping it as already up-to-date.
+_artwork_version_file="/rcade/share/pixelcade/.alinke_pixelcade-master-version"
+if [[ ! -d "/rcade/share/pixelcade/mame" && -f "$_artwork_version_file" ]]; then
+    rm -f "$_artwork_version_file"
+    echo -e "${green}[INFO]${nc} Artwork folder missing — cleared version file to force full artwork download"
+fi
+
 # Update Pixelcade artwork and DOFLinx .MAME files
 echo -e "${green}[INFO]${nc} Updating Pixelcade artwork — this downloads thousands of files and may take several minutes..."
 
