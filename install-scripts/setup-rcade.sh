@@ -894,7 +894,18 @@ if lsusb | grep -q '1d6b:3232'; then
         echo -e "${green}[INFO]${nc} Updating pixelcade.ini for LCD USB connection..."
         sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' "$pixelcade_ini"
         sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' "$pixelcade_ini"
-        echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB"
+
+        # Fetch the LCD hostname from the USB local-link address and write it to pixelcade.ini
+        lcd_info_json=$(curl -s --connect-timeout 5 --max-time 10 \
+            "http://169.254.100.1:8080/v2/info" 2>/dev/null)
+        lcd_hostname=$(echo "$lcd_info_json" | grep -o '"hostname":"[^"]*"' | sed 's/"hostname":"//;s/"//')
+        if [[ -n "$lcd_hostname" ]]; then
+            sed -i "s|lcdMarqueeHostName[ ]*=.*|lcdMarqueeHostName            = ${lcd_hostname}|" "$pixelcade_ini"
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB (hostname: ${lcd_hostname})"
+        else
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB"
+            echo -e "${yellow}[WARNING]${nc} Could not retrieve LCD hostname — set lcdMarqueeHostName manually if needed"
+        fi
     else
         echo -e "${yellow}[WARNING]${nc} pixelcade.ini not found at $pixelcade_ini — LCD settings could not be configured automatically"
     fi
