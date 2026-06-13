@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.7.3",
+    "version": "7.7.8",
     "artworkUpdate": true,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -127,14 +127,7 @@
       "7.7.2  Added console fallback logic for mame categories like 'fighting games', will check the mame folder for a match, other fallback folders can be specified too by adding a comma separated list in pixelcade.ini: consoleFallback=mame,x where x could be nes for example",
       "7.7.2  Bug fix: retroachivements now works in LCD only mode",
       "7.7.3  Adding front end setup in settings to make it easier to set up front end integrations for things like Big Box, HyperSpin,  etc. This will also include checks to make sure everything is set up correctly and give the user instructions on how to fix if not.",
-      "7.7.3  Restart and Shutdown options in Companion now will reboot and shutdown on Windows"
-
-    ]
-  },
-  "beta": {
-    "version": "7.7.8",
-    "artworkUpdate": false,
-    "releaseNotes": [ 
+      "7.7.3  Restart and Shutdown options in Companion now will reboot and shutdown on Windows",
       "7.7.4  Added Batocera checks to the front end setup tab in settings to make sure the Batocera scripts for front end integration are installed and configured correctly",
       "7.7.4  Added RCade checks to the front end setup tab in settings to make sure the Scripts scripts for front end integration are installed and configured correctly",
       "7.7.4  Attract mode can be enabled and disabled for RCade and Batocera from Pixelcade Companion",
@@ -144,8 +137,13 @@
       "7.7.6  Restyled the Widget tiles",
       "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
       "7.7.7  Pixelcade (pixelweb) path install change for RCade 2.0.8 and above",
-      "7.7.8  DOFLinx install changes for RCade 2.0.8 and above"
+      "7.7.8  DOFLinx in game effects path install changes for RCade 2.0.8 and above"
     ]
+  },
+  "beta": {
+    "version": "7.7.8",
+    "artworkUpdate": false,
+    "releaseNotes": []
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
