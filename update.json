@@ -143,7 +143,7 @@
   "beta": {
     "version": "7.7.9",
     "artworkUpdate": false,
-    "releaseNotes": [ "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu"]
+    "releaseNotes": [ "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu, doflinx disable and enable fix"]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
