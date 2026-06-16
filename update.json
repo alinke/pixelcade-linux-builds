@@ -141,9 +141,13 @@
     ]
   },
   "beta": {
-    "version": "7.7.9",
+    "version": "7.8.0",
     "artworkUpdate": false,
-    "releaseNotes": [ "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu, doflinx disable and enable fix"]
+    "releaseNotes": [ 
+      "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu, doflinx disable and enable fix",
+      "7.8.0 Added In Game Definitions overwrite option",
+      "7.8.0 Fixed premium art pack progress update and the license code now persists for future updates which will not require the code to be re-entered"
+  ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
