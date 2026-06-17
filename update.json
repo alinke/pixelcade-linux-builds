@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.7.8",
+    "version": "7.8.0",
     "artworkUpdate": true,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -137,17 +137,16 @@
       "7.7.6  Restyled the Widget tiles",
       "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
       "7.7.7  Pixelcade (pixelweb) path install change for RCade 2.0.8 and above",
-      "7.7.8  DOFLinx in game effects path install changes for RCade 2.0.8 and above"
+      "7.7.8  DOFLinx in game effects path install changes for RCade 2.0.8 and above",
+      "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu, doflinx disable and enable fix",
+      "7.8.0 Added In Game Definitions overwrite option",
+      "7.8.0 Fixed premium art pack progress update and the license code now persists for future updates which will not require the code to be re-entered"
     ]
   },
   "beta": {
     "version": "7.8.0",
     "artworkUpdate": false,
-    "releaseNotes": [ 
-      "7.7.9  For R-Cade in the front end setup tabs, added the board model and warning if Pixelcade not turn on in R-Cade manu, doflinx disable and enable fix",
-      "7.8.0 Added In Game Definitions overwrite option",
-      "7.8.0 Fixed premium art pack progress update and the license code now persists for future updates which will not require the code to be re-entered"
-  ]
+    "releaseNotes": []
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
