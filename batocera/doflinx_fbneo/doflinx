@@ -1,0 +1,21 @@
+#!/bin/bash
+case "$1" in
+    start)
+        sleep 30
+        export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+        cd /userdata/system/doflinx && ./DOFLinx &
+        ;;
+    stop)
+        export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+        cd /userdata/system/doflinx && ./DOFLinxMsg QUIT 2>/dev/null
+        sleep 2
+        killall DOFLinx 2>/dev/null
+        ;;
+    restart|reload)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        ;;
+esac
