@@ -2,8 +2,7 @@
 case "$1" in
     start)
         sleep 30
-        export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-        cd /userdata/system/doflinx && ./DOFLinx &
+        /userdata/system/doflinx/doflinx.sh &
         ;;
     stop)
         export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
