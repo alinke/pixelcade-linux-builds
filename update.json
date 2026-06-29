@@ -144,9 +144,9 @@
     ]
   },
   "beta": {
-    "version": "7.8.0",
+    "version": "7.8.1",
     "artworkUpdate": false,
-    "releaseNotes": []
+    "releaseNotes": [ "7.8.1 Five new widgets: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead"]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
