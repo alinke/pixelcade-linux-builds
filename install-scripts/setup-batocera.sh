@@ -736,6 +736,70 @@ find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec 
 #remove the attract mode scripts so they are not there by default
 rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
 rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+
+# Ask user if they want Pixelcade Attract Mode
+echo ""
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo -e "${cyan}Pixelcade Attract Mode (Optional)${nc}"
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo ""
+echo -e "${cyan}When the Batocera screensaver kicks in, Pixelcade can cycle${nc}"
+echo -e "${cyan}through a list of favorite widgets (weather, scores, clock, etc.)${nc}"
+echo -e "${cyan}that you can configure from the Pixelcade Companion Web UI${nc}"
+echo -e "${cyan}or the Pixelcade mobile app.${nc}"
+echo -e "${cyan}This feature can also be turned off later from Pixelcade Companion.${nc}"
+echo ""
+while true; do
+    read -p "Would you like to enable Pixelcade Attract Mode? (y/n) " yn
+    case $yn in
+        [Yy]* )
+            echo -e "${green}[INFO] Enabling Pixelcade Attract Mode...${nc}"
+            mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start
+            mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop
+            cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh << 'SSSTART'
+#!/bin/bash
+
+#
+# Screensaver Start Event
+# This script is called when the Batocera screensaver starts
+#
+
+# BASE URL for RESTful calls to Pixelcade
+PIXELCADEBASEURL="http://127.0.0.1:8080/"
+
+# Start attract mode with no interrupt (won't stop on button press)
+PIXELCADEURL="attract?nointerrupt"
+curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
+SSSTART
+            cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh << 'SSSTOP'
+#!/bin/bash
+
+#
+# Screensaver Stop Event
+# This script is called when the Batocera screensaver stops
+#
+
+# BASE URL for RESTful calls to Pixelcade
+PIXELCADEBASEURL="http://127.0.0.1:8080/"
+
+# Stop attract mode
+PIXELCADEURL="attract/stop"
+curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null
+SSSTOP
+            chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
+            chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+            echo -e "${green}[SUCCESS] Pixelcade Attract Mode enabled${nc}"
+            break
+            ;;
+        [Nn]* )
+            echo -e "${cyan}[INFO] Skipping Pixelcade Attract Mode${nc}"
+            break
+            ;;
+        * ) echo "Please answer y or n";;
+    esac
+done
+echo ""
+
 #hi2txt for high score scrolling
 
 echo -e "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
