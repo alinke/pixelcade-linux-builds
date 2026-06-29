@@ -1012,7 +1012,7 @@ fi
 if [[ "$install_doflinx" == "true" ]]; then
     echo ""
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-    echo -e "${cyan}Installing DOFLinx for In-Game Effects...${nc}"
+    echo -e "${cyan}Installing DOFLinx for In-Game Effects on the FBNEO wheel...${nc}"
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo ""
 
