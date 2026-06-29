@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.7.4",
   "latestArtworkVersion": 61,
-  "betaFirmwareVersion": "7.7.7",
+  "betaFirmwareVersion": "7.7.8",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -122,7 +122,8 @@
     "7.7.5  Fixed broken widgets: Netflix Top 10, Horrorscope, Google Tasks and Photos",
     "7.7.5  Restyled the Widget tiles",
     "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
-    "7.7.7  Artwork force update fixes"
+    "7.7.7  Artwork force update fixes",
+    "7.7.8  New widges: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
