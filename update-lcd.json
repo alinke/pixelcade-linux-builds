@@ -124,7 +124,8 @@
     "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
     "7.7.7  Artwork force update fixes",
     "7.7.8  New widges: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
-    "7.7.8 Fixed horrorscope widget (prior API provider was no longer supported)"
+    "7.7.8  Fixed horrorscope widget (prior API provider was no longer supported)",
+    "7.7.8  Added suport for Movie and TV show to the Plex widget (it only registered music prior)"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
