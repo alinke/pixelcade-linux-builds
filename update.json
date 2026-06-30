@@ -146,7 +146,13 @@
   "beta": {
     "version": "7.8.1",
     "artworkUpdate": false,
-    "releaseNotes": [ "7.8.1 Five new widgets: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead"]
+    "releaseNotes": [ 
+      "7.8.1 Five new widgets: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
+      "7.8.1 Earthquake Widget: Added LED strips effects corresponding to earthquake severity",
+      "7.8.1 Immproved integration with the Pixelcade Pulse 7segment, Mini LCD, and dot matrix sub-displays and various widgets",
+      "7.8.1 Added suport for Movie and TV show to the Plex widget (it only registered music prior)",
+      "7.8.1 Fixed horrorscope widget (prior API provider was no longer supported)"
+  ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
