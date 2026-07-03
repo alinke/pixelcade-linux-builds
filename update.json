@@ -153,7 +153,8 @@
       "7.8.1 Added suport for Movie and TV show to the Plex widget (it only registered music prior)",
       "7.8.1 Fixed horrorscope widget (prior API provider was no longer supported)",
       "7.8.1  Added info boxes to each widget settings page to explain what the widget does and how it works",
-      "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board"
+      "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board",
+      "7.8.1  Added Backup and Restore button in the General Settings tab allowing you to backup and restore your settings include Pixelcade Pulse zones"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
