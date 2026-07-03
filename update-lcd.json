@@ -125,7 +125,10 @@
     "7.7.7  Artwork force update fixes",
     "7.7.8  New widges: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
     "7.7.8  Fixed horrorscope widget (prior API provider was no longer supported)",
-    "7.7.8  Added suport for Movie and TV show to the Plex widget (it only registered music prior)"
+    "7.7.8  Added support for Movie and TV show to the Plex widget (it only registered music prior)",
+    "7.7.8  Added info boxes to each widget settings page to explain what the widget does and how it works",
+    "7.7.8  Most widgets now also update the Pixelcade Pulse sub-displays (mini LCD, 7-segment, and dot matrix) when they are connected",
+    "7.7.8  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
