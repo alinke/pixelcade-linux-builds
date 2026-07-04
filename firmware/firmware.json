@@ -21,7 +21,8 @@
     "version": 23,
     "subversion": 10,
     "releaseNotes": [
-      "Added char support to 7segment api and perf improvement"
+      "Added char support to 7segment api and perf improvement",
+      "New Pulse effects for the Planes Overhead and Earthquake widgets"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
