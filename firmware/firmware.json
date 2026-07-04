@@ -22,7 +22,8 @@
     "subversion": 10,
     "releaseNotes": [
       "Added char support to 7segment api and perf improvement",
-      "New Pulse effects for the Planes Overhead and Earthquake widgets"
+      "Pulse - New LED strip and matrix effects for the Planes Overhead and Earthquake widgets",
+      "Pulse - Improved the majority of the console and some arcade game specific LED strip animations"
     ]
   },
   "lastUpdated": "2025-01-08T00:00:00Z",
