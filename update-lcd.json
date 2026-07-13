@@ -1,7 +1,7 @@
 {
-  "latestFirmwareVersion": "7.7.4",
+  "latestFirmwareVersion": "7.8.2",
   "latestArtworkVersion": 61,
-  "betaFirmwareVersion": "7.8.1",
+  "betaFirmwareVersion": "7.8.2",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -114,7 +114,19 @@
     "7.7.1  Added a new theme called Chroma, many thanks to Viking & Jason for contributing",
     "7.7.2  Added a theme refresh icon allowing you to refresh the theme after an artwork update",
     "7.7.3  This call now works too for mameoutputs http://pixelcadedx-xxxxxxxx.local:8080/arcade/stream/mameoutput/galaga_beam?l=3&notext&nomini&nostrip",
-    "7.7.4  Artwork update fixes for 1280 x 390 Pixelcades"
+    "7.7.4  Artwork update fixes for 1280 x 390 Pixelcades",
+    "7.7.5  Sorting release notes now by most recent first and limit to top 50 with an expand all option",
+    "7.7.5  New widges: What to Watch, Retro Trivia, Recipes, Twitch Live, Countdown Timer",
+    "7.7.5  Fixed broken widgets: Netflix Top 10, Horrorscope, Google Tasks and Photos",
+    "7.7.5  Restyled the Widget tiles",
+    "7.7.6  Added Jellyfin/Emby Now Playing widget and integrated them with What to Watch widget",
+    "7.7.7  Artwork force update fixes",
+    "7.7.8  New widges: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
+    "7.7.8  Fixed horrorscope widget (prior API provider was no longer supported)",
+    "7.7.8  Added support for Movie and TV show to the Plex widget (it only registered music prior)",
+    "7.7.8  Added info boxes to each widget settings page to explain what the widget does and how it works",
+    "7.7.8  Most widgets now also update the Pixelcade Pulse sub-displays (mini LCD, 7-segment, and dot matrix) when they are connected",
+    "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board"
   ],
   "betaReleaseNotes": [
     "7.7.5  Sorting release notes now by most recent first and limit to top 50 with an expand all option",
@@ -128,7 +140,7 @@
     "7.7.8  Added support for Movie and TV show to the Plex widget (it only registered music prior)",
     "7.7.8  Added info boxes to each widget settings page to explain what the widget does and how it works",
     "7.7.8  Most widgets now also update the Pixelcade Pulse sub-displays (mini LCD, 7-segment, and dot matrix) when they are connected",
-    "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board"
+    "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
