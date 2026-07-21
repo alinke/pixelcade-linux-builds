@@ -153,7 +153,7 @@
     ]
   },
   "beta": {
-    "version": "7.8.2",
+    "version": "7.8.3",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.2 Five new widgets: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
@@ -164,7 +164,8 @@
       "7.8.2  Added info boxes to each widget settings page to explain what the widget does and how it works",
       "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board",
       "7.8.1  Added Backup and Restore button in the General Settings tab allowing you to backup and restore your settings include Pixelcade Pulse zones",
-      "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing"
+      "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing",
+      "7.8.3  Adding Vestaboard flipboard support https://www.vestaboard.com/"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
