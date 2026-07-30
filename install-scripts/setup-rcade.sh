@@ -641,6 +641,10 @@ elif [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
     echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
     cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
 #!/bin/bash
+# When launched at boot via udev/rcade-commands.sh, this script gets no $PATH
+# at all, which breaks anything DOFLinx shells out to internally. Make sure a
+# normal PATH is always present regardless of how this script was started.
+[ -z "$PATH" ] && export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 cd /rcade/share/doflinx && ./DOFLinx
 EOF
