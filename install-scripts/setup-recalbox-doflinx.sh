@@ -214,89 +214,53 @@ elif [[ $machine_arch == "x64" ]]; then
     beta_folder="Linux_x64_beta"
 fi
 
-# Base URLs for downloads
-stable_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${stable_folder}"
-beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
+# Download the whole DOFLinx executables repo once and copy over whatever files
+# actually exist in it, rather than hardcoding each filename individually — a
+# new file the DOFLinx author adds (like DOFLinxCommon.so was) then just shows
+# up automatically instead of silently breaking the install until the
+# installer script is updated.
+doflinx_archive_url="https://codeload.github.com/DOFLinx/CurrentExecutable/tar.gz/refs/heads/main"
+doflinx_tmpdir=$(mktemp -d)
 
-# Beta folder only contains DOFLinx and DOFLinx.pdb
-# All other supporting files come from stable folder
-# If beta mode is requested but beta folder doesn't exist, fall back to stable
-using_beta=false
-if [[ "$beta" == "true" ]]; then
-    echo -e "${yellow}[BETA]${nc} Checking for beta version..."
-    # Try to download from beta folder first
-    wget -q --spider "${beta_url}/DOFLinx"
-    if [ $? -eq 0 ]; then
-        main_url="$beta_url"
-        using_beta=true
-        echo -e "${green}[INFO]${nc} Beta version found - downloading DOFLinx from ${beta_folder}..."
-    else
-        main_url="$stable_url"
-        echo -e "${yellow}[INFO]${nc} Beta version not available - falling back to stable ${stable_folder}..."
-    fi
+echo -e "${green}[INFO]${nc} Downloading DOFLinx executables archive..."
+wget -q -O "${doflinx_tmpdir}/doflinx.tar.gz" "$doflinx_archive_url"
+if [ $? -ne 0 ]; then
+    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executables archive"
+    install_successful=false
 else
-    main_url="$stable_url"
-    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
+    tar -xzf "${doflinx_tmpdir}/doflinx.tar.gz" -C "$doflinx_tmpdir"
+    doflinx_extracted=$(find "$doflinx_tmpdir" -maxdepth 1 -type d -name "CurrentExecutable-*" | head -1)
+
+    if [[ -z "$doflinx_extracted" || ! -d "${doflinx_extracted}/${stable_folder}" ]]; then
+        echo -e "${red}[ERROR]${nc} DOFLinx archive did not contain expected folder ${stable_folder}"
+        install_successful=false
+    else
+        echo -e "${green}[INFO]${nc} Installing DOFLinx files from ${stable_folder}..."
+        cp -a "${doflinx_extracted}/${stable_folder}/." "${DOFLINX_PATH}/"
+    fi
+
+    using_beta=false
+    if [[ "$beta" == "true" ]]; then
+        if [[ -n "$doflinx_extracted" && -d "${doflinx_extracted}/${beta_folder}" ]]; then
+            echo -e "${yellow}[BETA]${nc} Beta version found - using DOFLinx executable from ${beta_folder}..."
+            cp -a "${doflinx_extracted}/${beta_folder}/." "${DOFLINX_PATH}/"
+            using_beta=true
+        else
+            echo -e "${yellow}[INFO]${nc} Beta version not available - using stable ${stable_folder}..."
+        fi
+    fi
 fi
+rm -rf "$doflinx_tmpdir"
 
-# Download main DOFLinx executable (from beta or stable based on availability)
-echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -O "${DOFLINX_PATH}/DOFLinx" "${main_url}/DOFLinx"
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
-   install_successful=false
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
-wget -O "${DOFLINX_PATH}/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
-fi
-
-# Download supporting files from stable folder (these don't exist in beta folder)
-echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
-wget -O "${DOFLINX_PATH}/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
-   install_successful=false
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
-wget -O "${DOFLINX_PATH}/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading keycodes..."
-wget -O "${DOFLINX_PATH}/keycodes" "${stable_url}/keycodes"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
-wget -O "${DOFLINX_PATH}/HELP.txt" "${stable_url}/HELP.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
-wget -O "${DOFLINX_PATH}/DONATE.txt" "${stable_url}/DONATE.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
-wget -O "${DOFLINX_PATH}/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
+if [[ ! -f "${DOFLINX_PATH}/DOFLinx" ]]; then
+    echo -e "${red}[ERROR]${nc} DOFLinx executable missing after copy"
+    install_successful=false
 fi
 
 # Set execute permissions
 echo -e "${green}[INFO]${nc} Setting permissions..."
-chmod a+x ${DOFLINX_PATH}/DOFLinx
-chmod a+x ${DOFLINX_PATH}/DOFLinxMsg
+chmod a+x ${DOFLINX_PATH}/DOFLinx 2>/dev/null
+chmod a+x ${DOFLINX_PATH}/DOFLinxMsg 2>/dev/null
 chmod a+x ${DOFLINX_PATH}/keycodes 2>/dev/null
 
 # Download configuration files from pixelcade-linux-builds
