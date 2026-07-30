@@ -263,59 +263,52 @@ else
     exit 1
 fi
 
-stable_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${stable_folder}"
-beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
+# Download the whole DOFLinx executables repo once and copy over whatever files
+# actually exist in it, rather than hardcoding each filename individually — a
+# new file the DOFLinx author adds (like DOFLinxCommon.so was) then just shows
+# up automatically instead of silently breaking the install until the
+# installer script is updated.
+doflinx_archive_url="https://codeload.github.com/DOFLinx/CurrentExecutable/tar.gz/refs/heads/main"
+doflinx_tmpdir=$(mktemp -d)
 
-using_beta=false
-if [[ "$beta" == "true" ]]; then
-    echo -e "${yellow}[BETA]${nc} Checking for beta version..."
-    wget -q --spider "${beta_url}/DOFLinx"
-    if [ $? -eq 0 ]; then
-        main_url="$beta_url"
-        using_beta=true
-        echo -e "${green}[INFO]${nc} Beta version found - downloading from ${beta_folder}..."
-    else
-        main_url="$stable_url"
-        echo -e "${yellow}[INFO]${nc} Beta not available - falling back to stable..."
-    fi
+echo -e "${green}[INFO]${nc} Downloading DOFLinx executables archive..."
+wget -q -O "${doflinx_tmpdir}/doflinx.tar.gz" "$doflinx_archive_url"
+if [ $? -ne 0 ]; then
+    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executables archive"
+    install_successful=false
 else
-    main_url="$stable_url"
-    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
-fi
+    tar -xzf "${doflinx_tmpdir}/doflinx.tar.gz" -C "$doflinx_tmpdir"
+    doflinx_extracted=$(find "$doflinx_tmpdir" -maxdepth 1 -type d -name "CurrentExecutable-*" | head -1)
 
-# DOFLinx executable
-echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -q -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
-if [ $? -ne 0 ]; then
-    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
+    if [[ -z "$doflinx_extracted" || ! -d "${doflinx_extracted}/${stable_folder}" ]]; then
+        echo -e "${red}[ERROR]${nc} DOFLinx archive did not contain expected folder ${stable_folder}"
+        install_successful=false
+    else
+        echo -e "${green}[INFO]${nc} Installing DOFLinx files from ${stable_folder}..."
+        cp -a "${doflinx_extracted}/${stable_folder}/." "${INSTALLPATH}doflinx/"
+    fi
+
+    using_beta=false
+    if [[ "$beta" == "true" ]]; then
+        if [[ -n "$doflinx_extracted" && -d "${doflinx_extracted}/${beta_folder}" ]]; then
+            echo -e "${yellow}[BETA]${nc} Beta version found - using DOFLinx executable from ${beta_folder}..."
+            cp -a "${doflinx_extracted}/${beta_folder}/." "${INSTALLPATH}doflinx/"
+            using_beta=true
+        else
+            echo -e "${yellow}[INFO]${nc} Beta not available - using stable..."
+        fi
+    fi
+fi
+rm -rf "$doflinx_tmpdir"
+
+if [[ ! -f "${INSTALLPATH}doflinx/DOFLinx" ]]; then
+    echo -e "${red}[ERROR]${nc} DOFLinx executable missing after copy"
     install_successful=false
 fi
-
-# Shared library dependency required by the DOFLinx executable (beta folder
-# doesn't carry this file, so it always comes from stable, like DOFLinxMsg)
-echo -e "${green}[INFO]${nc} Downloading DOFLinxCommon.so..."
-wget -q -O "${INSTALLPATH}doflinx/DOFLinxCommon.so" "${stable_url}/DOFLinxCommon.so"
-if [ $? -ne 0 ]; then
-    echo -e "${red}[ERROR]${nc} Failed to download DOFLinxCommon.so"
-    install_successful=false
-fi
-
-# Supporting files (always from stable)
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg..."
-wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
-if [ $? -ne 0 ]; then
-    echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg"
-    install_successful=false
-fi
-
-wget -q -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes" || true
-wget -q -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt" || true
-wget -q -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt" || true
-wget -q -O "${INSTALLPATH}doflinx/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt" || true
 
 # Permissions
-chmod a+x ${INSTALLPATH}doflinx/DOFLinx
-chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
+chmod a+x ${INSTALLPATH}doflinx/DOFLinx 2>/dev/null
+chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg 2>/dev/null
 chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null || true
 
 # Startup wrapper script
