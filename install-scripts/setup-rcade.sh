@@ -585,12 +585,6 @@ if [ $? -ne 0 ]; then
    install_successful=false
 fi
 
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
-wget -q -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
-fi
-
 # Download supporting files from stable folder (these don't exist in beta folder)
 echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
 
@@ -601,10 +595,11 @@ if [ $? -ne 0 ]; then
    install_successful=false
 fi
 
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
-wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
+echo -e "${green}[INFO]${nc} Downloading DOFLinxCommon.so..."
+wget -q -O "${INSTALLPATH}doflinx/DOFLinxCommon.so" "${stable_url}/DOFLinxCommon.so"
 if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
+   echo -e "${red}[ERROR]${nc} Failed to download DOFLinxCommon.so"
+   install_successful=false
 fi
 
 echo -e "${green}[INFO]${nc} Downloading keycodes..."
@@ -637,8 +632,12 @@ chmod a+x ${INSTALLPATH}doflinx/DOFLinx
 chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
 chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null
 
-# Create DOFLinx startup script only if it doesn't exist
-if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+# Create DOFLinx startup script only if it doesn't exist, or re-enable if disabled
+if [[ -f "${INSTALLPATH}doflinx/doflinx-disabled.sh" && ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+    echo -e "${green}[INFO]${nc} Re-enabling DOFLinx (renaming doflinx-disabled.sh back to doflinx.sh)..."
+    mv "${INSTALLPATH}doflinx/doflinx-disabled.sh" "${INSTALLPATH}doflinx/doflinx.sh"
+    chmod +x ${INSTALLPATH}doflinx/doflinx.sh
+elif [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
     echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
     cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
 #!/bin/bash

@@ -291,7 +291,14 @@ if [ $? -ne 0 ]; then
     install_successful=false
 fi
 
-wget -q -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb" || true
+# Shared library dependency required by the DOFLinx executable (beta folder
+# doesn't carry this file, so it always comes from stable, like DOFLinxMsg)
+echo -e "${green}[INFO]${nc} Downloading DOFLinxCommon.so..."
+wget -q -O "${INSTALLPATH}doflinx/DOFLinxCommon.so" "${stable_url}/DOFLinxCommon.so"
+if [ $? -ne 0 ]; then
+    echo -e "${red}[ERROR]${nc} Failed to download DOFLinxCommon.so"
+    install_successful=false
+fi
 
 # Supporting files (always from stable)
 echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg..."
@@ -301,7 +308,6 @@ if [ $? -ne 0 ]; then
     install_successful=false
 fi
 
-wget -q -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb" || true
 wget -q -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes" || true
 wget -q -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt" || true
 wget -q -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt" || true
