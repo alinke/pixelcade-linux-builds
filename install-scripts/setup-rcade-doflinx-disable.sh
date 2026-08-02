@@ -133,4 +133,4 @@ fi
 
 echo -e ""
 echo -e "${green}[SUCCESS]${nc} DOFLinx disabled. Files are preserved at ${INSTALLPATH}doflinx/"
-echo -e "${cyan}[NOTE]${nc} DOFLinx will not start on next reboot. Run the installer to re-enable."
+echo -e "${cyan}[NOTE]${nc} DOFLinx will not start on next reboot."
