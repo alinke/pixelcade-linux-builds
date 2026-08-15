@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.8.2",
+    "version": "7.8.5",
     "artworkUpdate": true,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -149,26 +149,25 @@
       "7.8.2  Added info boxes to each widget settings page to explain what the widget does and how it works",
       "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board",
       "7.8.1  Added Backup and Restore button in the General Settings tab allowing you to backup and restore your settings include Pixelcade Pulse zones",
-      "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing"
-    ]
-  },
-  "beta": {
-    "version": "7.8.5",
-    "artworkUpdate": false,
-    "releaseNotes": [ 
+      "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing",
       "7.8.2 Five new widgets: Day in Retro, Retro Achievements, Earthquakes, F1, and Planes Overhead",
       "7.8.2 Earthquake Widget: Added LED strips effects corresponding to earthquake severity",
       "7.8.2 Immproved integration with the Pixelcade Pulse 7segment, Mini LCD, and dot matrix sub-displays and various widgets",
       "7.8.2 Added suport for Movie and TV show to the Plex widget (it only registered music prior)",
       "7.8.2 Fixed horrorscope widget (prior API provider was no longer supported)",
       "7.8.2  Added info boxes to each widget settings page to explain what the widget does and how it works",
-      "7.8.1  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board",
-      "7.8.1  Added Backup and Restore button in the General Settings tab allowing you to backup and restore your settings include Pixelcade Pulse zones",
+      "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED strips connected to a Pixelcade LED board",
+      "7.8.2  Added Backup and Restore button in the General Settings tab allowing you to backup and restore your settings include Pixelcade Pulse zones",
       "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing",
       "7.8.3  Adding Vestaboard flipboard support https://www.vestaboard.com/ and misc widget fixes",
       "7.8.4  RCade 2.0.8 installer fixes",
       "7.8.5  Memory leak fix for gifs"
-  ]
+    ]
+  },
+  "beta": {
+    "version": "7.8.5",
+    "artworkUpdate": false,
+    "releaseNotes": []
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
