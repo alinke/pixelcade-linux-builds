@@ -2,20 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 4,
+    "patch": 5,
     "releaseNotes": [
-      "Fix: the 2.8\" was rendering upside down. Its boot-time and landscape rotation both changed from 1 to 3 (180 degrees from the old value -- confirmed on real hardware that 1, the usual SPI-board landscape value shared with the 3.5\"/AMOLED, was upside down specifically on this model's panel/mounting)."
+      "Fix: the 7\" reported zero touch events ever. This board's V3.0 hardware routes the RGB panel's reset line AND the GT911 touch controller's reset line through a PCA9557 I2C GPIO expander instead of direct ESP32 pins -- without running that expander's reset sequence once at boot (confirmed against Elecrow's own reference firmware for this exact board), the touch controller stays held in reset forever. The 5\" was investigated too but its pin config already matches its own authoritative reference exactly (RST=38, INT=18, I2C address 0x5D) -- that one needs further real-hardware diagnosis, not a config fix."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 4,
+    "patch": 5,
     "releaseNotes": [
-      "Fix: the 2.8\" was rendering upside down. Its boot-time and landscape rotation both changed from 1 to 3 (180 degrees from the old value -- confirmed on real hardware that 1, the usual SPI-board landscape value shared with the 3.5\"/AMOLED, was upside down specifically on this model's panel/mounting)."
+      "Fix: the 7\" reported zero touch events ever. This board's V3.0 hardware routes the RGB panel's reset line AND the GT911 touch controller's reset line through a PCA9557 I2C GPIO expander instead of direct ESP32 pins -- without running that expander's reset sequence once at boot (confirmed against Elecrow's own reference firmware for this exact board), the touch controller stays held in reset forever. The 5\" was investigated too but its pin config already matches its own authoritative reference exactly (RST=38, INT=18, I2C address 0x5D) -- that one needs further real-hardware diagnosis, not a config fix."
     ]
   },
-  "lastUpdated": "2026-08-23T05:00:00Z",
+  "lastUpdated": "2026-08-23T06:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
