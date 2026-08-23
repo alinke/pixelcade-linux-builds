@@ -2,20 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 1,
+    "patch": 2,
     "releaseNotes": [
-      "Fix: ESP32-S3 boards (AMOLED/5\"/7\") now use DIO flash mode instead of QIO. QIO could cause an affected physical unit to boot-loop indefinitely and never start (blank screen, no serial) -- DIO is fully compatible with any QIO-capable flash chip with no practical downside for this app."
+      "Fix: touch release events now report the last valid touch position instead of (0,0), and touch coordinates are clamped before sending -- a resistive-touch edge overshoot could previously wrap to a huge, meaningless coordinate (e.g. y=63872 instead of a small negative value near 0). Together these made swipe/tap gesture detection unreliable to non-functional on affected units."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 1,
+    "patch": 2,
     "releaseNotes": [
-      "Fix: ESP32-S3 boards (AMOLED/5\"/7\") now use DIO flash mode instead of QIO. QIO could cause an affected physical unit to boot-loop indefinitely and never start (blank screen, no serial) -- DIO is fully compatible with any QIO-capable flash chip with no practical downside for this app."
+      "Fix: touch release events now report the last valid touch position instead of (0,0), and touch coordinates are clamped before sending -- a resistive-touch edge overshoot could previously wrap to a huge, meaningless coordinate (e.g. y=63872 instead of a small negative value near 0). Together these made swipe/tap gesture detection unreliable to non-functional on affected units."
     ]
   },
-  "lastUpdated": "2026-08-22T00:00:00Z",
+  "lastUpdated": "2026-08-23T00:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
