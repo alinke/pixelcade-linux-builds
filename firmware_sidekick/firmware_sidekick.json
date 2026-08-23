@@ -2,20 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 6,
+    "patch": 7,
     "releaseNotes": [
-      "Fix: the 5\" reported zero touch events ever. Confirmed against the user's own board schematic (ESP32-8048S050C-I) that the touch controller's INT line isn't wired to GPIO18 at all -- that pin number came from a generic community board definition, not this specific board. LovyanGFX's GT911 driver gates every touch read on that pin's level when configured, so pointing it at an unrelated GPIO could permanently block touch detection. INT is now correctly left unused (-1); RST/SDA/SCL/I2C address were already correct and are unchanged."
+      "Fix: swipe gestures always measured zero displacement. pollTouch() only re-sampled the touch position on the not-pressed->pressed transition, so a finger that moved while still down (a genuine swipe) was never re-tracked -- the release event always resent the ORIGINAL touch-down position, making every swipe look like a zero-distance tap to the host. Position is now sampled on every loop() iteration while the finger is down, so release reflects wherever it actually was just before lifting off."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 6,
+    "patch": 7,
     "releaseNotes": [
-      "Fix: the 5\" reported zero touch events ever. Confirmed against the user's own board schematic (ESP32-8048S050C-I) that the touch controller's INT line isn't wired to GPIO18 at all -- that pin number came from a generic community board definition, not this specific board. LovyanGFX's GT911 driver gates every touch read on that pin's level when configured, so pointing it at an unrelated GPIO could permanently block touch detection. INT is now correctly left unused (-1); RST/SDA/SCL/I2C address were already correct and are unchanged."
+      "Fix: swipe gestures always measured zero displacement. pollTouch() only re-sampled the touch position on the not-pressed->pressed transition, so a finger that moved while still down (a genuine swipe) was never re-tracked -- the release event always resent the ORIGINAL touch-down position, making every swipe look like a zero-distance tap to the host. Position is now sampled on every loop() iteration while the finger is down, so release reflects wherever it actually was just before lifting off."
     ]
   },
-  "lastUpdated": "2026-08-23T06:30:00Z",
+  "lastUpdated": "2026-08-23T07:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
