@@ -2,20 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 2,
+    "patch": 3,
     "releaseNotes": [
-      "Fix: touch release events now report the last valid touch position instead of (0,0), and touch coordinates are clamped before sending -- a resistive-touch edge overshoot could previously wrap to a huge, meaningless coordinate (e.g. y=63872 instead of a small negative value near 0). Together these made swipe/tap gesture detection unreliable to non-functional on affected units."
+      "Fix: touch coordinates are now actually calibrated. Previously no calibration was ever applied (LovyanGFX defaults to an identity transform), so a resistive-touch board's raw ADC reading (roughly 128-3968) passed straight through instead of being scaled to the panel's real pixel dimensions -- every touch landed far outside the valid range and got clamped to the same corner regardless of where the screen was actually touched. Companion's Sidekick device settings now has a 'Calibrate Touch' button (resistive/XPT2046 models: 2.8\", 3.5\") that runs a one-time 4-corner tap calibration and saves it to the device's flash, so it only needs to be done once per physical unit."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 2,
+    "patch": 3,
     "releaseNotes": [
-      "Fix: touch release events now report the last valid touch position instead of (0,0), and touch coordinates are clamped before sending -- a resistive-touch edge overshoot could previously wrap to a huge, meaningless coordinate (e.g. y=63872 instead of a small negative value near 0). Together these made swipe/tap gesture detection unreliable to non-functional on affected units."
+      "Fix: touch coordinates are now actually calibrated. Previously no calibration was ever applied (LovyanGFX defaults to an identity transform), so a resistive-touch board's raw ADC reading (roughly 128-3968) passed straight through instead of being scaled to the panel's real pixel dimensions -- every touch landed far outside the valid range and got clamped to the same corner regardless of where the screen was actually touched. Companion's Sidekick device settings now has a 'Calibrate Touch' button (resistive/XPT2046 models: 2.8\", 3.5\") that runs a one-time 4-corner tap calibration and saves it to the device's flash, so it only needs to be done once per physical unit."
     ]
   },
-  "lastUpdated": "2026-08-23T00:00:00Z",
+  "lastUpdated": "2026-08-23T04:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
