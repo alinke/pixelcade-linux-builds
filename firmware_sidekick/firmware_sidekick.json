@@ -2,17 +2,17 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 7,
+    "patch": 8,
     "releaseNotes": [
-      "Fix: swipe gestures always measured zero displacement. pollTouch() only re-sampled the touch position on the not-pressed->pressed transition, so a finger that moved while still down (a genuine swipe) was never re-tracked -- the release event always resent the ORIGINAL touch-down position, making every swipe look like a zero-distance tap to the host. Position is now sampled on every loop() iteration while the finger is down, so release reflects wherever it actually was just before lifting off."
+      "Add: MDL1 serial query -- a connected device now reports its own catalog model ID (e.g. \"esp32-7in\") so Companion can detect a stale saved model selection (e.g. a port previously used by a different physical board) before offering to reflash it, and warn/require re-confirmation instead of silently flashing the wrong firmware."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 7,
+    "patch": 8,
     "releaseNotes": [
-      "Fix: swipe gestures always measured zero displacement. pollTouch() only re-sampled the touch position on the not-pressed->pressed transition, so a finger that moved while still down (a genuine swipe) was never re-tracked -- the release event always resent the ORIGINAL touch-down position, making every swipe look like a zero-distance tap to the host. Position is now sampled on every loop() iteration while the finger is down, so release reflects wherever it actually was just before lifting off."
+      "Add: MDL1 serial query -- a connected device now reports its own catalog model ID (e.g. \"esp32-7in\") so Companion can detect a stale saved model selection (e.g. a port previously used by a different physical board) before offering to reflash it, and warn/require re-confirmation instead of silently flashing the wrong firmware."
     ]
   },
   "lastUpdated": "2026-08-23T07:00:00Z",
