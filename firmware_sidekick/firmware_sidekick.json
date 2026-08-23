@@ -2,20 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 3,
+    "patch": 4,
     "releaseNotes": [
-      "Fix: touch coordinates are now actually calibrated. Previously no calibration was ever applied (LovyanGFX defaults to an identity transform), so a resistive-touch board's raw ADC reading (roughly 128-3968) passed straight through instead of being scaled to the panel's real pixel dimensions -- every touch landed far outside the valid range and got clamped to the same corner regardless of where the screen was actually touched. Companion's Sidekick device settings now has a 'Calibrate Touch' button (resistive/XPT2046 models: 2.8\", 3.5\") that runs a one-time 4-corner tap calibration and saves it to the device's flash, so it only needs to be done once per physical unit."
+      "Fix: the 2.8\" was rendering upside down. Its boot-time and landscape rotation both changed from 1 to 3 (180 degrees from the old value -- confirmed on real hardware that 1, the usual SPI-board landscape value shared with the 3.5\"/AMOLED, was upside down specifically on this model's panel/mounting)."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 3,
+    "patch": 4,
     "releaseNotes": [
-      "Fix: touch coordinates are now actually calibrated. Previously no calibration was ever applied (LovyanGFX defaults to an identity transform), so a resistive-touch board's raw ADC reading (roughly 128-3968) passed straight through instead of being scaled to the panel's real pixel dimensions -- every touch landed far outside the valid range and got clamped to the same corner regardless of where the screen was actually touched. Companion's Sidekick device settings now has a 'Calibrate Touch' button (resistive/XPT2046 models: 2.8\", 3.5\") that runs a one-time 4-corner tap calibration and saves it to the device's flash, so it only needs to be done once per physical unit."
+      "Fix: the 2.8\" was rendering upside down. Its boot-time and landscape rotation both changed from 1 to 3 (180 degrees from the old value -- confirmed on real hardware that 1, the usual SPI-board landscape value shared with the 3.5\"/AMOLED, was upside down specifically on this model's panel/mounting)."
     ]
   },
-  "lastUpdated": "2026-08-23T04:00:00Z",
+  "lastUpdated": "2026-08-23T05:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
