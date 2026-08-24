@@ -2,22 +2,24 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 8,
+    "patch": 9,
     "releaseNotes": [
-      "Add: MDL1 serial query -- a connected device now reports its own catalog model ID (e.g. \"esp32-7in\") so Companion can detect a stale saved model selection (e.g. a port previously used by a different physical board) before offering to reflash it, and warn/require re-confirmation instead of silently flashing the wrong firmware.",
-      "Add: M5Stack Tab5 (ESP32-P4, 1280x720 MIPI-DSI) support -- new catalog model \"m5stack-tab5\". Built and compile-verified without access to real hardware; treat as an unverified first build, not confirmed-working like every other model here. See esp32lcd/board_configs/m5stack-tab5's file header for what's confirmed vs. still a best-effort guess (particularly display rotation and which of three possible panel/touch hardware variants this specific unit has -- the firmware auto-detects between them at boot, matching M5Stack's own driver logic, but that detection itself hasn't been exercised on a real board yet)."
+      "Fix: 5\"/7\" (RGB-parallel panels) now compose each incoming card in an off-screen PSRAM buffer before blitting it to the display, instead of decoding the JPEG straight onto the live, continuously-scanned panel buffer -- substantially reduces visible tearing/jitter when the card changes. Not a complete fix: this display driver has no true hardware double-buffering, so a full-frame write still isn't atomic relative to the panel's own scan -- just much shorter than before.",
+      "Fix: AMOLED 1.91\" now boots directly into landscape (its native/default orientation) instead of portrait -- the boot-splash rotation had never been set for this board, so it fell back to the firmware's generic default.",
+      "Improve: boot-splash text (model name + firmware version) is now sized dynamically per line to fill the actual panel width, instead of a small fixed size -- most noticeable on AMOLED, whose old fixed size was tuned for its narrower portrait width even when booting landscape."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 8,
+    "patch": 9,
     "releaseNotes": [
-      "Add: MDL1 serial query -- a connected device now reports its own catalog model ID (e.g. \"esp32-7in\") so Companion can detect a stale saved model selection (e.g. a port previously used by a different physical board) before offering to reflash it, and warn/require re-confirmation instead of silently flashing the wrong firmware.",
-      "Add: M5Stack Tab5 (ESP32-P4, 1280x720 MIPI-DSI) support -- new catalog model \"m5stack-tab5\". Built and compile-verified without access to real hardware; treat as an unverified first build, not confirmed-working like every other model here. See esp32lcd/board_configs/m5stack-tab5's file header for what's confirmed vs. still a best-effort guess (particularly display rotation and which of three possible panel/touch hardware variants this specific unit has -- the firmware auto-detects between them at boot, matching M5Stack's own driver logic, but that detection itself hasn't been exercised on a real board yet)."
+      "Fix: 5\"/7\" (RGB-parallel panels) now compose each incoming card in an off-screen PSRAM buffer before blitting it to the display, instead of decoding the JPEG straight onto the live, continuously-scanned panel buffer -- substantially reduces visible tearing/jitter when the card changes. Not a complete fix: this display driver has no true hardware double-buffering, so a full-frame write still isn't atomic relative to the panel's own scan -- just much shorter than before.",
+      "Fix: AMOLED 1.91\" now boots directly into landscape (its native/default orientation) instead of portrait -- the boot-splash rotation had never been set for this board, so it fell back to the firmware's generic default.",
+      "Improve: boot-splash text (model name + firmware version) is now sized dynamically per line to fill the actual panel width, instead of a small fixed size -- most noticeable on AMOLED, whose old fixed size was tuned for its narrower portrait width even when booting landscape."
     ]
   },
-  "lastUpdated": "2026-08-23T08:00:00Z",
+  "lastUpdated": "2026-08-24T07:55:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
