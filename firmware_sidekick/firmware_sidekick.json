@@ -2,9 +2,12 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 9,
+    "patch": 11,
     "releaseNotes": [
-      "Fix: 5\"/7\" (RGB-parallel panels) now compose each incoming card in an off-screen PSRAM buffer before blitting it to the display, instead of decoding the JPEG straight onto the live, continuously-scanned panel buffer -- substantially reduces visible tearing/jitter when the card changes. Not a complete fix: this display driver has no true hardware double-buffering, so a full-frame write still isn't atomic relative to the panel's own scan -- just much shorter than before.",
+      "Fix: 5\"/7\"/jc8048w550c (RGB-parallel panels) no longer show a static white column artifact on the trailing edge of every scan line -- root cause was LovyanGFX's ESP32-S3 RGB driver never using ESP-IDF's real bounce-buffered panel driver (esp_lcd_new_rgb_panel), just a hand-rolled DMA path with no bounce buffer. Confirmed on real hardware: eliminates the artifact entirely on both previously-affected physical units (an earlier, more conservative GDMA-tuning-only attempt only partially helped one of them).",
+      "Fix: 5\" boot splash now defaults to the correct (flipped) orientation for this board's standard mounting, instead of showing upside-down until Companion connects and applies its own saved rotation.",
+      "Change: Sidekick model IDs shortened to match a renamed catalog on the Companion side (e.g. esp32-5in -> esp32-5, amoled-191 -> esp32-oled) -- internal identifier only, no user-visible behavior change.",
+      "Fix: 5\"/7\" (RGB-parallel panels) now compose each incoming card in an off-screen PSRAM buffer before blitting it to the display, instead of decoding the JPEG straight onto the live, continuously-scanned panel buffer -- substantially reduces visible tearing/jitter when the card changes.",
       "Fix: AMOLED 1.91\" now boots directly into landscape (its native/default orientation) instead of portrait -- the boot-splash rotation had never been set for this board, so it fell back to the firmware's generic default.",
       "Improve: boot-splash text (model name + firmware version) is now sized dynamically per line to fill the actual panel width, instead of a small fixed size -- most noticeable on AMOLED, whose old fixed size was tuned for its narrower portrait width even when booting landscape."
     ]
@@ -12,14 +15,13 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 9,
+    "patch": 10,
     "releaseNotes": [
-      "Fix: 5\"/7\" (RGB-parallel panels) now compose each incoming card in an off-screen PSRAM buffer before blitting it to the display, instead of decoding the JPEG straight onto the live, continuously-scanned panel buffer -- substantially reduces visible tearing/jitter when the card changes. Not a complete fix: this display driver has no true hardware double-buffering, so a full-frame write still isn't atomic relative to the panel's own scan -- just much shorter than before.",
-      "Fix: AMOLED 1.91\" now boots directly into landscape (its native/default orientation) instead of portrait -- the boot-splash rotation had never been set for this board, so it fell back to the firmware's generic default.",
-      "Improve: boot-splash text (model name + firmware version) is now sized dynamically per line to fill the actual panel width, instead of a small fixed size -- most noticeable on AMOLED, whose old fixed size was tuned for its narrower portrait width even when booting landscape."
+      "WIP -- not yet confirmed working, do not ship: investigating random noise on the trailing few columns of every line on 5\" (RGB-parallel) panels. Root cause still open.",
+      "Fix: 5\" boot splash now defaults to the correct (flipped) orientation for this board's standard mounting, instead of showing upside-down until Companion connects and applies its own saved rotation."
     ]
   },
-  "lastUpdated": "2026-08-24T07:55:00Z",
+  "lastUpdated": "2026-08-26T17:09:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
