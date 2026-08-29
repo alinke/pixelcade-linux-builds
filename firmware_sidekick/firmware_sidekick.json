@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 12,
+    "patch": 13,
     "releaseNotes": [
+      "Fix (M5Stack Tab5 only): the onboard accelerometer's auto-rotation now tells pixelweb when it switches the panel's orientation, instead of the switch happening silently on-device -- previously, content stayed sized for the old orientation (cut off / wrong-shaped) until some unrelated event (like a game change) happened to push a fresh frame. Companion's saved orientation setting and the currently-shown content now both update immediately when the sensor rotates the panel.",
       "New: redesigned boot splash on every board -- a vector \"retro sun\" (scanline-rendered gold-to-pink gradient circle) plus a PIXELCADE / SIDEKICK - <model> wordmark, replacing the old plain fitted-text splash.",
       "New (M5Stack Tab5 only): 12 synthesized UI sound effects (achievement unlocked, new high score, explosions, level up, extra life, game over, coin insert, player 1/2 button) playable over the Tab5's speaker via a new sound command -- see pixelweb's /sidekick/sound endpoint. Every other board has no speaker hardware and ignores sound requests silently.",
       "New (M5Stack Tab5 only): the onboard BMI270 accelerometer now auto-detects portrait vs. landscape mounting and rotates the display accordingly, taking precedence over Companion's manual rotation setting for this board.",
@@ -26,7 +27,7 @@
       "Fix: 5\" boot splash now defaults to the correct (flipped) orientation for this board's standard mounting, instead of showing upside-down until Companion connects and applies its own saved rotation."
     ]
   },
-  "lastUpdated": "2026-08-28T20:30:10Z",
+  "lastUpdated": "2026-08-29T02:05:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
