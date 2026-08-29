@@ -165,9 +165,9 @@
     ]
   },
   "beta": {
-    "version": "7.8.5",
+    "version": "7.8.6",
     "artworkUpdate": false,
-    "releaseNotes": []
+    "releaseNotes": [ "7.8.6  Adding Support for Pixlecade Sidekick Devices"]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
