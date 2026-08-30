@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick M5Stack Tab5", "version": "v1.0.13", "builds": [ { "chipFamily": "ESP32-P4", "parts": [ { "path": "../firmware_sidekick/current/esp32-tab5.bin", "offset": 0 } ] } ] }

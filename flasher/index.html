@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pixelcade Sidekick Web Flasher</title>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
+<style>
+  :root {
+    --bg: #14151a;
+    --bg-alt: #1c1e26;
+    --card: #20222b;
+    --border: #33353f;
+    --ink: #eef0f4;
+    --ink-soft: #9ba0ad;
+    --accent: #7ec8ff;
+    --accent-strong: #4fb3ff;
+    --good: #5cb85c;
+    --warn: #ffb347;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    padding: 2.5rem clamp(1rem, 4vw, 3rem) 4rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 1.5rem;
+    font-size: 1.02rem;
+  }
+  .browser-note {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
+  .browser-note b { color: var(--ink); }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  .board-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin-top: 1rem;
+  }
+  .board-card .board-name {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .board-card p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin: 0.4rem 0 1rem;
+  }
+  .variant-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .variant {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .variant .variant-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  esp-web-install-button {
+    --esp-tools-button-color: #fff;
+    --esp-tools-button-text-color: #0b0c10;
+  }
+  .note {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-top: 2rem;
+  }
+  .note b { color: var(--ink); }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Pixelcade Sidekick Web Flasher</h1>
+  <p class="lede">
+    Flash official Pixelcade Sidekick firmware directly from your browser over USB &mdash; no software
+    install required. This is a backup option for machines that can't run the Sidekick desktop flasher tool
+    in Companion; if that already works for you, keep using it.
+  </p>
+
+  <div class="browser-note">
+    <b>Requires Chrome or Edge on desktop</b> (Web Serial API &mdash; not supported in Safari, Firefox, or
+    any mobile browser). Connect your Sidekick display over USB, pick the matching board below, and click
+    Connect.
+  </div>
+
+  <h2>M5Stack Tab5</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick M5Stack Tab5</div>
+    <p>1280&times;720, native USB.</p>
+    <esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button>
+  </div>
+
+  <h2>AMOLED 1.91&Prime;</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick LILYGO T-Display S3 AMOLED</div>
+    <p>536&times;240, native USB, no touch.</p>
+    <esp-web-install-button manifest="./manifest-esp32-oled.json"></esp-web-install-button>
+  </div>
+
+  <h2>2.8&Prime; Display</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 2.8&Prime;</div>
+    <p>320&times;240, resistive touch &mdash; ESP32-2432S028R (&ldquo;Cheap Yellow Display&rdquo;).</p>
+    <esp-web-install-button manifest="./manifest-esp32-2.json"></esp-web-install-button>
+  </div>
+
+  <h2>3.5&Prime; Display</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 3.5&Prime;</div>
+    <p>480&times;320, resistive touch &mdash; Sunton ESP32-3248S035R.</p>
+    <esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button>
+  </div>
+
+  <h2>5&Prime; Display</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 5&Prime;</div>
+    <p>800&times;480, capacitive touch &mdash; ESP32-8048S050 / JC8048W550C / Elecrow CrowPanel 5.0.</p>
+    <esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button>
+  </div>
+
+  <h2>7&Prime; Display</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 7&Prime;</div>
+    <p>800&times;480, capacitive touch &mdash; ESP32-8048S070C / Elecrow CrowPanel 7.0.</p>
+    <esp-web-install-button manifest="./manifest-esp32-7.json"></esp-web-install-button>
+  </div>
+
+  <div class="note">
+    <b>Not sure which board you have?</b> Picking the wrong entry costs nothing but a re-flash &mdash;
+    it can't damage the hardware. If the screen stays blank, shows a garbled image, or touch doesn't
+    respond, you likely picked the wrong one; just flash the matching one instead.
+  </div>
+
+  <div class="note">
+    <b>Flashing fails or gets stuck at &ldquo;Connecting&hellip;&rdquo;?</b> Some boards (particularly
+    native-USB ones) need a manual boot-mode entry: unplug the display, hold its <b>BOOT</b> button, plug
+    it back in while still holding BOOT, then click Connect and release the button once flashing starts.
+  </div>
+
+  <footer>
+    Official Pixelcade Sidekick firmware. Part of the <a href="https://pixelcade.org">Pixelcade</a>
+    ecosystem &mdash; see <a href="https://pixelcade.org/sidekick/">pixelcade.org/sidekick</a> for setup
+    and device details.
+  </footer>
+</div>
+</body>
+</html>
