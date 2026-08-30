@@ -1,1 +1,1 @@
-{ "name": "Pixelcade Sidekick 3.5\"", "version": "v1.0.13", "builds": [ { "chipFamily": "ESP32", "parts": [ { "path": "../firmware_sidekick/current/esp32-3.bin", "offset": 0 } ] } ] }
+{ "name": "Pixelcade Sidekick 3.5\"", "version": "v1.0.14", "builds": [ { "chipFamily": "ESP32", "parts": [ { "path": "../firmware_sidekick/current/esp32-3.bin", "offset": 0 } ] } ] }

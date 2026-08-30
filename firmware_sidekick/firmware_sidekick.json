@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 13,
+    "patch": 14,
     "releaseNotes": [
+      "Fix (M5Stack Tab5 only): the device could go completely silent to serial commands (VER1/MDL1 in particular) for several seconds after boot, because pollTouch()/the BMI270 orientation poll ran before the Serial command loop on every iteration -- a blocking I2C transaction there (both freshly initializing on the same I2C bus right after a handshake-triggered reset) delayed processing of whatever was already sitting in Serial's RX buffer right along with it. Serial is now checked first on every board; touch/orientation polling still runs once per loop() either way, just after instead of before. Symptom on Companion's side was a Tab5 that connected fine but showed \"a newer firmware version is available\" even when already current, or intermittently failed to auto-detect its model.",
       "Fix (M5Stack Tab5 only): the onboard accelerometer's auto-rotation now tells pixelweb when it switches the panel's orientation, instead of the switch happening silently on-device -- previously, content stayed sized for the old orientation (cut off / wrong-shaped) until some unrelated event (like a game change) happened to push a fresh frame. Companion's saved orientation setting and the currently-shown content now both update immediately when the sensor rotates the panel.",
       "New: redesigned boot splash on every board -- a vector \"retro sun\" (scanline-rendered gold-to-pink gradient circle) plus a PIXELCADE / SIDEKICK - <model> wordmark, replacing the old plain fitted-text splash.",
       "New (M5Stack Tab5 only): 12 synthesized UI sound effects (achievement unlocked, new high score, explosions, level up, extra life, game over, coin insert, player 1/2 button) playable over the Tab5's speaker via a new sound command -- see pixelweb's /sidekick/sound endpoint. Every other board has no speaker hardware and ignores sound requests silently.",
@@ -27,7 +28,7 @@
       "Fix: 5\" boot splash now defaults to the correct (flipped) orientation for this board's standard mounting, instead of showing upside-down until Companion connects and applies its own saved rotation."
     ]
   },
-  "lastUpdated": "2026-08-29T02:05:00Z",
+  "lastUpdated": "2026-08-30T04:14:05Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
