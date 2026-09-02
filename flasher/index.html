@@ -168,14 +168,29 @@
   <h2>7&Prime; Display</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 7&Prime;</div>
-    <p>800&times;480, capacitive touch &mdash; ESP32-8048S070C / Elecrow CrowPanel 7.0.</p>
-    <esp-web-install-button manifest="./manifest-esp32-7.json"></esp-web-install-button>
+    <p>800&times;480, capacitive touch. Two genuinely different boards ship under this size &mdash;
+    check your unit's silkscreen and pick the matching one below.</p>
+    <div class="variant-pair">
+      <div class="variant">
+        <div class="variant-label">ESP32-8048S070C (Elecrow)</div>
+        <p style="margin-top:0;">Silkscreen ends in <b>&ldquo;C&rdquo;</b> &mdash; Elecrow CrowPanel 7.0 / IoTeikXgo.</p>
+        <esp-web-install-button manifest="./manifest-esp32-7-elecrow.json"></esp-web-install-button>
+      </div>
+      <div class="variant">
+        <div class="variant-label">ESP32-8048S070 (Sunton)</div>
+        <p style="margin-top:0;">Silkscreen has <b>no trailing &ldquo;C&rdquo;</b> &mdash; Sunton / EC Buying ESP32-S3 7.0.</p>
+        <esp-web-install-button manifest="./manifest-esp32-7-sunton.json"></esp-web-install-button>
+      </div>
+    </div>
   </div>
 
   <div class="note">
-    <b>Not sure which board you have?</b> Picking the wrong entry costs nothing but a re-flash &mdash;
-    it can't damage the hardware. If the screen stays blank, shows a garbled image, or touch doesn't
-    respond, you likely picked the wrong one; just flash the matching one instead.
+    <b>Not sure which board you have?</b> For every size except 7&Prime;, picking the wrong entry costs
+    nothing but a re-flash &mdash; it can't damage the hardware. If the screen stays blank, shows a
+    garbled image, or touch doesn't respond, you likely picked the wrong one; just flash the matching one
+    instead. <b>The two 7&Prime; boards are the one exception</b> &mdash; they're different hardware
+    (different pixel-clock pin, timing, and touch wiring), so check the silkscreen above rather than
+    guessing.
   </div>
 
   <div class="note">
