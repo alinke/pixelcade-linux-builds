@@ -2,22 +2,20 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 15,
+    "patch": 16,
     "releaseNotes": [
-      "Fix (5\": jc8048w550c/elecrow-crowpanel-5-0, and 7\": esp32-8048s070c): Fan Art and Screenshot cards -- full-bleed photographic images, larger than any card type these panels previously received -- could silently exceed the firmware's incoming-frame size limit, which the firmware rejected with no reply and no error. The rejected image's own bytes then got misread as serial commands, flooding the device with spurious identification-probe replies for several seconds and leaving touch completely unresponsive during that window. Raised the frame size limit (and the matching serial receive buffer) on all three boards; pixelweb also now caps how large a card it will ever send to a given panel, so this can't recur even if a future card type is bigger still.",
-      "Fix (5\" / jc8048w550c only): touch stopped responding for this board's specific hardware revision under certain conditions -- root cause was the touch controller's interrupt pin being configured to a GPIO that isn't actually wired to anything on this board's real schematic, corrected to match."
+      "New: added support for the Sunton \"ESP32-8048S070\" 7\" display (catalog ID esp32-7-sunton) -- a genuinely different physical board from the existing 7\" model despite the near-identical name (different PCLK pin, sync timing, and touch controller wiring). The previous single \"esp32-7\" catalog entry is renamed to esp32-7-elecrow to disambiguate; existing esp32-7-elecrow units are unaffected other than the internal ID change."
     ]
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 10,
+    "patch": 16,
     "releaseNotes": [
-      "WIP -- not yet confirmed working, do not ship: investigating random noise on the trailing few columns of every line on 5\" (RGB-parallel) panels. Root cause still open.",
-      "Fix: 5\" boot splash now defaults to the correct (flipped) orientation for this board's standard mounting, instead of showing upside-down until Companion connects and applies its own saved rotation."
+      "New: added support for the Sunton \"ESP32-8048S070\" 7\" display (catalog ID esp32-7-sunton) -- a genuinely different physical board from the existing 7\" model despite the near-identical name (different PCLK pin, sync timing, and touch controller wiring). The previous single \"esp32-7\" catalog entry is renamed to esp32-7-elecrow to disambiguate; existing esp32-7-elecrow units are unaffected other than the internal ID change."
     ]
   },
-  "lastUpdated": "2026-08-30T22:27:54Z",
+  "lastUpdated": "2026-09-02T01:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
