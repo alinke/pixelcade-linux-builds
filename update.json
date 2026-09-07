@@ -165,9 +165,12 @@
     ]
   },
   "beta": {
-    "version": "7.8.6",
+    "version": "7.8.7",
     "artworkUpdate": false,
-    "releaseNotes": [ "7.8.6  Adding Support for Pixlecade Sidekick Devices"]
+    "releaseNotes": [ 
+      "7.8.6  Adding Support for Pixlecade Sidekick Devices",
+      "7.8.7  Added Sidekick Game Launcher and Various Bugs"
+  ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
