@@ -12,9 +12,11 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 16,
+    "patch": 17,
     "releaseNotes": [
-      "New: added support for the Sunton \"ESP32-8048S070\" 7\" display (catalog ID esp32-7-sunton) -- a genuinely different physical board from the existing 7\" model despite the near-identical name (different PCLK pin, sync timing, and touch controller wiring). The previous single \"esp32-7\" catalog entry is renamed to esp32-7-elecrow to disambiguate; existing esp32-7-elecrow units are unaffected other than the internal ID change."
+      "Fix: eliminated screen tearing on full-screen art (Fan Art/Screenshot) on the RGB-parallel 5\"/7\" displays (esp32-5, esp32-7-elecrow, esp32-7-sunton) via double-buffered frame delivery.",
+      "Fix: screen rotation and Flip 180° on those same displays, broken by an early version of the tearing fix above -- both now display correctly again.",
+      "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
     ]
   },
   "lastUpdated": "2026-09-07T00:00:00Z",
