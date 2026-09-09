@@ -165,11 +165,12 @@
     ]
   },
   "beta": {
-    "version": "7.8.7",
+    "version": "7.8.8",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Adding Support for Pixlecade Sidekick Devices",
-      "7.8.7  Added Sidekick Game Launcher and Various Bugs"
+      "7.8.7  Added Sidekick Game Launcher and Various Bugs",
+      "7.8.8  More Sidekick bug fixes, UX & speed improvemenets, Sidekick game launcher & high score support for RecalBox"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
