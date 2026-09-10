@@ -8,7 +8,7 @@ pi5=false
 install_doflinx=true
 odroidn2=false
 machine_arch=default
-version=31  #increment this as the script is updated
+version=32  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -22,6 +22,7 @@ pixelcade_lcd_usb=false
 pixelcade_lcd_usb_already_set=false
 pixelcade_led_detected=false
 led_has_marquee="unset"
+attract_mode_choice="unset"
 NEWLINE=$'\n'
 
 # Color definitions
@@ -364,6 +365,31 @@ if [[ "$pixelcade_led_detected" == "true" && ("$pixelcade_lcd_usb" == "true" || 
     done
     echo ""
 fi
+
+# Ask about Pixelcade Attract Mode now, up front with the other interactive
+# questions, so the user can answer everything and walk away -- the scripts
+# themselves aren't written until later in the install, once the
+# EmulationStation scripts folder exists (see attract_mode_choice below).
+echo ""
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo -e "${cyan}Pixelcade Attract Mode (Optional)${nc}"
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo ""
+echo -e "${cyan}When the Batocera screensaver kicks in, Pixelcade can cycle${nc}"
+echo -e "${cyan}through a list of favorite widgets (weather, scores, clock, etc.)${nc}"
+echo -e "${cyan}that you can configure from the Pixelcade Companion Web UI${nc}"
+echo -e "${cyan}or the Pixelcade mobile app.${nc}"
+echo -e "${cyan}This feature can also be turned off later from Pixelcade Companion.${nc}"
+echo ""
+while true; do
+    read -p "Would you like to enable Pixelcade Attract Mode? (y/n) " yn
+    case $yn in
+        [Yy]* ) attract_mode_choice=true; break;;
+        [Nn]* ) attract_mode_choice=false; break;;
+        * ) echo "Please answer y or n";;
+    esac
+done
+echo ""
 
 # The possible platforms are:
 # linux_arm64
@@ -737,26 +763,13 @@ find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec 
 rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
 rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
 
-# Ask user if they want Pixelcade Attract Mode
-echo ""
-echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-echo -e "${cyan}Pixelcade Attract Mode (Optional)${nc}"
-echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-echo ""
-echo -e "${cyan}When the Batocera screensaver kicks in, Pixelcade can cycle${nc}"
-echo -e "${cyan}through a list of favorite widgets (weather, scores, clock, etc.)${nc}"
-echo -e "${cyan}that you can configure from the Pixelcade Companion Web UI${nc}"
-echo -e "${cyan}or the Pixelcade mobile app.${nc}"
-echo -e "${cyan}This feature can also be turned off later from Pixelcade Companion.${nc}"
-echo ""
-while true; do
-    read -p "Would you like to enable Pixelcade Attract Mode? (y/n) " yn
-    case $yn in
-        [Yy]* )
-            echo -e "${green}[INFO] Enabling Pixelcade Attract Mode...${nc}"
-            mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start
-            mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop
-            cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh << 'SSSTART'
+# Set up Pixelcade Attract Mode (the user already answered this up front --
+# see attract_mode_choice)
+if [[ "$attract_mode_choice" == "true" ]]; then
+    echo -e "${green}[INFO] Enabling Pixelcade Attract Mode...${nc}"
+    mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start
+    mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop
+    cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh << 'SSSTART'
 #!/bin/bash
 
 #
@@ -771,7 +784,7 @@ PIXELCADEBASEURL="http://127.0.0.1:8080/"
 PIXELCADEURL="attract?nointerrupt"
 curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
 SSSTART
-            cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh << 'SSSTOP'
+    cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh << 'SSSTOP'
 #!/bin/bash
 
 #
@@ -786,18 +799,12 @@ PIXELCADEBASEURL="http://127.0.0.1:8080/"
 PIXELCADEURL="attract/stop"
 curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null
 SSSTOP
-            chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
-            chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
-            echo -e "${green}[SUCCESS] Pixelcade Attract Mode enabled${nc}"
-            break
-            ;;
-        [Nn]* )
-            echo -e "${cyan}[INFO] Skipping Pixelcade Attract Mode${nc}"
-            break
-            ;;
-        * ) echo "Please answer y or n";;
-    esac
-done
+    chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
+    chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+    echo -e "${green}[SUCCESS] Pixelcade Attract Mode enabled${nc}"
+else
+    echo -e "${cyan}[INFO] Skipping Pixelcade Attract Mode${nc}"
+fi
 echo ""
 
 #hi2txt for high score scrolling
