@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick 10.1\" (Guition)", "version": "v1.0.19", "builds": [ { "chipFamily": "ESP32-P4", "parts": [ { "path": "../firmware_sidekick/current/esp32-10.bin", "offset": 0 } ] } ] }
