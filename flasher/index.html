@@ -105,6 +105,17 @@
     margin-top: 2rem;
   }
   .note b { color: var(--ink); }
+  .important-note {
+    background: var(--bg-alt);
+    border: 1px solid var(--warn);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
+  .important-note b { color: var(--warn); }
   footer {
     margin-top: 3rem;
     padding-top: 1.5rem;
@@ -123,6 +134,13 @@
     install required. This is a backup option for machines that can't run the Sidekick desktop flasher tool
     in Companion; if that already works for you, keep using it.
   </p>
+
+  <div class="important-note">
+    <b>IMPORTANT:</b> if you're flashing from the same computer that Pixelcade is installed on, you must
+    <b>quit Pixelcade (pixelweb) first</b>. Pixelcade's background Sidekick scanner keeps probing every
+    USB serial port and will conflict with the flasher's connection, causing the flash to fail or corrupt
+    partway through.
+  </div>
 
   <div class="browser-note">
     <b>Requires Chrome or Edge on desktop</b> (Web Serial API &mdash; not supported in Safari, Firefox, or
@@ -168,8 +186,20 @@
   <h2>5&Prime; Display</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 5&Prime;</div>
-    <p>800&times;480, capacitive touch &mdash; ESP32-8048S050 / Sunton.</p>
-    <esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button>
+    <p>800&times;480, capacitive touch. Two genuinely different boards ship under this size &mdash;
+    check your unit's silkscreen and pick the matching one below.</p>
+    <div class="variant-pair">
+      <div class="variant">
+        <div class="variant-label">ESP32-8048S050 (Sunton)</div>
+        <p style="margin-top:0;">Sunton / JC8048W550C and electrically-identical rebrands.</p>
+        <esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button>
+      </div>
+      <div class="variant">
+        <div class="variant-label">Elecrow CrowPanel Advance 5.0</div>
+        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911.</p>
+        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button>
+      </div>
+    </div>
   </div>
 
   <h2>7&Prime; Display</h2>
@@ -192,12 +222,12 @@
   </div>
 
   <div class="note">
-    <b>Not sure which board you have?</b> For every size except 7&Prime;, picking the wrong entry costs
-    nothing but a re-flash &mdash; it can't damage the hardware. If the screen stays blank, shows a
-    garbled image, or touch doesn't respond, you likely picked the wrong one; just flash the matching one
-    instead. <b>The two 7&Prime; boards are the one exception</b> &mdash; they're different hardware
-    (different pixel-clock pin, timing, and touch wiring), so check the silkscreen above rather than
-    guessing.
+    <b>Not sure which board you have?</b> Picking the wrong entry costs nothing but a re-flash &mdash;
+    it can't damage the hardware. If the screen stays blank, shows a garbled image, or touch doesn't
+    respond, you likely picked the wrong one; just flash the matching one instead. <b>The 5&Prime; and
+    7&Prime; sizes are each split into two genuinely different boards</b> &mdash; different panel driver
+    or touch controller wiring &mdash; so check your unit's silkscreen against the labels above rather
+    than guessing.
   </div>
 
   <div class="note">
