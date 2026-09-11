@@ -172,7 +172,7 @@
       "7.8.7  Sidekick: Added Game Launcher and Various Bugs",
       "7.8.8  Sidekic: More bug fixes, UX & speed improvemenets, Sidekick game launcher & high score support for RecalBox",
       "7.8.9  Sidekick: Bug fix for V1 LED boards not working with Sidekick, added widgets to swipe menus, fixed bug where a down swipe was incorrectly triggering portriat or flip mode",
-      "7.9.0. Sidekick: Added support for Elecrow 5in Advanced, Guition 10in power-off button, and not connected yet boot screen text"
+      "7.9.0. Sidekick: Added support for Elecrow 5in Advanced, Guition 10in power-off button, and not connected yet boot screen text, improved sports widget, added clock widget"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
