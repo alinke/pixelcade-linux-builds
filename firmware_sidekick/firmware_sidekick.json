@@ -2,8 +2,11 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 20,
+    "patch": 21,
     "releaseNotes": [
+      "New: added support for the Elecrow CrowPanel Advance 5.0\" display (esp32-5-elecrow-advance) -- a different 5\" panel than the existing Sunton-based display, so pick the right one when flashing.",
+      "Improvement: boot screen now explains how to connect when a Sidekick display hasn't paired with Pixelcade yet.",
+      "New: added a power-off button to the 10.1\" (Guition) display's boot screen, since it runs on battery and the physical button doesn't power it off.",
       "New: added support for the Sidekick 10.1\" (Guition) display -- touch and built-in speaker both included.",
       "Improvement: raised the USB-serial speed on the 2.8\" and 3.5\" displays (esp32-2, esp32-3) from 115200 to 750000 baud -- over 6x faster transfer of game art and menus to those displays."
     ]
