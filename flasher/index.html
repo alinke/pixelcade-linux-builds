@@ -148,20 +148,6 @@
     Connect.
   </div>
 
-  <h2>M5Stack Tab5</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick M5Stack Tab5</div>
-    <p>1280&times;720, native USB.</p>
-    <esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button>
-  </div>
-
-  <h2>10.1&Prime; (Guition)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition)</div>
-    <p>1280&times;800, native USB, touch, speaker.</p>
-    <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
-  </div>
-
   <h2>AMOLED 1.91&Prime;</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick LILYGO T-Display S3 AMOLED</div>
@@ -186,7 +172,7 @@
   <h2>5&Prime; Display</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 5&Prime;</div>
-    <p>800&times;480, capacitive touch. Two genuinely different boards ship under this size &mdash;
+    <p>800&times;480, capacitive touch. Three genuinely different boards ship under this size &mdash;
     check your unit's silkscreen and pick the matching one below.</p>
     <div class="variant-pair">
       <div class="variant">
@@ -199,7 +185,23 @@
         <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911.</p>
         <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button>
       </div>
+      <div class="variant">
+        <div class="variant-label">Elecrow CrowPanel AI 5.0 (ESP32-P4)</div>
+        <p style="margin-top:0;">Same ST7262 + GT911 as CrowPanel Advance above, but native-USB
+        ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled
+        <b>USB 2.0</b>, not the one labeled <b>UART</b>. It also needs manual boot-mode entry every
+        time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before
+        clicking Connect below.</p>
+        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-ai-p4.json"></esp-web-install-button>
+      </div>
     </div>
+  </div>
+
+  <h2>M5Stack Tab5</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick M5Stack Tab5</div>
+    <p>1280&times;720, native USB.</p>
+    <esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button>
   </div>
 
   <h2>7&Prime; Display</h2>
@@ -221,13 +223,20 @@
     </div>
   </div>
 
+  <h2>10.1&Prime; (Guition)</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition)</div>
+    <p>1280&times;800, native USB, touch, speaker.</p>
+    <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
+  </div>
+
   <div class="note">
     <b>Not sure which board you have?</b> Picking the wrong entry costs nothing but a re-flash &mdash;
     it can't damage the hardware. If the screen stays blank, shows a garbled image, or touch doesn't
     respond, you likely picked the wrong one; just flash the matching one instead. <b>The 5&Prime; and
-    7&Prime; sizes are each split into two genuinely different boards</b> &mdash; different panel driver
-    or touch controller wiring &mdash; so check your unit's silkscreen against the labels above rather
-    than guessing.
+    7&Prime; sizes are each split into multiple genuinely different boards</b> &mdash; different panel
+    driver or touch controller wiring &mdash; so check your unit's silkscreen against the labels above
+    rather than guessing.
   </div>
 
   <div class="note">
