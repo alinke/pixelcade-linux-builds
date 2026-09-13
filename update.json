@@ -175,7 +175,8 @@
       "7.9.0  Sidekick: Added support for Elecrow 5in Advanced, Guition 10in power-off button, and not connected yet boot screen text, improved sports widget, added clock widget",
       "7.9.1  Sidekick: Add suport for Elecrow 5in AI P4 display, added nickname to uniquely address when multiple sidekicks of the same model",
       "7.9.2  MiSTer mapping bug fixed for LCD",
-      "7.9.3  Sidekic: Added actual control panel images for MAME games to the game swipe menu, fix for Big Box console browsing"
+      "7.9.3  Sidekic: Added actual control panel images for MAME games to the game swipe menu, fix for Big Box console browsing",
+      "7.9.3  Added Brazillian Portuguese translation for the Retro Trivia widget"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
