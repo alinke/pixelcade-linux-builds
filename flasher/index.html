@@ -172,8 +172,8 @@
   <h2>5&Prime; Display</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 5&Prime;</div>
-    <p>800&times;480, capacitive touch. Three genuinely different boards ship under this size &mdash;
-    check your unit's silkscreen and pick the matching one below.</p>
+    <p>800&times;480, capacitive touch. Several genuinely different boards ship under this size &mdash;
+    check your unit's silkscreen (and hardware revision, where noted) and pick the matching one below.</p>
     <div class="variant-pair">
       <div class="variant">
         <div class="variant-label">ESP32-8048S050 (Sunton)</div>
@@ -181,9 +181,19 @@
         <esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button>
       </div>
       <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advance 5.0</div>
-        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911.</p>
+        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.2/v1.3</div>
+        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911. This is
+        the standard build for this board &mdash; use it unless you were specifically told to use the
+        v1.1 test build below (check the small hardware revision marking on your board).</p>
         <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button>
+      </div>
+      <div class="variant">
+        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.1 (TEST build)</div>
+        <p style="margin-top:0;"><b>Experimental, unverified build</b> for the older v1.1 hardware
+        revision, which controls backlight/buzzer differently than v1.2/v1.3 above. If you flashed the
+        regular build and got a black screen (backlight never turns on, even though the display may
+        actually be working underneath), try this one instead.</p>
+        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"></esp-web-install-button>
       </div>
       <div class="variant">
         <div class="variant-label">Elecrow CrowPanel AI 5.0 (ESP32-P4)</div>
