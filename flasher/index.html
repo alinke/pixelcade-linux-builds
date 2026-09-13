@@ -182,17 +182,17 @@
       </div>
       <div class="variant">
         <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.2/v1.3</div>
-        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911. This is
-        the standard build for this board &mdash; use it unless you were specifically told to use the
-        v1.1 test build below (check the small hardware revision marking on your board).</p>
+        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911. Two
+        hardware revisions of this board exist and need different firmware &mdash; check the small
+        hardware revision marking on your board and pick the matching one below.</p>
         <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button>
       </div>
       <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.1 (TEST build)</div>
-        <p style="margin-top:0;"><b>Experimental, unverified build</b> for the older v1.1 hardware
-        revision, which controls backlight/buzzer differently than v1.2/v1.3 above. If you flashed the
-        regular build and got a black screen (backlight never turns on, even though the display may
-        actually be working underneath), try this one instead.</p>
+        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.1</div>
+        <p style="margin-top:0;">Older hardware revision &mdash; controls backlight/buzzer differently
+        than v1.2/v1.3 above. If you flash the wrong revision's firmware, the screen stays black even
+        though the display is actually working underneath (the backlight just never turns on);
+        reflashing with the matching one fixes it.</p>
         <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"></esp-web-install-button>
       </div>
       <div class="variant">

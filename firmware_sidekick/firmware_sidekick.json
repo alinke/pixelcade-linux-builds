@@ -2,8 +2,10 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 21,
+    "patch": 22,
     "releaseNotes": [
+      "New: added support for the Elecrow CrowPanel Advance 5.0\" display's older hardware v1.1 revision (esp32-5-elecrow-advance-v1-1) -- it controls backlight/buzzer differently than the v1.2/v1.3 revision, so pick the matching one when flashing (check the small hardware revision marking on your board). Flashing the wrong revision's firmware leaves the screen black even though it's actually working underneath.",
+      "Improvement: the Elecrow CrowPanel Advance 5.0\" boot splash and model ID now say which hardware revision (v1.1 vs v1.3) the firmware was built for, so it's visible on the device itself, not just in the catalog.",
       "New: added support for the Elecrow CrowPanel Advance 5.0\" display (esp32-5-elecrow-advance) -- a different 5\" panel than the existing Sunton-based display, so pick the right one when flashing.",
       "Improvement: boot screen now explains how to connect when a Sidekick display hasn't paired with Pixelcade yet.",
       "New: added a power-off button to the 10.1\" (Guition) display's boot screen, since it runs on battery and the physical button doesn't power it off.",
