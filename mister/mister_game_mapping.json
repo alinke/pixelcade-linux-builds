@@ -355,6 +355,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Asteroids Deluxe (v3 green)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "astdelux"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Asteroids Deluxe (v3 orange)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "astdelux"
@@ -955,6 +961,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Caveman Ninja (World ver 4)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cninja"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Caveman Ninja (World, Ver. 4)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "cninja"
@@ -1028,6 +1040,12 @@
   {
     "misterConsole": "Arcade",
     "displayName": "Clean Sweep",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cleansweept"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Clean Sweep (TTL)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "cleansweept"
   },
@@ -1246,6 +1264,12 @@
     "displayName": "Crossed Swords 2",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "crswd2bl"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Crude Buster (World FX version)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "cbuster"
   },
   {
     "misterConsole": "Arcade",
@@ -2203,6 +2227,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Ghosts'n Goblins (JT)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "gng"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Ghosts'n Goblins (World set 1)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "gng"
@@ -3121,6 +3151,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Magic Sword Heroic Fantasy (World 900725)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "msword"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Magic Sword Heroic Fantasy -World 900725-",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "msword"
@@ -3340,6 +3376,12 @@
     "displayName": "Mega Man 2 The Power Fighters (USA 960708)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "megaman2"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Mega Man The Power Battle (CPS1, USA 951006)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "megaman"
   },
   {
     "misterConsole": "Arcade",
@@ -4423,6 +4465,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Quiz & Dragons Capcom Quiz Game -USA 920701-",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qad"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Quiz Chikyu Bouei Gun (Japan)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "qzchikyu"
@@ -4480,6 +4528,12 @@
     "displayName": "Quiz Quest - Hime to Yuusha no Monogatari (Japan)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "qzquest"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Quiz Tonosama no Yabou 2 Zenkoku-ban (Japan 950123)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "qtono2j"
   },
   {
     "misterConsole": "Arcade",
@@ -5557,7 +5611,19 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Street Fighter II The World Warrior -World 910522-",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sf2"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Street Fighter II' Champion Edition (World 920513)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sf2ce"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Street Fighter II' Champion Edition -World 920513-",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "sf2ce"
   },
@@ -5566,6 +5632,12 @@
     "displayName": "Street Fighter II' Champion Re-Edit (Hack, v0.29.7)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "sf2cre"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Street Fighter II' Hyper Fighting (World 921209)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sf2hf"
   },
   {
     "misterConsole": "Arcade",
@@ -5596,6 +5668,12 @@
     "displayName": "Street Fighter III New Generation (Asia 970204, NO CD, BIOS set 1)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "sfiiin"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Street Fighter Zero (CPS Changer, Japan 951020)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "sfzch"
   },
   {
     "misterConsole": "Arcade",
@@ -6001,6 +6079,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Teenage Mutant Ninja Turtles Turtles in Time (4 Players ver UAA)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "tmnt2"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Tehkan World Cup (set 1)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "tehkanwc"
@@ -6082,6 +6166,12 @@
     "displayName": "The Battle-Road",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "battroad"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "The Cliffhanger - Edward Randy (World ver 3)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "edrandy"
   },
   {
     "misterConsole": "Arcade",
@@ -6691,6 +6781,12 @@
   },
   {
     "misterConsole": "Arcade",
+    "displayName": "Vapor Trail - Hyper Offence Formation (World revision 1)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "vaportra"
+  },
+  {
+    "misterConsole": "Arcade",
     "displayName": "Vapor Trail - Hyper Offence Formation (World, Rev. 1)",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "vaportra"
@@ -6698,6 +6794,12 @@
   {
     "misterConsole": "Arcade",
     "displayName": "Varth Operation Thunderstorm (World 920714)",
+    "pixelcadeConsole": "mame",
+    "pixelcadeGame": "varth"
+  },
+  {
+    "misterConsole": "Arcade",
+    "displayName": "Varth Operation Thunderstorm -World 920714-",
     "pixelcadeConsole": "mame",
     "pixelcadeGame": "varth"
   },
