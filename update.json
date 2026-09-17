@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "7.9.6",
+    "version": "7.9.7",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -179,7 +179,8 @@
       "7.9.3  Added Brazillian Portuguese translation for the Retro Trivia widget, added additional time zones to World clock widget",
       "7.9.4  Sidekick: Licensing service fixes, artwork full download option",
       "7.9.5  Sidekick: widget fixes, favorites wasn't working on Arcade One HyperSpin",
-      "7.9.6  Sidekick: added brightness controls, intermittent reboot issue"
+      "7.9.6  Sidekick: added brightness controls, intermittent not starting on reboot fixed",
+      "7.9.7  Sidekick: Shows three dots in bottom right when attemping to download new artwork and disappears when done or fail (target artwork does not exist). If fail, then stays on prior artwork"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
