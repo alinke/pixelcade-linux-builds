@@ -1,6 +1,6 @@
 {
   "latestFirmwareVersion": "7.8.4",
-  "latestArtworkVersion": 61,
+  "latestArtworkVersion": 62,
   "betaFirmwareVersion": "7.8.4",
   "updateScriptVersion": 42,
   "releaseDate": "12-09-2025",
@@ -129,8 +129,6 @@
     "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board",
     "7.8.4  Various WiFi fixes for Gen4/Orange Pi Zero 3 based Pixelcade LCDs"
   ],
-  "betaReleaseNotes": [
-
-  ],
+  "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
 }
