@@ -181,7 +181,8 @@
       "7.9.5  Sidekick: widget fixes, favorites wasn't working on Arcade One HyperSpin",
       "7.9.6  Sidekick: added brightness controls, intermittent not starting on reboot fixed",
       "7.9.7  Sidekick: Shows three dots in the corner while checking for new artwork -- replaced by the artwork if found, or a descriptive \"Not Found\" label (e.g. \"Fan Art Not Found\") over the existing artwork if none exists",
-      "7.9.7  Added restart pixelcade option in Pixelcade Compaion"
+      "7.9.7  Added restart pixelcade option in Pixelcade Compaion",
+      "7.9.8  Bug fixe for switching from game to console browsing and vice versa"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
