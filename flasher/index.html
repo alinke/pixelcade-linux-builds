@@ -165,8 +165,40 @@
   <h2>3.5&Prime; Display</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 3.5&Prime;</div>
-    <p>480&times;320, resistive touch &mdash; Sunton ESP32-3248S035R.</p>
-    <esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button>
+    <p>480&times;320. Two touch variants ship under this size &mdash; check your unit's silkscreen
+    (ends in &ldquo;R&rdquo; for resistive, &ldquo;C&rdquo; for capacitive) and pick the matching one.</p>
+    <div class="variant-pair">
+      <div class="variant">
+        <div class="variant-label">ESP32-3248S035R (resistive)</div>
+        <p style="margin-top:0;">XPT2046 resistive touch &mdash; needs a one-time calibration.</p>
+        <esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button>
+      </div>
+      <div class="variant">
+        <div class="variant-label">ESP32-3248S035C (capacitive)</div>
+        <p style="margin-top:0;">GT911 capacitive touch &mdash; no calibration needed.</p>
+        <esp-web-install-button manifest="./manifest-esp32-3248s035c.json"></esp-web-install-button>
+      </div>
+    </div>
+  </div>
+
+  <h2>4.3&Prime; Display (Waveshare)</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Waveshare)</div>
+    <p>480&times;800 portrait panel (800&times;480 landscape-mounted), capacitive touch,
+    native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one
+    labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode
+    entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>,
+    before clicking Connect below.</p>
+    <esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"></esp-web-install-button>
+  </div>
+
+  <h2>4.3&Prime; Display (Sunton)</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Sunton)</div>
+    <p>480&times;272, capacitive touch, CH340-bridged &mdash; a genuinely different, lower-resolution
+    panel than the Waveshare 4.3&Prime; above (800&times;480). Single USB-C port, no manual boot-mode
+    entry needed.</p>
+    <esp-web-install-button manifest="./manifest-esp32-4827s043c.json"></esp-web-install-button>
   </div>
 
   <h2>5&Prime; Display</h2>
@@ -231,17 +263,6 @@
         <esp-web-install-button manifest="./manifest-esp32-7-sunton.json"></esp-web-install-button>
       </div>
     </div>
-  </div>
-
-  <h2>4.3&Prime; Display (Waveshare)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Waveshare)</div>
-    <p>480&times;800 portrait panel (800&times;480 landscape-mounted), capacitive touch,
-    native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one
-    labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode
-    entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>,
-    before clicking Connect below.</p>
-    <esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"></esp-web-install-button>
   </div>
 
   <h2>10.1&Prime; (Guition)</h2>

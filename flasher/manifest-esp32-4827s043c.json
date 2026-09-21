@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick 4.3\" (Sunton)", "version": "v1.0.25", "builds": [ { "chipFamily": "ESP32-S3", "parts": [ { "path": "../firmware_sidekick/current/esp32-4827s043c.bin", "offset": 0 } ] } ] }

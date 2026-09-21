@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick 3.5\" (Capacitive)", "version": "v1.0.25", "builds": [ { "chipFamily": "ESP32", "parts": [ { "path": "../firmware_sidekick/current/esp32-3248s035c.bin", "offset": 0 } ] } ] }

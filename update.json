@@ -182,7 +182,8 @@
       "7.9.6  Sidekick: added brightness controls, intermittent not starting on reboot fixed",
       "7.9.7  Sidekick: Shows three dots in the corner while checking for new artwork -- replaced by the artwork if found, or a descriptive \"Not Found\" label (e.g. \"Fan Art Not Found\") over the existing artwork if none exists",
       "7.9.7  Added restart pixelcade option in Pixelcade Compaion",
-      "7.9.8  Bug fixe for switching from game to console browsing and vice versa"
+      "7.9.8  Bug fixe for switching from game to console browsing and vice versa",
+      "7.9.8  Sidekick: Added support for the Waveshare ESP32-P4-WIFI6-Touch-LCD-4.3\", 4.3inch Sunton capacitive and 3.5\" Sunton (CYD) capacitive displays"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
