@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "7.9.7",
+    "version": "7.9.8",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
