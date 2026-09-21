@@ -16,14 +16,18 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 17,
+    "patch": 24,
     "releaseNotes": [
+      "New: added support for the Waveshare ESP32-P4-WIFI6-Touch-LCD-4.3\" display (esp32-4-waveshare) -- display and touch (audio/camera not yet supported).",
+      "New: added firmware-update-over-USB support for the Elecrow CrowPanel AI 5.0\" and Waveshare 4.3\" displays -- both boards' USB OTG port can't reach the normal ROM-bootloader flashing path, so updates now push over the same USB connection used for normal operation instead.",
+      "Fix: the Elecrow CrowPanel AI 5.0\" display always reported the same USB serial number ('0') for every unit, making it impossible to tell two connected units apart -- fixed with a firmware-reported per-unit identity query.",
+      "Fix: the AMOLED 1.91\" display (LILYGO T-Display-S3-AMOLED) needed its BOOT button held to flash, unlike other displays -- now flashes normally.",
       "Fix: eliminated screen tearing on full-screen art (Fan Art/Screenshot) on the RGB-parallel 5\"/7\" displays (esp32-5, esp32-7-elecrow, esp32-7-sunton) via double-buffered frame delivery.",
       "Fix: screen rotation and Flip 180° on those same displays, broken by an early version of the tearing fix above -- both now display correctly again.",
       "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
     ]
   },
-  "lastUpdated": "2026-09-10T09:00:00Z",
+  "lastUpdated": "2026-09-20T18:00:00Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
