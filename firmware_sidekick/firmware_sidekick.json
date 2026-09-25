@@ -2,8 +2,13 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 26,
+    "patch": 27,
     "releaseNotes": [
+      "Fix: cards could get corrupted or lost over USB when a display had joined WiFi but was still receiving cards over USB -- the serial receive buffer overflowed during WiFi activity.",
+      "Fix: less display noise on the 5\"/7\" displays with WiFi on (larger display bounce buffer). The 5\" Elecrow Advance can still show occasional streaks with cards over WiFi; USB is unaffected.",
+      "Change: the 5\" Elecrow Advance now uses 1.5M USB (was 2M) -- 2M occasionally dropped bytes on this board.",
+      "Fix: turning WiFi off from Companion now fully shuts the radio off (the 2.1\" round display restarts to do this).",
+      "Change: the red 5\" Elecrow display is now called \"Elecrow Basic\" on its boot screen.",
       "New: WiFi -- most displays can now receive cards over WiFi instead of USB (set it up once over USB from Sidekick settings in Companion). Includes the M5Stack Tab5 and the ESP32-P4 displays, which update their built-in WiFi chip automatically the first time.",
       "New: faster USB on most displays (1.5M-2M baud, up from 115200-610000) and faster JPEG decoding on the ESP32-S3 displays -- cards change noticeably faster.",
       "New: added support for the Elecrow CrowPanel 2.1\" round display (esp32-2-elecrow-round) -- cards are resized to fit the round screen, and turning the dial switches cards.",
@@ -34,8 +39,13 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 26,
+    "patch": 27,
     "releaseNotes": [
+      "Fix: cards could get corrupted or lost over USB when a display had joined WiFi but was still receiving cards over USB -- the serial receive buffer overflowed during WiFi activity.",
+      "Fix: less display noise on the 5\"/7\" displays with WiFi on (larger display bounce buffer). The 5\" Elecrow Advance can still show occasional streaks with cards over WiFi; USB is unaffected.",
+      "Change: the 5\" Elecrow Advance now uses 1.5M USB (was 2M) -- 2M occasionally dropped bytes on this board.",
+      "Fix: turning WiFi off from Companion now fully shuts the radio off (the 2.1\" round display restarts to do this).",
+      "Change: the red 5\" Elecrow display is now called \"Elecrow Basic\" on its boot screen.",
       "New: WiFi -- most displays can now receive cards over WiFi instead of USB (set it up once over USB from Sidekick settings in Companion). Includes the M5Stack Tab5 and the ESP32-P4 displays, which update their built-in WiFi chip automatically the first time.",
       "New: faster USB on most displays (1.5M-2M baud, up from 115200-610000) and faster JPEG decoding on the ESP32-S3 displays -- cards change noticeably faster.",
       "New: added support for the Elecrow CrowPanel 2.1\" round display (esp32-2-elecrow-round) -- cards are resized to fit the round screen, and turning the dial switches cards.",
