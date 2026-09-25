@@ -159,7 +159,8 @@
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 2.1&Prime; Round</div>
     <p>480&times;480 round. Elecrow CrowPanel 2.1&Prime; rotary display (ESP32-S3) &mdash; capacitive touch, no calibration needed.
-    WiFi works but is flaky on this board; USB is recommended.</p>
+    WiFi works but is flaky on this board; USB is recommended.
+    Connect its <b>USB-C</b> port; the small connectors on the back (power, UART, I2C) aren't used.</p>
     <esp-web-install-button manifest="./manifest-esp32-2-elecrow-round.json"></esp-web-install-button>
   </div>
 
@@ -278,7 +279,7 @@
   <h2>M5Stack Tab5</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick M5Stack Tab5</div>
-    <p>1280&times;720, native USB.</p>
+    <p>1280&times;720, native USB. Connect the <b>USB-C</b> port (not the USB-A port).</p>
     <esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button>
   </div>
 
@@ -304,7 +305,9 @@
   <h2>10.1&Prime; (Guition)</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition)</div>
-    <p>1280&times;800, native USB, touch, speaker.</p>
+    <p>1280&times;800, native USB, touch, speaker. This board has <b>three</b> USB ports &mdash; to flash,
+    connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b>
+    USB port.</p>
     <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
   </div>
 
@@ -312,7 +315,8 @@
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Elecrow)</div>
     <p>1024&times;600, capacitive touch, stereo speakers. Elecrow CrowPanel Advanced 10.1&Prime; ESP32-P4 HMI.
-    Connect the port labelled <b>UART0</b> to flash; after that, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
+    This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not
+    <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
     <esp-web-install-button manifest="./manifest-esp32-10-elecrow.json"></esp-web-install-button>
   </div>
 
