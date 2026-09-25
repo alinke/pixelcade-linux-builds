@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick 4.3\" (Elecrow Advance)", "version": "v1.0.26", "builds": [ { "chipFamily": "ESP32-S3", "parts": [ { "path": "../firmware_sidekick/current/esp32-4-elecrow-advance.bin", "offset": 0 } ] } ] }
