@@ -2,8 +2,12 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 27,
+    "patch": 28,
     "releaseNotes": [
+      "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
+      "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
+      "Fix: USB now stays at full speed while a display is also connected over WiFi (it used to drop to 115200).",
+      "Change: the 2.8\" display's boot screen now says \"(Resistive)\" and the Sunton 5\" says \"(Sunton)\".",
       "Fix: cards could get corrupted or lost over USB when a display had joined WiFi but was still receiving cards over USB -- the serial receive buffer overflowed during WiFi activity.",
       "Fix: less display noise on the 5\"/7\" displays with WiFi on (larger display bounce buffer). The 5\" Elecrow Advance can still show occasional streaks with cards over WiFi; USB is unaffected.",
       "Change: the 5\" Elecrow Advance now uses 1.5M USB (was 2M) -- 2M occasionally dropped bytes on this board.",
@@ -39,8 +43,12 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 27,
+    "patch": 28,
     "releaseNotes": [
+      "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
+      "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
+      "Fix: USB now stays at full speed while a display is also connected over WiFi (it used to drop to 115200).",
+      "Change: the 2.8\" display's boot screen now says \"(Resistive)\" and the Sunton 5\" says \"(Sunton)\".",
       "Fix: cards could get corrupted or lost over USB when a display had joined WiFi but was still receiving cards over USB -- the serial receive buffer overflowed during WiFi activity.",
       "Fix: less display noise on the 5\"/7\" displays with WiFi on (larger display bounce buffer). The 5\" Elecrow Advance can still show occasional streaks with cards over WiFi; USB is unaffected.",
       "Change: the 5\" Elecrow Advance now uses 1.5M USB (was 2M) -- 2M occasionally dropped bytes on this board.",
@@ -66,7 +74,7 @@
       "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
     ]
   },
-  "lastUpdated": "2026-09-20T21:45:00Z",
+  "lastUpdated": "2026-09-25T15:50:15Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"

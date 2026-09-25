@@ -1,1 +1,1 @@
-{ "name": "Pixelcade Sidekick 2.4\" (Capacitive)", "version": "v1.0.27", "builds": [ { "chipFamily": "ESP32", "parts": [ { "path": "../firmware_sidekick/current/esp32-2432s024c.bin", "offset": 0 } ] } ] }
+{ "name": "Pixelcade Sidekick 2.4\" (Capacitive)", "version": "v1.0.28", "builds": [ { "chipFamily": "ESP32", "parts": [ { "path": "../firmware_sidekick/current/esp32-2432s024c.bin", "offset": 0 } ] } ] }
