@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 28,
+    "patch": 29,
     "releaseNotes": [
+      "Fix: the 4.3\" and 5\" Elecrow Advance displays no longer get stuck showing horizontal streaks with WiFi on -- the display now re-syncs after every card. A brief glitch can still show while a card changes.",
       "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
       "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
       "Fix: USB now stays at full speed while a display is also connected over WiFi (it used to drop to 115200).",
@@ -43,8 +44,9 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 28,
+    "patch": 29,
     "releaseNotes": [
+      "Fix: the 4.3\" and 5\" Elecrow Advance displays no longer get stuck showing horizontal streaks with WiFi on -- the display now re-syncs after every card. A brief glitch can still show while a card changes.",
       "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
       "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
       "Fix: USB now stays at full speed while a display is also connected over WiFi (it used to drop to 115200).",
@@ -74,7 +76,7 @@
       "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
     ]
   },
-  "lastUpdated": "2026-09-25T15:50:15Z",
+  "lastUpdated": "2026-09-26T06:13:35Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
