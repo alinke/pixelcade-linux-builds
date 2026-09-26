@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "7.9.9",
+    "version": "8.0.0",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -186,7 +186,10 @@
       "7.9.8  Sidekick: Added support for the Waveshare ESP32-P4-WIFI6-Touch-LCD-4.3\", 4.3inch Sunton capacitive and 3.5\" Sunton (CYD) capacitive displays",
       "7.9.9  Sidekick: Added support for the Elecrow 2.1\" round display (cards resized to fit the round screen, turn the dial to change cards), Elecrow 10.1\" ESP32-P4 (with speakers), Elecrow Advance 3.5\" and 4.3\", red Elecrow 5\", and Sunton 2.4\" capacitive displays",
       "7.9.9  Sidekick: WiFi support -- displays can receive cards over WiFi instead of USB, set up once over USB in Companion's Sidekick settings (needs Sidekick firmware 1.0.26)",
-      "7.9.9  Sidekick: faster USB and faster card drawing with Sidekick firmware 1.0.26; the \"Not Found\" label now clears after 3 seconds and added fallbacks"
+      "7.9.9  Sidekick: faster card drawing with Sidekick firmware 1.0.29; the \"Not Found\" label now clears after 3 seconds and added generic image fallbacks when console or rom images do not exist",
+      "8.0.0  Sidekick: Added new game art: marquee, cabinet, and flyer",
+      "8.0.0  Added setting to show static PNG marquees only (no animated marquees)",
+      "8.0.0  Added setting to disable DOFLinx in game effects (only works for certain front ends and not fully tested yet)"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",

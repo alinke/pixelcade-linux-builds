@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 29,
+    "patch": 30,
     "releaseNotes": [
+      "Fix: brightness on the 5\" Elecrow Advance hardware v1.1 -- low settings (1-9%) no longer turn the screen off, and the brightness steps now use the display's own five levels. Thanks to the customer who tracked this down.",
       "Fix: the 4.3\" and 5\" Elecrow Advance displays no longer get stuck showing horizontal streaks with WiFi on -- the display now re-syncs after every card. A brief glitch can still show while a card changes.",
       "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
       "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
@@ -44,8 +45,9 @@
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 29,
+    "patch": 30,
     "releaseNotes": [
+      "Fix: brightness on the 5\" Elecrow Advance hardware v1.1 -- low settings (1-9%) no longer turn the screen off, and the brightness steps now use the display's own five levels. Thanks to the customer who tracked this down.",
       "Fix: the 4.3\" and 5\" Elecrow Advance displays no longer get stuck showing horizontal streaks with WiFi on -- the display now re-syncs after every card. A brief glitch can still show while a card changes.",
       "New: WiFi pairing is now stored on the display itself -- once a display is set up for WiFi from a computer, other computers running Pixelcade on the same network can no longer take it over. Setting up its WiFi from another computer over USB moves it to that computer; turning WiFi off clears it.",
       "New: displays on WiFi now announce themselves on the network every few seconds, so Pixelcade finds them reliably (and Companion can list displays on your network, including ones not paired yet).",
@@ -76,7 +78,7 @@
       "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
     ]
   },
-  "lastUpdated": "2026-09-26T06:13:35Z",
+  "lastUpdated": "2026-09-26T19:16:37Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware_sidekick/beta/"
