@@ -40,7 +40,69 @@
       "New: added a power-off button to the 10.1\" (Guition) display's boot screen, since it runs on battery and the physical button doesn't power it off.",
       "New: added support for the Sidekick 10.1\" (Guition) display -- touch and built-in speaker both included.",
       "Improvement: raised the USB-serial speed on the 2.8\" and 3.5\" displays (esp32-2, esp32-3) from 115200 to 750000 baud -- over 6x faster transfer of game art and menus to those displays."
-    ]
+    ],
+    "boards": {
+      "esp32-oled": {
+        "changedIn": "1.0.30"
+      },
+      "esp32-7-elecrow": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-7-sunton": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5-elecrow-advance": {
+        "changedIn": "1.0.29"
+      },
+      "esp32-5-elecrow-advance-v1-1": {
+        "changedIn": "1.0.30"
+      },
+      "esp32-2": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3248s035c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-2432s024c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-2-elecrow-round": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3-elecrow-advance": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4-elecrow-advance": {
+        "changedIn": "1.0.29"
+      },
+      "esp32-5-elecrow": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4827s043c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-tab5": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-10": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5-elecrow-ai-p4": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4-waveshare": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-10-elecrow": {
+        "changedIn": "1.0.28"
+      }
+    }
   },
   "beta": {
     "major": 1,
@@ -76,7 +138,69 @@
       "Fix: eliminated screen tearing on full-screen art (Fan Art/Screenshot) on the RGB-parallel 5\"/7\" displays (esp32-5, esp32-7-elecrow, esp32-7-sunton) via double-buffered frame delivery.",
       "Fix: screen rotation and Flip 180° on those same displays, broken by an early version of the tearing fix above -- both now display correctly again.",
       "Fix: esp32-7-sunton was never actually covered by the RGB-parallel tearing protection at all despite shipping since 1.0.16 -- it's now correctly included alongside the other two displays."
-    ]
+    ],
+    "boards": {
+      "esp32-oled": {
+        "changedIn": "1.0.30"
+      },
+      "esp32-7-elecrow": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-7-sunton": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5-elecrow-advance": {
+        "changedIn": "1.0.29"
+      },
+      "esp32-5-elecrow-advance-v1-1": {
+        "changedIn": "1.0.30"
+      },
+      "esp32-2": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3248s035c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-2432s024c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-2-elecrow-round": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-3-elecrow-advance": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4-elecrow-advance": {
+        "changedIn": "1.0.29"
+      },
+      "esp32-5-elecrow": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4827s043c": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-tab5": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-10": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-5-elecrow-ai-p4": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-4-waveshare": {
+        "changedIn": "1.0.28"
+      },
+      "esp32-10-elecrow": {
+        "changedIn": "1.0.28"
+      }
+    }
   },
   "lastUpdated": "2026-09-26T19:16:37Z",
   "baseUrls": {
