@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.1",
+    "version": "8.0.2",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -190,7 +190,8 @@
       "8.0.0  Sidekick: Added new game art: marquee, cabinet, and flyer",
       "8.0.0  Added setting to show static PNG marquees only (no animated marquees)",
       "8.0.0  Added setting to disable DOFLinx in game effects (only works for certain front ends and not fully tested yet)",
-      "8.0.1  Sidekick: firmware update prompts now only appear when your display's firmware actually changed"
+      "8.0.1  Sidekick: firmware update prompts now only appear when your display's firmware actually changed",
+      "8.0.2  Sidekick: bug fixes and wifi fix if wrong password entered"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
