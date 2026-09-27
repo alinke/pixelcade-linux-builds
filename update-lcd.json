@@ -1,9 +1,9 @@
 {
-  "latestFirmwareVersion": "7.8.5",
+  "latestFirmwareVersion": "7.8.6",
   "latestArtworkVersion": 63,
-  "betaFirmwareVersion": "7.8.5",
+  "betaFirmwareVersion": "7.8.6",
   "updateScriptVersion": 42,
-  "releaseDate": "09-24-2026",
+  "releaseDate": "09-26-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
   "releaseNotesList": [
     "7.1.5: The uploader in Companion now shows the progress and activity for each file",
@@ -128,7 +128,8 @@
     "7.7.8  Most widgets now also update the Pixelcade Pulse sub-displays (mini LCD, 7-segment, and dot matrix) when they are connected",
     "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board",
     "7.8.4  Various WiFi fixes for Gen4/Orange Pi Zero 3 based Pixelcade LCDs",
-    "7.8.5  Fixed broken sports widget"
+    "7.8.5  Fixed broken sports widget",
+    "7.8.6  Added Glen's Retro Show FU cab branding"
   ],
   "betaReleaseNotes": [],
   "minimumRequiredVersion": "5.0.0"
