@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.0",
+    "version": "8.0.1",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -189,7 +189,8 @@
       "7.9.9  Sidekick: faster card drawing with Sidekick firmware 1.0.29; the \"Not Found\" label now clears after 3 seconds and added generic image fallbacks when console or rom images do not exist",
       "8.0.0  Sidekick: Added new game art: marquee, cabinet, and flyer",
       "8.0.0  Added setting to show static PNG marquees only (no animated marquees)",
-      "8.0.0  Added setting to disable DOFLinx in game effects (only works for certain front ends and not fully tested yet)"
+      "8.0.0  Added setting to disable DOFLinx in game effects (only works for certain front ends and not fully tested yet)",
+      "8.0.1  Sidekick: firmware update prompts now only appear when your display's firmware actually changed"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
