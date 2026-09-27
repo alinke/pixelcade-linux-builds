@@ -25,6 +25,8 @@
     "version": 23,
     "subversion": 11,
     "releaseNotes": [
+      "Fix: 7-segment and dot matrix no longer blank when pixelweb restarts (e.g. returning from Visual Pinball) -- an already-running display is refreshed in place and keeps its content; a full re-init still happens after a power cycle or USB unplug",
+      "Fix: the mini LCD no longer blanks between updates -- new lines overwrite the old ones instead of clearing the screen first",
       "Fix: 7-segment and dot matrix could stay blank after pixelweb restarts (e.g. returning from Visual Pinball) -- commands to the Pulse displays are no longer dropped while one re-initializes, and a re-init now re-shows what was on the display",
       "Faster 7-segment/dot matrix re-init (power-up test patterns only shown at power-up)",
       "Fixed intermittent bug when deleting zones",
