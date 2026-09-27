@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.3",
+    "version": "8.0.4",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -193,7 +193,8 @@
       "8.0.1  Sidekick: firmware update prompts now only appear when your display's firmware actually changed",
       "8.0.2  Sidekick: bug fixes and wifi fix if wrong password entered",
       "8.0.2  Sidekick: the sibling fallback (ex. Cabinet → Box Art) now shows the \"CABINET NOT FOUND\" badge and 3-second clear like the deeper fallback does",
-      "8.0.3  Sidekick: In game HUD score and stats with DOFLinx now close to real time"
+      "8.0.3  Sidekick: In game HUD score and stats with DOFLinx now close to real time",
+      "8.0.4  Sidekick: In game HUD faster over WiFi (up to ~13 updates/sec, needs Sidekick firmware 1.0.33) and over USB (up to ~20 updates/sec), without falling behind"
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
