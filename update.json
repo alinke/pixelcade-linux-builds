@@ -196,7 +196,12 @@
       "8.0.3  Sidekick: In game HUD score and stats with DOFLinx now close to real time",
       "8.0.4  Sidekick: In game HUD score and stats faster on WiFi connected devices",
       "8.0.5  Sidekick: PAUSED 3×, the red CHEAT badge only shows when cheats are on, WiFi MAC address in the pop-up and Configure WiFi dialog, note on 2.4 GHz WiFi requirement",
-      "8.0.6  Sidekick: much faster card and menu swipes on slower computers and over WiFi (cards are prepared ahead of time, and with Sidekick firmware 1.0.35 the display keeps recent cards and menus so it can show them again instantly), CHEAT badge now shows as soon as cheats are turned on"
+      "8.0.6  Sidekick: much faster card and menu swipes on slower computers and over WiFi (cards are prepared ahead of time, and with Sidekick firmware 1.0.35 the display keeps recent cards and menus so it can show them again instantly), CHEAT badge now shows as soon as cheats are turned on",
+      "8.0.7  Sidekick: Added support for iOS devices",
+      "8.0.7  Sidekick: Revised sidekick settings layout",
+      "8.0.7  Sidekick: Added game card carousel mode option which cycles through game cards",
+      "8.0.7. Sidekick: When swiping on a game, cards without content like no high scores for example will no longer show in the swipe rotation"
+
   ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
