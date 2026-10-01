@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 35,
+    "patch": 36,
     "releaseNotes": [
+      "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
       "New: faster card and menu swipes -- the display keeps the last few cards and menus it showed, so swiping back to one (or reopening a menu) shows it right away instead of waiting for it to be sent again. Biggest difference over WiFi (needs Pixelcade 8.0.6 or newer; ESP32-S3 and ESP32-P4 displays).",
       "New: displays can report their WiFi MAC address, so Pixelcade Companion shows it for every display -- including the M5Stack Tab5 and the other ESP32-P4 displays, whose WiFi chip has its own address (needs Pixelcade 8.0.5 or newer).",
       "Faster in-game HUD over WiFi and USB -- the display now tells Pixelcade over WiFi when each update is drawn, so updates go out as fast as the connection allows without falling behind (needs Pixelcade 8.0.4 or newer).",
@@ -49,72 +50,73 @@
     ],
     "boards": {
       "esp32-oled": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-7-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-7-sunton": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-advance-v1-1": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3248s035c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2432s024c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2-elecrow-round": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4827s043c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-tab5": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-10": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-ai-p4": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4-waveshare": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-10-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       }
     }
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 35,
+    "patch": 36,
     "releaseNotes": [
+      "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
       "New: faster card and menu swipes -- the display keeps the last few cards and menus it showed, so swiping back to one (or reopening a menu) shows it right away instead of waiting for it to be sent again. Biggest difference over WiFi (needs Pixelcade 8.0.6 or newer; ESP32-S3 and ESP32-P4 displays).",
       "New: displays can report their WiFi MAC address, so Pixelcade Companion shows it for every display -- including the M5Stack Tab5 and the other ESP32-P4 displays, whose WiFi chip has its own address (needs Pixelcade 8.0.5 or newer).",
       "Faster in-game HUD over WiFi and USB -- the display now tells Pixelcade over WiFi when each update is drawn, so updates go out as fast as the connection allows without falling behind (needs Pixelcade 8.0.4 or newer).",
