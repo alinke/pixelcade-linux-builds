@@ -155,64 +155,64 @@
     ],
     "boards": {
       "esp32-oled": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-7-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-7-sunton": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-advance-v1-1": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3248s035c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2432s024c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-2-elecrow-round": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-3-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4-elecrow-advance": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4827s043c": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-tab5": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-10": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-5-elecrow-ai-p4": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-4-waveshare": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       },
       "esp32-10-elecrow": {
-        "changedIn": "1.0.35"
+        "changedIn": "1.0.36"
       }
     }
   },
