@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pixelcade Sidekick Test Flasher -- 10.1" Guition V1</title>
+<meta name="robots" content="noindex" />
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
+<style>
+  :root {
+    --bg: #14151a;
+    --bg-alt: #1c1e26;
+    --card: #20222b;
+    --border: #33353f;
+    --ink: #eef0f4;
+    --ink-soft: #9ba0ad;
+    --accent: #7ec8ff;
+    --accent-strong: #4fb3ff;
+    --good: #5cb85c;
+    --warn: #ffb347;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    padding: 2.5rem clamp(1rem, 4vw, 3rem) 4rem;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 1.5rem;
+    font-size: 1.02rem;
+  }
+  .browser-note {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
+  .browser-note b { color: var(--ink); }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  .board-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin-top: 1rem;
+  }
+  .board-card .board-name {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .board-card p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin: 0.4rem 0 1rem;
+  }
+  .variant-pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .variant {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .variant .variant-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  esp-web-install-button {
+    --esp-tools-button-color: #fff;
+    --esp-tools-button-text-color: #0b0c10;
+  }
+  .note {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-top: 2rem;
+  }
+  .note b { color: var(--ink); }
+  .important-note {
+    background: var(--bg-alt);
+    border: 1px solid var(--warn);
+    border-left: 3px solid var(--warn);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--ink);
+    font-size: 0.92rem;
+    margin-bottom: 2rem;
+  }
+  .important-note b { color: var(--warn); }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+  <h1>Pixelcade Sidekick &mdash; test firmware</h1>
+  <div class="note">
+    <b>Test build for one board only.</b> This is for the <b>older</b> 10.1&Prime; Guition, whose label
+    on the back says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no &ldquo;1&rdquo; at the end).
+    If your label says <b>10153002-V2</b> / <b>JC8012P4A1C_I_W_Y1</b>, use the
+    <a href="./">normal flasher</a> instead.
+  </div>
+
+  <h2>10.1&Prime; (Guition V1, older panel) &mdash; TEST</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition V1)</div>
+    <p>Use <b>Chrome or Edge</b> on a desktop computer. This board has <b>three</b> USB ports &mdash; to flash,
+    connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b>
+    USB port.</p>
+    <p>If it works, the screen shows <b>&ldquo;Pixelcade Sidekick 10.1&Prime; (Guition V1)&rdquo;</b> after it
+    starts. Please report back either way: a picture of the screen, a black screen, or a garbled image.</p>
+    <esp-web-install-button manifest="./manifest-test-guition-v1.json"></esp-web-install-button>
+  </div>
+</body>
+</html>
