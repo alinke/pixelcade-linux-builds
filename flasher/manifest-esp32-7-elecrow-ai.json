@@ -1,0 +1,1 @@
+{ "name": "Pixelcade Sidekick 7\" (Elecrow AI)", "version": "v1.0.37", "builds": [ { "chipFamily": "ESP32-P4", "parts": [ { "path": "../firmware_sidekick/current/esp32-7-elecrow-ai.bin", "offset": 0 } ] } ] }
