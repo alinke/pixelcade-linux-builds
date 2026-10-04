@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.8",
+    "version": "8.0.9",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -201,7 +201,8 @@
       "8.0.7  Sidekick: Revised sidekick settings layout",
       "8.0.7  Sidekick: Added game card carousel mode option which cycles through game cards",
       "8.0.7. Sidekick: When swiping on a game, cards without content like no high scores for example will no longer show in the swipe rotation",
-      "8.0.8. Sidekick: Carousel mode check box is on device too"
+      "8.0.8. Sidekick: Carousel mode check box is on device too",
+      "8.0.9  Sidekick: Added support for the 7\" Elecrow Advance and 7\" Elecrow AI displays"
 
   ]
   },
