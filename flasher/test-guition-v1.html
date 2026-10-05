@@ -136,15 +136,46 @@
     <a href="./">normal flasher</a> instead.
   </div>
 
-  <h2>Pixelcade test firmware B</h2>
+  <div class="note">
+    <b>Please try these in order, A to D, and note what you see with each.</b> Flash each one through the
+    <b>bottom</b> USB port labeled <b>UART</b> (Chrome or Edge on a desktop computer). For B, C and D, use the
+    <b>top</b> USB port afterwards, as usual. For each one, a photo at <b>low</b> and at <b>full</b> brightness
+    helps, plus: are the colors <b>washed out</b>? Any <b>fine vertical lines</b>? Any <b>flicker</b>?
+  </div>
+
+  <h2>A &mdash; Guition&rsquo;s own factory firmware (for comparison)</h2>
+  <div class="board-card">
+    <div class="board-name">Guition factory demo, old panel (V3.3)</div>
+    <p>Guition&rsquo;s own firmware for this panel, not Pixelcade&rsquo;s &mdash; it shows Guition&rsquo;s demo
+    screens. It tells us whether the lines/washed-out look come from the panel itself or from our firmware.
+    About 14&nbsp;MB, so it takes a few minutes to flash.</p>
+    <esp-web-install-button manifest="./manifest-test-guition-factory-old-panel.json"></esp-web-install-button>
+  </div>
+
+  <h2>B &mdash; Pixelcade test firmware</h2>
   <div class="board-card">
     <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition V1) &mdash; test B</div>
-    <p>Our firmware with the old panel's settings, now sent in exactly the order Guition's own firmware
-    sends them. Use <b>Chrome or Edge</b> on a desktop computer. To flash, connect the <b>bottom</b> USB port
-    labeled <b>UART</b>; after flashing, Sidekick runs over the <b>top</b> USB port.</p>
-    <p>The screen should show <b>&ldquo;Pixelcade Sidekick 10.1&Prime; (Guition V1)&rdquo;</b> after it starts.
-    Please send a photo of the picture at both low and full brightness.</p>
+    <p>Our firmware with the old panel&rsquo;s settings, sent in the same order as Guition&rsquo;s own firmware.
+    The screen shows <b>&ldquo;Pixelcade Sidekick 10.1&Prime; (Guition V1)&rdquo;</b> when it starts.</p>
     <esp-web-install-button manifest="./manifest-test-guition-v1.json"></esp-web-install-button>
   </div>
+
+  <h2>C &mdash; B with a slower backlight signal</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition V1) &mdash; test C</div>
+    <p>Same as B, but the backlight dimming signal runs at 5&nbsp;kHz instead of 44&nbsp;kHz. Compare
+    <b>low brightness</b> with B: is the flicker gone, are the colors less dim?</p>
+    <esp-web-install-button manifest="./manifest-test-guition-v1-c.json"></esp-web-install-button>
+  </div>
+
+  <h2>D &mdash; B with a faster screen refresh</h2>
+  <div class="board-card">
+    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition V1) &mdash; test D</div>
+    <p>Same as B, but the screen refreshes about 62 times a second instead of 52. Compare
+    <b>full brightness</b> with B: is the flicker gone? If the picture breaks up or goes black, that&rsquo;s
+    useful to know too &mdash; just flash B again.</p>
+    <esp-web-install-button manifest="./manifest-test-guition-v1-d.json"></esp-web-install-button>
+  </div>
+
 </body>
 </html>
