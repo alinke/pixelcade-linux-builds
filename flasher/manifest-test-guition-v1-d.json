@@ -1,1 +1,0 @@
-{ "name": "Pixelcade Sidekick 10.1\" (Guition V1) TEST D", "version": "v1.0.37-oldpanel-test-d", "builds": [ { "chipFamily": "ESP32-P4", "parts": [ { "path": "../firmware_sidekick/test/esp32-10-guition-v1-old-panel-d.bin", "offset": 0 } ] } ] }

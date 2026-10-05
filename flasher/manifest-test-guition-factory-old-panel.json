@@ -1,1 +1,0 @@
-{ "name": "Guition factory demo, old panel (V3.3)", "version": "V3.3", "builds": [ { "chipFamily": "ESP32-P4", "parts": [ { "path": "../firmware_sidekick/test/guition-factory-JC8012P4A1C_I_W_Y-V3.3_Old_Panel.bin", "offset": 0 } ] } ] }

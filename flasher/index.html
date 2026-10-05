@@ -322,7 +322,21 @@
     <p>1280&times;800, native USB, touch, speaker. This board has <b>three</b> USB ports &mdash; to flash,
     connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b>
     USB port.</p>
-    <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
+    <p>Two hardware versions need different firmware &mdash; check the <b>label on the back</b>. With the
+    wrong one the screen stays black; just flash the other one.</p>
+    <div class="variant-pair">
+      <div class="variant">
+        <div class="variant-label">SKU ends in &ldquo;-V2&rdquo; (newer)</div>
+        <p style="margin-top:0;">Label says <b>SKU: 10153002-V2</b> and <b>Models: JC8012P4A1C_I_W_Y1</b>.</p>
+        <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
+      </div>
+      <div class="variant">
+        <div class="variant-label">No &ldquo;-V2&rdquo; on the label (older, V1)</div>
+        <p style="margin-top:0;">Label says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no
+        &ldquo;1&rdquo; at the end).</p>
+        <esp-web-install-button manifest="./manifest-esp32-10-guition-v1.json"></esp-web-install-button>
+      </div>
+    </div>
   </div>
 
   <h2>10.1&Prime; (Elecrow)</h2>
