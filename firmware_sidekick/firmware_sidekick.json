@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 37,
+    "patch": 38,
     "releaseNotes": [
+      "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
       "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
       "New: faster card and menu swipes -- the display keeps the last few cards and menus it showed, so swiping back to one (or reopening a menu) shows it right away instead of waiting for it to be sent again. Biggest difference over WiFi (needs Pixelcade 8.0.6 or newer; ESP32-S3 and ESP32-P4 displays).",
@@ -81,7 +82,7 @@
         "changedIn": "1.0.36"
       },
       "esp32-2-elecrow-round": {
-        "changedIn": "1.0.37"
+        "changedIn": "1.0.38"
       },
       "esp32-3-elecrow-advance": {
         "changedIn": "1.0.36"
@@ -115,14 +116,18 @@
       },
       "esp32-7-elecrow-ai": {
         "changedIn": "1.0.37"
+      },
+      "esp32-10-guition-v1": {
+        "changedIn": "1.0.38"
       }
     }
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 37,
+    "patch": 38,
     "releaseNotes": [
+      "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
       "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
       "New: faster card and menu swipes -- the display keeps the last few cards and menus it showed, so swiping back to one (or reopening a menu) shows it right away instead of waiting for it to be sent again. Biggest difference over WiFi (needs Pixelcade 8.0.6 or newer; ESP32-S3 and ESP32-P4 displays).",
