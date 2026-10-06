@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.11",
+    "version": "8.0.12",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -204,7 +204,8 @@
       "8.0.8. Sidekick: Carousel mode check box is on device too",
       "8.0.9  Sidekick: Added support for the 7\" Elecrow Advance and 7\" Elecrow AI displays",
       "8.0.10 Sidekick: Added support for the older 10.1\" Guition panel (V1, label without -V2), and the original 7\" Elecrow is now called 7\" Elecrow Basic",
-      "8.0.11 Sidekick: New Manual card -- scan its QR code with your phone to read the game's instruction manual (operator manual for arcade games); your phone must be on the same WiFi as the cabinet"
+      "8.0.11 Sidekick: New Manual card -- scan its QR code with your phone to read the game's instruction manual (operator manual for arcade games); your phone must be on the same WiFi as the cabinet",
+      "8.0.12 Sidekick: New History and Move List cards for arcade games (MAME/FBNeo) -- game history and trivia from arcade-history.com and special-move lists for fighting games, with a QR code to read them on your phone"
 
   ]
   },
