@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.8.6",
-  "latestArtworkVersion": 63,
-  "betaFirmwareVersion": "7.8.6",
+  "latestArtworkVersion": 64,
+  "betaFirmwareVersion": "7.8.7",
   "updateScriptVersion": 42,
   "releaseDate": "09-26-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -131,6 +131,8 @@
     "7.8.5  Fixed broken sports widget",
     "7.8.6  Added Glen's Retro Show FU cab branding"
   ],
-  "betaReleaseNotes": [],
+  "betaReleaseNotes": [
+    "7.8.7  Speed improvements and goes to default marquee on front end exit"
+  ],
   "minimumRequiredVersion": "5.0.0"
 }
