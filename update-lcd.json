@@ -132,7 +132,7 @@
     "7.8.6  Added Glen's Retro Show FU cab branding"
   ],
   "betaReleaseNotes": [
-    "7.8.7  Speed improvements and goes to default marquee on front end exit"
+    "7.8.7  Speed improvements and goes to default marquee on front end exit. New Alt Marquees: turn on Show Alt Marquees in Settings > Artwork to use alternate marquees, browse them with Alt Marquees Only, and upload your own from Upload Artwork. Faster, more accurate artwork matching (names with (World)/(USA) etc. now match)"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
