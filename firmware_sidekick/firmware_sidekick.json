@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 38,
+    "patch": 39,
     "releaseNotes": [
+      "New: support for the Waveshare ESP32-S3-Touch-LCD-3.49 V2, a 640x172 bar display with touch and sound (plug a small speaker into its 2-pin connector). Needs Pixelcade 8.0.14 or newer to select it. No changes for other displays.",
       "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
       "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
@@ -119,14 +120,18 @@
       },
       "esp32-10-guition-v1": {
         "changedIn": "1.0.38"
+      },
+      "esp32-3-waveshare": {
+        "changedIn": "1.0.39"
       }
     }
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 38,
+    "patch": 39,
     "releaseNotes": [
+      "New: support for the Waveshare ESP32-S3-Touch-LCD-3.49 V2, a 640x172 bar display with touch and sound (plug a small speaker into its 2-pin connector). Needs Pixelcade 8.0.14 or newer to select it. No changes for other displays.",
       "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
       "New: Configure WiFi lists the networks the display can see, so you pick yours from a list instead of typing its name (needs Pixelcade 8.0.7 or newer; displays with WiFi).",
