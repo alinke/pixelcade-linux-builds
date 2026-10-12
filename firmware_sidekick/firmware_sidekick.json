@@ -240,6 +240,9 @@
       },
       "esp32-10-guition-v1": {
         "changedIn": "1.0.38"
+      },
+      "esp32-3-waveshare": {
+        "changedIn": "1.0.39"
       }
     }
   },
