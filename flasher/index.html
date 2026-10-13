@@ -6,369 +6,692 @@
 <title>Pixelcade Sidekick Web Flasher</title>
 <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
 <style>
-  :root {
-    --bg: #14151a;
-    --bg-alt: #1c1e26;
-    --card: #20222b;
-    --border: #33353f;
-    --ink: #eef0f4;
-    --ink-soft: #9ba0ad;
-    --accent: #7ec8ff;
-    --accent-strong: #4fb3ff;
-    --good: #5cb85c;
-    --warn: #ffb347;
+  .pxsk-embed {
+    --pxsk-bg: #14151a;
+    --pxsk-bg-alt: #1c1e26;
+    --pxsk-card: #20222b;
+    --pxsk-border: #33353f;
+    --pxsk-ink: #eef0f4;
+    --pxsk-ink-soft: #9ba0ad;
+    --pxsk-accent: #7ec8ff;
+    --pxsk-accent-strong: #4fb3ff;
+    --pxsk-good: #5cb85c;
+    box-sizing: border-box;
+    background: var(--pxsk-bg);
+    color: var(--pxsk-ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    padding: 2rem clamp(1rem, 4vw, 2.5rem);
+    border-radius: 12px;
   }
+  .pxsk-embed *, .pxsk-embed *::before, .pxsk-embed *::after { box-sizing: border-box; }
+  .pxsk-embed .pxsk-lede {
+    color: var(--pxsk-ink-soft);
+    max-width: 68ch;
+    margin: 0 0 2rem;
+    font-size: 1.02rem;
+  }
+  .pxsk-embed h2 {
+    font-size: 1.15rem;
+    color: var(--pxsk-ink);
+    margin: 0 0 0.75rem;
+    border-bottom: 1px solid var(--pxsk-border);
+    padding-bottom: 0.5rem;
+  }
+  .pxsk-embed h2:not(:first-child) { margin-top: 2.5rem; }
+  .pxsk-embed .pxsk-paths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 1rem 0 0;
+  }
+  .pxsk-embed .pxsk-path-card {
+    background: var(--pxsk-card);
+    border: 1px solid var(--pxsk-border);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+  }
+  .pxsk-embed .pxsk-path-card .pxsk-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pxsk-accent);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .pxsk-embed .pxsk-path-card p {
+    color: var(--pxsk-ink-soft);
+    font-size: 0.94rem;
+    margin: 0.4rem 0 0;
+  }
+  .pxsk-embed .pxsk-path-card ol {
+    margin: 0.6rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--pxsk-ink-soft);
+    font-size: 0.94rem;
+  }
+  .pxsk-embed .pxsk-path-card ol li { margin-bottom: 0.3rem; }
+  .pxsk-embed .pxsk-path-card ol li b { color: var(--pxsk-ink); }
+
+  /* Supported displays: one card per board */
+  .pxsk-embed .pxsk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .pxsk-embed .pxsk-card {
+    background: var(--pxsk-card);
+    border: 1px solid var(--pxsk-border);
+    border-radius: 10px;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+  }
+  .pxsk-embed .pxsk-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .pxsk-embed .pxsk-thumb {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--pxsk-bg-alt);
+    cursor: zoom-in;
+  }
+  .pxsk-embed .pxsk-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  .pxsk-embed .pxsk-thumb:hover img { transform: scale(1.04); }
+  .pxsk-embed .pxsk-thumb:focus-visible { outline: 2px solid var(--pxsk-accent); outline-offset: 2px; }
+  .pxsk-embed .pxsk-thumb-label {
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.62);
+    color: #fff;
+  }
+  .pxsk-embed .pxsk-card-title {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--pxsk-ink);
+    margin: 0.2rem 0 0;
+    line-height: 1.3;
+  }
+  .pxsk-embed .pxsk-specs { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .pxsk-embed .pxsk-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--pxsk-border);
+    color: var(--pxsk-ink-soft);
+  }
+  .pxsk-embed .pxsk-badge.pxsk-touch { color: var(--pxsk-good); border-color: var(--pxsk-good); }
+  .pxsk-embed .pxsk-search { font-size: 0.82rem; }
+  .pxsk-embed .pxsk-search-label {
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--pxsk-ink-soft);
+  }
+  .pxsk-embed .pxsk-search code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    color: var(--pxsk-accent-strong);
+    background: none;
+    padding: 0;
+    overflow-wrap: anywhere;
+  }
+  .pxsk-embed .pxsk-card-notes {
+    color: var(--pxsk-ink-soft);
+    font-size: 0.86rem;
+    margin: 0;
+    flex: 1;
+  }
+  .pxsk-embed .pxsk-card-notes b { color: var(--pxsk-ink); }
+  .pxsk-embed .pxsk-card-buy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.2rem;
+  }
+  .pxsk-embed .pxsk-buybtn {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.8rem;
+    border-radius: 7px;
+    border: 1px solid var(--pxsk-accent);
+    color: var(--pxsk-accent);
+    text-decoration: none;
+  }
+  .pxsk-embed .pxsk-buybtn:hover { background: var(--pxsk-accent); color: var(--pxsk-bg); }
+  .pxsk-embed .pxsk-buylink {
+    color: var(--pxsk-accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .pxsk-embed .pxsk-buylink:hover { text-decoration: underline; }
+
+  .pxsk-embed .pxsk-note {
+    background: var(--pxsk-bg-alt);
+    border: 1px solid var(--pxsk-border);
+    border-left: 3px solid var(--pxsk-accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--pxsk-ink-soft);
+    font-size: 0.92rem;
+    margin-top: 1.25rem;
+  }
+  .pxsk-embed .pxsk-note b { color: var(--pxsk-ink); }
+
+  /* Photo pop-up (moved to <body> by the script so theme layout can't clip it) */
+  .pxsk-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 3.5rem 2.5rem;
+    background: rgba(8, 9, 12, 0.92);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .pxsk-lightbox[hidden] { display: none; }
+  .pxsk-lightbox figure { margin: 0; text-align: center; max-width: 100%; }
+  .pxsk-lightbox img {
+    display: block;
+    max-width: min(92vw, 1100px);
+    max-height: calc(100vh - 8rem);
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+  .pxsk-lightbox figcaption {
+    margin-top: 0.75rem;
+    color: #d6d9e0;
+    font-size: 0.95rem;
+  }
+  .pxsk-lightbox button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(32, 34, 43, 0.85);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .pxsk-lightbox button:hover { background: rgba(126, 200, 255, 0.25); border-color: #7ec8ff; }
+  .pxsk-lightbox button:focus-visible { outline: 2px solid #7ec8ff; outline-offset: 2px; }
+  .pxsk-lightbox .pxsk-lb-close { top: 1rem; right: 1rem; }
+  .pxsk-lightbox .pxsk-lb-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+  .pxsk-lightbox .pxsk-lb-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+  @media (max-width: 640px) {
+    .pxsk-lightbox { padding: 3.5rem 0.75rem 2rem; }
+    .pxsk-lightbox .pxsk-lb-prev, .pxsk-lightbox .pxsk-lb-next { top: auto; bottom: 0.75rem; transform: none; }
+  }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--ink);
+    background: #14151a;
+    color: #eef0f4;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.55;
     padding: 2.5rem clamp(1rem, 4vw, 3rem) 4rem;
   }
-  .wrap { max-width: 880px; margin: 0 auto; }
-  h1 {
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.01em;
-  }
-  .lede {
-    color: var(--ink-soft);
-    max-width: 68ch;
-    margin: 0 0 1.5rem;
-    font-size: 1.02rem;
-  }
-  .browser-note {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--warn);
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+  .pxsk-embed { padding: 0; background: none; border-radius: 0; }
+  .pxsk-embed .pxsk-lede { margin-bottom: 1.5rem; }
+  .pxsk-embed .pxsk-warn {
+    background: var(--pxsk-bg-alt);
+    border: 1px solid #ffb347;
+    border-left: 3px solid #ffb347;
     border-radius: 6px;
     padding: 0.9rem 1.1rem;
-    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
+  }
+  .pxsk-embed .pxsk-warn b { color: #ffb347; }
+  .pxsk-embed .pxsk-browser {
+    background: var(--pxsk-bg-alt);
+    border: 1px solid var(--pxsk-border);
+    border-left: 3px solid #ffb347;
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    color: var(--pxsk-ink-soft);
     font-size: 0.92rem;
     margin-bottom: 2rem;
   }
-  .browser-note b { color: var(--ink); }
-  h2 {
-    font-size: 1.15rem;
-    margin: 2.5rem 0 0.5rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.5rem;
-  }
-  .board-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem 1.4rem;
-    margin-top: 1rem;
-  }
-  .board-card .board-name {
-    font-size: 1.02rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-  }
-  .board-card p {
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-    margin: 0.4rem 0 1rem;
-  }
-  .variant-pair {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-  .variant {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
+  .pxsk-embed .pxsk-browser b { color: var(--pxsk-ink); }
+  .pxsk-embed .pxsk-install { padding-top: 0.2rem; }
+  .pxsk-embed .pxsk-variant {
+    background: var(--pxsk-bg-alt);
+    border: 1px solid var(--pxsk-border);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.75rem;
   }
-  .variant .variant-label {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 0.6rem;
-  }
+  .pxsk-embed .pxsk-variant-label { font-size: 0.85rem; color: var(--pxsk-accent); font-weight: 600; }
+  .pxsk-embed .pxsk-variant p { color: var(--pxsk-ink-soft); font-size: 0.86rem; margin: 0.3rem 0 0.6rem; }
+  .pxsk-embed .pxsk-variant p b, .pxsk-embed .pxsk-card-notes b { color: var(--pxsk-ink); }
   esp-web-install-button {
     --esp-tools-button-color: #fff;
     --esp-tools-button-text-color: #0b0c10;
   }
-  .note {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 6px;
-    padding: 0.9rem 1.1rem;
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-    margin-top: 2rem;
-  }
-  .note b { color: var(--ink); }
-  .important-note {
-    background: var(--bg-alt);
-    border: 1px solid var(--warn);
-    border-left: 3px solid var(--warn);
-    border-radius: 6px;
-    padding: 0.9rem 1.1rem;
-    color: var(--ink);
-    font-size: 0.92rem;
-    margin-bottom: 2rem;
-  }
-  .important-note b { color: var(--warn); }
   footer {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-    color: var(--ink-soft);
+    border-top: 1px solid #33353f;
+    color: #9ba0ad;
     font-size: 0.82rem;
   }
-  footer a { color: var(--accent); }
+  footer a { color: #7ec8ff; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Pixelcade Sidekick Web Flasher</h1>
-  <p class="lede">
+  <div class="pxsk-embed">
+  <p class="pxsk-lede">
     Flash official Pixelcade Sidekick firmware directly from your browser over USB &mdash; no software
     install required. This is a backup option for machines that can't run the Sidekick desktop flasher tool
     in Companion; if that already works for you, keep using it.
   </p>
 
-  <div class="important-note">
+  <div class="pxsk-warn">
     <b>IMPORTANT:</b> if you're flashing from the same computer that Pixelcade is installed on, you must
     <b>quit Pixelcade (pixelweb) first</b>. Pixelcade's background Sidekick scanner keeps probing every
     USB serial port and will conflict with the flasher's connection, causing the flash to fail or corrupt
     partway through.
   </div>
 
-  <div class="browser-note">
+  <div class="pxsk-browser">
     <b>Requires Chrome or Edge on desktop</b> (Web Serial API &mdash; not supported in Safari, Firefox, or
-    any mobile browser). Connect your Sidekick display over USB, pick the matching board below, and click
-    Connect.
+    any mobile browser). Connect your Sidekick display over USB, find your board below (compare it with the
+    photos &mdash; tap one to enlarge it), and click Connect.
   </div>
 
-  <h2>AMOLED 1.91&Prime;</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick LILYGO T-Display S3 AMOLED</div>
-    <p>536&times;240, native USB, no touch.</p>
-    <esp-web-install-button manifest="./manifest-esp32-oled.json"></esp-web-install-button>
+  <div class="pxsk-grid">
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Front-768x576.jpg" data-pxsk-caption="AMOLED 1.91″ — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="AMOLED 1.91″, front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Back-768x576.jpg" data-pxsk-caption="AMOLED 1.91″ — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/1-Lilygo-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="AMOLED 1.91″, back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">AMOLED 1.91″</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">536×240</span><span class="pxsk-badge">No touch</span></div>
+<p class="pxsk-card-notes">LILYGO T-Display S3 AMOLED. Native USB, no touch.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-oled.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0C2T6T8YC" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-front-768x576.jpg" data-pxsk-caption="2.1″ Round Display (Elecrow) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.1″ Round Display (Elecrow), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-back-768x576.jpg" data-pxsk-caption="2.1″ Round Display (Elecrow) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-elecrow-round-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.1″ Round Display (Elecrow), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">2.1″ Round Display (Elecrow)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">480×480 (round)</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow CrowPanel 2.1&Prime; rotary display (ESP32-S3) &mdash; capacitive touch, no calibration needed. WiFi works but is flaky on this board; USB is recommended. Connect its <b>USB-C</b> port; the small connectors on the back (power, UART, I2C) aren't used.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2-elecrow-round.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-2-1inch-hmi-esp32-rotary-display-480-480-ips-round-touch-knob-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Front-768x576.jpg" data-pxsk-caption="2.4″ Display (Sunton) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.4″ Display (Sunton), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Back-768x576.jpg" data-pxsk-caption="2.4″ Display (Sunton) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-Sunton-Capacitive-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.4″ Display (Sunton), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">2.4″ Display (Capacitive)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">320×240</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Sunton ESP32-2432S024C (check the silkscreen) &mdash; CST820 capacitive touch, no calibration needed.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2432s024c.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0CLGD2DG6?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-front-768x576.jpg" data-pxsk-caption="2.8″ Display — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.8″ Display, front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-back-768x576.jpg" data-pxsk-caption="2.8″ Display — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/2-sunton-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="2.8″ Display, back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">2.8″ Display (Resistive)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">320×240</span><span class="pxsk-badge pxsk-touch">Touch (resistive)</span></div>
+<p class="pxsk-card-notes">ESP32-2432S028R (&ldquo;Cheap Yellow Display&rdquo;).</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0DNT75JK6" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Front-768x576.jpg" data-pxsk-caption="3.5″ Display (Resistive) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Resistive), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Back-768x576.jpg" data-pxsk-caption="3.5″ Display (Resistive) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Resistive-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Resistive), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">3.5″ Display (Resistive)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (resistive)</span></div>
+<p class="pxsk-card-notes">ESP32-3248S035R &mdash; silkscreen ends in &ldquo;R&rdquo;. XPT2046 resistive touch &mdash; needs a one-time calibration.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0D93MBWC2" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Front-768x576.jpg" data-pxsk-caption="3.5″ Display (Capacitive) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Capacitive), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Back-768x576.jpg" data-pxsk-caption="3.5″ Display (Capacitive) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Sunton-Capacitive-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Capacitive), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">3.5″ Display (Capacitive)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">ESP32-3248S035C &mdash; silkscreen ends in &ldquo;C&rdquo;. GT911 capacitive touch &mdash; no calibration needed.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3248s035c.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0C5DB6RHM?lv=shuf&amp;channelId=500&amp;plpRedirect=mhFallback" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-front-768x576.jpg" data-pxsk-caption="3.5″ Display (Elecrow Advance) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Elecrow Advance), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-Back-768x576.jpg" data-pxsk-caption="3.5″ Display (Elecrow Advance) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/3-Elecrow-s3-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.5″ Display (Elecrow Advance), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">3.5″ Display (Elecrow Advance)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow CrowPanel Advance 3.5&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed. Connect the port labelled <b>USB1 / OTG</b> (not USB0 / UART0).</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-3-5-hmi-esp32-ai-display-480x320-artificial-intelligent-ips-touch-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Front-768x576.jpg" data-pxsk-caption="3.49″ Bar Display (Waveshare) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.49″ Bar Display (Waveshare), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Back-768x576.jpg" data-pxsk-caption="3.49″ Bar Display (Waveshare) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/3-lilygo-Back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="3.49″ Bar Display (Waveshare), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">3.49″ Bar Display (Waveshare)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">640×172</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Waveshare ESP32-S3-Touch-LCD-3.49 <b>V2</b> (PCB Rev1.1, &ldquo;V2&rdquo; label on the case) &mdash; capacitive touch, no calibration needed. The original V1 board isn&rsquo;t supported.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-waveshare.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0FSD7HPZV?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-front-768x576.jpg" data-pxsk-caption="4.3″ Display (Waveshare) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="4.3″ Display (Waveshare), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-back-768x576.jpg" data-pxsk-caption="4.3″ Display (Waveshare) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-waveshare-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="4.3″ Display (Waveshare), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">4.3″ Display (Waveshare)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">480&times;800 portrait panel (800&times;480 landscape-mounted), native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Connect below.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GQB5PY1X?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-front-768x576.jpg" data-pxsk-caption="4.3″ Display (Elecrow Advance) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="4.3″ Display (Elecrow Advance), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-back-768x576.jpg" data-pxsk-caption="4.3″ Display (Elecrow Advance) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-elecrow-s3-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="4.3″ Display (Elecrow Advance), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">4.3″ Display (Elecrow Advance)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow CrowPanel Advance 4.3&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-4-3-hmi-esp32-800x480-ai-display-ips-touch-artificial-intelligent-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-front-768x576.jpg" data-pxsk-caption="4.3″ Display (Sunton) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="4.3″ Display (Sunton), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-back-768x715.jpg" data-pxsk-caption="4.3″ Display (Sunton) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-back-300x279.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-back-300x279.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/4-sunton-back-768x715.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="279" alt="4.3″ Display (Sunton), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">4.3″ Display (Sunton)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">480×272</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">CH340-bridged &mdash; a genuinely different, lower-resolution panel than the Waveshare 4.3&Prime; (800&times;480). Single USB-C port, no manual boot-mode entry needed.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4827s043c.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0CLGCMWQ7?ref=clp_hp_h_pc" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-front-768x576.jpg" data-pxsk-caption="5″ Display (Sunton) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Sunton), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-back-768x576.jpg" data-pxsk-caption="5″ Display (Sunton) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-sunton-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Sunton), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">5″ Display (Sunton)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">ESP32-8048S050 &mdash; Sunton / JC8048W550C and electrically-identical rebrands.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0DRYS8ZTW" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-front-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow Basic) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow Basic), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-back-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow Basic) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-basic-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow Basic), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">5″ Display (Elecrow Basic)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow's original (non-&ldquo;Advance&rdquo;) 5&Prime; &mdash; red circuit board, &ldquo;ESP32 Display-5 Inch&rdquo; and SKU DIS07050H on the back. Not the same as the Sunton board or the Elecrow Advance boards.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/esp32-display-5-inch-hmi-display-rgb-tft-lcd-touch-screen-support-lvgl.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-front-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow Advance) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow Advance), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-back-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow Advance) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow Advance), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">5″ Display (Elecrow Advance)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Two versions of this board need different firmware &mdash; pick the one that matches yours.</p>
+<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.2/v1.3</div><p>Elecrow CrowPanel Advance 5.0 &mdash; ST7262 + GT911. Two hardware revisions of this board exist and need different firmware &mdash; check the small hardware revision marking on your board.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.1</div><p>Older hardware revision &mdash; controls backlight/buzzer differently than v1.2/v1.3. If you flash the wrong revision's firmware, the screen stays black even though the display is actually working underneath (the backlight just never turns on); reflashing with the matching one fixes it.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0G3WC3LR2" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-front-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow AI) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow AI), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-back-768x576.jpg" data-pxsk-caption="5″ Display (Elecrow AI) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-elecrow-ai-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="5″ Display (Elecrow AI), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">5″ Display (Elecrow AI)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Same ST7262 + GT911 as the CrowPanel Advance, but native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB 2.0</b>, not the one labeled <b>UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Connect below.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow-ai-p4.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-5inch-esp32-p4-hmi-ai-display-800x480-ips-touch-screen-with-wifi-6.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GLGWJP8B" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-front-768x576.jpg" data-pxsk-caption="M5Stack Tab5 — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="M5Stack Tab5, front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-back-768x576.jpg" data-pxsk-caption="M5Stack Tab5 — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/5-tab5-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="M5Stack Tab5, back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">M5Stack Tab5</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">1280×720</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Native USB. Connect the <b>USB-C</b> port (not the USB-A port).</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.digikey.com/en/products/detail/m5stack-technology-co-ltd/C145/26740595" target="_blank" rel="noopener noreferrer">Buy: DigiKey</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-front-768x576.jpg" data-pxsk-caption="7″ Display (Elecrow Basic) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Elecrow Basic), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-back-768x576.jpg" data-pxsk-caption="7″ Display (Elecrow Basic) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Elecrow Basic), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-front-no-case.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-front-no-case-768x576.jpg" data-pxsk-caption="7″ Display (Elecrow Basic) — Front (no case)"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-front-no-case-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-front-no-case-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-front-no-case-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Elecrow Basic), front (no case)" loading="lazy"><span class="pxsk-thumb-label">Front (no case)</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-back-no-case.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-back-no-case-768x576.jpg" data-pxsk-caption="7″ Display (Elecrow Basic) — Back (no case)"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-back-no-case-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-back-no-case-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-elecrow-s3-back-no-case-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Elecrow Basic), back (no case)" loading="lazy"><span class="pxsk-thumb-label">Back (no case)</span></a>
+</div>
+<h3 class="pxsk-card-title">7″ Display (Elecrow Basic)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">ESP32-8048S070C &mdash; silkscreen ends in <b>&ldquo;C&rdquo;</b>. Elecrow CrowPanel 7.0 / IoTeikXgo.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GSZV9LS1" target="_blank" rel="noopener noreferrer">Buy: Amazon (with case)</a><a class="pxsk-buybtn" href="https://www.elecrow.com/esp32-display-7-inch-hmi-display-rgb-tft-lcd-touch-screen-support-lvgl.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-front-768x576.jpg" data-pxsk-caption="7″ Display (Sunton) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Sunton), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-back-768x576.jpg" data-pxsk-caption="7″ Display (Sunton) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/7-sunton-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Sunton), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">7″ Display (Sunton)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">ESP32-8048S070 &mdash; silkscreen has <b>no trailing &ldquo;C&rdquo;</b>. Sunton / EC Buying ESP32-S3 7.0.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-sunton.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0H268CXVY" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-front-768x471.jpg" data-pxsk-caption="7″ Display (Elecrow Advance) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-front-300x184.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-front-300x184.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-front-768x471.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="184" alt="7″ Display (Elecrow Advance), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-back-768x576.jpg" data-pxsk-caption="7″ Display (Elecrow Advance) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-advanced-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="7″ Display (Elecrow Advance), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">7″ Display (Elecrow Advance)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Black board, silkscreen &ldquo;ESP32 Display-7.0 inch (Advance_series)&rdquo;, SKU DIS02170A, hardware <b>V1.3 or newer</b>. One USB-C port (USB-5V-IN), used for flashing and normal operation.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-7-hmi-esp32-ai-display-800x480-ai-ips-touch-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-front-768x469.jpg" data-pxsk-caption="7″ Display (Elecrow AI) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-front-300x183.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-front-300x183.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-front-768x469.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="183" alt="7″ Display (Elecrow AI), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-back-768x445.jpg" data-pxsk-caption="7″ Display (Elecrow AI) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-back-300x174.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-back-300x174.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/10/7-elecrow-ai-back-768x445.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="174" alt="7″ Display (Elecrow AI), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">7″ Display (Elecrow AI)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">1024×600</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow CrowPanel Advanced 7&Prime; AI (ESP32-P4), stereo speakers. This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-ai.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-7inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-with-wifi-6-compatible-with-arduino-lvgl-micropython.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-front-768x576.jpg" data-pxsk-caption="10.1″ Display (Guition) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/10-guition-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="10.1″ Display (Guition), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-back-768x576.jpg" data-pxsk-caption="10.1″ Display (Guition) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/10-guition-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/10-guition-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="10.1″ Display (Guition), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">10.1″ Display (Guition)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">1280×800</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Two versions of this board need different firmware &mdash; pick the one that matches yours.</p>
+<div class="pxsk-variant"><div class="pxsk-variant-label">V2 (newer)</div><p>Label on the back says <b>SKU: 10153002-V2</b> and <b>Models: JC8012P4A1C_I_W_Y1</b>. Speaker. This board has <b>three</b> USB ports &mdash; to flash, connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">V1 (older)</div><p>Label on the back says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no &ldquo;1&rdquo; at the end, no &ldquo;-V2&rdquo;). Speaker. To flash, connect the <b>bottom</b> USB port labeled <b>UART</b>; after flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10-guition-v1.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://proengi.com/products/esp32p4-development-board-10-1-inch-1280-800-screen-wifi-bt-type-c-for-arduino-lvgl-esp-ide-smart-home-optional-speaker-battery" target="_blank" rel="noopener noreferrer">Buy: ProEngi</a></div>
+</article>
+<article class="pxsk-card">
+<div class="pxsk-photos">
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-front.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-front-768x576.jpg" data-pxsk-caption="10.1″ Display (Elecrow) — Front"><img src="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-front-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-front-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-front-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="10.1″ Display (Elecrow), front" loading="lazy"><span class="pxsk-thumb-label">Front</span></a>
+<a class="pxsk-thumb" href="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-back.jpg" target="_blank" rel="noopener noreferrer" data-pxsk-large="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-back-768x576.jpg" data-pxsk-caption="10.1″ Display (Elecrow) — Back"><img src="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-back-300x225.jpg" srcset="https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-back-300x225.jpg 300w, https://pixelcade.org/wp-content/uploads/2026/09/10-elecrow-p4-back-768x576.jpg 768w" sizes="(max-width: 640px) 45vw, 160px" width="300" height="225" alt="10.1″ Display (Elecrow), back" loading="lazy"><span class="pxsk-thumb-label">Back</span></a>
+</div>
+<h3 class="pxsk-card-title">10.1″ Display (Elecrow)</h3>
+<div class="pxsk-specs"><span class="pxsk-badge">1024×600</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
+<p class="pxsk-card-notes">Elecrow CrowPanel Advanced 10.1&Prime; ESP32-P4 HMI, stereo speakers. This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-10-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-10-1inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
+</article>
   </div>
 
-  <h2>2.1&Prime; Round Display (Elecrow)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 2.1&Prime; Round</div>
-    <p>480&times;480 round. Elecrow CrowPanel 2.1&Prime; rotary display (ESP32-S3) &mdash; capacitive touch, no calibration needed.
-    WiFi works but is flaky on this board; USB is recommended.
-    Connect its <b>USB-C</b> port; the small connectors on the back (power, UART, I2C) aren't used.</p>
-    <esp-web-install-button manifest="./manifest-esp32-2-elecrow-round.json"></esp-web-install-button>
-  </div>
-
-  <h2>2.4&Prime; Display</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 2.4&Prime; (Capacitive)</div>
-    <p>320&times;240. Sunton ESP32-2432S024C (check the silkscreen) &mdash; CST820 capacitive touch, no calibration needed.</p>
-    <esp-web-install-button manifest="./manifest-esp32-2432s024c.json"></esp-web-install-button>
-  </div>
-
-  <h2>2.8&Prime; Display</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 2.8&Prime; (Resistive)</div>
-    <p>320&times;240, resistive touch &mdash; ESP32-2432S028R (&ldquo;Cheap Yellow Display&rdquo;).</p>
-    <esp-web-install-button manifest="./manifest-esp32-2.json"></esp-web-install-button>
-  </div>
-
-  <h2>3.5&Prime; Display</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 3.5&Prime;</div>
-    <p>480&times;320. Two touch variants ship under this size &mdash; check your unit's silkscreen
-    (ends in &ldquo;R&rdquo; for resistive, &ldquo;C&rdquo; for capacitive) and pick the matching one.</p>
-    <div class="variant-pair">
-      <div class="variant">
-        <div class="variant-label">ESP32-3248S035R (resistive)</div>
-        <p style="margin-top:0;">XPT2046 resistive touch &mdash; needs a one-time calibration.</p>
-        <esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">ESP32-3248S035C (capacitive)</div>
-        <p style="margin-top:0;">GT911 capacitive touch &mdash; no calibration needed.</p>
-        <esp-web-install-button manifest="./manifest-esp32-3248s035c.json"></esp-web-install-button>
-      </div>
-    </div>
-  </div>
-
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 3.5&Prime; (Elecrow Advance)</div>
-    <p>480&times;320. Elecrow CrowPanel Advance 3.5&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed.
-    Connect the port labelled <b>USB1 / OTG</b> (not USB0 / UART0).</p>
-    <esp-web-install-button manifest="./manifest-esp32-3-elecrow-advance.json"></esp-web-install-button>
-  </div>
-
-  <h2>3.49&Prime; Bar Display (Waveshare)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 3.49&Prime; Bar (Waveshare)</div>
-    <p>640&times;172 bar. Waveshare ESP32-S3-Touch-LCD-3.49 <b>V2</b> (PCB Rev1.1, &ldquo;V2&rdquo; label on the case) &mdash;
-    capacitive touch, no calibration needed. The original V1 board isn&rsquo;t supported.</p>
-    <esp-web-install-button manifest="./manifest-esp32-3-waveshare.json"></esp-web-install-button>
-  </div>
-
-  <h2>4.3&Prime; Display (Waveshare)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Waveshare)</div>
-    <p>480&times;800 portrait panel (800&times;480 landscape-mounted), capacitive touch,
-    native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one
-    labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode
-    entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>,
-    before clicking Connect below.</p>
-    <esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"></esp-web-install-button>
-  </div>
-
-  <h2>4.3&Prime; Display (Elecrow Advance)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Elecrow Advance)</div>
-    <p>800&times;480. Elecrow CrowPanel Advance 4.3&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed.</p>
-    <esp-web-install-button manifest="./manifest-esp32-4-elecrow-advance.json"></esp-web-install-button>
-  </div>
-
-  <h2>4.3&Prime; Display (Sunton)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 4.3&Prime; (Sunton)</div>
-    <p>480&times;272, capacitive touch, CH340-bridged &mdash; a genuinely different, lower-resolution
-    panel than the Waveshare 4.3&Prime; above (800&times;480). Single USB-C port, no manual boot-mode
-    entry needed.</p>
-    <esp-web-install-button manifest="./manifest-esp32-4827s043c.json"></esp-web-install-button>
-  </div>
-
-  <h2>5&Prime; Display</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 5&Prime;</div>
-    <p>800&times;480, capacitive touch. Several genuinely different boards ship under this size &mdash;
-    check your unit's silkscreen (and hardware revision, where noted) and pick the matching one below.</p>
-    <div class="variant-pair">
-      <div class="variant">
-        <div class="variant-label">ESP32-8048S050 (Sunton)</div>
-        <p style="margin-top:0;">Sunton / JC8048W550C and electrically-identical rebrands.</p>
-        <esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow Basic 5.0 (red board, SKU DIS07050H)</div>
-        <p style="margin-top:0;">Elecrow's original (non-&ldquo;Advance&rdquo;) 5&Prime; &mdash; red circuit board,
-        &ldquo;ESP32 Display-5 Inch&rdquo; and SKU DIS07050H on the back. Not the same as the Sunton board
-        or the Elecrow Advance boards.</p>
-        <esp-web-install-button manifest="./manifest-esp32-5-elecrow.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.2/v1.3</div>
-        <p style="margin-top:0;">Different panel driver/touch controller &mdash; ST7262 + GT911. Two
-        hardware revisions of this board exist and need different firmware &mdash; check the small
-        hardware revision marking on your board and pick the matching one below.</p>
-        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advance 5.0 &mdash; hardware v1.1</div>
-        <p style="margin-top:0;">Older hardware revision &mdash; controls backlight/buzzer differently
-        than v1.2/v1.3 above. If you flash the wrong revision's firmware, the screen stays black even
-        though the display is actually working underneath (the backlight just never turns on);
-        reflashing with the matching one fixes it.</p>
-        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel AI 5.0 (ESP32-P4)</div>
-        <p style="margin-top:0;">Same ST7262 + GT911 as CrowPanel Advance above, but native-USB
-        ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled
-        <b>USB 2.0</b>, not the one labeled <b>UART</b>. It also needs manual boot-mode entry every
-        time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before
-        clicking Connect below.</p>
-        <esp-web-install-button manifest="./manifest-esp32-5-elecrow-ai-p4.json"></esp-web-install-button>
-      </div>
-    </div>
-  </div>
-
-  <h2>M5Stack Tab5</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick M5Stack Tab5</div>
-    <p>1280&times;720, native USB. Connect the <b>USB-C</b> port (not the USB-A port).</p>
-    <esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button>
-  </div>
-
-  <h2>7&Prime; Display</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 7&Prime;</div>
-    <p>Capacitive touch. Four genuinely different boards ship under this size &mdash;
-    check your unit's silkscreen and pick the matching one below.</p>
-    <div class="variant-pair">
-      <div class="variant">
-        <div class="variant-label">Elecrow Basic 7.0 (ESP32-8048S070C)</div>
-        <p style="margin-top:0;">Silkscreen ends in <b>&ldquo;C&rdquo;</b> &mdash; Elecrow CrowPanel 7.0 / IoTeikXgo.</p>
-        <esp-web-install-button manifest="./manifest-esp32-7-elecrow.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">ESP32-8048S070 (Sunton)</div>
-        <p style="margin-top:0;">Silkscreen has <b>no trailing &ldquo;C&rdquo;</b> &mdash; Sunton / EC Buying ESP32-S3 7.0.</p>
-        <esp-web-install-button manifest="./manifest-esp32-7-sunton.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advance 7.0 (ESP32-S3)</div>
-        <p style="margin-top:0;">800&times;480. Black board, silkscreen &ldquo;ESP32 Display-7.0 inch
-        (Advance_series)&rdquo;, SKU DIS02170A, hardware <b>V1.3 or newer</b>. One USB-C port (USB-5V-IN),
-        used for flashing and normal operation.</p>
-        <esp-web-install-button manifest="./manifest-esp32-7-elecrow-advance.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">Elecrow CrowPanel Advanced 7&Prime; AI (ESP32-P4)</div>
-        <p style="margin-top:0;">1024&times;600, stereo speakers. This board has <b>two</b> USB-C ports
-        &mdash; to flash, connect the one labelled <b>UART0</b> (not <b>USB2.0</b>). After flashing,
-        Sidekick runs over the port labelled <b>USB2.0</b>.</p>
-        <esp-web-install-button manifest="./manifest-esp32-7-elecrow-ai.json"></esp-web-install-button>
-      </div>
-    </div>
-  </div>
-
-  <h2>10.1&Prime; (Guition)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Guition)</div>
-    <p>1280&times;800, native USB, touch, speaker. This board has <b>three</b> USB ports &mdash; to flash,
-    connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b>
-    USB port.</p>
-    <p>Two hardware versions need different firmware &mdash; check the <b>label on the back</b>. With the
-    wrong one the screen stays black; just flash the other one.</p>
-    <div class="variant-pair">
-      <div class="variant">
-        <div class="variant-label">SKU ends in &ldquo;-V2&rdquo; (newer)</div>
-        <p style="margin-top:0;">Label says <b>SKU: 10153002-V2</b> and <b>Models: JC8012P4A1C_I_W_Y1</b>.</p>
-        <esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button>
-      </div>
-      <div class="variant">
-        <div class="variant-label">No &ldquo;-V2&rdquo; on the label (older, V1)</div>
-        <p style="margin-top:0;">Label says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no
-        &ldquo;1&rdquo; at the end).</p>
-        <esp-web-install-button manifest="./manifest-esp32-10-guition-v1.json"></esp-web-install-button>
-      </div>
-    </div>
-  </div>
-
-  <h2>10.1&Prime; (Elecrow)</h2>
-  <div class="board-card">
-    <div class="board-name">Pixelcade Sidekick 10.1&Prime; (Elecrow)</div>
-    <p>1024&times;600, capacitive touch, stereo speakers. Elecrow CrowPanel Advanced 10.1&Prime; ESP32-P4 HMI.
-    This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not
-    <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
-    <esp-web-install-button manifest="./manifest-esp32-10-elecrow.json"></esp-web-install-button>
-  </div>
-
-  <div class="note">
+  <div class="pxsk-note">
     <b>Not sure which board you have?</b> Picking the wrong entry costs nothing but a re-flash &mdash;
     it can't damage the hardware. If the screen stays blank, shows a garbled image, or touch doesn't
-    respond, you likely picked the wrong one; just flash the matching one instead. <b>The 5&Prime; and
-    7&Prime; sizes are each split into multiple genuinely different boards</b> &mdash; different panel
-    driver or touch controller wiring &mdash; so check your unit's silkscreen against the labels above
+    respond, you likely picked the wrong one; just flash the matching one instead. <b>The 4.3&Prime;, 5&Prime;,
+    7&Prime; and 10.1&Prime; sizes each have several genuinely different boards</b> &mdash; different panel
+    driver or touch controller wiring &mdash; so check your unit against the photos and markings above
     rather than guessing.
   </div>
 
-  <div class="note">
+  <div class="pxsk-note">
     <b>Flashing fails or gets stuck at &ldquo;Connecting&hellip;&rdquo;?</b> Some boards (particularly
     native-USB ones) need a manual boot-mode entry: unplug the display, hold its <b>BOOT</b> button, plug
     it back in while still holding BOOT, then click Connect and release the button once flashing starts.
+  </div>
+<script>
+(function () {
+  if (window.pxskLightbox) return;
+  window.pxskLightbox = true;
+
+  var box = document.createElement("div");
+  box.className = "pxsk-lightbox";
+  box.hidden = true;
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.setAttribute("aria-label", "Board photo");
+  box.innerHTML =
+    '<button type="button" class="pxsk-lb-close" aria-label="Close">&times;</button>' +
+    '<button type="button" class="pxsk-lb-prev" aria-label="Previous photo">&#8249;</button>' +
+    '<figure><img alt=""><figcaption></figcaption></figure>' +
+    '<button type="button" class="pxsk-lb-next" aria-label="Next photo">&#8250;</button>';
+  document.body.appendChild(box);
+
+  var img = box.querySelector("img");
+  var cap = box.querySelector("figcaption");
+  var btnClose = box.querySelector(".pxsk-lb-close");
+  var btnPrev = box.querySelector(".pxsk-lb-prev");
+  var btnNext = box.querySelector(".pxsk-lb-next");
+  var items = [], index = 0, opener = null, bodyOverflow = "";
+
+  function show(i) {
+    index = (i + items.length) % items.length;
+    var a = items[index];
+    img.src = a.getAttribute("data-pxsk-large") || a.href;
+    img.alt = a.getAttribute("data-pxsk-caption") || "";
+    cap.textContent = img.alt;
+    var many = items.length > 1;
+    btnPrev.hidden = !many;
+    btnNext.hidden = !many;
+  }
+
+  function open(a) {
+    var card = a.closest(".pxsk-card");
+    items = Array.prototype.slice.call((card || document).querySelectorAll("a.pxsk-thumb"));
+    opener = a;
+    show(items.indexOf(a));
+    bodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    box.hidden = false;
+    btnClose.focus();
+  }
+
+  function close() {
+    box.hidden = true;
+    img.removeAttribute("src");
+    document.body.style.overflow = bodyOverflow;
+    if (opener) opener.focus();
+  }
+
+  // Photos are hosted on pixelcade.org; when that can't be reached (e.g. the
+  // copy built into Companion, used offline) drop the broken thumbnails.
+  function hidePhotos(im) {
+    var p = im.closest && im.closest(".pxsk-photos");
+    if (p) p.style.display = "none";
+  }
+  document.addEventListener("error", function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG" && t.closest && t.closest(".pxsk-embed")) hidePhotos(t);
+  }, true);
+  Array.prototype.forEach.call(document.querySelectorAll(".pxsk-embed .pxsk-photos img"), function (im) {
+    if (im.complete && im.getAttribute("src") && im.naturalWidth === 0) hidePhotos(im);
+  });
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest(".pxsk-embed a.pxsk-thumb");
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    open(a);
+  });
+  btnClose.addEventListener("click", close);
+  btnPrev.addEventListener("click", function () { show(index - 1); });
+  btnNext.addEventListener("click", function () { show(index + 1); });
+  box.addEventListener("click", function (e) { if (e.target === box) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (box.hidden) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowLeft" && items.length > 1) show(index - 1);
+    else if (e.key === "ArrowRight" && items.length > 1) show(index + 1);
+    else if (e.key === "Tab") {
+      var f = Array.prototype.filter.call(box.querySelectorAll("button"), function (b) { return !b.hidden; });
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+</script>
   </div>
 
   <footer>
