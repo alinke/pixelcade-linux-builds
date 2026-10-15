@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.15",
+    "version": "8.0.16",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -211,7 +211,8 @@
       "8.0.14 New /defaultmarquee API: shows the default marquee on the LED and LCD -- for setups without a frontend, e.g. a script that launches a game and calls it when the game closes",
       "8.0.15 Sidekick: Manual card shows the manual's pages on 5\" and larger displays and in the Sidekick app, with Zoom on displays for small print",
       "8.0.15 Sidekick: Sidekick app 1.0.2 adds Expand to open the manual, history, move list or description full screen with pinch-zoom",
-      "8.0.15 Sidekick: QR codes to read on your phone now on the Game Description card and on smaller displays too; Larger text option on displays"
+      "8.0.15 Sidekick: QR codes to read on your phone now on the Game Description card and on smaller displays too; Larger text option on displays",
+      "8.0.16 Sidekick: Added web page sidekick client at http://<arcade-ip>:8080/sidekick/web, good also for older iOS & Android devices that don't support the Sidekick app"
 
   ]
   },
