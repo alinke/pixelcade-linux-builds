@@ -1,9 +1,9 @@
 {
-  "latestFirmwareVersion": "7.8.6",
+  "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 64,
   "betaFirmwareVersion": "7.8.7",
   "updateScriptVersion": 42,
-  "releaseDate": "09-26-2026",
+  "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
   "releaseNotesList": [
     "7.1.5: The uploader in Companion now shows the progress and activity for each file",
