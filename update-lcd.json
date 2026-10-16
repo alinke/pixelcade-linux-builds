@@ -129,10 +129,10 @@
     "7.8.2  Added LCD Pulse Sync mode which allows the LCD to sync with the Pulse sub-displays and LED trips connected to a Pixelcade LED board",
     "7.8.4  Various WiFi fixes for Gen4/Orange Pi Zero 3 based Pixelcade LCDs",
     "7.8.5  Fixed broken sports widget",
-    "7.8.6  Added Glen's Retro Show FU cab branding"
+    "7.8.6  Added Glen's Retro Show FU cab branding",
+    "7.8.7  Speed improvements and goes to default marquee on front end exit. New Alt Marquees: turn on Show Alt Marquees in Settings > Artwork to use alternate marquees, browse them with Alt Marquees Only, and upload your own from Upload Artwork. Faster, more accurate artwork matching (names with (World)/(USA) etc. now match)"
   ],
   "betaReleaseNotes": [
-    "7.8.7  Speed improvements and goes to default marquee on front end exit. New Alt Marquees: turn on Show Alt Marquees in Settings > Artwork to use alternate marquees, browse them with Alt Marquees Only, and upload your own from Upload Artwork. Faster, more accurate artwork matching (names with (World)/(USA) etc. now match)"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
