@@ -2,8 +2,9 @@
   "production": {
     "major": 1,
     "minor": 0,
-    "patch": 39,
+    "patch": 40,
     "releaseNotes": [
+      "New: support for the LilyGO T-Display-S3-Long, a 640x180 bar display with touch. Needs Pixelcade 8.0.17 or newer to select it. No changes for other displays.",
       "New: support for the Waveshare ESP32-S3-Touch-LCD-3.49 V2, a 640x172 bar display with touch and sound (plug a small speaker into its 2-pin connector). Needs Pixelcade 8.0.14 or newer to select it. No changes for other displays.",
       "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
@@ -53,7 +54,7 @@
     ],
     "boards": {
       "esp32-oled": {
-        "changedIn": "1.0.36"
+        "changedIn": "1.0.40"
       },
       "esp32-7-elecrow": {
         "changedIn": "1.0.36"
@@ -123,14 +124,18 @@
       },
       "esp32-3-waveshare": {
         "changedIn": "1.0.39"
+      },
+      "esp32-3-lilygo": {
+        "changedIn": "1.0.40"
       }
     }
   },
   "beta": {
     "major": 1,
     "minor": 0,
-    "patch": 39,
+    "patch": 40,
     "releaseNotes": [
+      "New: support for the LilyGO T-Display-S3-Long, a 640x180 bar display with touch. Needs Pixelcade 8.0.17 or newer to select it. No changes for other displays.",
       "New: support for the Waveshare ESP32-S3-Touch-LCD-3.49 V2, a 640x172 bar display with touch and sound (plug a small speaker into its 2-pin connector). Needs Pixelcade 8.0.14 or newer to select it. No changes for other displays.",
       "New: support for the older 10.1\" Guition panel -- the label on the back says SKU 10153001, without \"-V2\". Those boards showed a black screen before; on the web flasher, pick the 10.1\" Guition option for labels without \"-V2\" (needs Pixelcade 8.0.10 or newer). No changes for other displays.",
       "New: support for two more 7\" displays -- the Elecrow CrowPanel Advance 7.0 (ESP32-S3, 800x480, hardware V1.3 or newer) and the Elecrow CrowPanel Advanced 7\" AI (ESP32-P4, 1024x600). No changes for existing displays (needs Pixelcade 8.0.9 or newer to select them).",
