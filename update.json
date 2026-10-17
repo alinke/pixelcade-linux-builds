@@ -165,7 +165,7 @@
     ]
   },
   "beta": {
-    "version": "8.0.16",
+    "version": "8.0.17",
     "artworkUpdate": false,
     "releaseNotes": [ 
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
@@ -212,7 +212,9 @@
       "8.0.15 Sidekick: Manual card shows the manual's pages on 5\" and larger displays and in the Sidekick app, with Zoom on displays for small print",
       "8.0.15 Sidekick: Sidekick app 1.0.2 adds Expand to open the manual, history, move list or description full screen with pinch-zoom",
       "8.0.15 Sidekick: QR codes to read on your phone now on the Game Description card and on smaller displays too; Larger text option on displays",
-      "8.0.16 Sidekick: Added web page sidekick client at http://<arcade-ip>:8080/sidekick/web, good also for older iOS & Android devices that don't support the Sidekick app"
+      "8.0.16 Sidekick: Added web page sidekick client at http://<arcade-ip>:8080/sidekick/web, good also for older iOS & Android devices that don't support the Sidekick app",
+      "8.0.17  Sidekick: Added support for the LilyGO T-Display-S3-Long 3.4\" bar display; on bar displays the game description card now shows the read-on-your-phone QR code beside the text",
+      "8.0.17  Sports widget: Fixed game times showing in the wrong time zone (e.g. 8:33 AM instead of 9:30 AM)"
 
   ]
   },
