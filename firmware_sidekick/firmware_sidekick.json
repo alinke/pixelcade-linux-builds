@@ -178,7 +178,7 @@
     ],
     "boards": {
       "esp32-oled": {
-        "changedIn": "1.0.36"
+        "changedIn": "1.0.40"
       },
       "esp32-7-elecrow": {
         "changedIn": "1.0.36"
@@ -248,6 +248,9 @@
       },
       "esp32-3-waveshare": {
         "changedIn": "1.0.39"
+      },
+      "esp32-3-lilygo": {
+        "changedIn": "1.0.40"
       }
     }
   },
