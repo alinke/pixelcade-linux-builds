@@ -1,6 +1,6 @@
 {
   "production": {
-    "version": "7.8.5",
+    "version": "8.0.17",
     "artworkUpdate": true,
     "releaseNotes": [
      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
@@ -161,13 +161,7 @@
       "7.8.2  UX improvements to Pixelcade Pulze zone setup and editing",
       "7.8.3  Adding Vestaboard flipboard support https://www.vestaboard.com/ and misc widget fixes",
       "7.8.4  RCade 2.0.8 installer fixes",
-      "7.8.5  Memory leak fix for gifs"
-    ]
-  },
-  "beta": {
-    "version": "8.0.17",
-    "artworkUpdate": false,
-    "releaseNotes": [ 
+      "7.8.5  Memory leak fix for gifs",
       "7.8.6  Sidekick: Adding Support for Pixlecade Sidekick Devices",
       "7.8.7  Sidekick: Added Game Launcher and Various Bugs",
       "7.8.8  Sidekic: More bug fixes, UX & speed improvemenets, Sidekick game launcher & high score support for RecalBox",
@@ -213,10 +207,14 @@
       "8.0.15 Sidekick: Sidekick app 1.0.2 adds Expand to open the manual, history, move list or description full screen with pinch-zoom",
       "8.0.15 Sidekick: QR codes to read on your phone now on the Game Description card and on smaller displays too; Larger text option on displays",
       "8.0.16 Sidekick: Added web page sidekick client at http://<arcade-ip>:8080/sidekick/web, good also for older iOS & Android devices that don't support the Sidekick app",
-      "8.0.17  Sidekick: Added support for the LilyGO T-Display-S3-Long 3.4\" bar display; on bar displays the game description card now shows the read-on-your-phone QR code beside the text",
-      "8.0.17  Sports widget: Fixed game times showing in the wrong time zone (e.g. 8:33 AM instead of 9:30 AM)"
-
-  ]
+      "8.0.17 Sidekick: Added support for the LilyGO T-Display-S3-Long 3.4\" bar display",
+      "8.0.17 Sports widget: Fixed game times showing in the wrong time zone (e.g. 8:33 AM instead of 9:30 AM)"
+    ]
+  },
+  "beta": {
+    "version": "8.0.17",
+    "artworkUpdate": false,
+    "releaseNotes": []
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
