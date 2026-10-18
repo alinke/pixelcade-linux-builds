@@ -304,6 +304,20 @@
     --esp-tools-button-color: #fff;
     --esp-tools-button-text-color: #0b0c10;
   }
+  .pxsk-flash-btn {
+    background: #fff;
+    color: #0b0c10;
+    border: none;
+    border-radius: 20px;
+    padding: 0.55rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+  .pxsk-flash-btn:hover { background: #e2e4ea; }
+  .pxsk-flash-btn:focus-visible { outline: 2px solid var(--pxsk-accent); outline-offset: 2px; }
   footer {
     margin-top: 3rem;
     padding-top: 1.5rem;
@@ -334,7 +348,7 @@
   <div class="pxsk-browser">
     <b>Requires Chrome or Edge on desktop</b> (Web Serial API &mdash; not supported in Safari, Firefox, or
     any mobile browser). Connect your Sidekick display over USB, find your board below (compare it with the
-    photos &mdash; tap one to enlarge it), and click Connect.
+    photos &mdash; tap one to enlarge it), and click Flash.
   </div>
 
   <div class="pxsk-grid">
@@ -346,7 +360,7 @@
 <h3 class="pxsk-card-title">AMOLED 1.91″</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">536×240</span><span class="pxsk-badge">No touch</span></div>
 <p class="pxsk-card-notes">LILYGO T-Display S3 AMOLED. Native USB, no touch.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-oled.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-oled.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0C2T6T8YC" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -357,7 +371,7 @@
 <h3 class="pxsk-card-title">2.1″ Round Display (Elecrow)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">480×480 (round)</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow CrowPanel 2.1&Prime; rotary display (ESP32-S3) &mdash; capacitive touch, no calibration needed. WiFi works but is flaky on this board; USB is recommended. Connect its <b>USB-C</b> port; the small connectors on the back (power, UART, I2C) aren't used.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2-elecrow-round.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2-elecrow-round.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-2-1inch-hmi-esp32-rotary-display-480-480-ips-round-touch-knob-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -368,7 +382,7 @@
 <h3 class="pxsk-card-title">2.4″ Display (Capacitive)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">320×240</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Sunton ESP32-2432S024C (check the silkscreen) &mdash; CST820 capacitive touch, no calibration needed.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2432s024c.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2432s024c.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0CLGD2DG6?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -379,7 +393,7 @@
 <h3 class="pxsk-card-title">2.8″ Display (Resistive)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">320×240</span><span class="pxsk-badge pxsk-touch">Touch (resistive)</span></div>
 <p class="pxsk-card-notes">ESP32-2432S028R (&ldquo;Cheap Yellow Display&rdquo;).</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-2.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0DNT75JK6" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -390,7 +404,7 @@
 <h3 class="pxsk-card-title">3.5″ Display (Resistive)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (resistive)</span></div>
 <p class="pxsk-card-notes">ESP32-3248S035R &mdash; silkscreen ends in &ldquo;R&rdquo;. XPT2046 resistive touch &mdash; needs a one-time calibration.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0D93MBWC2" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -401,7 +415,7 @@
 <h3 class="pxsk-card-title">3.5″ Display (Capacitive)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">ESP32-3248S035C &mdash; silkscreen ends in &ldquo;C&rdquo;. GT911 capacitive touch &mdash; no calibration needed.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3248s035c.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3248s035c.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0C5DB6RHM?lv=shuf&amp;channelId=500&amp;plpRedirect=mhFallback" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -412,7 +426,7 @@
 <h3 class="pxsk-card-title">3.5″ Display (Elecrow Advance)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">480×320</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow CrowPanel Advance 3.5&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed. Connect the port labelled <b>USB1 / OTG</b> (not USB0 / UART0).</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-elecrow-advance.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-3-5-hmi-esp32-ai-display-480x320-artificial-intelligent-ips-touch-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -423,7 +437,7 @@
 <h3 class="pxsk-card-title">3.4″ Bar Display (LilyGO)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">640×180</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">LILYGO T-Display-S3-Long &mdash; capacitive touch, no calibration needed. One USB-C port, used for both flashing and normal operation.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-lilygo.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-lilygo.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://lilygo.cc/products/t-display-s3-long" target="_blank" rel="noopener noreferrer">Buy: LilyGO</a></div>
 </article>
 <article class="pxsk-card">
@@ -434,7 +448,7 @@
 <h3 class="pxsk-card-title">3.49″ Bar Display (Waveshare)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">640×172</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Waveshare ESP32-S3-Touch-LCD-3.49 <b>V2</b> (PCB Rev1.1, &ldquo;V2&rdquo; label on the case) &mdash; capacitive touch, no calibration needed. The original V1 board isn&rsquo;t supported.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-waveshare.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-3-waveshare.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0FSD7HPZV?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -444,8 +458,8 @@
 </div>
 <h3 class="pxsk-card-title">4.3″ Display (Waveshare)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
-<p class="pxsk-card-notes">480&times;800 portrait panel (800&times;480 landscape-mounted), native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Connect below.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"></esp-web-install-button></div>
+<p class="pxsk-card-notes">480&times;800 portrait panel (800&times;480 landscape-mounted), native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB OTG</b>, not the one labeled <b>USB TO UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Flash below.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-waveshare.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GQB5PY1X?ref=fed_asin_title" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -456,7 +470,7 @@
 <h3 class="pxsk-card-title">4.3″ Display (Elecrow Advance)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow CrowPanel Advance 4.3&Prime; HMI (ESP32-S3) &mdash; GT911 capacitive touch, no calibration needed.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4-elecrow-advance.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-4-3-hmi-esp32-800x480-ai-display-ips-touch-artificial-intelligent-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -467,7 +481,7 @@
 <h3 class="pxsk-card-title">4.3″ Display (Sunton)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">480×272</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">CH340-bridged &mdash; a genuinely different, lower-resolution panel than the Waveshare 4.3&Prime; (800&times;480). Single USB-C port, no manual boot-mode entry needed.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4827s043c.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-4827s043c.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0CLGCMWQ7?ref=clp_hp_h_pc" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -478,7 +492,7 @@
 <h3 class="pxsk-card-title">5″ Display (Sunton)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">ESP32-8048S050 &mdash; Sunton / JC8048W550C and electrically-identical rebrands.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0DRYS8ZTW" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -489,7 +503,7 @@
 <h3 class="pxsk-card-title">5″ Display (Elecrow Basic)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow's original (non-&ldquo;Advance&rdquo;) 5&Prime; &mdash; red circuit board, &ldquo;ESP32 Display-5 Inch&rdquo; and SKU DIS07050H on the back. Not the same as the Sunton board or the Elecrow Advance boards.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/esp32-display-5-inch-hmi-display-rgb-tft-lcd-touch-screen-support-lvgl.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -500,8 +514,8 @@
 <h3 class="pxsk-card-title">5″ Display (Elecrow Advance)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Two versions of this board need different firmware &mdash; pick the one that matches yours.</p>
-<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.2/v1.3</div><p>Elecrow CrowPanel Advance 5.0 &mdash; ST7262 + GT911. Two hardware revisions of this board exist and need different firmware &mdash; check the small hardware revision marking on your board.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"></esp-web-install-button></div>
-<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.1</div><p>Older hardware revision &mdash; controls backlight/buzzer differently than v1.2/v1.3. If you flash the wrong revision's firmware, the screen stays black even though the display is actually working underneath (the backlight just never turns on); reflashing with the matching one fixes it.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.2/v1.3</div><p>Elecrow CrowPanel Advance 5.0 &mdash; ST7262 + GT911. Two hardware revisions of this board exist and need different firmware &mdash; check the small hardware revision marking on your board.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">hardware v1.1</div><p>Older hardware revision &mdash; controls backlight/buzzer differently than v1.2/v1.3. If you flash the wrong revision's firmware, the screen stays black even though the display is actually working underneath (the backlight just never turns on); reflashing with the matching one fixes it.</p><esp-web-install-button manifest="./manifest-esp32-5-elecrow-advance-v1_1.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0G3WC3LR2" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -511,8 +525,8 @@
 </div>
 <h3 class="pxsk-card-title">5″ Display (Elecrow AI)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
-<p class="pxsk-card-notes">Same ST7262 + GT911 as the CrowPanel Advance, but native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB 2.0</b>, not the one labeled <b>UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Connect below.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow-ai-p4.json"></esp-web-install-button></div>
+<p class="pxsk-card-notes">Same ST7262 + GT911 as the CrowPanel Advance, but native-USB ESP32-P4 silicon. This board has <b>two</b> USB-C ports &mdash; connect the one labeled <b>USB 2.0</b>, not the one labeled <b>UART</b>. It also needs manual boot-mode entry every time: hold <b>BOOT</b>, press and release <b>RESET</b>, then release <b>BOOT</b>, before clicking Flash below.</p>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-5-elecrow-ai-p4.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-5inch-esp32-p4-hmi-ai-display-800x480-ips-touch-screen-with-wifi-6.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GLGWJP8B" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -523,7 +537,7 @@
 <h3 class="pxsk-card-title">M5Stack Tab5</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">1280×720</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Native USB. Connect the <b>USB-C</b> port (not the USB-A port).</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-tab5.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-tab5.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.digikey.com/en/products/detail/m5stack-technology-co-ltd/C145/26740595" target="_blank" rel="noopener noreferrer">Buy: DigiKey</a></div>
 </article>
 <article class="pxsk-card">
@@ -536,7 +550,7 @@
 <h3 class="pxsk-card-title">7″ Display (Elecrow Basic)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">ESP32-8048S070C &mdash; silkscreen ends in <b>&ldquo;C&rdquo;</b>. Elecrow CrowPanel 7.0 / IoTeikXgo.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0GSZV9LS1" target="_blank" rel="noopener noreferrer">Buy: Amazon (with case)</a><a class="pxsk-buybtn" href="https://www.elecrow.com/esp32-display-7-inch-hmi-display-rgb-tft-lcd-touch-screen-support-lvgl.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -547,7 +561,7 @@
 <h3 class="pxsk-card-title">7″ Display (Sunton)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">ESP32-8048S070 &mdash; silkscreen has <b>no trailing &ldquo;C&rdquo;</b>. Sunton / EC Buying ESP32-S3 7.0.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-sunton.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-sunton.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.amazon.com/dp/B0H268CXVY" target="_blank" rel="noopener noreferrer">Buy: Amazon</a></div>
 </article>
 <article class="pxsk-card">
@@ -558,7 +572,7 @@
 <h3 class="pxsk-card-title">7″ Display (Elecrow Advance)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">800×480</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Black board, silkscreen &ldquo;ESP32 Display-7.0 inch (Advance_series)&rdquo;, SKU DIS02170A, hardware <b>V1.3 or newer</b>. One USB-C port (USB-5V-IN), used for flashing and normal operation.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-advance.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-advance.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advance-7-hmi-esp32-ai-display-800x480-ai-ips-touch-screen.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -569,7 +583,7 @@
 <h3 class="pxsk-card-title">7″ Display (Elecrow AI)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">1024×600</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow CrowPanel Advanced 7&Prime; AI (ESP32-P4), stereo speakers. This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-ai.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-7-elecrow-ai.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-7inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-with-wifi-6-compatible-with-arduino-lvgl-micropython.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
 <article class="pxsk-card">
@@ -580,8 +594,8 @@
 <h3 class="pxsk-card-title">10.1″ Display (Guition)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">1280×800</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Two versions of this board need different firmware &mdash; pick the one that matches yours.</p>
-<div class="pxsk-variant"><div class="pxsk-variant-label">V2 (newer)</div><p>Label on the back says <b>SKU: 10153002-V2</b> and <b>Models: JC8012P4A1C_I_W_Y1</b>. Speaker. This board has <b>three</b> USB ports &mdash; to flash, connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10.json"></esp-web-install-button></div>
-<div class="pxsk-variant"><div class="pxsk-variant-label">V1 (older)</div><p>Label on the back says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no &ldquo;1&rdquo; at the end, no &ldquo;-V2&rdquo;). Speaker. To flash, connect the <b>bottom</b> USB port labeled <b>UART</b>; after flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10-guition-v1.json"></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">V2 (newer)</div><p>Label on the back says <b>SKU: 10153002-V2</b> and <b>Models: JC8012P4A1C_I_W_Y1</b>. Speaker. This board has <b>three</b> USB ports &mdash; to flash, connect the <b>bottom</b> port labeled <b>UART</b>. After flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
+<div class="pxsk-variant"><div class="pxsk-variant-label">V1 (older)</div><p>Label on the back says <b>SKU: 10153001</b> and <b>Models: JC8012P4A1C_I_W_Y</b> (no &ldquo;1&rdquo; at the end, no &ldquo;-V2&rdquo;). Speaker. To flash, connect the <b>bottom</b> USB port labeled <b>UART</b>; after flashing, Sidekick runs over the <b>top</b> USB port. With the wrong version's firmware the screen stays black; just flash the other one.</p><esp-web-install-button manifest="./manifest-esp32-10-guition-v1.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://proengi.com/products/esp32p4-development-board-10-1-inch-1280-800-screen-wifi-bt-type-c-for-arduino-lvgl-esp-ide-smart-home-optional-speaker-battery" target="_blank" rel="noopener noreferrer">Buy: ProEngi</a></div>
 </article>
 <article class="pxsk-card">
@@ -592,7 +606,7 @@
 <h3 class="pxsk-card-title">10.1″ Display (Elecrow)</h3>
 <div class="pxsk-specs"><span class="pxsk-badge">1024×600</span><span class="pxsk-badge pxsk-touch">Touch (capacitive)</span></div>
 <p class="pxsk-card-notes">Elecrow CrowPanel Advanced 10.1&Prime; ESP32-P4 HMI, stereo speakers. This board has <b>two</b> USB-C ports &mdash; to flash, connect the one labelled <b>UART0</b> (not <b>USB2.0</b>). After flashing, Sidekick runs over the port labelled <b>USB2.0</b>.</p>
-<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-10-elecrow.json"></esp-web-install-button></div>
+<div class="pxsk-install"><esp-web-install-button manifest="./manifest-esp32-10-elecrow.json"><button slot="activate" class="pxsk-flash-btn">Flash</button></esp-web-install-button></div>
 <div class="pxsk-card-buy"><a class="pxsk-buybtn" href="https://www.elecrow.com/crowpanel-advanced-10-1inch-esp32-p4-hmi-ai-display-1024x600-ips-touch-screen-wifi-6.html" target="_blank" rel="noopener noreferrer">Buy: Elecrow</a></div>
 </article>
   </div>
@@ -609,7 +623,7 @@
   <div class="pxsk-note">
     <b>Flashing fails or gets stuck at &ldquo;Connecting&hellip;&rdquo;?</b> Some boards (particularly
     native-USB ones) need a manual boot-mode entry: unplug the display, hold its <b>BOOT</b> button, plug
-    it back in while still holding BOOT, then click Connect and release the button once flashing starts.
+    it back in while still holding BOOT, then click Flash and release the button once flashing starts.
   </div>
 <script>
 (function () {
