@@ -83,20 +83,7 @@ elif lsb_release -a | grep -q 'ubuntu'; then
 fi
 
 #******************* MAIN SCRIPT START ******************************
-# let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
-
-if ! command -v lsusb  &> /dev/null; then
-    echo "${red}lsusb command not be found so cannot check if Pixelcade is USB connected${white}"
-else
-   if lsusb | grep -q '1b4f:0008'; then
-      echo "${yellow}Pixelcade LED Marquee Detected${white}"
-   elif lsusb | grep -q '2e8a:1050'; then 
-      echo "${yellow}Pixelcade LED Marquee Detected${white}"
-   else  
-      echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting...${white}"
-      exit 1
-   fi
-fi
+# No Pixelcade LED/LCD check here: a user may only have a Sidekick connected.
 
 echo "${yellow}Stopping Pixelcade (if running...)${white}"
 killall java #need to stop pixelweb.jar if already running
