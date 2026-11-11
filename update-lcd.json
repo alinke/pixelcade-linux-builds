@@ -134,10 +134,10 @@
     "7.8.7  Speed improvements and goes to default marquee on front end exit. New Alt Marquees: turn on Show Alt Marquees in Settings > Artwork to use alternate marquees, browse them with Alt Marquees Only, and upload your own from Upload Artwork. Faster, more accurate artwork matching (names with (World)/(USA) etc. now match)"
   ],
   "betaReleaseNotes": [
-    "7.8.8  New Arcade Neon look for Companion with a collapsible settings menu and a new loading screen",
-    "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added",
-    "7.8.8  Updates page: one Artwork card shows what's installed and what's new",
-    "7.8.8  Pixelcade LCD can now use the Internet and use artwork from your host arcade PC or Pi"
+    "7.8.8  Pixelcade LCD can now use the Internet and use artwork from your host arcade PC or Pi",
+    "7.8.8  Companion: Improved UI with collapsible settings menu",
+    "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added"
+    
   ],
   "minimumRequiredVersion": "5.0.0"
 }
