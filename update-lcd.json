@@ -137,8 +137,7 @@
     "7.8.8  New Arcade Neon look for Companion with a collapsible settings menu and a new loading screen",
     "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added",
     "7.8.8  Updates page: one Artwork card shows what's installed and what's new",
-    "7.8.8  Yahoo Fantasy widget: Working again (Yahoo required a new app ID); sign in to Yahoo again in the widget's settings",
-    "7.8.8  Support for the new single-board Pixelcade LCD: marquees and internet over USB from your arcade computer, WiFi setup and board info"
+    "7.8.8  Pixelcade LCD can now use the Internet and use artwork from your host arcade PC or Pi"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
