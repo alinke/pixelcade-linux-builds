@@ -212,9 +212,17 @@
     ]
   },
   "beta": {
-    "version": "8.0.17",
+    "version": "8.0.18",
     "artworkUpdate": false,
-    "releaseNotes": []
+    "releaseNotes": [
+      "8.0.18 Companion: New Arcade Neon look with a collapsible settings menu",
+      "8.0.18 Sidekick: The Marquee card now builds a marquee from the game's own art when there's no marquee scan",
+      "8.0.18 Sidekick: Firmware updates from a Raspberry Pi on Bullseye or Buster no longer fail with a GLIBC_2.34 error",
+      "8.0.18 Sidekick: Build-a-Cade RetroPie owners get the Build-a-Cade price with or without a Pixelcade LED or LCD",
+      "8.0.18 Yahoo Fantasy widget: Working again (Yahoo required a new app ID); sign in to Yahoo again in the widget's settings",
+      "8.0.18 Art Pack: Original NNN-NNN codes work again in Have a code?",
+      "8.0.18 Pixelcade LCD over USB: an LCD plugged into this computer gets its marquees, artwork and internet through it (for the new single-board LCD)"
+    ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
   "baseUrls": {
