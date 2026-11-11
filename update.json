@@ -215,10 +215,10 @@
     "version": "8.0.18",
     "artworkUpdate": false,
     "releaseNotes": [
-      "8.0.18 Companion: New Arcade Neon look with a collapsible settings menu",
-      "8.0.18 Sidekick: The Marquee card now builds a marquee from the game's own art when there's no marquee scan",
-      "8.0.18 Art Pack: Original NNN-NNN codes work again in Have a code?",
-      "8.0.18 Pixelcade LCD over USB: an LCD plugged into this arcade device can now get artwork and Internet from this device"
+      "8.0.18 A Pixelcade LCD USB connected can now get artwork and Internet from this device",
+      "8.0.18 Companion: Improved UI with collapsible settings menu",
+      "8.0.18 Licenses: purchased and gift codes work again after reinstalling pixelweb on the same computer"
+      
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
