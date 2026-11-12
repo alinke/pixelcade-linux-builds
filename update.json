@@ -215,9 +215,9 @@
     "version": "8.0.19",
     "artworkUpdate": false,
     "releaseNotes": [
-      "8.0.19 Pulse: zone clear now reliably turns the zone off (an effect's last frame could stay lit); /ledstrip/zone/{zone}/stop now works",
+      "8.0.19 Pulse: /ledstrip/zone/{zone}/stop now works (a zone clear that leaves an effect's last frame lit is fixed in LED firmware 23.11 beta -- reinstall it from Update)",
       "8.0.19 Pulse: a zone name now reaches the right zone right after zones are deleted or set up again (it kept the old zone until pixelweb restarted)",
-      "8.0.19 API: /stats and /animation/overlay take ?return to go back to the game's marquee afterwards; new /animations/list",
+      "8.0.19 API: /stats and /animation/overlay take ?return to go back to the game's marquee afterwards; new /animations/list lists the animated folder",
       "8.0.18 A Pixelcade LCD USB connected can now get artwork and Internet from this device",
       "8.0.18 Companion: Improved UI with collapsible settings menu",
       "8.0.18 Licenses: purchased and gift codes work again after reinstalling pixelweb on the same computer"
