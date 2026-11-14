@@ -212,9 +212,10 @@
     ]
   },
   "beta": {
-    "version": "8.0.22",
+    "version": "8.0.23",
     "artworkUpdate": false,
     "releaseNotes": [
+      "8.0.23 LCD HDMI Mode: the home page shows the LCD artwork download's progress while the first download runs",
       "8.0.22 LCD HDMI Mode: the installer sets up only the core Pixelcade files (5 MB) when there is no LED marquee (new -install-artwork-core)",
       "8.0.21 Text: /text with loop=-1 keeps scrolling until the next text replaces it (it scrolled once and went blank)",
       "8.0.21 Pulse: /ledstrip/clear no longer leaves an effect's last frame lit -- fixed in LED firmware 23.11 beta, reinstall it from Update",
