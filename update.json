@@ -212,9 +212,11 @@
     ]
   },
   "beta": {
-    "version": "8.0.20",
+    "version": "8.0.21",
     "artworkUpdate": false,
     "releaseNotes": [
+      "8.0.21 Text: /text with loop=-1 keeps scrolling until the next text replaces it (it scrolled once and went blank)",
+      "8.0.21 Pulse: /ledstrip/clear no longer leaves an effect's last frame lit -- fixed in LED firmware 23.11 beta, reinstall it from Update",
       "8.0.20 New: Pixelcade LCD HDMI Mode (Batocera x86-64) -- plug the LCD bar into this computer's second HDMI output, no separate LCD computer needed. Settings > Pixelcade LCD > LCD HDMI Mode; 14-day free trial",
       "8.0.20 LCD: the home page's link to Pixelcade Companion LCD fits phone screens",
       "8.0.20 DOFLinx: /info reports lcdHDMIMode, lcdHDMIAddress and lcdHDMIPort",
