@@ -1,7 +1,7 @@
 {
   "latestFirmwareVersion": "7.8.7",
-  "latestArtworkVersion": 65,
-  "latestArtworkVersion1280": 60,
+  "latestArtworkVersion": 66,
+  "latestArtworkVersion1280": 61,
   "betaFirmwareVersion": "7.8.8",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
@@ -137,7 +137,6 @@
     "7.8.8  Pixelcade LCD can now use the Internet and use artwork from your host arcade PC or Pi",
     "7.8.8  Companion: Improved UI with collapsible settings menu",
     "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added"
-    
   ],
   "minimumRequiredVersion": "5.0.0"
 }
