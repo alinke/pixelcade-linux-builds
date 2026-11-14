@@ -184,7 +184,7 @@ if [[ "$lcd_hdmi_available" == "true" && "$pixelcade_lcd_hdmi_already_set" != "t
       echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
       echo ""
       echo -e "${cyan}An LCD marquee bar is connected to this computer's HDMI output (${hdmi_lcd_output}).${nc}"
-      echo -e "${cyan}Pixelcade can drive it directly from this computer, with no separate LCD computer.${nc}"
+      echo -e "${cyan}Pixelcade can drive it directly from this computer, with no separate single board computer.${nc}"
       echo ""
       while true; do
           read -p "Use it as your Pixelcade LCD marquee (Pixelcade LCD HDMI Mode)? (y/n) " yn
@@ -1051,7 +1051,7 @@ if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
             set_ini noLedMatrix true
         fi
         echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for Pixelcade LCD HDMI Mode"
-        echo -e "${cyan}[INFO] On its first start Pixelcade downloads the LCD software and the LCD artwork library (about 20 GB) in the background.${nc}"
+        echo -e "${cyan}[INFO] On its first start Pixelcade downloads the LCD software and the LCD artwork library (about 20 GB) in the background -- progress shows on the LCD.${nc}"
     else
         echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
     fi
@@ -1375,11 +1375,33 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo -e "${magenta}[INFO] Pixelcade $pixelcade_version Installed${nc}"
 
-echo " "
-echo -e "${cyan}[INFO] An LED art pack is available at https://pixelcade.org/artpack/${nc}"
-echo -e "${cyan}[INFO] The LED art pack adds additional animated marquees for select games${nc}"
-echo -e "${cyan}[INFO] After purchase, you'll receive a serial code and then install with this command:${nc}"
-echo -e "${cyan}[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>${nc}"
+_no_led_marquee=false
+if [[ "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ]]; then
+    _no_led_marquee=true
+fi
+
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+    echo " "
+    echo -e "${cyan}=====================================================================${nc}"
+    echo -e "${cyan} Pixelcade LCD HDMI Mode: after the reboot, the LCD downloads its${nc}"
+    echo -e "${cyan} artwork library in the background (about 20 GB, roughly 30-40 minutes${nc}"
+    echo -e "${cyan} depending on your internet connection).${nc}"
+    echo -e "${cyan}  - Progress shows along the bottom of the LCD marquee.${nc}"
+    echo -e "${cyan}  - The artwork for the games on this computer downloads first, then the${nc}"
+    echo -e "${cyan}    rest of the library; videos come last.${nc}"
+    echo -e "${cyan}  - You can play during the download: a game whose artwork hasn't arrived${nc}"
+    echo -e "${cyan}    yet shows its console marquee until it does.${nc}"
+    echo -e "${cyan}  - If the computer restarts, the download picks up where it left off.${nc}"
+    echo -e "${cyan}=====================================================================${nc}"
+fi
+
+if [[ "$_no_led_marquee" != "true" ]]; then
+    echo " "
+    echo -e "${cyan}[INFO] An LED art pack is available at https://pixelcade.org/artpack/${nc}"
+    echo -e "${cyan}[INFO] The LED art pack adds additional animated marquees for select games${nc}"
+    echo -e "${cyan}[INFO] After purchase, you'll receive a serial code and then install with this command:${nc}"
+    echo -e "${cyan}[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>${nc}"
+fi
 
 echo -e "\n${magenta}Please now reboot and Pixelcade will be loaded automatically on startup${nc}"
 echo -e "${magenta}Would you like to reboot now? (y/n)${nc}"
