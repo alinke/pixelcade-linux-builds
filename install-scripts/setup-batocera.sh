@@ -1375,6 +1375,27 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo -e "${magenta}[INFO] Pixelcade $pixelcade_version Installed${nc}"
 
+# TEMPORARY (beta, x86-64 only): a DOFLinx build with in-game effects support
+# that isn't in the DOFLinx repo yet. Done at the end so nothing above
+# replaces it. Remove once the DOFLinx repo has it.
+if [[ "$beta" == "true" && "$machine_arch" == "amd64" && -d "${INSTALLPATH}doflinx" ]]; then
+    echo -e "${yellow}[BETA]${nc} Installing the temporary x86-64 DOFLinx build with in-game effects support..."
+    _doflinx_temp="${INSTALLPATH}doflinx/DOFLinx.download"
+    if wget -q -O "$_doflinx_temp" "https://github.com/alinke/pixelcade-linux-builds/raw/main/temp/DOFLinx" && [[ -s "$_doflinx_temp" ]]; then
+        chmod a+x "$_doflinx_temp"
+        mv -f "$_doflinx_temp" "${INSTALLPATH}doflinx/DOFLinx"
+        if pidof DOFLinx >/dev/null 2>&1; then
+            batocera-services stop doflinx >/dev/null 2>&1
+            sleep 2
+            batocera-services start doflinx >/dev/null 2>&1
+        fi
+        echo -e "${green}[SUCCESS]${nc} Temporary DOFLinx build installed"
+    else
+        rm -f "$_doflinx_temp"
+        echo -e "${yellow}[WARNING]${nc} Couldn't download the temporary DOFLinx build -- keeping the regular one"
+    fi
+fi
+
 _no_led_marquee=false
 if [[ "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ]]; then
     _no_led_marquee=true
