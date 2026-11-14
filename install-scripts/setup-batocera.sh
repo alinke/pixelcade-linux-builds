@@ -19,6 +19,8 @@ batocera_40_plus=false
 pixelcade_version=default
 beta=false
 pixelcade_lcd_usb=false
+pixelcade_lcd_hdmi=false        # Pixelcade LCD HDMI Mode: the LCD bar is on this computer's HDMI output
+pixelcade_lcd_hdmi_already_set=false
 pixelcade_lcd_usb_already_set=false
 pixelcade_led_detected=false
 led_has_marquee="unset"
@@ -91,6 +93,9 @@ for arg in "$@"; do
   if [[ "$arg" == "beta" ]]; then
     echo -e "${cyan}[INFO] Installing Beta Version of Pixelcade${nc}"
     beta=true
+  elif [[ "$arg" == "lcdhdmi" ]]; then
+    # Applied below, once we know it's a beta install on x86-64
+    pixelcade_lcd_hdmi_requested=true
   elif [[ "$arg" == "lcdusb" ]]; then
     echo -e "${cyan}[INFO] Setting up for Pixelcade LCD Marquee over USB${nc}"
     pixelcade_lcd_usb_already_set=true
@@ -130,6 +135,69 @@ if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
   fi
 else
   echo -e "${cyan}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${nc}"
+fi
+
+# Pixelcade LCD HDMI Mode: an LCD bar plugged straight into this computer's
+# HDMI output (scaler board, no Orange Pi). It's recognized by the preferred
+# resolution in its EDID: very wide and short (1920x360, 1280x390) -- normal
+# monitors and TVs never are. Prints the output name, e.g. HDMI-A-1.
+detect_hdmi_lcd_bar() {
+    local dir status w h
+    for dir in /sys/class/drm/card*-*; do
+        status=$(cat "$dir/status" 2>/dev/null)
+        [[ "$status" == "connected" ]] || continue
+        [[ -r "$dir/edid" ]] || continue # (sysfs reports size 0, so no -s test)
+        # First detailed timing descriptor (bytes 54..71) = preferred mode
+        read -r b56 b58 b59 b61 < <(od -An -tu1 -j54 -N8 "$dir/edid" | awk '{print $3, $5, $6, $8}')
+        [[ -n "$b61" ]] || continue
+        w=$(( b56 | ((b58 & 0xf0) << 4) ))
+        h=$(( b59 | ((b61 & 0xf0) << 4) ))
+        if (( h > 0 && h <= 480 && w * 10 >= h * 30 )); then
+            echo "${dir##*/card[0-9]-}"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# LCD HDMI Mode is in beta and only built for x86-64 so far
+lcd_hdmi_available=false
+if [[ "$beta" == "true" && "$(uname -m)" == "x86_64" ]]; then
+  lcd_hdmi_available=true
+fi
+if [[ "$pixelcade_lcd_hdmi_requested" == "true" ]]; then
+  if [[ "$lcd_hdmi_available" == "true" ]]; then
+    echo -e "${cyan}[INFO] Setting up Pixelcade LCD HDMI Mode (LCD bar on this computer's HDMI output)${nc}"
+    pixelcade_lcd_hdmi_already_set=true
+    pixelcade_lcd_hdmi=true
+  else
+    echo -e "${yellow}[WARNING] Pixelcade LCD HDMI Mode is only available with the beta installer on x86-64 computers for now -- skipping it${nc}"
+  fi
+fi
+
+if [[ "$lcd_hdmi_available" == "true" && "$pixelcade_lcd_hdmi_already_set" != "true" && "$pixelcade_lcd_usb" != "true" ]]; then
+  hdmi_lcd_output=$(detect_hdmi_lcd_bar)
+  if [[ -n "$hdmi_lcd_output" ]]; then
+      echo ""
+      echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+      echo -e "${cyan}Pixelcade LCD HDMI Mode${nc}"
+      echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+      echo ""
+      echo -e "${cyan}An LCD marquee bar is connected to this computer's HDMI output (${hdmi_lcd_output}).${nc}"
+      echo -e "${cyan}Pixelcade can drive it directly from this computer, with no separate LCD computer.${nc}"
+      echo ""
+      while true; do
+          read -p "Use it as your Pixelcade LCD marquee (Pixelcade LCD HDMI Mode)? (y/n) " yn
+          case $yn in
+              [Yy]* ) pixelcade_lcd_hdmi=true; break;;
+              [Nn]* ) pixelcade_lcd_hdmi=false; break;;
+              * ) echo "Please answer y or n";;
+          esac
+      done
+  fi
+fi
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+  echo -e "${green}[INFO] Pixelcade LCD HDMI Mode will be set up${nc}"
 fi
 
 INSTALLPATH="${HOME}/"
@@ -315,6 +383,8 @@ else
       pixelcade_led_detected=true
    elif [[ "$pixelcade_lcd_usb" == "true" ]]; then
       echo -e "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
+   elif [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+      echo -e "${yellow}[INFO] Pixelcade LCD HDMI Mode (no Pixelcade LED connected)${white}"
    else
       echo -e "${yellow}[WARNING] No Pixelcade LED or USB-connected LCD Marquee was detected${white}"
       echo ""
@@ -336,7 +406,7 @@ else
 fi
 
 # If both LED and LCD are connected, ask about the LED marquee setup
-if [[ "$pixelcade_led_detected" == "true" && ("$pixelcade_lcd_usb" == "true" || "$pixelcade_lcd_usb_already_set" == "true") ]]; then
+if [[ "$pixelcade_led_detected" == "true" && ("$pixelcade_lcd_usb" == "true" || "$pixelcade_lcd_usb_already_set" == "true" || "$pixelcade_lcd_hdmi" == "true") ]]; then
     echo ""
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo -e "${cyan}LED + LCD Marquee Configuration${nc}"
@@ -941,7 +1011,39 @@ wget -O ${INSTALLPATH}pixelcade/pixelcadelcdfinder https://github.com/alinke/pix
 chmod +x ${INSTALLPATH}pixelcade/pixelcadelcdfinder
 
 echo "Checking for Pixelcade LCDs on your network..."
+if [[ "$pixelcade_lcd_hdmi" != "true" ]]; then
 ${INSTALLPATH}pixelcade/pixelcadelcdfinder -nogui #check for Pixelcade LCDs
+fi
+
+# Pixelcade LCD HDMI Mode: pixelweb does the rest on its first start --
+# downloads the LCD software and the Artwork Library, sets Batocera's main and
+# second screen, and takes the LCD output over from Batocera's backglass.
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+    echo "Updating pixelcade.ini for Pixelcade LCD HDMI Mode..."
+    ini=${INSTALLPATH}pixelcade/pixelcade.ini
+    if [[ -f $ini ]]; then
+        set_ini() { # key value
+            if grep -q "^$1[ ]*=" "$ini"; then
+                sed -i "s|^$1[ ]*=.*|$1 = $2|" "$ini"
+            else
+                sed -i "/^lcdMarquee[ ]*=/a $1 = $2" "$ini"
+                grep -q "^$1[ ]*=" "$ini" || echo "$1 = $2" >> "$ini"
+            fi
+        }
+        set_ini lcdConnection hdmi
+        if [[ "$beta" == "true" ]]; then
+            set_ini lcdSoftwareChannel beta
+        fi
+        # No LED board, or one used only for Pulse lighting: the LCD is the only marquee
+        if [[ "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ]]; then
+            set_ini noLedMatrix true
+        fi
+        echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for Pixelcade LCD HDMI Mode"
+        echo -e "${cyan}[INFO] On its first start Pixelcade downloads the LCD software and the LCD artwork library (about 20 GB) in the background.${nc}"
+    else
+        echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
+    fi
+fi
 
 
 #if pixelcade lcd is usb connected, then update pixelcade.ini accordingly
@@ -1124,6 +1226,7 @@ DOFEOF
             # Fix paths from rcade to Batocera
             sed -i "s|/rcade/share/pixelcade/|${INSTALLPATH}pixelcade/|g" "$doflinx_ini_tmp"
             sed -i "s|/rcade/share/roms/mame/|/userdata/roms/mame/|g" "$doflinx_ini_tmp"
+            sed -i "s|/rcade/share/saves/|/userdata/saves/|g" "$doflinx_ini_tmp" # FBNeo high scores (MAME_HIGHSCORE_FOLDER)
             sed -i "s|Config file for DOFLinx Linux on RCade|Config file for DOFLinx Linux on Batocera|" "$doflinx_ini_tmp"
 
             new_hash=$(md5sum "$doflinx_ini_tmp" 2>/dev/null | cut -d' ' -f1)
