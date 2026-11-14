@@ -965,9 +965,21 @@ if [[ ! -d "${INSTALLPATH}pixelcade/mame" && -f "$_artwork_version_file" ]]; the
     echo -e "${green}[INFO]${nc} Artwork folder missing — cleared version file to force full artwork download"
 fi
 
-cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
+# LCD HDMI Mode with no LED marquee (no LED board, or one used only for Pulse
+# lighting): the LED artwork isn't shown anywhere, so only its core files
+# (console.csv, DOFLinx, fonts, system -- about 5 MB) instead of the whole repo.
+# Choosing an LED marquee later installs the rest from the Companion's Update tab.
+_artwork_status=0
+if [[ "$pixelcade_lcd_hdmi" == "true" && ( "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ) ]] \
+   && ${INSTALLPATH}pixelcade/pixelweb -h 2>&1 | grep -q 'install-artwork-core'; then
+    echo -e "${green}[INFO]${nc} No LED marquee: installing the core Pixelcade files only (the LCD has its own artwork)"
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork-core
+else
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
+    _artwork_status=$?
+fi
 
-if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+if [[ $_artwork_status == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
     echo -e "${green}[INFO]${nc} Updating Pixelcade artwork — this downloads thousands of files and may take several minutes..."
     cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork &
     _artwork_pid=$!
