@@ -212,9 +212,11 @@
     ]
   },
   "beta": {
-    "version": "8.0.23",
+    "version": "8.0.24",
     "artworkUpdate": false,
     "releaseNotes": [
+      "8.0.24 Support: Settings > Support > Download Support Bundle -- one zip with the logs and settings of Pixelcade, the Pixelcade LCD and DOFLinx (passwords, keys and your location removed)",
+      "8.0.24 Phone app: /v2/info names the LCD this Pixelcade drives (linkedLCD), so the app can show the cabinet as one card",
       "8.0.23 LCD HDMI Mode: the home page shows the LCD artwork download's progress while the first download runs",
       "8.0.22 LCD HDMI Mode: the installer sets up only the core Pixelcade files (5 MB) when there is no LED marquee (new -install-artwork-core)",
       "8.0.21 Text: /text with loop=-1 keeps scrolling until the next text replaces it (it scrolled once and went blank)",
