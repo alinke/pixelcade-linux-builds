@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 65,
   "latestArtworkVersion1280": 60,
-  "betaFirmwareVersion": "7.8.13",
+  "betaFirmwareVersion": "7.8.14",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -138,7 +138,8 @@
     "7.8.8  Companion: Improved UI with collapsible settings menu",
     "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added",
     "7.8.13 Adding HDMI mode, currently x86 Linux only on Batocera",
-    "7.8.13 Added new theme called Comic Book, big thanks for Mr. Robot"
+    "7.8.13 Added new theme called Comic Book, big thanks for Mr. Robot",
+    "7.8.14 Added support bundle which zips up both LED and LCD logs, access from Settings -> Support"
     
   ],
   "minimumRequiredVersion": "5.0.0"
