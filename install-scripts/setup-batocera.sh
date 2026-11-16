@@ -160,9 +160,9 @@ detect_hdmi_lcd_bar() {
     return 1
 }
 
-# LCD HDMI Mode is in beta and only built for x86-64 so far
+# LCD HDMI Mode is in beta, built for x86-64 PCs and ARM64 (e.g. Raspberry Pi 5)
 lcd_hdmi_available=false
-if [[ "$beta" == "true" && "$(uname -m)" == "x86_64" ]]; then
+if [[ "$beta" == "true" && ( "$(uname -m)" == "x86_64" || "$(uname -m)" == "aarch64" ) ]]; then
   lcd_hdmi_available=true
 fi
 if [[ "$pixelcade_lcd_hdmi_requested" == "true" ]]; then
@@ -171,7 +171,7 @@ if [[ "$pixelcade_lcd_hdmi_requested" == "true" ]]; then
     pixelcade_lcd_hdmi_already_set=true
     pixelcade_lcd_hdmi=true
   else
-    echo -e "${yellow}[WARNING] Pixelcade LCD HDMI Mode is only available with the beta installer on x86-64 computers for now -- skipping it${nc}"
+    echo -e "${yellow}[WARNING] Pixelcade LCD HDMI Mode is only available with the beta installer on x86-64 and ARM64 (e.g. Raspberry Pi 5) for now -- skipping it${nc}"
   fi
 fi
 
