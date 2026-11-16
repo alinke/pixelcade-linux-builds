@@ -6,6 +6,7 @@ The HTML for the app download pages on pixelcade.org, and the screenshots they s
 |---|---|
 | `pixelcade-apps-page.html` | https://pixelcade.org/apps/ (Pixelcade Companion: iOS, Android, Mac, Windows) |
 | `pixelcade-sidekick-apps-page.html` | https://pixelcade.org/sidekick-apps/ (Pixelcade Sidekick: iOS, Android) |
+| `pixelcade-lcd-hdmi-page.html` | https://pixelcade.org/lcd-hdmi/ (Pixelcade LCD HDMI Mode: what it is, supported systems, trial) |
 
 ## Updating a page
 

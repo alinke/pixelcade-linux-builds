@@ -1,0 +1,170 @@
+<!-- Pixelcade LCD HDMI Mode page (e.g. https://pixelcade.org/lcd-hdmi/)
+     Paste into a WordPress "Custom HTML" block. Styles are scoped to .pxhd. -->
+<style>
+.pxhd{--bg:#0b0b12;--surface:#17161f;--surface2:#211f2c;--border:#2e2b3d;--text:#ececf4;--muted:#a2a1b8;--accent:#7c3aed;--accent-text:#c4b5fd;--teal:#14b8a6;--amber:#f59e0b;
+  background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;border-radius:16px;overflow:hidden;max-width:1100px;margin:0 auto;text-align:left}
+.pxhd *{box-sizing:border-box}
+.pxhd a{color:var(--accent-text)}
+.pxhd h1,.pxhd h2,.pxhd h3{color:var(--text);font-family:inherit;text-transform:none;letter-spacing:normal}
+.pxhd h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;font-weight:700}
+.pxhd h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:700;line-height:1.25}
+.pxhd h3{font-size:18px;margin:0 0 6px;font-weight:600}
+.pxhd p{margin:0 0 14px;color:var(--muted)}
+.pxhd .hd-hero{padding:56px 24px 40px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.38),transparent 70%)}
+.pxhd .hd-lead{font-size:18px;max-width:720px;margin:0 auto}
+.pxhd .hd-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
+.pxhd .hd-pill{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px;color:var(--text)}
+.pxhd .hd-pill b{color:var(--accent-text);font-weight:600}
+.pxhd section{padding:40px 24px;border-top:1px solid var(--border)}
+.pxhd .hd-wrap{max-width:1000px;margin:0 auto}
+
+/* diagram */
+.pxhd .hd-diagram{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin-top:26px}
+.pxhd .hd-box{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.pxhd .hd-box small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+.pxhd .hd-pc{border-color:var(--accent)}
+.pxhd .hd-screens{display:flex;flex-direction:column;gap:14px}
+.pxhd .hd-bar{height:34px;border-radius:6px;background:linear-gradient(90deg,#1e1b4b,#7c3aed 45%,#14b8a6);margin:0 auto 6px;max-width:260px;box-shadow:0 0 22px rgba(124,58,237,.45)}
+.pxhd .hd-tv{height:84px;border-radius:6px;background:#0f0e16;border:3px solid #3a3650;margin:0 auto 6px;max-width:150px}
+.pxhd .hd-links{display:flex;flex-direction:column;gap:46px;color:var(--muted);font:600 12px ui-monospace,Menlo,monospace;text-align:center}
+.pxhd .hd-links span{display:block;border-top:2px dashed var(--border);padding-top:4px;min-width:96px}
+.pxhd .hd-links span.lcd{border-color:var(--teal);color:var(--teal)}
+
+.pxhd .hd-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.pxhd .hd-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px}
+.pxhd .hd-card p{margin:0}
+.pxhd .hd-platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+.pxhd .hd-plat{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative}
+.pxhd .hd-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--teal);color:var(--teal);margin-bottom:10px}
+.pxhd .hd-plat p{margin:0}
+.pxhd .hd-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;counter-reset:step}
+.pxhd .hd-step{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px 20px 16px}
+.pxhd .hd-step:before{counter-increment:step;content:counter(step);display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;margin-bottom:10px}
+.pxhd .hd-step p{margin:0}
+.pxhd .hd-note{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;color:var(--text);margin-top:18px}
+.pxhd .hd-note.warn{border-left-color:var(--amber)}
+.pxhd .hd-note p{color:var(--text);margin:0}
+.pxhd table{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px;border:0}
+.pxhd th,.pxhd td{text-align:left;padding:10px 12px;border:0;border-bottom:1px solid var(--border);vertical-align:top;background:transparent;color:var(--muted)}
+.pxhd th{color:var(--text);font-weight:600}
+.pxhd td:first-child{color:var(--text)}
+.pxhd .hd-scroll{overflow-x:auto}
+.pxhd ul.hd-list{list-style:none;padding:0;margin:12px 0 0}
+.pxhd ul.hd-list li{padding:6px 0 6px 28px;position:relative;color:var(--text)}
+.pxhd ul.hd-list li:before{content:"";position:absolute;left:4px;top:12px;width:12px;height:12px;border-radius:3px;background:var(--accent)}
+.pxhd .hd-btn{display:inline-block;background:var(--accent);color:#fff !important;text-decoration:none !important;font-weight:600;padding:11px 18px;border-radius:9px;margin:6px 8px 0 0}
+.pxhd .hd-btn:hover,.pxhd .hd-btn:focus{filter:brightness(1.12);outline:2px solid var(--accent-text);outline-offset:2px}
+.pxhd .hd-btn.hd-ghost{background:transparent;border:1px solid var(--accent-text);color:var(--accent-text) !important}
+@media (max-width:760px){
+  .pxhd .hd-cards,.pxhd .hd-platforms,.pxhd .hd-steps{grid-template-columns:1fr}
+  .pxhd .hd-diagram{grid-template-columns:1fr;gap:10px}
+  .pxhd .hd-links{flex-direction:row;justify-content:center;gap:24px}
+  .pxhd .hd-links span{border-top:0;border-left:2px dashed var(--border);padding:0 0 0 8px;min-width:0}
+  .pxhd .hd-links span.lcd{border-color:var(--teal)}
+  .pxhd section{padding:32px 16px}
+  .pxhd .hd-hero{padding:40px 16px 28px}
+}
+</style>
+
+<div class="pxhd">
+  <div class="hd-hero">
+    <h1>Pixelcade LCD HDMI Mode</h1>
+    <p class="hd-lead">Run your Pixelcade LCD marquee straight from your arcade computer's second HDMI port. No separate board inside the marquee: the Pixelcade LCD software runs on the same computer as your games.</p>
+    <div class="hd-pills">
+      <span class="hd-pill"><b>Windows</b> 64-bit</span>
+      <span class="hd-pill"><b>Batocera</b> x86-64 PC</span>
+      <span class="hd-pill"><b>Batocera</b> Raspberry Pi 5</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>How it works</h2>
+      <p>A Pixelcade LCD normally has its own small computer that drives the marquee screen. In LCD HDMI Mode the LCD bar plugs into your arcade computer's second HDMI output instead. Pixelcade downloads the LCD software, starts it with your computer, keeps it updated and shows your marquees on the bar, while your games play on the main screen.</p>
+      <div class="hd-diagram" aria-label="The arcade computer's first HDMI port goes to the game screen, the second to the Pixelcade LCD bar">
+        <div class="hd-box hd-pc"><h3>Your arcade computer</h3><small>Windows or Batocera, with two HDMI outputs</small></div>
+        <div class="hd-links"><span>HDMI 1</span><span class="lcd">HDMI 2</span></div>
+        <div class="hd-screens">
+          <div class="hd-box"><div class="hd-tv"></div>Game screen</div>
+          <div class="hd-box"><div class="hd-bar"></div>Pixelcade LCD marquee</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>Why use it</h2>
+      <div class="hd-cards">
+        <div class="hd-card"><h3>One computer</h3><p>No extra board in the marquee to power, network or update. Everything runs on the computer you already have.</p></div>
+        <div class="hd-card"><h3>The full LCD experience</h3><p>Game and console marquees, videos, scrolling text, achievements and widgets, the same as a Pixelcade LCD with its own board.</p></div>
+        <div class="hd-card"><h3>Works with your apps</h3><p>Your front end, Pixelcade Companion and the Pixelcade phone apps all work as before. The LCD shows up next to your LED in the apps.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>Supported systems</h2>
+      <p>LCD HDMI Mode currently runs on Windows and on Batocera. It has been tested on a Raspberry Pi 5 and on a PC with two HDMI ports.</p>
+      <div class="hd-platforms">
+        <div class="hd-plat"><span class="hd-tag">Tested on a dual-HDMI PC</span><h3>Windows</h3><p>64-bit Windows on a PC with two HDMI outputs.</p></div>
+        <div class="hd-plat"><span class="hd-tag">Tested on a dual-HDMI PC</span><h3>Batocera on a PC</h3><p>x86-64 PCs with two HDMI outputs.</p></div>
+        <div class="hd-plat"><span class="hd-tag">Tested on a Raspberry Pi 5</span><h3>Batocera on ARM64</h3><p>The Raspberry Pi 5: HDMI 0 for the game screen, HDMI 1 for the LCD bar.</p></div>
+      </div>
+      <div class="hd-note warn"><p>Other systems, such as other Linux arcade distributions and 32-bit computers, aren't supported yet. On those, use a Pixelcade LCD with its own board.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>Getting started</h2>
+      <div class="hd-steps">
+        <div class="hd-step"><h3>Connect the bar</h3><p>Plug the Pixelcade LCD bar into your computer's second HDMI port, and the game screen into the first.</p></div>
+        <div class="hd-step"><h3>Turn it on</h3><p><strong>Batocera:</strong> the Pixelcade installer offers LCD HDMI Mode when it finds an LCD bar. <strong>Windows:</strong> in Pixelcade Companion, go to Settings &gt; Pixelcade LCD &gt; LCD HDMI Mode.</p></div>
+        <div class="hd-step"><h3>Let the artwork download</h3><p>The first time, the LCD downloads its Artwork Library, about 20 GB. Artwork for the games on your computer comes first, and the bar shows the progress.</p></div>
+      </div>
+      <div class="hd-note"><p>Your marquees work during the download: anything already downloaded shows right away, and the rest fills in as it arrives. Pixelcade Companion shows the download's progress on its home page.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>Free trial</h2>
+      <p>LCD HDMI Mode starts with a 14-day free trial with everything turned on. After the trial, without a license, the LCD keeps showing the Pixelcade logo and console marquees; game marquees, text, achievements and widgets need a license. You can unlock it from the trial screen on the LCD or in Pixelcade Companion.</p>
+      <div class="hd-scroll">
+        <table>
+          <tr><th></th><th>Free trial (14 days)</th><th>After the trial</th><th>Licensed</th></tr>
+          <tr><td>Console marquees</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Game marquees and videos</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Text, achievements and widgets</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        </table>
+      </div>
+      <div class="hd-note"><p>A Pixelcade LCD with its own board doesn't need this license.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h2>What you need</h2>
+      <ul class="hd-list">
+        <li>A Pixelcade LCD marquee bar</li>
+        <li>An arcade computer with two HDMI outputs, running 64-bit Windows or Batocera (x86-64 PC or Raspberry Pi 5)</li>
+        <li>About 20 GB of free disk space for the Artwork Library</li>
+        <li>An Internet connection for the first download and updates</li>
+      </ul>
+      <p style="margin-top:22px">
+        <a class="hd-btn" href="https://pixelcade.org/lcd-manual/">LCD User Guide</a>
+        <a class="hd-btn hd-ghost" href="https://pixelcade.org/apps/">Pixelcade apps</a>
+        <a class="hd-btn hd-ghost" href="https://pixelcade.org/api/#lcd-hdmi-mode">For developers: API</a>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="hd-wrap">
+      <h3>Need help?</h3>
+      <p>Ask us on <a href="https://discord.gg/dnZKB6SHMj" target="_blank" rel="noopener">Discord</a>. In Pixelcade Companion, Settings &gt; Support &gt; Download Support Bundle collects everything we usually ask for.</p>
+    </div>
+  </section>
+</div>
