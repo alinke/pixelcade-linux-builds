@@ -1,8 +1,8 @@
 {
   "latestFirmwareVersion": "7.8.7",
-  "latestArtworkVersion": 65,
-  "latestArtworkVersion1280": 60,
-  "betaFirmwareVersion": "7.8.14",
+  "latestArtworkVersion": 66,
+  "latestArtworkVersion1280": 61,
+  "betaFirmwareVersion": "7.8.16",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -139,7 +139,9 @@
     "7.8.8  Artwork updates now download only the new or changed files, and Check & Repair fixes missing or outdated artwork without touching files you added",
     "7.8.13 Adding HDMI mode, currently x86 Linux only on Batocera",
     "7.8.13 Added new theme called Comic Book, big thanks for Mr. Robot",
-    "7.8.14 Added support bundle which zips up both LED and LCD logs, access from Settings -> Support"
+    "7.8.14 Added support bundle which zips up both LED and LCD logs, access from Settings -> Support",
+    "7.8.15 Pixelcade LCD HDMI Mode on Windows: the LCD bar can be a second monitor of a Windows PC",
+    "7.8.16 In-game explosion effects show over the marquee that's on screen, and Raspberry Pi 5 (Batocera) LCD HDMI Mode"
     
   ],
   "minimumRequiredVersion": "5.0.0"
