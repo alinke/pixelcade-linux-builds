@@ -212,9 +212,12 @@
     ]
   },
   "beta": {
-    "version": "8.0.24",
+    "version": "8.0.25",
     "artworkUpdate": false,
     "releaseNotes": [
+      "8.0.25 New: Pixelcade LCD HDMI Mode on Windows (64-bit) and on Batocera on a Raspberry Pi 5 -- plug the LCD bar into the second HDMI output, then Settings > Pixelcade LCD > LCD HDMI Mode",
+      "8.0.25 LCD HDMI Mode: a first install downloads the LCD software reliably on Windows",
+      "8.0.25 Support bundle: includes the LCD's settings",
       "8.0.24 Support: Settings > Support > Download Support Bundle -- one zip with the logs and settings of Pixelcade, the Pixelcade LCD and DOFLinx (passwords, keys and your location removed)",
       "8.0.24 Phone app: /v2/info names the LCD this Pixelcade drives (linkedLCD), so the app can show the cabinet as one card",
       "8.0.23 LCD HDMI Mode: the home page shows the LCD artwork download's progress while the first download runs",
