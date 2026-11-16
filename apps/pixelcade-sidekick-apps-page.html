@@ -1,0 +1,88 @@
+<!-- Pixelcade Sidekick apps page (e.g. https://pixelcade.org/sidekick-apps/)
+     Paste into a WordPress "Custom HTML" block. Screenshots are hosted at
+     https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/ -->
+<style>
+.pxsk{--bg:#0b0b12;--surface:#17161f;--surface2:#211f2c;--border:#2e2b3d;--text:#ececf4;--muted:#a2a1b8;--accent:#7c3aed;--accent-text:#c4b5fd;
+  background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;border-radius:16px;overflow:hidden;max-width:1100px;margin:0 auto}
+.pxsk *{box-sizing:border-box}
+.pxsk a{color:var(--accent-text)}
+.pxsk .sk-hero{padding:56px 24px 40px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.38),transparent 70%)}
+.pxsk h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;color:var(--text);font-weight:700}
+.pxsk h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;color:var(--text);font-weight:700}
+.pxsk h3{font-size:18px;margin:0 0 6px;color:var(--text);font-weight:600}
+.pxsk p{margin:0 0 14px;color:var(--muted)}
+.pxsk .sk-lead{font-size:18px;max-width:700px;margin:0 auto}
+.pxsk section{padding:40px 24px;border-top:1px solid var(--border)}
+.pxsk .sk-wrap{max-width:1000px;margin:0 auto}
+.pxsk .sk-badges{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;margin:22px 0 0}
+.pxsk .sk-badges img{height:52px;width:auto;display:block}
+.pxsk .sk-shots{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px}
+.pxsk .sk-shots figure{margin:0;text-align:center}
+.pxsk .sk-shots img{width:100%;height:auto;border-radius:22px;border:1px solid var(--border);box-shadow:0 14px 34px rgba(0,0,0,.5);display:block;background:#000}
+.pxsk .sk-shots figcaption{color:var(--muted);font-size:14px;margin-top:10px}
+.pxsk .sk-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;counter-reset:step}
+.pxsk .sk-step{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:20px 20px 16px;position:relative}
+.pxsk .sk-step:before{counter-increment:step;content:counter(step);display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;margin-bottom:10px}
+.pxsk .sk-step p{margin:0}
+.pxsk .sk-btn{display:inline-block;background:var(--accent);color:#fff !important;text-decoration:none !important;font-weight:600;padding:11px 18px;border-radius:9px;margin:6px 8px 0 0}
+.pxsk .sk-btn:hover,.pxsk .sk-btn:focus{filter:brightness(1.12);outline:2px solid var(--accent-text);outline-offset:2px}
+.pxsk .sk-btn.sk-ghost{background:transparent;border:1px solid var(--accent-text);color:var(--accent-text) !important}
+.pxsk .sk-note{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;color:var(--text);margin-top:18px}
+.pxsk img.sk-gplay{height:78px;width:228px;margin:-13px -26px;max-width:none}
+@media (max-width:760px){
+  .pxsk .sk-shots{grid-template-columns:1fr 1fr}
+  .pxsk .sk-steps{grid-template-columns:1fr}
+  .pxsk section{padding:32px 16px}
+  .pxsk .sk-hero{padding:40px 16px 28px}
+}
+</style>
+
+<div class="pxsk">
+  <div class="sk-hero">
+    <h1>Pixelcade Sidekick</h1>
+    <p class="sk-lead">Turn a phone or tablet into a Sidekick display for your cabinet. It shows box art, game descriptions, controls, high scores and live game stats, and changes with every game you launch, alongside your Pixelcade marquee.</p>
+    <div class="sk-badges">
+      <a href="https://apps.apple.com/us/app/pixelcade-sidekick/id6817645502" target="_blank" rel="noopener"><img src="https://pixelcade.org/wp-content/uploads/2026/01/apple-store-300x89.png" alt="Download Pixelcade Sidekick on the App Store"></a>
+      <a href="https://play.google.com/store/apps/details?id=org.pixelcade.sidekick" target="_blank" rel="noopener"><img src="https://pixelcade.org/wp-content/uploads/2026/01/Google_Play-Badge-Logo.wine_.svg" class="sk-gplay" alt="Get Pixelcade Sidekick on Google Play"></a>
+    </div>
+  </div>
+
+  <section>
+    <div class="sk-wrap">
+      <h2>What it shows</h2>
+      <p>Live scores and stats while you play, game cards to choose from, and widgets when the cabinet is idle.</p>
+      <div class="sk-shots">
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-arcade-scores.jpg" alt="Sidekick showing live arcade scores" loading="lazy"><figcaption>Live arcade scores</figcaption></figure>
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-pinball-scores.jpg" alt="Sidekick showing live pinball stats" loading="lazy"><figcaption>Pinball stats</figcaption></figure>
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-game-cards.jpg" alt="Sidekick menu of game cards" loading="lazy"><figcaption>Game cards: description, controls, high scores, box art and more</figcaption></figure>
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-weather.jpg" alt="Sidekick weather widget" loading="lazy"><figcaption>Weather</figcaption></figure>
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-stocks.jpg" alt="Sidekick stocks widget" loading="lazy"><figcaption>Stocks</figcaption></figure>
+        <figure><img src="https://alinke.github.io/pixelcade-linux-builds/apps/sidekick/iphone-clock.jpg" alt="Sidekick clock widget" loading="lazy"><figcaption>Clock</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sk-wrap">
+      <h2>Getting started</h2>
+      <div class="sk-steps">
+        <div class="sk-step"><h3>Install the app</h3><p>On an iPhone, iPad or Android phone or tablet that's on the same WiFi as your cabinet.</p></div>
+        <div class="sk-step"><h3>Turn on Sidekick</h3><p>In Pixelcade Companion on your cabinet, go to Settings &gt; Sidekick to unlock it and turn it on.</p></div>
+        <div class="sk-step"><h3>Pick your Pixelcade</h3><p>Open the app and choose your cabinet from the list. It updates with every game you launch.</p></div>
+      </div>
+      <div class="sk-note">No cabinet nearby? Open the app and tap <strong>See a Demo</strong> to try it first.</div>
+      <p style="margin-top:22px">
+        <a class="sk-btn" href="https://pixelcade.org/sidekick">Sidekick overview</a>
+        <a class="sk-btn sk-ghost" href="https://pixelcade.org/sidekick-manual/">Sidekick User Guide</a>
+        <a class="sk-btn sk-ghost" href="https://pixelcade.org/apps/">Pixelcade apps</a>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sk-wrap">
+      <h3>Need help?</h3>
+      <p>Ask us on <a href="https://discord.gg/dnZKB6SHMj" target="_blank" rel="noopener">Discord</a>.</p>
+    </div>
+  </section>
+</div>
