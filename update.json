@@ -3,7 +3,7 @@
     "version": "8.0.17",
     "artworkUpdate": true,
     "releaseNotes": [
-     "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",     
+      "Added native and improved iOS and Android mobile apps http://pixelcade.org/apps",
       "Added Playlist feature which allows you to define a slideshow of marquees and widgets and set the duration for each item",
       "Added drag and drop to Playlist and attract mode toggle which prevents the playlist being interrupted when in arcade mode (not on by default",
       "mDNS discovery fix for Linux, tested working on RCade",
@@ -212,9 +212,13 @@
     ]
   },
   "beta": {
-    "version": "8.0.25",
-    "artworkUpdate": false,
+    "version": "8.0.26",
+    "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.26 New for Pulse strips: /ledstrip/frame and /ledstrip/ranges set any number of LEDs with one refresh, so your own programs can stream custom animations (about 200 frames a second on a 144-LED strip; needs LED firmware 23.11 beta). See Custom Animations in the API docs for three examples",
+      "8.0.26 New game event effects on the LED and LCD: resume, shot, reload, out of ammo, hit, life lost, death, race winner, race leader and checkpoint",
+      "8.0.26 New /effects/list: every effect name with whether the LED and the LCD can play it and which game event it's for",
+      "8.0.26 Effects: ?coalesce skips an effect that's still playing (for shots and hits that repeat quickly); ?lcd also plays it on the Pixelcade LCD",
       "8.0.25 New: Pixelcade LCD HDMI Mode on Windows (64-bit) and on Batocera on a Raspberry Pi 5 -- plug the LCD bar into the second HDMI output, then Settings > Pixelcade LCD > LCD HDMI Mode",
       "8.0.25 LCD HDMI Mode: a first install downloads the LCD software reliably on Windows",
       "8.0.25 Support bundle: includes the LCD's settings",
@@ -233,7 +237,6 @@
       "8.0.18 A Pixelcade LCD USB connected can now get artwork and Internet from this device",
       "8.0.18 Companion: Improved UI with collapsible settings menu",
       "8.0.18 Licenses: purchased and gift codes work again after reinstalling pixelweb on the same computer"
-      
     ]
   },
   "lastUpdated": "2026-03-17T00:00:00Z",
