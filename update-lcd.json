@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.18",
+  "betaFirmwareVersion": "7.8.19",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -143,10 +143,13 @@
     "7.8.15 Pixelcade LCD HDMI Mode on Windows: the LCD bar can be a second monitor of a Windows PC",
     "7.8.16 In-game explosion effects show over the marquee that's on screen, and Raspberry Pi 5 (Batocera) LCD HDMI Mode",
     "7.8.17 Game event effects (deaths, checkpoints and more) in high resolution on the LCD",
-    "7.8.18 Marquee Sound Reaction: in LCD HDMI Mode on Windows, the marquee reacts to the game's sound, with several styles to choose from",
+    "7.8.18 Marquee Sound Reaction: in LCD HDMI Mode on Windows only, the marquee reacts to the game's sound, with several styles to choose from",
     "7.8.18 Video marquees play smoother, at full speed",
-    "7.8.18 Artwork Library: marquees from the library no longer show a User tag, and a new microSD card can be formatted and filled in one step from Updates",
-    "7.8.18 Yahoo Fantasy widget shows your real record and Yahoo's win probability"
+    "7.8.18 A new microSD card can be formatted and filled in one step from Updates",
+    "7.8.18 Yahoo Fantasy widget shows your real record and Yahoo's win probability",
+    "7.8.19 Tickers (sports, stocks, news and more) scroll smoothly on LCD bars with the picture turned upside down",
+    "7.8.19 The single-board Pixelcade LCD takes a USB thumb drive as well as a microSD card (one at a time), mounted automatically when plugged in",
+    "7.8.19 Formatting a microSD card or USB drive shows its progress, and a card that won't take the format says so"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
