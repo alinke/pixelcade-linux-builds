@@ -212,9 +212,11 @@
     ]
   },
   "beta": {
-    "version": "8.0.27",
+    "version": "8.0.28",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.28 Pulse strips: programs that stream frames to the strip (/ledstrip/frame, e.g. MESH) keep their full speed while the marquee scrolls text or plays a GIF -- the strip used to slow to a few frames a second with pauses of up to a second",
+      "8.0.28 Yahoo Fantasy: while your matchup is live (games being played), All Teams mode shows just the matchup score and skips the standings, as on the LCD",
       "8.0.27 LCD HDMI Mode: a regular 1920 x 1080 monitor works as the marquee -- Settings > Pixelcade LCD > 1920 x 1080 Monitor or BitLCD, then Marquee Position puts it at the top, middle or bottom of the screen (needs LCD software 7.8.20)",
       "8.0.27 LCD HDMI Mode: Marquee Sound Reaction has a style picker, and LED Strips React to Sound makes the LED strips, rings and matrices follow the sound too (a VU meter, or glow, beat pulses and sparkle while a game runs)",
       "8.0.27 Yahoo Fantasy: shows your real record (W-L, rank, points) for the current season only, and always puts your team on your side of the matchup",
