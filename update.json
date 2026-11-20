@@ -212,9 +212,12 @@
     ]
   },
   "beta": {
-    "version": "8.0.26",
+    "version": "8.0.27",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.27 LCD HDMI Mode: a regular 1920 x 1080 monitor works as the marquee -- Settings > Pixelcade LCD > 1920 x 1080 Monitor or BitLCD, then Marquee Position puts it at the top, middle or bottom of the screen (needs LCD software 7.8.20)",
+      "8.0.27 LCD HDMI Mode: Marquee Sound Reaction has a style picker, and LED Strips React to Sound makes the LED strips, rings and matrices follow the sound too (a VU meter, or glow, beat pulses and sparkle while a game runs)",
+      "8.0.27 Yahoo Fantasy: shows your real record (W-L, rank, points) for the current season only, and always puts your team on your side of the matchup",
       "8.0.26 New for Pulse strips: /ledstrip/frame and /ledstrip/ranges set any number of LEDs with one refresh, so your own programs can stream custom animations (about 200 frames a second on a 144-LED strip; needs LED firmware 23.11 beta). See Custom Animations in the API docs for three examples",
       "8.0.26 New game event effects on the LED and LCD: resume, shot, reload, out of ammo, hit, life lost, death, race winner, race leader and checkpoint",
       "8.0.26 New /effects/list: every effect name with whether the LED and the LCD can play it and which game event it's for",
