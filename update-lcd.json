@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.22",
+  "betaFirmwareVersion": "7.8.23",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -154,7 +154,9 @@
     "7.8.21 Yahoo Fantasy: while your matchup is live, only the live lineups card is shown (every player's points, both totals and your win probability)",
     "7.8.22 Single-board Pixelcade LCD: video marquees play on the board's video hardware, using about a third of the processor they did",
     "7.8.22 Single-board Pixelcade LCD: the 180° screen rotation (21\" and 28\" bars) is done by the board's graphics hardware, so tickers and videos run lighter",
-    "7.8.22 Device Info has a copy button next to the hostname"
+    "7.8.22 Device Info has a copy button next to the hostname",
+    "7.8.23 Updates: if you're on a beta, a Switch to Production button takes you back to the production release",
+    "7.8.23 The running Plex and media server widget buttons show white text so it's readable on the red background"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
