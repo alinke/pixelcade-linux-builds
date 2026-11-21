@@ -212,9 +212,10 @@
     ]
   },
   "beta": {
-    "version": "8.0.28",
+    "version": "8.0.29",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.29 Set Default Marquee completely redesigned, now allows you to select multiple marquees and animations and set the order they will be displayed including transition effects",
       "8.0.28 Pulse strips: programs that stream frames to the strip (/ledstrip/frame, e.g. MESH) keep their full speed while the marquee scrolls text or plays a GIF -- the strip used to slow to a few frames a second with pauses of up to a second",
       "8.0.28 Yahoo Fantasy: while your matchup is live (games being played), All Teams mode shows just the matchup score and skips the standings, as on the LCD",
       "8.0.27 LCD HDMI Mode: a regular 1920 x 1080 monitor works as the marquee -- Settings > Pixelcade LCD > 1920 x 1080 Monitor or BitLCD, then Marquee Position puts it at the top, middle or bottom of the screen (needs LCD software 7.8.20)",
