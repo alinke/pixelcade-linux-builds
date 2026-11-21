@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.21",
+  "betaFirmwareVersion": "7.8.22",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -151,7 +151,10 @@
     "7.8.19 The single-board Pixelcade LCD takes a USB thumb drive as well as a microSD card (one at a time), mounted automatically when plugged in",
     "7.8.19 Formatting a microSD card or USB drive shows its progress, and a card that won't take the format says so",
     "7.8.20 A regular 1920 x 1080 monitor works as a marquee: the marquee strip can go at the top, middle or bottom of the screen (Screen Resolution > 1920 x 1080 Monitor or AtGames BitLCD)",
-    "7.8.21 Yahoo Fantasy: while your matchup is live, only the live lineups card is shown (every player's points, both totals and your win probability)"
+    "7.8.21 Yahoo Fantasy: while your matchup is live, only the live lineups card is shown (every player's points, both totals and your win probability)",
+    "7.8.22 Single-board Pixelcade LCD: video marquees play on the board's video hardware, using about a third of the processor they did",
+    "7.8.22 Single-board Pixelcade LCD: the 180° screen rotation (21\" and 28\" bars) is done by the board's graphics hardware, so tickers and videos run lighter",
+    "7.8.22 Device Info has a copy button next to the hostname"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
