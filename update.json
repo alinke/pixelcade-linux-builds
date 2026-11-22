@@ -212,9 +212,18 @@
     ]
   },
   "beta": {
-    "version": "8.0.29",
+    "version": "8.0.30",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.30 Added a Windows front end installer wizard to Companion which will check and configure major front ends",
+      "8.0.30 Sidekick: the Yahoo Fantasy matchup shows both team logos and Yahoo's win probability bar",
+      "8.0.30 Sidekick: Planes Overhead shows a radar with every plane in range; each plane's card highlights it on the radar with its airline, altitude and speed",
+      "8.0.30 Sidekick: new looks for World Clock (a tile per city with an analog clock and day/night sky), Stocks (a tile per symbol, green or red), YouTube (channel picture, subscriber count, views and videos) and Netflix Top 10 (bigger text, two columns on the 5\" and 7\")",
+      "8.0.30 Sidekick: starting a widget now takes over from the game's cards instead of switching back and forth with them",
+      "8.0.30 World Clock: up to 6 cities (was 3); the LED marquee shows 4 to 6 in two columns",
+      "8.0.30 Pulse LED strips: Yahoo Fantasy twinkles green while your team is ahead and red while it's behind",
+      "8.0.30 Pulse LED strips: Netflix, YouTube, Clock, World Clock, Horoscope, Countdown, Sports, News, What to Watch, Retro Trivia and This Day in Retro each run their own effect; Stocks is green or red with the market and Weather follows the conditions (sun, rain, snow, storms, clear night)",
+      "8.0.30 Pulse dot matrix: while a widget runs a strip effect, the dot matrix shows a short static label instead of scrolling (it can't scroll during a strip effect)",
       "8.0.29 Set Default Marquee completely redesigned, now allows you to select multiple marquees and animations and set the order they will be displayed including transition effects",
       "8.0.28 Pulse strips: programs that stream frames to the strip (/ledstrip/frame, e.g. MESH) keep their full speed while the marquee scrolls text or plays a GIF -- the strip used to slow to a few frames a second with pauses of up to a second",
       "8.0.28 Yahoo Fantasy: while your matchup is live (games being played), All Teams mode shows just the matchup score and skips the standings, as on the LCD",
