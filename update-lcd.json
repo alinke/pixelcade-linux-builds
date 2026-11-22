@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.23",
+  "betaFirmwareVersion": "7.8.24",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -156,7 +156,8 @@
     "7.8.22 Single-board Pixelcade LCD: the 180° screen rotation (21\" and 28\" bars) is done by the board's graphics hardware, so tickers and videos run lighter",
     "7.8.22 Device Info has a copy button next to the hostname",
     "7.8.23 Updates: if you're on a beta, a Switch to Production button takes you back to the production release",
-    "7.8.23 The running Plex and media server widget buttons show white text so it's readable on the red background"
+    "7.8.24 Single-board Pixelcade LCD: the Pulse Sub-Displays settings say they aren't supported on this board yet, instead of offering settings that don't work",
+    "7.8.24 Log page: System Info (and Copy Log + Info) now shows the board, OS, uptime, temperature and memory, LCD HDMI Mode, where the internet comes from, the Artwork Library status and artwork shared from your computer"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
