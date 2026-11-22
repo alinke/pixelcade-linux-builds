@@ -25,6 +25,7 @@
     "version": 23,
     "subversion": 11,
     "releaseNotes": [
+      "Fix: the twinklefox Pulse effect lights every zone it runs on -- with some zone counts (e.g. 6 zones at speed 253), some zones never twinkled and stayed dark. Already on this beta? Reinstall it from the Update page",
       "Fix: writing a large default marquee from Set Default Marquee no longer ends on the Pixelcade logo -- replacing a big marquee with another big one ran out of flash space part-way through, and the new marquee was lost. The old marquee is now removed before the new one is written",
       "Fix: writing a default marquee while the strip or displays are busy no longer stalls or fails -- the second core now stays paused for the whole write, and a write that can't start leaves the stored marquee unchanged instead of half-written",
       "Fix: a default marquee that runs longer than 60 seconds now plays to the end and loops -- it used to freeze on one frame after 60 seconds",
@@ -41,7 +42,7 @@
       "Fixed intermittent crash with clear all zones button in Companion"
     ]
   },
-  "lastUpdated": "2026-11-21T08:46:21Z",
+  "lastUpdated": "2026-11-22T23:00:51Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/beta/"
