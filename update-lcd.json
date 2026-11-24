@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.25",
+  "betaFirmwareVersion": "7.8.26",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -157,7 +157,8 @@
     "7.8.22 Device Info has a copy button next to the hostname",
     "7.8.23 Updates: if you're on a beta, a Switch to Production button takes you back to the production release",
     "7.8.24 Log page: System Info (and Copy Log + Info) now shows the board, OS, uptime, temperature and memory, LCD HDMI Mode, where the internet comes from, the Artwork Library status and artwork shared from your computer",
-    "7.8.25 Yahoo Fantasy: the 7-segment, mini LCD and Pulse LED strips follow your score as it changes, not just when the matchup changes"
+    "7.8.25 Yahoo Fantasy: the 7-segment, mini LCD and Pulse LED strips follow your score as it changes, not just when the matchup changes",
+    "7.8.26 A widget started with nointerrupt no longer leaves the LCD ignoring widgets and games after it stops"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
