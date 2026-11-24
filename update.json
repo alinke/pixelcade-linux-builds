@@ -191,9 +191,10 @@
     ]
   },
   "beta": {
-    "version": "8.0.31",
+    "version": "8.0.32",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.0.32 Scrolling text on the LED marquee stays smooth while a controller like MESH streams LED strip frames",
       "8.0.30 Added a Windows front end installer wizard to Companion which will check and configure major front ends",
       "8.0.30 Sidekick: the Yahoo Fantasy matchup shows both team logos and Yahoo's win probability bar",
       "8.0.30 Sidekick: Planes Overhead shows a radar with every plane in range; each plane's card highlights it on the radar with its airline, altitude and speed",
