@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.27",
+  "betaFirmwareVersion": "7.8.28",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -159,7 +159,8 @@
     "7.8.24 Log page: System Info (and Copy Log + Info) now shows the board, OS, uptime, temperature and memory, LCD HDMI Mode, where the internet comes from, the Artwork Library status and artwork shared from your computer",
     "7.8.25 Yahoo Fantasy: the 7-segment, mini LCD and Pulse LED strips follow your score as it changes, not just when the matchup changes",
     "7.8.26 A widget started with nointerrupt no longer leaves the LCD ignoring widgets and games after it stops",
-    "7.8.27 LCD HDMI Mode on Windows: the LCD software is now built for the latest Windows libraries (images failed to show with them before)"
+    "7.8.27 LCD HDMI Mode on Windows: the LCD software is now built for the latest Windows libraries (images failed to show with them before)",
+    "7.8.28 New LCD board (DC-A566B): Settings > Advanced > Display Output can show the marquee on a monitor plugged into the board's HDMI port instead of the LCD bar, at the top, middle or bottom of the screen"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
