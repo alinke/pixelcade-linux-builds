@@ -78,7 +78,7 @@ echo -e ""
 # DOFLinx installs to /recalbox/share/bootvideos/doflinx (writable, persistent, allows exec)
 DOFLINX_PATH="/recalbox/share/bootvideos/doflinx"
 PIXELCADE_PATH="/etc/init.d/pixelcade"
-ARTPATH="/recalbox/share/pixelcade-art/"
+ARTPATH="/recalbox/share/pixelcade-art"
 
 # Check if Pixelcade is installed
 if [[ ! -f "${PIXELCADE_PATH}/pixelweb" ]]; then
