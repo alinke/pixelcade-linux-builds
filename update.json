@@ -191,9 +191,14 @@
     ]
   },
   "beta": {
-    "version": "8.0.32",
+    "version": "8.1.0",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.1.0 Windows: a new Pixelcade Setup window (pixelweb.exe -setup, or http://localhost:8080/setup) with three tabs, Pixelcade LCD, Artwork and Front End Setup Wizard, each showing what is happening live",
+      "8.1.0 Pixelcade LCD Finder is now in Companion (Pixelcade LCD tab, or /lcdfinder): finds and pairs your Pixelcade LCD over the network, USB or HDMI, shows what is paired now and has an Identify button",
+      "8.1.0 Artwork setup window (pixelweb.exe -setup-artwork, or /setupartwork) shows the install progress and says when the latest LED or LCD artwork is already installed",
+      "8.1.0 Front End Setup Wizard: Search this PC for front ends, several MAME locations, and a Pixelcade Attract Mode step",
+      "8.1.0 Open LEDBlinky Config and Open HyperHQ only show when Companion is open on the arcade PC itself",
       "8.0.32 Scrolling text on the LED marquee stays smooth while a controller like MESH streams LED strip frames",
       "8.0.30 Added a Windows front end installer wizard to Companion which will check and configure major front ends",
       "8.0.30 Sidekick: the Yahoo Fantasy matchup shows both team logos and Yahoo's win probability bar",
