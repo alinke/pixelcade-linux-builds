@@ -199,6 +199,8 @@
       "8.1.0 Artwork setup window (pixelweb.exe -setup-artwork, or /setupartwork) shows the install progress and says when the latest LED or LCD artwork is already installed",
       "8.1.0 Front End Setup Wizard: Search this PC for front ends, several MAME locations, and a Pixelcade Attract Mode step",
       "8.1.0 Open LEDBlinky Config and Open HyperHQ only show when Companion is open on the arcade PC itself",
+      "8.1.0 Windows: clicking in the Pixelcade window no longer freezes Pixelcade (front ends and LEDBlinky waited until Esc was pressed or Pixelcade was closed); copying text from the window still works",
+      "8.1.0 Recalbox: console icons show in Companion again (a trailing slash on the Pixelcade folder broke them)",
       "8.0.32 Scrolling text on the LED marquee stays smooth while a controller like MESH streams LED strip frames",
       "8.0.30 Added a Windows front end installer wizard to Companion which will check and configure major front ends",
       "8.0.30 Sidekick: the Yahoo Fantasy matchup shows both team logos and Yahoo's win probability bar",
