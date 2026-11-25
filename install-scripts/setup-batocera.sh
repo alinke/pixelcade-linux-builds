@@ -5,10 +5,10 @@ pizero=false
 pi4=false
 pi3=false
 pi5=false
-install_doflinx=false
+install_doflinx=true
 odroidn2=false
 machine_arch=default
-version=29  #increment this as the script is updated
+version=32  #increment this as the script is updated
 batocera_version=default
 batocera_recommended_minimum_version=33
 batocera_self_contained_version=38
@@ -19,7 +19,12 @@ batocera_40_plus=false
 pixelcade_version=default
 beta=false
 pixelcade_lcd_usb=false
+pixelcade_lcd_hdmi=false        # Pixelcade LCD HDMI Mode: the LCD bar is on this computer's HDMI output
+pixelcade_lcd_hdmi_already_set=false
 pixelcade_lcd_usb_already_set=false
+pixelcade_led_detected=false
+led_has_marquee="unset"
+attract_mode_choice="unset"
 NEWLINE=$'\n'
 
 # Color definitions
@@ -88,6 +93,9 @@ for arg in "$@"; do
   if [[ "$arg" == "beta" ]]; then
     echo -e "${cyan}[INFO] Installing Beta Version of Pixelcade${nc}"
     beta=true
+  elif [[ "$arg" == "lcdhdmi" ]]; then
+    # Applied below, once we know it's a beta install on x86-64
+    pixelcade_lcd_hdmi_requested=true
   elif [[ "$arg" == "lcdusb" ]]; then
     echo -e "${cyan}[INFO] Setting up for Pixelcade LCD Marquee over USB${nc}"
     pixelcade_lcd_usb_already_set=true
@@ -112,39 +120,7 @@ echo -e "${cyan}Now connect your Pixelcade marquee(s) to free USB port(s) on you
 echo -e "${cyan}Grab a coffee or tea as this installer will take around 10 minutes depending on your Internet connection speed${nc}"
 echo ""
 
-# Ask about DOFLinx installation for in-game effects
-echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-echo -e "${cyan}Optional: In-Game Effects powered by DOFLinx${nc}"
-echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-echo ""
-echo -e "${cyan}DOFLinx provides in-game LED effects for MAME arcade games${nc}"
-echo -e "${cyan}(e.g., gun flash, explosions, led strip effects with Pixelcade Pulse devices)${nc}"
-echo ""
-echo -e "${yellow}Important considerations:${nc}"
-echo -e "${yellow}  - This will switch your default MAME emulator from RetroArch to MAME standalone${nc}"
-echo -e "${yellow}  - Your MAME ROMs must be compatible with MAME standalone${nc}"
-echo -e "${yellow}  - Some games that work in RetroArch may not load in MAME standalone${nc}"
-echo -e "${red}  - NOT recommended for Pi 3 or older hardware (MAME standalone is slow)${nc}"
-echo ""
-echo -e "${cyan}  Uninstaller available at: https://pixelcade.org/batocerav2/${nc}"
-echo ""
-while true; do
-    read -p "Would you like to install DOFLinx for in-game effects? (y/n) " yn
-    case $yn in
-        [Yy]* )
-            install_doflinx=true
-            echo -e "${green}[INFO] DOFLinx will be installed after Pixelcade setup completes${nc}"
-            break
-            ;;
-        [Nn]* )
-            install_doflinx=false
-            echo -e "${cyan}[INFO] Skipping DOFLinx installation${nc}"
-            break
-            ;;
-        * ) echo "Please answer y or n";;
-    esac
-done
-echo ""
+install_doflinx=true
 
 #let's see if Pixelcade LCD is there using lsusb and if not, ask the user a question as not all Pixelcade LCDs have the USB ID set, that is only with firmware 6.3 and above
 if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
@@ -159,6 +135,69 @@ if [[ "$pixelcade_lcd_usb_already_set" != "true" ]]; then
   fi
 else
   echo -e "${cyan}[INFO] Using pre-configured Pixelcade LCD Marquee over USB setup${nc}"
+fi
+
+# Pixelcade LCD HDMI Mode: an LCD bar plugged straight into this computer's
+# HDMI output (scaler board, no Orange Pi). It's recognized by the preferred
+# resolution in its EDID: very wide and short (1920x360, 1280x390) -- normal
+# monitors and TVs never are. Prints the output name, e.g. HDMI-A-1.
+detect_hdmi_lcd_bar() {
+    local dir status w h
+    for dir in /sys/class/drm/card*-*; do
+        status=$(cat "$dir/status" 2>/dev/null)
+        [[ "$status" == "connected" ]] || continue
+        [[ -r "$dir/edid" ]] || continue # (sysfs reports size 0, so no -s test)
+        # First detailed timing descriptor (bytes 54..71) = preferred mode
+        read -r b56 b58 b59 b61 < <(od -An -tu1 -j54 -N8 "$dir/edid" | awk '{print $3, $5, $6, $8}')
+        [[ -n "$b61" ]] || continue
+        w=$(( b56 | ((b58 & 0xf0) << 4) ))
+        h=$(( b59 | ((b61 & 0xf0) << 4) ))
+        if (( h > 0 && h <= 480 && w * 10 >= h * 30 )); then
+            echo "${dir##*/card[0-9]-}"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# LCD HDMI Mode is in beta, built for x86-64 PCs and ARM64 (e.g. Raspberry Pi 5)
+lcd_hdmi_available=false
+if [[ "$beta" == "true" && ( "$(uname -m)" == "x86_64" || "$(uname -m)" == "aarch64" ) ]]; then
+  lcd_hdmi_available=true
+fi
+if [[ "$pixelcade_lcd_hdmi_requested" == "true" ]]; then
+  if [[ "$lcd_hdmi_available" == "true" ]]; then
+    echo -e "${cyan}[INFO] Setting up Pixelcade LCD HDMI Mode (LCD bar on this computer's HDMI output)${nc}"
+    pixelcade_lcd_hdmi_already_set=true
+    pixelcade_lcd_hdmi=true
+  else
+    echo -e "${yellow}[WARNING] Pixelcade LCD HDMI Mode is only available with the beta installer on x86-64 and ARM64 (e.g. Raspberry Pi 5) for now -- skipping it${nc}"
+  fi
+fi
+
+if [[ "$lcd_hdmi_available" == "true" && "$pixelcade_lcd_hdmi_already_set" != "true" && "$pixelcade_lcd_usb" != "true" ]]; then
+  hdmi_lcd_output=$(detect_hdmi_lcd_bar)
+  if [[ -n "$hdmi_lcd_output" ]]; then
+      echo ""
+      echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+      echo -e "${cyan}Pixelcade LCD HDMI Mode${nc}"
+      echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+      echo ""
+      echo -e "${cyan}An LCD marquee bar is connected to this computer's HDMI output (${hdmi_lcd_output}).${nc}"
+      echo -e "${cyan}Pixelcade can drive it directly from this computer, with no separate single board computer.${nc}"
+      echo ""
+      while true; do
+          read -p "Use it as your Pixelcade LCD marquee (Pixelcade LCD HDMI Mode)? (y/n) " yn
+          case $yn in
+              [Yy]* ) pixelcade_lcd_hdmi=true; break;;
+              [Nn]* ) pixelcade_lcd_hdmi=false; break;;
+              * ) echo "Please answer y or n";;
+          esac
+      done
+  fi
+fi
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+  echo -e "${green}[INFO] Pixelcade LCD HDMI Mode will be set up${nc}"
 fi
 
 INSTALLPATH="${HOME}/"
@@ -205,6 +244,78 @@ if [[ $batocera_version -ge $batocera_40_plus_version ]]; then #we need to add t
         echo -e "${cyan}[INFO] Pixelcade LCD added to Batocera services for auto-start${nc}"
     else
         echo -e "${cyan}[INFO] Skipping Pixelcade LCD marquee configuration${nc}"
+    fi
+fi
+
+# Early WiFi setup for LCD USB — ask now while user is present for interactive questions
+if [[ "$pixelcade_lcd_usb" == "true" ]]; then
+    # For pre-40 Batocera, manually bring up the USB interface since there's no service
+    if [[ "$batocera_40_plus" != "true" ]]; then
+        for iface in eth1 usb0 usb1; do
+            if ip link show "$iface" &>/dev/null; then
+                ifconfig "$iface" 169.254.100.2 netmask 255.255.0.0 up 2>/dev/null
+                break
+            fi
+        done
+    fi
+    sleep 2
+
+    wifi_status_json=$(curl -s --connect-timeout 5 --max-time 10 \
+        "http://169.254.100.1:8080/v2/wifi/status" 2>/dev/null)
+    wifi_currently_connected=$(echo "$wifi_status_json" | grep -o '"connected":true' 2>/dev/null)
+    wifi_current_ssid=$(echo "$wifi_status_json" | grep -o '"ssid":"[^"]*"' | sed 's/"ssid":"//;s/"//' 2>/dev/null)
+
+    if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
+        echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
+        read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
+    else
+        echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
+        read -p "Configure WiFi? [y/N]: " wifi_choice
+    fi
+    wifi_choice="${wifi_choice%$'\r'}"
+
+    if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
+        read -p "WiFi SSID: " wifi_ssid
+        wifi_ssid="${wifi_ssid%$'\r'}"
+        if [[ -z "$wifi_ssid" ]]; then
+            echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
+        else
+            read -p "WiFi Password (leave blank for open network): " wifi_password
+            wifi_password="${wifi_password%$'\r'}"
+
+            wifi_ssid_json="${wifi_ssid//\\/\\\\}"
+            wifi_ssid_json="${wifi_ssid_json//\"/\\\"}"
+            wifi_pass_json="${wifi_password//\\/\\\\}"
+            wifi_pass_json="${wifi_pass_json//\"/\\\"}"
+
+            echo -e "${green}[INFO]${nc} Connecting Pixelcade LCD to: ${wifi_ssid}"
+            echo -e "${yellow}[NOTE]${nc} This may take up to 30 seconds..."
+
+            http_code=$(curl -s -o /tmp/pixelcade_wifi_resp.json -w "%{http_code}" \
+                -X POST \
+                -H "Content-Type: application/json" \
+                -d "{\"ssid\":\"${wifi_ssid_json}\",\"password\":\"${wifi_pass_json}\"}" \
+                --connect-timeout 10 \
+                --max-time 60 \
+                "http://169.254.100.1:8080/v2/wifi/connect" 2>/dev/null)
+
+            if [[ "$http_code" == "200" ]]; then
+                if grep -q '"success":true' /tmp/pixelcade_wifi_resp.json 2>/dev/null; then
+                    message=$(sed 's/.*"message":"\([^"]*\)".*/\1/' /tmp/pixelcade_wifi_resp.json 2>/dev/null)
+                    echo -e "${green}[SUCCESS]${nc} WiFi configured successfully! (${message})"
+                else
+                    message=$(sed 's/.*"message":"\([^"]*\)".*/\1/' /tmp/pixelcade_wifi_resp.json 2>/dev/null)
+                    echo -e "${red}[ERROR]${nc} WiFi connection failed: ${message}"
+                    echo -e "${yellow}[INFO]${nc} You can configure WiFi later via the Pixelcade app"
+                fi
+            else
+                echo -e "${red}[ERROR]${nc} Could not reach Pixelcade LCD (response: ${http_code})"
+                echo -e "${yellow}[INFO]${nc} After rebooting, you can configure WiFi via the Pixelcade app"
+            fi
+            rm -f /tmp/pixelcade_wifi_resp.json
+        fi
+    else
+        echo -e "${green}[INFO]${nc} Skipping WiFi setup - configure it later via the Pixelcade app"
     fi
 fi
 
@@ -266,15 +377,89 @@ elif ! command -v lsusb  &> /dev/null; then
 else
    if lsusb | grep -q '1b4f:0008'; then
       echo -e "${magenta}Pixelcade LED Marquee V1 Detected${white}"
-   elif lsusb | grep -q '2e8a:1050'; then 
+      pixelcade_led_detected=true
+   elif lsusb | grep -q '2e8a:1050'; then
       echo -e "${magenta}[INFO] Pixelcade LED Marquee V2 Detected${white}"
+      pixelcade_led_detected=true
    elif [[ "$pixelcade_lcd_usb" == "true" ]]; then
       echo -e "${yellow}[INFO] Pixelcade LCD Marquee Detected${white}"
-   else  
-      echo -e "${red}[ERROR] Sorry, Pixelcade LED or LCD Marquee was not detected, please ensure Pixelcade LED or LCD is USB connected to your Pi, exiting...${white}"
-      exit 1
+   elif [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+      echo -e "${yellow}[INFO] Pixelcade LCD HDMI Mode (no Pixelcade LED connected)${white}"
+   else
+      echo -e "${yellow}[WARNING] No Pixelcade LED or USB-connected LCD Marquee was detected${white}"
+      echo ""
+      while true; do
+         read -p "Do you have a Pixelcade LCD connected over the network (not USB)? (y/n) " yn
+         case $yn in
+            [Yy]* )
+               echo -e "${cyan}[INFO] Continuing installation for network-connected LCD...${nc}"
+               break
+               ;;
+            [Nn]* )
+               echo -e "${red}[ERROR] Please ensure your Pixelcade LED or LCD is connected and run the installer again${nc}"
+               exit 1
+               ;;
+            * ) echo "Please answer y or n";;
+         esac
+      done
    fi
 fi
+
+# If both LED and LCD are connected, ask about the LED marquee setup
+if [[ "$pixelcade_led_detected" == "true" && ("$pixelcade_lcd_usb" == "true" || "$pixelcade_lcd_usb_already_set" == "true" || "$pixelcade_lcd_hdmi" == "true") ]]; then
+    echo ""
+    echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+    echo -e "${cyan}LED + LCD Marquee Configuration${nc}"
+    echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+    echo ""
+    echo -e "${cyan}You have both a Pixelcade LED board and LCD connected.${nc}"
+    echo -e "${cyan}Does your LED board have a marquee display attached?${nc}"
+    echo -e "${cyan}  (y) = LED board has a marquee (LED + LCD marquees)${nc}"
+    echo -e "${cyan}  (n) = LED board is for Pixelcade Pulse lighting effects only (LCD-only marquee)${nc}"
+    echo ""
+    while true; do
+        read -p "Does your Pixelcade LED board have an LED marquee connected? (y/n) " yn
+        case $yn in
+            [Yy]* )
+                led_has_marquee=true
+                echo -e "${green}[INFO] Configured for LED + LCD marquees${nc}"
+                break
+                ;;
+            [Nn]* )
+                led_has_marquee=false
+                echo -e "${green}[INFO] Configured for LCD-only marquee with Pulse lighting${nc}"
+                break
+                ;;
+            * ) echo "Please answer y or n";;
+        esac
+    done
+    echo ""
+fi
+
+# Ask about Pixelcade Attract Mode now, up front with the other interactive
+# questions, so the user can answer everything and walk away -- the scripts
+# themselves aren't written until later in the install, once the
+# EmulationStation scripts folder exists (see attract_mode_choice below).
+echo ""
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo -e "${cyan}Pixelcade Attract Mode (Optional)${nc}"
+echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
+echo ""
+echo -e "${cyan}When the Batocera screensaver kicks in, Pixelcade can cycle${nc}"
+echo -e "${cyan}through a list of favorite widgets (weather, scores, clock, etc.)${nc}"
+echo -e "${cyan}that you can configure from the Pixelcade Companion Web UI${nc}"
+echo -e "${cyan}or the Pixelcade mobile app.${nc}"
+echo -e "${cyan}This feature can also be turned off later from Pixelcade Companion.${nc}"
+echo ""
+while true; do
+    read -p "Would you like to enable Pixelcade Attract Mode? (y/n) " yn
+    case $yn in
+        [Yy]* ) attract_mode_choice=true; break;;
+        [Nn]* ) attract_mode_choice=false; break;;
+        * ) echo "Please answer y or n";;
+    esac
+done
+echo ""
 
 # The possible platforms are:
 # linux_arm64
@@ -326,12 +511,12 @@ if cat /proc/device-tree/model | grep -q 'Raspberry Pi 3'; then
    pi3=true
 fi
 
-if cat /proc/device-tree/model | grep -q 'Pi 4'; then
+if cat /proc/device-tree/model | grep -q 'Raspberry Pi 4'; then
    printf "${yellow}Raspberry Pi 4 detected...\n"
    pi4=true
 fi
 
-if cat /proc/device-tree/model | grep -q 'Pi 5'; then
+if cat /proc/device-tree/model | grep -q 'Raspberry Pi 5'; then
    printf "${yellow}Raspberry Pi 5 detected...\n"
    pi5=true
 fi
@@ -353,10 +538,10 @@ if [[ $machine_arch == "default" ]]; then
 fi
 
 # ============================================================================
-# VPinball Installation for Batocera V41/V42 on AMD64 only
+# VPinball Installation for Batocera V41-V43 on AMD64 only (V44+ ships VPinball natively)
 # ============================================================================
 
-if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" == "amd64" ]]; then
+if [[ $batocera_version -ge 41 && $batocera_version -lt 44 && "$machine_arch" == "amd64" ]]; then
     echo ""
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo -e "${cyan}[INFO] Batocera V${batocera_version} on linux_amd64 detected${nc}"
@@ -465,7 +650,7 @@ if [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" 
 
     fi  # end of "else" block for VPinball not already installed
 
-elif [[ ($batocera_version -eq 41 || $batocera_version -eq 42) && "$machine_arch" != "amd64" ]]; then
+elif [[ $batocera_version -ge 41 && $batocera_version -lt 44 && "$machine_arch" != "amd64" ]]; then
     echo -e "${yellow}[WARN] VPinball is only available for linux_amd64 (detected: linux_${machine_arch})${nc}"
     echo -e "${cyan}[INFO] Skipping VPinball installation${nc}"
 fi
@@ -644,7 +829,56 @@ echo -e "${yellow}Installing Pixelcade EmulationStation Scripts for Batocera...$
 #copy over the custom scripts
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/batocera/scripts ${INSTALLPATH}configs/emulationstation #note this will overwrite existing scripts
 find ${INSTALLPATH}configs/emulationstation/scripts -type f -iname "*.sh" -exec chmod +x {} \; #make all the scripts executble
+#remove the attract mode scripts so they are not there by default
+rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
+rm -f ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+
+# Set up Pixelcade Attract Mode (the user already answered this up front --
+# see attract_mode_choice)
+if [[ "$attract_mode_choice" == "true" ]]; then
+    echo -e "${green}[INFO] Enabling Pixelcade Attract Mode...${nc}"
+    mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start
+    mkdir -p ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop
+    cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh << 'SSSTART'
+#!/bin/bash
+
+#
+# Screensaver Start Event
+# This script is called when the Batocera screensaver starts
+#
+
+# BASE URL for RESTful calls to Pixelcade
+PIXELCADEBASEURL="http://127.0.0.1:8080/"
+
+# Start attract mode with no interrupt (won't stop on button press)
+PIXELCADEURL="attract?nointerrupt"
+curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null &
+SSSTART
+    cat > ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh << 'SSSTOP'
+#!/bin/bash
+
+#
+# Screensaver Stop Event
+# This script is called when the Batocera screensaver stops
+#
+
+# BASE URL for RESTful calls to Pixelcade
+PIXELCADEBASEURL="http://127.0.0.1:8080/"
+
+# Stop attract mode
+PIXELCADEURL="attract/stop"
+curl -s "$PIXELCADEBASEURL$PIXELCADEURL" >> /dev/null 2>/dev/null
+SSSTOP
+    chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-start/pixelcade.sh
+    chmod +x ${INSTALLPATH}configs/emulationstation/scripts/screensaver-stop/pixelcade.sh
+    echo -e "${green}[SUCCESS] Pixelcade Attract Mode enabled${nc}"
+else
+    echo -e "${cyan}[INFO] Skipping Pixelcade Attract Mode${nc}"
+fi
+echo ""
+
 #hi2txt for high score scrolling
+
 echo -e "${yellow}Installing hi2txt for High Scores...${white}" #note this requires java
 cp -r -f ${INSTALLPATH}ptemp/pixelcade-linux-main/hi2txt ${INSTALLPATH}pixelcade #for high scores
 
@@ -722,11 +956,65 @@ else #we have self contained V38 or above so let's make sure custom.sh has pixel
 fi
 
 chmod a+x ${INSTALLPATH}pixelcade/pixelweb
-cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
 
-if [[ $? == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
-    echo "Checking for new Pixelcade artwork..."
-    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork
+# If the mame artwork folder is missing but a version file exists, remove the version file
+# so pixelweb performs a full re-download instead of skipping it as already up-to-date.
+_artwork_version_file="${INSTALLPATH}pixelcade/.alinke_pixelcade-master-version"
+if [[ ! -d "${INSTALLPATH}pixelcade/mame" && -f "$_artwork_version_file" ]]; then
+    rm -f "$_artwork_version_file"
+    echo -e "${green}[INFO]${nc} Artwork folder missing — cleared version file to force full artwork download"
+fi
+
+# LCD HDMI Mode with no LED marquee (no LED board, or one used only for Pulse
+# lighting): the LED artwork isn't shown anywhere, so only its core files
+# (console.csv, DOFLinx, fonts, system -- about 5 MB) instead of the whole repo.
+# Choosing an LED marquee later installs the rest from the Companion's Update tab.
+_artwork_status=0
+if [[ "$pixelcade_lcd_hdmi" == "true" && ( "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ) ]] \
+   && ${INSTALLPATH}pixelcade/pixelweb -h 2>&1 | grep -q 'install-artwork-core'; then
+    echo -e "${green}[INFO]${nc} No LED marquee: installing the core Pixelcade files only (the LCD has its own artwork)"
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork-core
+else
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -install-artwork #install the artwork
+    _artwork_status=$?
+fi
+
+if [[ $_artwork_status == 2 ]]; then #this means artwork is already installed so let's check for updates and get if so
+    echo -e "${green}[INFO]${nc} Updating Pixelcade artwork — this downloads thousands of files and may take several minutes..."
+    cd ${INSTALLPATH}pixelcade && ./pixelweb -update-artwork &
+    _artwork_pid=$!
+    _artwork_elapsed=0
+    while kill -0 "$_artwork_pid" 2>/dev/null; do
+        sleep 15
+        _artwork_elapsed=$(( _artwork_elapsed + 15 ))
+        echo -e "${green}[INFO]${nc} Still downloading artwork... (${_artwork_elapsed}s elapsed)"
+    done
+    wait "$_artwork_pid"
+    _artwork_exit=$?
+
+    if [ $_artwork_exit -eq 0 ]; then
+        echo -e "${green}[SUCCESS]${nc} Pixelcade artwork updated"
+    else
+        echo -e "${yellow}[WARNING]${nc} Artwork update exited with code $_artwork_exit - you can retry later from the Update tab"
+    fi
+fi
+
+# Force-update DOFLinx .MAME files (artwork update may skip these if artwork is already up to date)
+echo -e "${green}[INFO]${nc} Updating DOFLinx .MAME files..."
+cd ${INSTALLPATH}pixelcade && ./pixelweb -update-doflinx &
+_doflinx_pid=$!
+_doflinx_elapsed=0
+while kill -0 "$_doflinx_pid" 2>/dev/null; do
+    sleep 10
+    _doflinx_elapsed=$(( _doflinx_elapsed + 10 ))
+    echo -e "${green}[INFO]${nc} Still downloading DOFLinx MAME files... (${_doflinx_elapsed}s elapsed)"
+done
+wait "$_doflinx_pid"
+
+if [ $? -eq 0 ]; then
+    echo -e "${green}[SUCCESS]${nc} DOFLinx .MAME files updated"
+else
+    echo -e "${yellow}[WARNING]${nc} DOFLinx MAME update failed - you can retry later from the Update tab"
 fi
 
 cd ${INSTALLPATH}pixelcade
@@ -735,7 +1023,39 @@ wget -O ${INSTALLPATH}pixelcade/pixelcadelcdfinder https://github.com/alinke/pix
 chmod +x ${INSTALLPATH}pixelcade/pixelcadelcdfinder
 
 echo "Checking for Pixelcade LCDs on your network..."
+if [[ "$pixelcade_lcd_hdmi" != "true" ]]; then
 ${INSTALLPATH}pixelcade/pixelcadelcdfinder -nogui #check for Pixelcade LCDs
+fi
+
+# Pixelcade LCD HDMI Mode: pixelweb does the rest on its first start --
+# downloads the LCD software and the Artwork Library, sets Batocera's main and
+# second screen, and takes the LCD output over from Batocera's backglass.
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+    echo "Updating pixelcade.ini for Pixelcade LCD HDMI Mode..."
+    ini=${INSTALLPATH}pixelcade/pixelcade.ini
+    if [[ -f $ini ]]; then
+        set_ini() { # key value
+            if grep -q "^$1[ ]*=" "$ini"; then
+                sed -i "s|^$1[ ]*=.*|$1 = $2|" "$ini"
+            else
+                sed -i "/^lcdMarquee[ ]*=/a $1 = $2" "$ini"
+                grep -q "^$1[ ]*=" "$ini" || echo "$1 = $2" >> "$ini"
+            fi
+        }
+        set_ini lcdConnection hdmi
+        if [[ "$beta" == "true" ]]; then
+            set_ini lcdSoftwareChannel beta
+        fi
+        # No LED board, or one used only for Pulse lighting: the LCD is the only marquee
+        if [[ "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ]]; then
+            set_ini noLedMatrix true
+        fi
+        echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for Pixelcade LCD HDMI Mode"
+        echo -e "${cyan}[INFO] On its first start Pixelcade downloads the LCD software and the LCD artwork library (about 20 GB) in the background -- progress shows on the LCD.${nc}"
+    else
+        echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
+    fi
+fi
 
 
 #if pixelcade lcd is usb connected, then update pixelcade.ini accordingly
@@ -744,28 +1064,297 @@ if [[ "$pixelcade_lcd_usb" == "true" ]]; then
     if [[ -f ${INSTALLPATH}pixelcade/pixelcade.ini ]]; then
         sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
         sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' ${INSTALLPATH}pixelcade/pixelcade.ini
-        echo -e "${cyan}Successfully updated pixelcade.ini for LCD USB connection${nc}"
+
+        # Fetch the LCD hostname from the USB local-link address and write it to pixelcade.ini
+        lcd_info_json=$(curl -s --connect-timeout 5 --max-time 10 \
+            "http://169.254.100.1:8080/v2/info" 2>/dev/null)
+        lcd_hostname=$(echo "$lcd_info_json" | grep -o '"hostname":"[^"]*"' | sed 's/"hostname":"//;s/"//')
+        if [[ -n "$lcd_hostname" ]]; then
+            sed -i "s|lcdMarqueeHostName[ ]*=.*|lcdMarqueeHostName            = ${lcd_hostname}|" ${INSTALLPATH}pixelcade/pixelcade.ini
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB (hostname: ${lcd_hostname})"
+        else
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB"
+            echo -e "${yellow}[WARNING]${nc} Could not retrieve LCD hostname — set lcdMarqueeHostName manually if needed"
+        fi
+        # If LED board has no marquee (Pulse-only), set noLedMatrix = true
+        if [[ "$led_has_marquee" == "false" ]]; then
+            if grep -q '^noLedMatrix' ${INSTALLPATH}pixelcade/pixelcade.ini; then
+                sed -i 's/^noLedMatrix.*/noLedMatrix                   = true/' ${INSTALLPATH}pixelcade/pixelcade.ini
+            else
+                echo 'noLedMatrix                   = true' >> ${INSTALLPATH}pixelcade/pixelcade.ini
+            fi
+            echo -e "${green}[INFO]${nc} Set noLedMatrix = true (LCD-only marquee with Pulse lighting)"
+        fi
     else
         echo -e "${cyan}pixelcade.ini not found, skipping update...${nc}"
     fi
+
+    # AtGames Legends Ultimate detection - configure BitLCD and DOFLinx automatically
+    # rk3328-ha8801 = Legends 1.1, rk3399-legends = Legends 1.0
+    board_compatible=$(cat /proc/device-tree/compatible 2>/dev/null | tr '\0' '\n')
+    if echo "$board_compatible" | grep -qE 'ha8801|rk3399-legends'; then
+        echo -e "${green}[INFO]${nc} AtGames Legends cabinet detected"
+
+        # Set BitLCD screen mode on the LCD
+        echo -e "${green}[INFO]${nc} Setting BitLCD screen mode..."
+        alu_response=$(curl -s --connect-timeout 5 --max-time 15 \
+            "http://169.254.100.1:8080/settings?key=screenMode&value=bitlcd" 2>/dev/null)
+        if [[ -n "$alu_response" ]]; then
+            echo -e "${green}[SUCCESS]${nc} BitLCD screen mode configured"
+        else
+            echo -e "${yellow}[WARNING]${nc} Could not set BitLCD screen mode - configure it later in the Pixelcade app"
+        fi
+
+        # Configure DOFLinx.ini button mappings for ALU
+        doflinx_ini="${INSTALLPATH}doflinx/config/DOFLinx.ini"
+        if [[ -f "$doflinx_ini" ]]; then
+            echo -e "${green}[INFO]${nc} Configuring DOFLinx.ini for AtGames Legends Ultimate..."
+            for entry in \
+                "LINK_BUT_CN=0000,Orange,J0106,0000,MONO,J0306" \
+                "LINK_BUT_P1=0000,Cyan,J0109,0000,MONO,J0309" \
+                "LINK_BUT_P2=0000,Orchid,J0209,0000,MONO,J0409"; do
+                key="${entry%%=*}"
+                value="${entry#*=}"
+                if grep -q "^${key}[[:space:]]*=" "$doflinx_ini"; then
+                    sed -i "s|^${key}[[:space:]]*=.*|${key}=${value}|" "$doflinx_ini"
+                else
+                    echo "${key}=${value}" >> "$doflinx_ini"
+                fi
+            done
+            echo -e "${green}[SUCCESS]${nc} DOFLinx.ini configured for AtGames Legends Ultimate"
+        else
+            echo -e "${yellow}[WARNING]${nc} DOFLinx.ini not found, skipping ALU button configuration"
+        fi
+    fi
+
 fi
 
 # Install DOFLinx if user opted in
 if [[ "$install_doflinx" == "true" ]]; then
     echo ""
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
-    echo -e "${cyan}Installing DOFLinx for In-Game Effects...${nc}"
+    echo -e "${cyan}Installing DOFLinx for In-Game Effects on the FBNEO wheel...${nc}"
     echo -e "${magenta}═══════════════════════════════════════════════════════════${nc}"
     echo ""
-    cd ${INSTALLPATH}
-    wget https://raw.githubusercontent.com/alinke/DOFLinx-for-Linux/refs/heads/main/setup-doflinx.sh && chmod +x setup-doflinx.sh && ./setup-doflinx.sh
-    if [ $? -eq 0 ]; then
-        echo -e "${green}[SUCCESS] DOFLinx installation complete${nc}"
-    else
-        echo -e "${yellow}[WARNING] DOFLinx installation may have encountered issues${nc}"
+
+    # Stop running DOFLinx if this is a reinstall
+    doflinx_pids=$(pidof DOFLinx 2>/dev/null)
+    if [[ -n "$doflinx_pids" ]]; then
+        echo -e "${green}[INFO]${nc} Stopping running DOFLinx process(es): $doflinx_pids"
+        DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 ${INSTALLPATH}doflinx/DOFLinxMsg QUIT 2>/dev/null
+        sleep 2
+        doflinx_pids=$(pidof DOFLinx 2>/dev/null)
+        if [[ -n "$doflinx_pids" ]]; then
+            kill -9 $doflinx_pids 2>/dev/null
+            sleep 1
+        fi
     fi
-    # Clean up the DOFLinx setup script
-    rm -f ${INSTALLPATH}setup-doflinx.sh
+
+    # Create directories
+    mkdir -p ${INSTALLPATH}doflinx/config
+
+    # Map architecture to DOFLinx folder names
+    if [[ $machine_arch == "arm64" ]]; then
+        doflinx_stable_folder="Linux_arm64"
+        doflinx_beta_folder="Linux_arm64_beta"
+    elif [[ $machine_arch == "amd64" ]]; then
+        doflinx_stable_folder="Linux_x64"
+        doflinx_beta_folder="Linux_x64_beta"
+    else
+        echo -e "${red}[ERROR]${nc} DOFLinx unsupported architecture: $machine_arch"
+        doflinx_stable_folder=""
+    fi
+
+    if [[ -n "$doflinx_stable_folder" ]]; then
+        # Download the whole DOFLinx executables repo once and copy over whatever
+        # files actually exist in it, rather than hardcoding each filename
+        # individually — a new file the DOFLinx author adds (like DOFLinxCommon.so
+        # was) then just shows up automatically instead of silently breaking the
+        # install until the installer script is updated.
+        doflinx_archive_url="https://codeload.github.com/DOFLinx/CurrentExecutable/tar.gz/refs/heads/main"
+        doflinx_tmpdir=$(mktemp -d)
+
+        echo -e "${green}[INFO]${nc} Downloading DOFLinx executables archive..."
+        wget -q -O "${doflinx_tmpdir}/doflinx.tar.gz" "$doflinx_archive_url"
+        if [ $? -ne 0 ]; then
+            echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executables archive"
+        else
+            tar -xzf "${doflinx_tmpdir}/doflinx.tar.gz" -C "$doflinx_tmpdir"
+            doflinx_extracted=$(find "$doflinx_tmpdir" -maxdepth 1 -type d -name "CurrentExecutable-*" | head -1)
+
+            if [[ -z "$doflinx_extracted" || ! -d "${doflinx_extracted}/${doflinx_stable_folder}" ]]; then
+                echo -e "${red}[ERROR]${nc} DOFLinx archive did not contain expected folder ${doflinx_stable_folder}"
+            else
+                echo -e "${green}[INFO]${nc} Installing DOFLinx files from ${doflinx_stable_folder}..."
+                cp -a "${doflinx_extracted}/${doflinx_stable_folder}/." "${INSTALLPATH}doflinx/"
+            fi
+
+            doflinx_using_beta=false
+            if [[ "$beta" == "true" ]]; then
+                if [[ -n "$doflinx_extracted" && -d "${doflinx_extracted}/${doflinx_beta_folder}" ]]; then
+                    echo -e "${yellow}[BETA]${nc} Beta DOFLinx found - using executable from ${doflinx_beta_folder}..."
+                    cp -a "${doflinx_extracted}/${doflinx_beta_folder}/." "${INSTALLPATH}doflinx/"
+                    doflinx_using_beta=true
+                else
+                    echo -e "${yellow}[INFO]${nc} Beta DOFLinx not available - using stable..."
+                fi
+            fi
+        fi
+        rm -rf "$doflinx_tmpdir"
+
+        if [[ ! -f "${INSTALLPATH}doflinx/DOFLinx" ]]; then
+            echo -e "${red}[ERROR]${nc} DOFLinx executable missing after copy"
+        fi
+
+        # Set execute permissions
+        chmod a+x ${INSTALLPATH}doflinx/DOFLinx 2>/dev/null
+        chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg 2>/dev/null
+        chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null
+
+        # Create DOFLinx startup script
+        if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+            echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
+            cat > ${INSTALLPATH}doflinx/doflinx.sh << DOFEOF
+#!/bin/bash
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+cd ${INSTALLPATH}doflinx && ./DOFLinx
+DOFEOF
+            chmod +x ${INSTALLPATH}doflinx/doflinx.sh
+        fi
+
+        # Download config files — use rcade config (FBNEO core) with Batocera paths
+        doflinx_config_dir="${INSTALLPATH}doflinx/config"
+        doflinx_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/DOFLinx.ini"
+        doflinx_ini="${doflinx_config_dir}/DOFLinx.ini"
+        doflinx_ini_hash="${doflinx_config_dir}/.DOFLinx.ini.original.md5"
+        doflinx_ini_tmp="${doflinx_config_dir}/DOFLinx.ini.tmp"
+
+        echo -e "${green}[INFO]${nc} Checking DOFLinx.ini..."
+        wget -q -O "$doflinx_ini_tmp" "$doflinx_ini_url"
+        if [ $? -ne 0 ]; then
+            echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.ini"
+            rm -f "$doflinx_ini_tmp"
+        else
+            # Fix paths from rcade to Batocera
+            sed -i "s|/rcade/share/pixelcade/|${INSTALLPATH}pixelcade/|g" "$doflinx_ini_tmp"
+            sed -i "s|/rcade/share/roms/mame/|/userdata/roms/mame/|g" "$doflinx_ini_tmp"
+            sed -i "s|/rcade/share/saves/|/userdata/saves/|g" "$doflinx_ini_tmp" # FBNeo high scores (MAME_HIGHSCORE_FOLDER)
+            sed -i "s|Config file for DOFLinx Linux on RCade|Config file for DOFLinx Linux on Batocera|" "$doflinx_ini_tmp"
+
+            new_hash=$(md5sum "$doflinx_ini_tmp" 2>/dev/null | cut -d' ' -f1)
+            current_hash=$(md5sum "$doflinx_ini" 2>/dev/null | cut -d' ' -f1)
+            original_hash=$(cat "$doflinx_ini_hash" 2>/dev/null)
+
+            if [[ ! -f "$doflinx_ini" ]]; then
+                echo -e "${green}[INFO]${nc} Installing DOFLinx.ini..."
+                mv "$doflinx_ini_tmp" "$doflinx_ini"
+                echo "$new_hash" > "$doflinx_ini_hash"
+            elif [[ "$new_hash" == "$current_hash" ]]; then
+                echo -e "${green}[INFO]${nc} DOFLinx.ini is already up to date"
+                rm -f "$doflinx_ini_tmp"
+            elif [[ "$current_hash" == "$original_hash" ]]; then
+                echo -e "${green}[INFO]${nc} Updating DOFLinx.ini to latest version..."
+                mv "$doflinx_ini_tmp" "$doflinx_ini"
+                echo "$new_hash" > "$doflinx_ini_hash"
+                rm -f "${doflinx_config_dir}/DOFLinx.ini.latest"
+            else
+                echo -e "${yellow}[NOTICE]${nc} You have customized DOFLinx.ini - ${green}preserving your changes${nc}"
+                echo -e "${yellow}[NOTICE]${nc} New version saved as: ${cyan}${doflinx_config_dir}/DOFLinx.ini.latest${nc}"
+                mv "$doflinx_ini_tmp" "${doflinx_config_dir}/DOFLinx.ini.latest"
+            fi
+        fi
+
+        # Smart update for colours.ini
+        colours_ini_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/colours.ini"
+        colours_ini="${doflinx_config_dir}/colours.ini"
+        colours_ini_hash="${doflinx_config_dir}/.colours.ini.original.md5"
+        colours_ini_tmp="${doflinx_config_dir}/colours.ini.tmp"
+
+        echo -e "${green}[INFO]${nc} Checking colours.ini..."
+        wget -q -O "$colours_ini_tmp" "$colours_ini_url"
+        if [ $? -ne 0 ]; then
+            echo -e "${yellow}[WARNING]${nc} Failed to download colours.ini"
+            rm -f "$colours_ini_tmp"
+        else
+            new_hash=$(md5sum "$colours_ini_tmp" 2>/dev/null | cut -d' ' -f1)
+            current_hash=$(md5sum "$colours_ini" 2>/dev/null | cut -d' ' -f1)
+            original_hash=$(cat "$colours_ini_hash" 2>/dev/null)
+
+            if [[ ! -f "$colours_ini" ]]; then
+                echo -e "${green}[INFO]${nc} Installing colours.ini..."
+                mv "$colours_ini_tmp" "$colours_ini"
+                echo "$new_hash" > "$colours_ini_hash"
+            elif [[ "$new_hash" == "$current_hash" ]]; then
+                echo -e "${green}[INFO]${nc} colours.ini is already up to date"
+                rm -f "$colours_ini_tmp"
+            elif [[ "$current_hash" == "$original_hash" ]]; then
+                echo -e "${green}[INFO]${nc} Updating colours.ini to latest version..."
+                mv "$colours_ini_tmp" "$colours_ini"
+                echo "$new_hash" > "$colours_ini_hash"
+                rm -f "${doflinx_config_dir}/colours.ini.latest"
+            else
+                echo -e "${yellow}[NOTICE]${nc} You have customized colours.ini - ${green}preserving your changes${nc}"
+                echo -e "${yellow}[NOTICE]${nc} New version saved as: ${cyan}${doflinx_config_dir}/colours.ini.latest${nc}"
+                mv "$colours_ini_tmp" "${doflinx_config_dir}/colours.ini.latest"
+            fi
+        fi
+
+        # Install DOFLinx service file for auto-start
+        echo -e "${green}[INFO]${nc} Installing DOFLinx service file..."
+        mkdir -p ${INSTALLPATH}services
+        wget -q -O ${INSTALLPATH}services/doflinx https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/batocera/doflinx_fbneo/doflinx
+        if [ $? -eq 0 ]; then
+            chmod +x ${INSTALLPATH}services/doflinx
+            batocera-services enable doflinx
+            echo -e "${green}[SUCCESS]${nc} DOFLinx service installed and enabled for auto-start"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx service file - DOFLinx will need to be started manually"
+        fi
+
+        # Enable RetroArch Network Command Interface (required for DOFLinx to detect which game is running)
+        RETROARCH_CFG="${INSTALLPATH}configs/retroarch/retroarchcustom.cfg"
+        if [[ -f "$RETROARCH_CFG" ]]; then
+            echo -e "${green}[INFO]${nc} Enabling RetroArch Network Command Interface for DOFLinx..."
+            if grep -q '^network_cmd_enable' "$RETROARCH_CFG"; then
+                sed -i 's/^network_cmd_enable.*/network_cmd_enable = "true"/' "$RETROARCH_CFG"
+            else
+                echo 'network_cmd_enable = "true"' >> "$RETROARCH_CFG"
+            fi
+            if grep -q '^network_cmd_port' "$RETROARCH_CFG"; then
+                sed -i 's/^network_cmd_port.*/network_cmd_port = "55355"/' "$RETROARCH_CFG"
+            else
+                echo 'network_cmd_port = "55355"' >> "$RETROARCH_CFG"
+            fi
+            echo -e "${green}[SUCCESS]${nc} RetroArch NCI enabled (network_cmd_enable=true, port=55355)"
+        else
+            echo -e "${yellow}[WARNING]${nc} RetroArch config not found at $RETROARCH_CFG — you may need to enable Network Command Interface manually"
+        fi
+
+        # Configure PIXELCADE_EXPLOSIONS_DISPLAYS based on marquee setup
+        doflinx_ini="${INSTALLPATH}doflinx/config/DOFLinx.ini"
+        if [[ -f "$doflinx_ini" ]]; then
+            if [[ "$pixelcade_led_detected" == "false" || "$led_has_marquee" == "false" ]]; then
+                explosions_value="LCD"
+            elif [[ "$led_has_marquee" == "true" ]]; then
+                explosions_value="LED,LCD"
+            else
+                explosions_value=""
+            fi
+            if [[ -n "$explosions_value" ]]; then
+                if grep -q '^PIXELCADE_EXPLOSIONS_DISPLAYS' "$doflinx_ini"; then
+                    sed -i "s|^PIXELCADE_EXPLOSIONS_DISPLAYS.*|PIXELCADE_EXPLOSIONS_DISPLAYS=${explosions_value}|" "$doflinx_ini"
+                else
+                    echo "PIXELCADE_EXPLOSIONS_DISPLAYS=${explosions_value}" >> "$doflinx_ini"
+                fi
+                echo -e "${green}[INFO]${nc} Set PIXELCADE_EXPLOSIONS_DISPLAYS=${explosions_value}"
+            fi
+        fi
+
+        echo -e "${green}[SUCCESS]${nc} DOFLinx installed to ${INSTALLPATH}doflinx"
+        if [[ "$doflinx_using_beta" == "true" ]]; then
+            echo -e "${cyan}[INFO]${nc} DOFLinx Version: ${yellow}BETA${nc}"
+        fi
+    fi
     echo ""
 fi
 
@@ -786,11 +1375,54 @@ echo ""
 pixelcade_version="$(cd ${INSTALLPATH}pixelcade && ./pixelweb -version)"
 echo -e "${magenta}[INFO] Pixelcade $pixelcade_version Installed${nc}"
 
-echo " "
-echo -e "${cyan}[INFO] An LED art pack is available at https://pixelcade.org/artpack/${nc}"
-echo -e "${cyan}[INFO] The LED art pack adds additional animated marquees for select games${nc}"
-echo -e "${cyan}[INFO] After purchase, you'll receive a serial code and then install with this command:${nc}"
-echo -e "${cyan}[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>${nc}"
+# TEMPORARY (beta, x86-64 only): a DOFLinx build with in-game effects support
+# that isn't in the DOFLinx repo yet. Done at the end so nothing above
+# replaces it. Remove once the DOFLinx repo has it.
+if [[ "$beta" == "true" && "$machine_arch" == "amd64" && -d "${INSTALLPATH}doflinx" ]]; then
+    echo -e "${yellow}[BETA]${nc} Installing the temporary x86-64 DOFLinx build with in-game effects support..."
+    _doflinx_temp="${INSTALLPATH}doflinx/DOFLinx.download"
+    if wget -q -O "$_doflinx_temp" "https://github.com/alinke/pixelcade-linux-builds/raw/main/temp/DOFLinx" && [[ -s "$_doflinx_temp" ]]; then
+        chmod a+x "$_doflinx_temp"
+        mv -f "$_doflinx_temp" "${INSTALLPATH}doflinx/DOFLinx"
+        if pidof DOFLinx >/dev/null 2>&1; then
+            batocera-services stop doflinx >/dev/null 2>&1
+            sleep 2
+            batocera-services start doflinx >/dev/null 2>&1
+        fi
+        echo -e "${green}[SUCCESS]${nc} Temporary DOFLinx build installed"
+    else
+        rm -f "$_doflinx_temp"
+        echo -e "${yellow}[WARNING]${nc} Couldn't download the temporary DOFLinx build -- keeping the regular one"
+    fi
+fi
+
+_no_led_marquee=false
+if [[ "$pixelcade_led_detected" != "true" || "$led_has_marquee" == "false" ]]; then
+    _no_led_marquee=true
+fi
+
+if [[ "$pixelcade_lcd_hdmi" == "true" ]]; then
+    echo " "
+    echo -e "${cyan}=====================================================================${nc}"
+    echo -e "${cyan} Pixelcade LCD HDMI Mode: after the reboot, the LCD downloads its${nc}"
+    echo -e "${cyan} artwork library in the background (about 20 GB, roughly 30-40 minutes${nc}"
+    echo -e "${cyan} depending on your internet connection).${nc}"
+    echo -e "${cyan}  - Progress shows along the bottom of the LCD marquee.${nc}"
+    echo -e "${cyan}  - The artwork for the games on this computer downloads first, then the${nc}"
+    echo -e "${cyan}    rest of the library; videos come last.${nc}"
+    echo -e "${cyan}  - You can play during the download: a game whose artwork hasn't arrived${nc}"
+    echo -e "${cyan}    yet shows its console marquee until it does.${nc}"
+    echo -e "${cyan}  - If the computer restarts, the download picks up where it left off.${nc}"
+    echo -e "${cyan}=====================================================================${nc}"
+fi
+
+if [[ "$_no_led_marquee" != "true" ]]; then
+    echo " "
+    echo -e "${cyan}[INFO] An LED art pack is available at https://pixelcade.org/artpack/${nc}"
+    echo -e "${cyan}[INFO] The LED art pack adds additional animated marquees for select games${nc}"
+    echo -e "${cyan}[INFO] After purchase, you'll receive a serial code and then install with this command:${nc}"
+    echo -e "${cyan}[INFO] cd ~/pixelcade && ./pixelweb --install-artpack <serial code>${nc}"
+fi
 
 echo -e "\n${magenta}Please now reboot and Pixelcade will be loaded automatically on startup${nc}"
 echo -e "${magenta}Would you like to reboot now? (y/n)${nc}"

@@ -1,7 +1,7 @@
 {
   "production": {
     "version": 23,
-    "subversion": 7,
+    "subversion": 10,
     "releaseNotes": [
       "Fixed intermittent bug when deleting zones",
       "All Pulse effects now have both a loops and duration param that will clear when done",
@@ -12,17 +12,36 @@
       "Added graphic equalizer effects fo Pulse devices for Spotify and Last.fm widgets",
       "Changed to improved, single pixel font for Pixelcade Pulse dot matrix display",
       "Smooth scrolling for the Pulse dot matrix display",
-      "Added zone based flood commands"
+      "Added zone based flood commands",
+      "Batocera VPinball fixes",
+      "Pulse 7Segment, Dot Matrix, and miniLCD startup init fixs",
+      "Added char support to 7segment api and perf improvement",
+      "Pulse - New LED strip and matrix effects for the Planes Overhead and Earthquake widgets",
+      "Pulse - Improved the majority of the console LED strip animations, added additional mame games, and added a set for RCade menu items",
+      "Pulse - bug fixes for zone setups"
     ]
   },
   "beta": {
     "version": 23,
-    "subversion": 8,
+    "subversion": 12,
     "releaseNotes": [
-      "Batocera VPinball fixes"
+      "Fix: writing a large default marquee from Set Default Marquee no longer ends on the Pixelcade logo -- replacing a big marquee with another big one ran out of flash space part-way through, and the new marquee was lost. The old marquee is now removed before the new one is written",
+      "Fix: writing a default marquee while the strip or displays are busy no longer stalls or fails -- the second core now stays paused for the whole write, and a write that can't start leaves the stored marquee unchanged instead of half-written",
+      "Fix: a default marquee that runs longer than 60 seconds now plays to the end and loops -- it used to freeze on one frame after 60 seconds",
+      "Already on this beta? Reinstall it from the Update page to get these fixes",
+      "New: Pulse strip bulk writes -- /ledstrip/frame and /ledstrip/ranges set any number of LEDs with one refresh, so programs can stream their own animations (about 200 frames a second on a 144-LED strip). Needs pixelweb 8.0.26+",
+      "Fix: turning off the whole Pulse strip (/ledstrip/clear) now always leaves it dark -- a running effect could draw one last frame after the clear",
+      "Fix: clearing a Pulse zone now always turns it off -- a running effect could draw one last frame after the clear and leave it lit",
+      "Fix: 7-segment and dot matrix no longer blank when pixelweb restarts (e.g. returning from Visual Pinball) -- a display that's already running keeps showing its content, and commands to the Pulse displays are no longer dropped during a re-init. A full re-init still happens after a power cycle or USB unplug",
+      "Fix: the mini LCD no longer blanks between updates -- new lines overwrite the old ones instead of clearing the screen first",
+      "Faster 7-segment/dot matrix re-init (power-up test patterns only shown at power-up)",
+      "Fixed intermittent bug when deleting zones",
+      "All Pulse effects now have both a loops and duration param that will clear when done",
+      "Added color params to all 8x8 matrix explosions",
+      "Fixed intermittent crash with clear all zones button in Companion"
     ]
   },
-  "lastUpdated": "2025-01-08T00:00:00Z",
+  "lastUpdated": "2026-11-25T08:54:25Z",
   "baseUrls": {
     "production": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/current/",
     "beta": "https://github.com/alinke/pixelcade-linux-builds/raw/refs/heads/main/firmware/beta/"

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixelcade - Authorization Complete</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            max-width: 480px;
+            margin: 20px;
+        }
+        .logo { font-size: 48px; margin-bottom: 20px; }
+        h1 { font-size: 24px; margin-bottom: 16px; }
+        .provider { font-weight: bold; text-transform: capitalize; }
+        .provider.google, .provider.photos, .provider.calendar { color: #4285F4; }
+        .provider.spotify  { color: #1DB954; }
+        .provider.lastfm   { color: #d51007; }
+        .provider.yahoo    { color: #6001D2; }
+        .provider.twitch   { color: #9146FF; }
+        .status {
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+        .status.success    { background: rgba(29,185,84,0.2);  color: #1DB954; }
+        .status.error      { background: rgba(255,82,82,0.2);  color: #ff5252; }
+        .status.processing { background: rgba(255,193,7,0.2);  color: #ffc107; }
+        .message { font-size: 15px; color: rgba(255,255,255,0.8); margin: 16px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="logo">🎮</div>
+    <h1>Pixelcade Authorization</h1>
+    <div id="provider" class="provider"></div>
+    <div id="status"  class="status processing">Processing...</div>
+    <div id="message" class="message"></div>
+</div>
+
+<script>
+(function () {
+    var params   = new URLSearchParams(window.location.search);
+    var code     = params.get('code');
+    var state    = params.get('state');
+    var error    = params.get('error');
+
+    var statusEl  = document.getElementById('status');
+    var messageEl = document.getElementById('message');
+    var providerEl = document.getElementById('provider');
+
+    var provider  = 'google';
+    var sessionId = '';
+    if (state && state.indexOf(':') !== -1) {
+        var parts = state.split(':');
+        provider  = parts[0];
+        sessionId = parts.slice(1).join(':');
+    }
+
+    var providerNames = {
+        spotify:  'Spotify',
+        google:   'Google',
+        photos:   'Google Photos',
+        calendar: 'Google',
+        lastfm:   'Last.fm',
+        yahoo:    'Yahoo Fantasy',
+        twitch:   'Twitch'
+    };
+    providerEl.textContent  = providerNames[provider] || provider;
+    providerEl.className    = 'provider ' + provider;
+
+    if (error) {
+        statusEl.textContent = 'Authorization Failed';
+        statusEl.className   = 'status error';
+        messageEl.textContent = 'Error: ' + error;
+        return;
+    }
+
+    if (!code || !sessionId) {
+        statusEl.textContent  = 'Missing Parameters';
+        statusEl.className    = 'status error';
+        messageEl.textContent = 'Required authorization parameters were not received.';
+        return;
+    }
+
+    // Relay the code to the Pixelcade server.
+    // This cross-origin call is fine — relay.php sends Access-Control-Allow-Origin: *.
+    // Crucially, this URL contains only clean params (no iss= or scope=) so
+    // ModSecurity on pixelcade.org will not block it.
+    var relayUrl = 'https://pixelcade.org/api/oauth/relay.php'
+        + '?action=store'
+        + '&provider='  + encodeURIComponent(provider)
+        + '&session='   + encodeURIComponent(sessionId)
+        + '&code='      + encodeURIComponent(code);
+
+    fetch(relayUrl)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            if (data.status === 'success') {
+                statusEl.textContent  = '✓ Connected!';
+                statusEl.className    = 'status success';
+                messageEl.textContent = 'Your Pixelcade device will connect automatically. You can close this window.';
+            } else {
+                throw new Error(data.error || 'Relay error');
+            }
+        })
+        .catch(function (err) {
+            statusEl.textContent  = 'Error';
+            statusEl.className    = 'status error';
+            messageEl.textContent = 'Could not reach the Pixelcade relay. Please try again.';
+            console.error(err);
+        });
+}());
+</script>
+</body>
+</html>

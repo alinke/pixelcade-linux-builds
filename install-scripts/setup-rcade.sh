@@ -10,10 +10,10 @@
 #
 # This script is organized to minimize overlay usage:
 # 1. System space changes (/usr/bin, /etc) happen first
-# 2. Overlay is saved with rcade-save.sh
+# 2. Overlay is saved with rcade-save.sh, we only use overlay if below R-Cade 2.0.8 which requires pixelweb to be in system space
 # 3. User space changes (/rcade/share/) happen after overlay save
 
-version=19
+version=22
 install_successful=true
 RCADE_STARTUP="/etc/init.d/S10animationscreens"
 
@@ -27,6 +27,12 @@ nc='\033[0m'
 # Parse command line arguments
 beta=false
 force=false
+no_pause=false
+no_quit=false
+no_restart=false
+gui_wifi_ssid=""
+gui_wifi_password=""
+enable_attract_mode=""
 while [[ $# -gt 0 ]]; do
     case $1 in
         beta|--beta|-beta)
@@ -35,6 +41,34 @@ while [[ $# -gt 0 ]]; do
             ;;
         force|--force|-force)
             force=true
+            shift
+            ;;
+        --no-pause)
+            no_pause=true
+            shift
+            ;;
+        --no-quit)
+            no_quit=true
+            shift
+            ;;
+        --no-restart)
+            no_restart=true
+            shift
+            ;;
+        --wifi-ssid)
+            gui_wifi_ssid="$2"
+            shift 2
+            ;;
+        --wifi-password)
+            gui_wifi_password="$2"
+            shift 2
+            ;;
+        --enable-attract-mode)
+            enable_attract_mode=true
+            shift
+            ;;
+        --no-attract-mode)
+            enable_attract_mode=false
             shift
             ;;
         *)
@@ -58,7 +92,7 @@ echo -e "This script will install and configure Pixelcade & DOFLinx in game effe
 echo -e "Pixelcade artwork will be installed in /rcade/share/pixelcade"
 echo -e "DOFLinx will be installed in /rcade/share/doflinx"
 echo -e ""
-pause
+[[ "$no_pause" == "true" ]] || pause
 
 INSTALLPATH="/rcade/share/"
 
@@ -165,66 +199,106 @@ if [[ $machine_arch == "default" ]]; then
   machine_arch=x64
 fi
 
+# RCade version detection — determines where pixelweb lives and whether overlay save is needed.
+# RCade 2.0.8+ installs pixelweb to /rcade/share/pixelcade (user space, no overlay save needed).
+# Older versions install to /usr/bin (overlay space, requires rcade-save.sh).
+rcade_new_version=false
+es_ver=$(emulationstation --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+if [[ -n "$es_ver" ]]; then
+    IFS='.' read -r _es_major _es_minor _es_patch <<< "$es_ver"
+    if [[ "$_es_major" -gt 2 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -gt 0 ]] || \
+       [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -ge 8 ]]; then
+        rcade_new_version=true
+    elif [[ "$_es_major" -eq 2 && "$_es_minor" -eq 0 && "$_es_patch" -eq 7 ]]; then
+        # Beta: 2.0.7 with kernel 6.19.0 behaves like 2.0.8+
+        _kernel_ver=$(uname -a | awk '{print $3}')
+        if [[ "$_kernel_ver" == "6.19.0" ]]; then
+            rcade_new_version=true
+            rcade_207_beta=true
+        fi
+    fi
+fi
+
+if [[ "$rcade_new_version" == "true" ]]; then
+    pixelweb_install_path="/rcade/share/pixelcade/pixelweb"
+    if [[ "$rcade_207_beta" == "true" ]]; then
+        echo -e "${green}[INFO]${nc} RCade 2.0.7 Beta detected — installing pixelweb to user space: ${pixelweb_install_path}"
+    else
+        echo -e "${green}[INFO]${nc} RCade ${es_ver} detected — installing pixelweb to user space: ${pixelweb_install_path}"
+    fi
+else
+    pixelweb_install_path="/usr/bin/pixelweb"
+    echo -e "${green}[INFO]${nc} RCade pre-2.0.8 detected — installing pixelweb to system space: ${pixelweb_install_path}"
+fi
+
 # ============================================================================
 # PHASE 1: SYSTEM SPACE CHANGES (saved to overlay)
 # These changes go to /usr/bin and /etc which are in the overlay filesystem
+# (On RCade 2.0.8+, only /etc changes happen here; pixelweb is installed in Phase 2)
 # ============================================================================
 echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 echo -e "${cyan}[PHASE 1]${nc} System space changes (will be saved to overlay)"
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 
-# Stop Pixelcade before updating
-echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
-curl -s localhost:8080/quit >/dev/null 2>&1
-sleep 2
+# Stop Pixelcade before updating (skipped when called from GUI — pixelweb stays running)
+if [[ "$no_quit" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Stopping Pixelcade service..."
+    curl -s localhost:8080/quit >/dev/null 2>&1
+    sleep 2
+fi
 
-# Update pixelweb binary in /usr/bin (SYSTEM SPACE)
-echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
-cd /usr/bin
+# Update pixelweb binary (system space for pre-2.0.8, user space for 2.0.8+)
+if [[ "$rcade_new_version" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Updating Pixelcade binary to the latest version..."
 
-if [[ "$beta" == "true" ]]; then
-    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
-    if wget --spider "$pixelweb_url" 2>/dev/null; then
-        echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
-        wget -O /usr/bin/pixelweb "$pixelweb_url"
-        if [ $? -eq 0 ]; then
-            chmod a+x /usr/bin/pixelweb
-            echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
+    if [[ "$beta" == "true" ]]; then
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+        if wget --spider "$pixelweb_url" 2>/dev/null; then
+            echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+            if [ $? -eq 0 ]; then
+                chmod a+x "$pixelweb_install_path"
+                echo -e "${green}[SUCCESS]${nc} Beta pixelweb binary updated successfully"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            fi
         else
-            echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
+            pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+            if wget --spider "$pixelweb_url" 2>/dev/null; then
+                wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+                if [ $? -eq 0 ]; then
+                    chmod a+x "$pixelweb_install_path"
+                    echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
+                else
+                    echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
+                fi
+            fi
         fi
     else
-        echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch}, falling back to production version..."
         pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
         if wget --spider "$pixelweb_url" 2>/dev/null; then
-            wget -O /usr/bin/pixelweb "$pixelweb_url"
+            echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
             if [ $? -eq 0 ]; then
-                chmod a+x /usr/bin/pixelweb
+                chmod a+x "$pixelweb_install_path"
                 echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
             else
                 echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
             fi
+        else
+            echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
         fi
     fi
 else
-    pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
-    if wget --spider "$pixelweb_url" 2>/dev/null; then
-        echo -e "${green}[INFO]${nc} Downloading pixelweb for ${machine_arch}..."
-        wget -O /usr/bin/pixelweb "$pixelweb_url"
-        if [ $? -eq 0 ]; then
-            chmod a+x /usr/bin/pixelweb
-            echo -e "${green}[SUCCESS]${nc} pixelweb binary updated successfully"
-        else
-            echo -e "${yellow}[WARNING]${nc} Failed to download pixelweb binary"
-        fi
-    else
-        echo -e "${yellow}[WARNING]${nc} pixelweb binary not available for architecture ${machine_arch}"
-    fi
+    echo -e "${green}[INFO]${nc} Skipping pixelweb system-space install (RCade 2.0.8+: pixelweb installs to user space in Phase 2)"
 fi
 
 # Update startup scripts (SYSTEM SPACE)
-# R-Cade has two different versions:
+# Skipped on RCade 2.0.8+ — startup integration is handled by the RCade system itself.
+# R-Cade pre-2.0.8 has two different versions:
 #   OLD: S10animationscreens contains pixelweb startup block directly (has "grep pixelweb")
 #   NEW: S10animationscreens delegates to rcade-commands.sh start_screens (has "start_screens")
 #        In NEW version, we modify rcade-commands.sh directly where pixelweb is launched
@@ -232,7 +306,9 @@ fi
 
 RCADE_COMMANDS="/rcade/scripts/rcade-commands.sh"
 
-if [[ -f "$RCADE_STARTUP" ]]; then
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Skipping startup script modification (RCade 2.0.8+: Pixelcade and DOFLinx startup are already handled by the system)"
+elif [[ -f "$RCADE_STARTUP" ]]; then
     # Detect which version based on content
     if grep -q "start_screens" "$RCADE_STARTUP"; then
         startup_version="new"
@@ -252,6 +328,20 @@ if [[ -f "$RCADE_STARTUP" ]]; then
             rm -f "$backup"
         fi
     done
+
+    # If doflinx exists in BOTH S10animationscreens and rcade-commands.sh, remove it from S10animationscreens
+    if grep -q "doflinx" "$RCADE_STARTUP" && [[ -f "$RCADE_COMMANDS" ]] && grep -q "doflinx" "$RCADE_COMMANDS"; then
+        echo -e "${yellow}[INFO]${nc} DOFLinx found in both S10animationscreens and rcade-commands.sh - removing from S10animationscreens..."
+        awk '/# Launch DOFLinx/{skip=1; next} skip && /^[[:space:]]*;;/{skip=0; print; next} !skip{print}' "$RCADE_STARTUP" > "${RCADE_STARTUP}.tmp"
+        if [[ -s "${RCADE_STARTUP}.tmp" ]]; then
+            mv "${RCADE_STARTUP}.tmp" "$RCADE_STARTUP"
+            chmod +x "$RCADE_STARTUP"
+            echo -e "${green}[SUCCESS]${nc} DOFLinx removed from S10animationscreens"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to clean up S10animationscreens"
+            rm -f "${RCADE_STARTUP}.tmp"
+        fi
+    fi
 
     if [[ "$startup_version" == "new" ]]; then
         # NEW VERSION: Modify rcade-commands.sh where pixelweb is actually launched
@@ -356,7 +446,8 @@ fi
 # Install udev rule to rename Pixelcade LCD USB RNDIS interface to pixelcade0.
 # rcade-commands.sh start_network looks for "pixelcade" in ifconfig output and
 # assigns a static IP, so this rename is required for LCD USB setups.
-if lsusb | grep -q '1d6b:3232'; then
+# Skipped on RCade 2.0.8+ — network configuration is handled by the RCade system itself.
+if [[ "$rcade_new_version" == "false" ]] && lsusb | grep -q '1d6b:3232'; then
     echo -e "${green}[INFO]${nc} Installing Pixelcade LCD udev rule..."
     cat > /etc/udev/rules.d/99-pixelcade-lcd.rules << 'RULEEOF'
 # Rename Pixelcade LCD USB RNDIS interface to pixelcade0 and bring it up with static IP.
@@ -366,16 +457,29 @@ RULEEOF
     # Remove any old setup script from previous installs
     rm -f /usr/lib/udev/pixelcade-net-setup.sh
     echo -e "${green}[SUCCESS]${nc} Pixelcade LCD udev rule installed"
+else
+    # RCade 2.0.8+ handles USB network natively — remove the rule if it was left by an older install
+    if [[ -f /etc/udev/rules.d/99-pixelcade-lcd.rules ]]; then
+        rm -f /etc/udev/rules.d/99-pixelcade-lcd.rules
+        rm -f /usr/lib/udev/pixelcade-net-setup.sh
+        udevadm control --reload-rules 2>/dev/null
+        echo -e "${green}[INFO]${nc} Removed legacy Pixelcade LCD udev rule (not needed on RCade 2.0.8+)"
+    fi
 fi
 
 # ============================================================================
 # SAVE OVERLAY - Commit system space changes
+# Not needed on RCade 2.0.8+ because pixelweb is in user space (/rcade/share)
 # ============================================================================
 echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-echo -e "${cyan}[OVERLAY]${nc} Saving system changes to overlay..."
-echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
-/rcade/scripts/rcade-save.sh
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${cyan}[OVERLAY]${nc} Skipping overlay save (not needed on RCade 2.0.8+)"
+else
+    echo -e "${cyan}[OVERLAY]${nc} Saving system changes to overlay..."
+    echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+    /rcade/scripts/rcade-save.sh
+fi
 
 # ============================================================================
 # PHASE 2: USER SPACE CHANGES (in /rcade/share/ - not saved to overlay)
@@ -385,6 +489,41 @@ echo -e ""
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
 echo -e "${cyan}[PHASE 2]${nc} User space changes (/rcade/share/ - persists separately)"
 echo -e "${cyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${nc}"
+
+# On RCade 2.0.8+, install pixelweb to user space (/rcade/share/pixelcade/pixelweb).
+if [[ "$rcade_new_version" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Installing pixelweb binary to user space..."
+    mkdir -p "$(dirname "$pixelweb_install_path")"
+    if [[ "$beta" == "true" ]]; then
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/beta/linux_${machine_arch}/pixelweb"
+        if wget --spider "$pixelweb_url" 2>/dev/null; then
+            echo -e "${cyan}[BETA]${nc} Downloading beta pixelweb for ${machine_arch}..."
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+            if [ $? -eq 0 ]; then
+                chmod a+x "$pixelweb_install_path"
+                echo -e "${green}[SUCCESS]${nc} Beta pixelweb installed to $pixelweb_install_path"
+            else
+                echo -e "${yellow}[WARNING]${nc} Failed to download beta pixelweb binary"
+            fi
+        else
+            echo -e "${yellow}[WARNING]${nc} Beta pixelweb not available for ${machine_arch} — falling back to production..."
+            pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+            wget -q -O "$pixelweb_install_path" "$pixelweb_url" && chmod a+x "$pixelweb_install_path" && \
+                echo -e "${green}[SUCCESS]${nc} Production pixelweb installed to $pixelweb_install_path" || \
+                echo -e "${yellow}[WARNING]${nc} Failed to download production pixelweb binary"
+        fi
+    else
+        pixelweb_url="https://github.com/alinke/pixelcade-linux-builds/raw/main/linux_${machine_arch}/pixelweb"
+        echo -e "${green}[INFO]${nc} Downloading production pixelweb for ${machine_arch}..."
+        wget -q -O "$pixelweb_install_path" "$pixelweb_url"
+        if [ $? -eq 0 ]; then
+            chmod a+x "$pixelweb_install_path"
+            echo -e "${green}[SUCCESS]${nc} Production pixelweb installed to $pixelweb_install_path"
+        else
+            echo -e "${yellow}[WARNING]${nc} Failed to download production pixelweb binary"
+        fi
+    fi
+fi
 
 # Create necessary directories in user space
 if [[ ! -d "${INSTALLPATH}doflinx" ]]; then
@@ -401,7 +540,7 @@ fi
 
 # Determine folders based on architecture
 # Repository: https://github.com/DOFLinx/CurrentExecutable
-# Beta folder only contains DOFLinx and DOFLinx.pdb - all other files come from stable
+# Beta folder only contains DOFLinx (and possibly DOFLinx.pdb) - all other files come from stable
 if [[ $machine_arch == "arm64" ]]; then
     stable_folder="Linux_arm64"
     beta_folder="Linux_arm64_beta"
@@ -413,98 +552,72 @@ else
     install_successful=false
 fi
 
-# Base URLs for downloads
-stable_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${stable_folder}"
-beta_url="https://github.com/DOFLinx/CurrentExecutable/raw/main/${beta_folder}"
+# Download the whole DOFLinx executables repo once and copy over whatever files
+# actually exist in it, rather than hardcoding each filename individually — a
+# new file the DOFLinx author adds (like DOFLinxCommon.so was) then just shows
+# up automatically instead of silently breaking the install until the
+# installer script is updated.
+doflinx_archive_url="https://codeload.github.com/DOFLinx/CurrentExecutable/tar.gz/refs/heads/main"
+doflinx_tmpdir=$(mktemp -d)
 
-# Beta folder only contains DOFLinx and DOFLinx.pdb
-# All other supporting files come from stable folder
-# If beta mode is requested but beta folder doesn't exist, fall back to stable
-using_beta=false
-if [[ "$beta" == "true" ]]; then
-    echo -e "${yellow}[BETA]${nc} Checking for beta version..."
-    # Try to download from beta folder first
-    wget -q --spider "${beta_url}/DOFLinx"
-    if [ $? -eq 0 ]; then
-        main_url="$beta_url"
-        using_beta=true
-        echo -e "${green}[INFO]${nc} Beta version found - downloading DOFLinx from ${beta_folder}..."
-    else
-        main_url="$stable_url"
-        echo -e "${yellow}[INFO]${nc} Beta version not available - falling back to stable ${stable_folder}..."
-    fi
+echo -e "${green}[INFO]${nc} Downloading DOFLinx executables archive..."
+wget -q -O "${doflinx_tmpdir}/doflinx.tar.gz" "$doflinx_archive_url"
+if [ $? -ne 0 ]; then
+    echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executables archive"
+    install_successful=false
 else
-    main_url="$stable_url"
-    echo -e "${green}[INFO]${nc} Downloading DOFLinx from ${stable_folder}..."
+    tar -xzf "${doflinx_tmpdir}/doflinx.tar.gz" -C "$doflinx_tmpdir"
+    doflinx_extracted=$(find "$doflinx_tmpdir" -maxdepth 1 -type d -name "CurrentExecutable-*" | head -1)
+
+    if [[ -z "$doflinx_extracted" || ! -d "${doflinx_extracted}/${stable_folder}" ]]; then
+        echo -e "${red}[ERROR]${nc} DOFLinx archive did not contain expected folder ${stable_folder}"
+        install_successful=false
+    else
+        echo -e "${green}[INFO]${nc} Installing DOFLinx files from ${stable_folder}..."
+        cp -a "${doflinx_extracted}/${stable_folder}/." "${INSTALLPATH}doflinx/"
+    fi
+
+    using_beta=false
+    if [[ "$beta" == "true" ]]; then
+        if [[ -n "$doflinx_extracted" && -d "${doflinx_extracted}/${beta_folder}" ]]; then
+            echo -e "${yellow}[BETA]${nc} Beta version found - using DOFLinx executable from ${beta_folder}..."
+            cp -a "${doflinx_extracted}/${beta_folder}/." "${INSTALLPATH}doflinx/"
+            using_beta=true
+        else
+            echo -e "${yellow}[INFO]${nc} Beta version not available - using stable ${stable_folder}..."
+        fi
+    fi
 fi
+rm -rf "$doflinx_tmpdir"
 
-# Download main DOFLinx executable (from beta or stable based on availability)
-echo -e "${green}[INFO]${nc} Downloading DOFLinx executable..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx" "${main_url}/DOFLinx"
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinx executable"
-   install_successful=false
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinx.pdb..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx.pdb" "${main_url}/DOFLinx.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx.pdb"
-fi
-
-# Download supporting files from stable folder (these don't exist in beta folder)
-echo -e "${green}[INFO]${nc} Downloading supporting files from ${stable_folder}..."
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg executable..."
-wget -O "${INSTALLPATH}doflinx/DOFLinxMsg" "${stable_url}/DOFLinxMsg"
-if [ $? -ne 0 ]; then
-   echo -e "${red}[ERROR]${nc} Failed to download DOFLinxMsg executable"
-   install_successful=false
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinxMsg.pdb..."
-wget -O "${INSTALLPATH}doflinx/DOFLinxMsg.pdb" "${stable_url}/DOFLinxMsg.pdb"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinxMsg.pdb"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading keycodes..."
-wget -O "${INSTALLPATH}doflinx/keycodes" "${stable_url}/keycodes"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download keycodes"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading HELP.txt..."
-wget -O "${INSTALLPATH}doflinx/HELP.txt" "${stable_url}/HELP.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download HELP.txt"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DONATE.txt..."
-wget -O "${INSTALLPATH}doflinx/DONATE.txt" "${stable_url}/DONATE.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DONATE.txt"
-fi
-
-echo -e "${green}[INFO]${nc} Downloading DOFLinx Update Notes.txt..."
-wget -O "${INSTALLPATH}doflinx/DOFLinx Update Notes.txt" "${stable_url}/DOFLinx%20Update%20Notes.txt"
-if [ $? -ne 0 ]; then
-   echo -e "${yellow}[WARNING]${nc} Failed to download DOFLinx Update Notes.txt"
+if [[ ! -f "${INSTALLPATH}doflinx/DOFLinx" ]]; then
+    echo -e "${red}[ERROR]${nc} DOFLinx executable missing after copy"
+    install_successful=false
 fi
 
 # Set execute permissions
 echo -e "${green}[INFO]${nc} Setting permissions..."
-chmod a+x ${INSTALLPATH}doflinx/DOFLinx
-chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg
+chmod a+x ${INSTALLPATH}doflinx/DOFLinx 2>/dev/null
+chmod a+x ${INSTALLPATH}doflinx/DOFLinxMsg 2>/dev/null
 chmod a+x ${INSTALLPATH}doflinx/keycodes 2>/dev/null
 
-# Create DOFLinx startup script only if it doesn't exist
-if [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+# Create DOFLinx startup script only if it doesn't exist, or re-enable if disabled
+if [[ -f "${INSTALLPATH}doflinx/doflinx-disabled.sh" && ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
+    echo -e "${green}[INFO]${nc} Re-enabling DOFLinx (renaming doflinx-disabled.sh back to doflinx.sh)..."
+    mv "${INSTALLPATH}doflinx/doflinx-disabled.sh" "${INSTALLPATH}doflinx/doflinx.sh"
+    chmod +x ${INSTALLPATH}doflinx/doflinx.sh
+elif [[ ! -f "${INSTALLPATH}doflinx/doflinx.sh" ]]; then
     echo -e "${green}[INFO]${nc} Creating DOFLinx startup script..."
     cat > ${INSTALLPATH}doflinx/doflinx.sh << 'EOF'
 #!/bin/bash
+# When launched at boot via udev/rcade-commands.sh, this script gets no $PATH
+# at all, which breaks anything DOFLinx shells out to internally. bash quietly
+# assigns itself a default PATH in that case but does NOT export it to child
+# processes, so a "export only if empty" check never fires — export
+# unconditionally instead, keeping any inherited PATH ahead of the defaults.
+export PATH="${PATH:+$PATH:}/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /rcade/share/doflinx && ./DOFLinx &
+cd /rcade/share/doflinx && ./DOFLinx
 EOF
     chmod +x ${INSTALLPATH}doflinx/doflinx.sh
 else
@@ -614,51 +727,126 @@ else
    fi
 fi
 
+# If the mame artwork folder is missing but a version file exists, remove the version file
+# so pixelweb performs a full re-download instead of skipping it as already up-to-date.
+_artwork_version_file="/rcade/share/pixelcade/.alinke_pixelcade-master-version"
+if [[ ! -d "/rcade/share/pixelcade/mame" && -f "$_artwork_version_file" ]]; then
+    rm -f "$_artwork_version_file"
+    echo -e "${green}[INFO]${nc} Artwork folder missing — cleared version file to force full artwork download"
+fi
+
 # Update Pixelcade artwork and DOFLinx .MAME files
-echo -e "${green}[INFO]${nc} Updating Pixelcade artwork and DOFLinx .MAME files..."
-cd /usr/bin
-./pixelweb -p /rcade/share/pixelcade -update-artwork
+echo -e "${green}[INFO]${nc} Updating Pixelcade artwork — this downloads thousands of files and may take several minutes..."
+
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-artwork &
+_artwork_pid=$!
+_artwork_elapsed=0
+while kill -0 "$_artwork_pid" 2>/dev/null; do
+    sleep 15
+    _artwork_elapsed=$(( _artwork_elapsed + 15 ))
+    echo -e "${green}[INFO]${nc} Still downloading artwork... (${_artwork_elapsed}s elapsed)"
+done
+wait "$_artwork_pid"
+_artwork_exit=$?
+
+if [ $_artwork_exit -eq 0 ]; then
+    echo -e "${green}[SUCCESS]${nc} Pixelcade artwork updated"
+else
+    echo -e "${yellow}[WARNING]${nc} Artwork update exited with code $_artwork_exit - you can retry later from the Update tab"
+fi
+
 # Let's also force and update the latest DOFLinx MAME files too because it'll skip if artwork is already up to date
-./pixelweb -p /rcade/share/pixelcade -update-doflinx
+echo -e "${green}[INFO]${nc} Updating DOFLinx .MAME files..."
+"$pixelweb_install_path" -p /rcade/share/pixelcade -update-doflinx &
+_doflinx_pid=$!
+_doflinx_elapsed=0
+while kill -0 "$_doflinx_pid" 2>/dev/null; do
+    sleep 10
+    _doflinx_elapsed=$(( _doflinx_elapsed + 10 ))
+    echo -e "${green}[INFO]${nc} Still downloading DOFLinx MAME files... (${_doflinx_elapsed}s elapsed)"
+done
+wait "$_doflinx_pid"
 
 if [ $? -eq 0 ]; then
-    echo -e "${green}[SUCCESS]${nc} Pixelcade artwork and DOFLinx .MAME files updated"
+    echo -e "${green}[SUCCESS]${nc} DOFLinx .MAME files updated"
 else
-    echo -e "${yellow}[WARNING]${nc} Failed to update artwork - you can manually run: ./pixelweb -p /rcade/share/pixelcade -update-artwork"
+    echo -e "${yellow}[WARNING]${nc} DOFLinx MAME update failed - you can retry later from the Update tab"
 fi
 
-# Update RetroArch configuration for RetroAchievements (in user space)
-echo -e "${green}[INFO]${nc} Configuring RetroArch for RetroAchievements..."
-RETROARCH_CFG="/rcade/share/configs/retroarch/retroarch.cfg"
+# Java needed for high scores, hi2txt
+cd ${INSTALLPATH}pixelcade
+JDKDEST="${INSTALLPATH}pixelcade/jdk"
 
-if [[ -f "$RETROARCH_CFG" ]]; then
-    # Create a backup
-    cp "$RETROARCH_CFG" "${RETROARCH_CFG}.backup.$(date +%Y%m%d_%H%M%S)"
-
-    # Function to update or add a setting
-    update_setting() {
-        local setting="$1"
-        local value="$2"
-        local file="$3"
-
-        if grep -q "^${setting} =" "$file"; then
-            # Setting exists, update it
-            sed -i "s|^${setting} =.*|${setting} = ${value}|" "$file"
-        else
-            # Setting doesn't exist, append it
-            echo "${setting} = ${value}" >> "$file"
-        fi
-    }
-
-    # Update the three RetroAchievements settings
-    update_setting "cheevos_enable" '"true"' "$RETROARCH_CFG"
-    update_setting "cheevos_hardcore_mode_enable" '"false"' "$RETROARCH_CFG"
-    update_setting "cheevos_start_active" '"true"' "$RETROARCH_CFG"
-
-    echo -e "${green}[SUCCESS]${nc} RetroArch configured for RetroAchievements"
-else
-    echo -e "${yellow}[WARNING]${nc} RetroArch config file not found at $RETROARCH_CFG"
+if [[ ! -d $JDKDEST ]]; then
+    if [[ $machine_arch == "arm64" ]]; then
+        echo -e "${green}[INFO]${nc} Installing Java JRE 11 64-Bit for aarch64..."
+        curl -kLO https://github.com/alinke/pixelcade-jre/raw/main/jdk-aarch64.zip
+        unzip jdk-aarch64.zip
+        chmod +x ${INSTALLPATH}pixelcade/jdk/bin/java
+        echo -e "${green}[SUCCESS]${nc} Java JRE installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} No Java JDK available for architecture ${machine_arch} - high score functionality will not be available"
+    fi
 fi
+
+# hi2txt for high scores
+HI2TXTDEST="${INSTALLPATH}pixelcade/hi2txt"
+mkdir -p ${HI2TXTDEST}
+echo -e "${green}[INFO]${nc} Installing hi2txt for High Scores..."
+wget -q -O "${HI2TXTDEST}/hi2txt.jar" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.jar"
+wget -q -O "${HI2TXTDEST}/hi2txt.zip" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/hi2txt/hi2txt.zip"
+if [ $? -eq 0 ]; then
+    echo -e "${green}[SUCCESS]${nc} hi2txt installed"
+else
+    echo -e "${yellow}[WARNING]${nc} Failed to download hi2txt - high score functionality may not be available"
+fi
+
+# Install pixelcade game-start script
+echo -e "${green}[INFO]${nc} Installing pixelcade game-start script for high scores..."
+mkdir -p /rcade/share/userscripts/game-start
+wget -q -O "/rcade/share/userscripts/game-start/pixelcade.sh" "https://github.com/alinke/pixelcade-linux-builds/raw/main/rcade/scripts/game-start/pixelcade.sh"
+if [ $? -eq 0 ]; then
+    chmod +x /rcade/share/userscripts/game-start/pixelcade.sh
+    echo -e "${green}[SUCCESS]${nc} pixelcade.sh installed to /rcade/share/userscripts/game-start"
+else
+    echo -e "${yellow}[WARNING]${nc} Failed to download pixelcade game-start script"
+fi
+
+# Attract mode: ask interactively when running standalone; respect flag when called from GUI
+if [[ -z "$enable_attract_mode" && "$no_pause" == "false" ]]; then
+    echo -e ""
+    echo -e "${cyan}[QUESTION]${nc} Would you like to enable Pixelcade Attract Mode?"
+    echo -e "           This automatically shows Pixelcade artwork and widgets when"
+    echo -e "           the R-Cade screensaver activates (idle screen)."
+    read -s -n 1 -p "           Enable Attract Mode? [y/N]: " _attract_answer
+    echo ""
+    if [[ "$_attract_answer" =~ ^[Yy]$ ]]; then
+        enable_attract_mode=true
+    else
+        enable_attract_mode=false
+    fi
+fi
+
+if [[ "$enable_attract_mode" == "true" ]]; then
+    echo -e "${green}[INFO]${nc} Installing Pixelcade Attract Mode screensaver scripts..."
+    mkdir -p /rcade/share/userscripts/screensaver-start
+    mkdir -p /rcade/share/userscripts/screensaver-stop
+    wget -q -O "/rcade/share/userscripts/screensaver-start/pixelcade.sh" "https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/rcade/scripts/screensaver-start/pixelcade.sh"
+    if [ $? -eq 0 ]; then
+        chmod +x /rcade/share/userscripts/screensaver-start/pixelcade.sh
+        echo -e "${green}[SUCCESS]${nc} screensaver-start/pixelcade.sh installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} Failed to download screensaver-start script"
+    fi
+    wget -q -O "/rcade/share/userscripts/screensaver-stop/pixelcade.sh" "https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/rcade/scripts/screensaver-stop/pixelcade.sh"
+    if [ $? -eq 0 ]; then
+        chmod +x /rcade/share/userscripts/screensaver-stop/pixelcade.sh
+        echo -e "${green}[SUCCESS]${nc} screensaver-stop/pixelcade.sh installed"
+    else
+        echo -e "${yellow}[WARNING]${nc} Failed to download screensaver-stop script"
+    fi
+fi
+
 
 # ============================================================================
 # PIXELCADE LCD SETUP (skip for Pixelcade LED)
@@ -681,6 +869,28 @@ if lsusb | grep -q '1d6b:3232'; then
             break
         fi
     done
+
+    # Enable LCD in pixelcade.ini
+    pixelcade_ini="/rcade/share/pixelcade/pixelcade.ini"
+    if [[ -f "$pixelcade_ini" ]]; then
+        echo -e "${green}[INFO]${nc} Updating pixelcade.ini for LCD USB connection..."
+        sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' "$pixelcade_ini"
+        sed -i 's/lcdUsbConnected[ ]*=[ ]*false/lcdUsbConnected = true/g' "$pixelcade_ini"
+
+        # Fetch the LCD hostname from the USB local-link address and write it to pixelcade.ini
+        lcd_info_json=$(curl -s --connect-timeout 5 --max-time 10 \
+            "http://169.254.100.1:8080/v2/info" 2>/dev/null)
+        lcd_hostname=$(echo "$lcd_info_json" | grep -o '"hostname":"[^"]*"' | sed 's/"hostname":"//;s/"//')
+        if [[ -n "$lcd_hostname" ]]; then
+            sed -i "s|lcdMarqueeHostName[ ]*=.*|lcdMarqueeHostName            = ${lcd_hostname}|" "$pixelcade_ini"
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB (hostname: ${lcd_hostname})"
+        else
+            echo -e "${green}[SUCCESS]${nc} pixelcade.ini updated for LCD USB"
+            echo -e "${yellow}[WARNING]${nc} Could not retrieve LCD hostname — set lcdMarqueeHostName manually if needed"
+        fi
+    else
+        echo -e "${yellow}[WARNING]${nc} pixelcade.ini not found at $pixelcade_ini — LCD settings could not be configured automatically"
+    fi
 
     # AtGames Legends Ultimate detection - configure BitLCD and DOFLinx automatically
     # rk3328-ha8801 = Legends 1.1, rk3399-legends = Legends 1.0
@@ -726,25 +936,34 @@ if lsusb | grep -q '1d6b:3232'; then
     wifi_currently_connected=$(echo "$wifi_status_json" | grep -o '"connected":true' 2>/dev/null)
     wifi_current_ssid=$(echo "$wifi_status_json" | grep -o '"ssid":"[^"]*"' | sed 's/"ssid":"//;s/"//' 2>/dev/null)
 
-    if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
-        echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
-        read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
+    if [[ -n "$gui_wifi_ssid" ]]; then
+        # Called from GUI — use provided credentials, skip interactive prompts
+        wifi_ssid="$gui_wifi_ssid"
+        wifi_password="$gui_wifi_password"
+        wifi_choice="y"
     else
-        echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
-        read -p "Configure WiFi? [y/N]: " wifi_choice
+        if [[ -n "$wifi_currently_connected" && -n "$wifi_current_ssid" ]]; then
+            echo -e "${green}[INFO]${nc} Pixelcade LCD is already connected to WiFi: ${cyan}${wifi_current_ssid}${nc}"
+            read -p "Do you want to switch to a different WiFi? [y/N]: " wifi_choice
+        else
+            echo -e "Would you like to configure WiFi for your Pixelcade LCD now?"
+            read -p "Configure WiFi? [y/N]: " wifi_choice
+        fi
+        wifi_choice="${wifi_choice%$'\r'}"
     fi
 
-    # Strip carriage return (present when running over SSH from Windows or with CRLF scripts)
-    wifi_choice="${wifi_choice%$'\r'}"
-
     if [[ "$wifi_choice" =~ ^[Yy]$ ]]; then
-        read -p "WiFi SSID: " wifi_ssid
-        wifi_ssid="${wifi_ssid%$'\r'}"
+        if [[ -z "$gui_wifi_ssid" ]]; then
+            read -p "WiFi SSID: " wifi_ssid
+            wifi_ssid="${wifi_ssid%$'\r'}"
+        fi
         if [[ -z "$wifi_ssid" ]]; then
             echo -e "${yellow}[WARNING]${nc} No SSID entered, skipping WiFi setup"
         else
-            read -p "WiFi Password (leave blank for open network): " wifi_password
-            wifi_password="${wifi_password%$'\r'}"
+            if [[ -z "$gui_wifi_ssid" ]]; then
+                read -p "WiFi Password (leave blank for open network): " wifi_password
+                wifi_password="${wifi_password%$'\r'}"
+            fi
 
             # Escape backslash and double-quote for JSON
             wifi_ssid_json="${wifi_ssid//\\/\\\\}"
@@ -782,6 +1001,15 @@ if lsusb | grep -q '1d6b:3232'; then
     else
         echo -e "${green}[INFO]${nc} Skipping WiFi setup - configure it later via the Pixelcade app"
     fi
+fi
+
+# Restart pixelweb in background so companion UI is accessible immediately
+# (skipped when called from GUI — the caller manages the restart)
+if [[ "$no_restart" == "false" ]]; then
+    echo -e "${green}[INFO]${nc} Starting Pixelcade..."
+    "$pixelweb_install_path" -p /rcade/share/pixelcade >> /tmp/pixelweb.log 2>&1 &
+    sleep 2
+    echo -e "${green}[INFO]${nc} Pixelcade companion accessible at http://rcade.local:8080"
 fi
 
 if [[ $install_successful == "true" ]]; then

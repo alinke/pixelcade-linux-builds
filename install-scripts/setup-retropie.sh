@@ -22,7 +22,7 @@ white=`tput setaf 7`
 reset=`tput sgr0`
 upgrade_artwork=false
 upgrade_software=false
-version=11  #increment this as the script is updated
+version=12  #increment this as the script is updated
 es_minimum_version=2.11.0
 es_version=default
 NEWLINE=$'\n'
@@ -70,20 +70,7 @@ if ! command -v curl &>/dev/null; then
 fi
 
 #******************* MAIN SCRIPT START ******************************
-# let's detect if Pixelcade is USB connected, could be 0 or 1 so we need to check both
-
-if ! command -v lsusb  &> /dev/null; then
-    echo "${red}lsusb command not be found so cannot check if Pixelcade is USB connected${white}"
-else
-   if lsusb | grep -q '1b4f:0008'; then
-      echo "${yellow}Pixelcade LED Marquee Detected${white}"
-   elif lsusb | grep -q '2e8a:1050'; then 
-      echo "${yellow}Pixelcade LED Marquee Detected${white}"
-   else  
-      echo "${red}Sorry, Pixelcade LED Marquee was not detected, pleasse ensure Pixelcade is USB connected to your Pi and the toggle switch on the Pixelcade board is pointing towards USB, exiting...${white}"
-      exit 1
-   fi
-fi
+# No Pixelcade LED/LCD check here: a user may only have a Sidekick connected.
 
 echo "${yellow}Stopping Pixelcade (if running...)${white}"
 killall java #need to stop pixelweb.jar if already running
@@ -310,14 +297,13 @@ sed -i '/recent,mame/d' ${INSTALLPATH}pixelcade/console.csv
 #add to retropie startup
 if [ "$retropie" = true ] ; then
 
-    if cat /opt/retropie/configs/all/autostart.sh | grep "^[^#;]" | grep -q 'java'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
+    if cat /opt/retropie/configs/all/autostart.sh | grep "^[^#;]" | grep -q 'java -jar pixelweb\.jar'; then  #ignore any comment line, user has the old java pixelweb, we need to comment out this line and replace
         echo "${yellow}Backing up autostart.sh to autostart.bak${white}"
         cd /opt/retropie/configs/all && cp autostart.sh autostart.bak #let's make a backup of autostart.sh since we are modifying it
         echo "${yellow}Commenting out old java pixelweb version${white}"
-        sed -e '/java/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
+        sed -e '/java -jar pixelweb\.jar/ s/^#*/#/' -i /opt/retropie/configs/all/autostart.sh #comment out the line
         echo "${yellow}Adding pixelweb to startup${white}"
-        #sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &" /opt/retropie/configs/all/autostart.sh
-        sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -image "system/retropie.png" -silent -startup &" /opt/retropie/configs/all/autostart.sh
+        sed -i "/^emulationstation.*/i cd ~/pixelcade && ./pixelweb -image system/retropie.png -silent -startup &" /opt/retropie/configs/all/autostart.sh
     fi
 
     # let's check if autostart.sh already has pixelcade added and if so, we don't want to add it twice
@@ -364,6 +350,24 @@ if [[ -d "/etc/udev/rules.d" ]]; then #let's create the udev rule for Pixelcade 
   echo "${yellow}Adding udev rule...${white}"
   sudo wget -O /etc/udev/rules.d/99-pixelcade.rules https://raw.githubusercontent.com/alinke/pixelcade-linux-builds/main/install-scripts/99-pixelcade.rules
   sudo /etc/init.d/udev restart #BUT it seems this takes a re-start and does not work immediately
+fi
+
+# Pixelcade LCD detection
+if lsusb | grep -q '1d6b:3232'; then
+    echo ""
+    echo "${yellow}Pixelcade LCD detected via USB${white}"
+    echo "${red}NOTE: Pixelcade LCD over USB networking is not supported on RetroPie.${white}"
+    echo "${yellow}You will need to manually enter the Pixelcade LCD hostname or IP address${white}"
+    echo "${yellow}from Pixelcade Companion at http://<your retropie hostname or IP>:8080${white}"
+    echo ""
+    pixelcade_ini="${INSTALLPATH}pixelcade/pixelcade.ini"
+    if [[ -f "$pixelcade_ini" ]]; then
+        echo "${yellow}Enabling LCD in pixelcade.ini...${white}"
+        sed -i 's/lcdMarquee[ ]*=[ ]*false/lcdMarquee = true/g' "$pixelcade_ini"
+        echo "${green}pixelcade.ini updated - LCD marquee enabled${white}"
+    else
+        echo "${red}pixelcade.ini not found at $pixelcade_ini - LCD settings could not be configured automatically${white}"
+    fi
 fi
 
 #cd ~/pixelcade && ./pixelweb -d "${pixelcadePort}"  -image "system/retropie.png" -startup &

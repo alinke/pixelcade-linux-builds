@@ -214,7 +214,8 @@ if [[ ! -f "${INSTALLPATH}linux/user-startup.sh" ]]; then #is the user startup i
     if [[ -f "${INSTALLPATH}linux/_user-startup.sh" ]]; then #user the default user-startup.sh that comes with MiSTer
         mv ${INSTALLPATH}linux/_user-startup.sh ${INSTALLPATH}linux/user-startup.sh
         cd ${INSTALLPATH}linux
-        grep -qxF "cd ${INSTALLPATH}pixelcade && ./runpixelcade.sh' user-startup.sh || echo 'cd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" >> user-startup.sh
+        grep -qxF "cd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" user-startup.sh || \
+            echo "cd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" >> user-startup.sh
     else #the defaut is not there so let's make a new one from scratch
         echo -e "echo ***" \$\1 "***\n\ncd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" >> ${INSTALLPATH}linux/user-startup.sh
     fi
@@ -223,7 +224,7 @@ else
         echo "Pixelcade was already added to user-startup.sh, skipping..."
     else
         echo "Adding Pixelcade Listener auto start to user-startup.sh ..."
-        sed -i -e "$acd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" ${INSTALLPATH}linux/user-startup.sh
+        echo "cd ${INSTALLPATH}pixelcade && ./runpixelcade.sh" >> ${INSTALLPATH}linux/user-startup.sh
     fi
 fi
 chmod +x ${INSTALLPATH}linux/user-startup.sh

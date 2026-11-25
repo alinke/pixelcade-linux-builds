@@ -6,7 +6,7 @@ pi4=false
 pi3=false
 odroidn2=false
 machine_arch=default
-version=19  #increment this as the script is updated
+version=20  #increment this as the script is updated
 pixelcade_version=default
 NEWLINE=$'\n'
 
@@ -88,7 +88,7 @@ function pause(){
 #mount -o remount,rw /  #have to do this to get write access, removing though as it's needed in the main command now
 
 INSTALLPATH="/etc/init.d/"
-ARTPATH="/recalbox/share/pixelcade-art/"
+ARTPATH="/recalbox/share/pixelcade-art"
 ESSCRIPTS="/recalbox/share/userscripts/"
 
 
@@ -282,9 +282,9 @@ wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.jar https://github.com/alinke/pixe
 wget -O ${INSTALLPATH}pixelcade/hi2txt/hi2txt.zip https://github.com/alinke/pixelcade-linux/raw/main/hi2txt/hi2txt.zip
 
 # need to remove a few lines in console.csv
-sed -i '/all,mame/d' ${ARTPATH}console.csv
-sed -i '/favorites,mame/d' ${ARTPATH}console.csv
-sed -i '/recent,mame/d' ${ARTPATH}console.csv
+sed -i '/all,mame/d' ${ARTPATH}/console.csv
+sed -i '/favorites,mame/d' ${ARTPATH}/console.csv
+sed -i '/recent,mame/d' ${ARTPATH}/console.csv
 
 # We need to handle two cases here for S99MyScript.py
 # 1. the user had the older java pixelweb so we need to remove that line and replace
@@ -301,7 +301,7 @@ else    #S99MyScript.py is already there so let's check if old java pixelweb is 
       echo "Adding pixelweb to startup"
       echo -e "    sleep 5\n    cd ${INSTALLPATH}pixelcade && ./pixelweb -p ${ARTPATH} -port 7070 -image "system/recalbox.png" -startup &\n" >> ${INSTALLPATH}S99MyScript.py #we'll just need to assume startup flag is needed now even though  may not have been in the past
   fi
-  if cat ${INSTALLPATH}S99MyScript.py | grep -q 'pixelweb -image'; then #this means the startup text we want is already there
+  if cat ${INSTALLPATH}S99MyScript.py | grep "^[^#;]" | grep -q 'pixelweb -p'; then #this means the startup text we want is already there
       echo "Pixelcade already added to S99MyScript.py, skipping..."
   else
       echo "Adding Pixelcade Listener auto start to your existing S99MyScript.py ..."  #if we got here, then the user already has a S99MyScript.py but there is not pixelcade in there yet
@@ -330,7 +330,7 @@ echo "Pausing for 5 seconds..."
 sleep 5
 
 # Configure pixelcade.ini to use port 7070
-PIXELCADE_INI="${ARTPATH}pixelcade.ini"
+PIXELCADE_INI="${ARTPATH}/pixelcade.ini"
 if [[ -f "$PIXELCADE_INI" ]]; then
     echo "Configuring pixelcade.ini to use port 7070..."
     # Remove all bindPort lines (both commented and uncommented)
