@@ -2,7 +2,7 @@
   "latestFirmwareVersion": "7.8.7",
   "latestArtworkVersion": 66,
   "latestArtworkVersion1280": 61,
-  "betaFirmwareVersion": "7.8.28",
+  "betaFirmwareVersion": "8.1.0",
   "updateScriptVersion": 42,
   "releaseDate": "10-16-2026",
   "releaseNotes": "USB search fix for MP4s, full resolution downloads from Companion, can create aliases",
@@ -153,14 +153,15 @@
     "7.8.20 A regular 1920 x 1080 monitor works as a marquee: the marquee strip can go at the top, middle or bottom of the screen (Screen Resolution > 1920 x 1080 Monitor or AtGames BitLCD)",
     "7.8.21 Yahoo Fantasy: while your matchup is live, only the live lineups card is shown (every player's points, both totals and your win probability)",
     "7.8.22 Single-board Pixelcade LCD: video marquees play on the board's video hardware, using about a third of the processor they did",
-    "7.8.22 Single-board Pixelcade LCD: the 180° screen rotation (21\" and 28\" bars) is done by the board's graphics hardware, so tickers and videos run lighter",
+    "7.8.22 Single-board Pixelcade LCD: the 180\u00b0 screen rotation (21\" and 28\" bars) is done by the board's graphics hardware, so tickers and videos run lighter",
     "7.8.22 Device Info has a copy button next to the hostname",
     "7.8.23 Updates: if you're on a beta, a Switch to Production button takes you back to the production release",
     "7.8.24 Log page: System Info (and Copy Log + Info) now shows the board, OS, uptime, temperature and memory, LCD HDMI Mode, where the internet comes from, the Artwork Library status and artwork shared from your computer",
     "7.8.25 Yahoo Fantasy: the 7-segment, mini LCD and Pulse LED strips follow your score as it changes, not just when the matchup changes",
     "7.8.26 A widget started with nointerrupt no longer leaves the LCD ignoring widgets and games after it stops",
     "7.8.27 LCD HDMI Mode on Windows: the LCD software is now built for the latest Windows libraries (images failed to show with them before)",
-    "7.8.28 New LCD board (DC-A566B): Settings > Advanced > Display Output can show the marquee on a monitor plugged into the board's HDMI port instead of the LCD bar, at the top, middle or bottom of the screen"
+    "7.8.28 New LCD board (DC-A566B): Settings > Advanced > Display Output can show the marquee on a monitor plugged into the board's HDMI port instead of the LCD bar, at the top, middle or bottom of the screen",
+    "8.1.0 Version number now matches Pixelcade LED (8.1.0); no other changes from 7.8.28"
   ],
   "minimumRequiredVersion": "5.0.0"
 }
