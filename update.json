@@ -191,9 +191,17 @@
     ]
   },
   "beta": {
-    "version": "8.1.0",
+    "version": "8.1.1",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.1.1 Pixelcade LCD: your own LCD marquees from LaunchBox and Arcade One folders are found by themselves, plus folders of your own, with Pixelcade's artwork or yours first (needs Pixelcade LCD 8.1.1)",
+      "8.1.1 Find Missing LCD Marquees: scans your front end's games and downloads the missing LCD marquees from ScreenScraper",
+      "8.1.1 Browse Artwork: Pixelcade LED Artwork, Local LCD Artwork and Pixelcade LCD Artwork tabs; a click shows the marquee on the Pixelcade LCD",
+      "8.1.1 Pixelcade LCD settings are now in tabs: Setup, Local LCD Artwork, Find Missing and Status",
+      "8.1.1 Scrolling text on V2 LED boards is scrolled by the board itself and stays smooth while LED strip effects stream (needs LED firmware 23.12 beta; already on 23.12? reinstall it from Updates)",
+      "8.1.1 Windows: LED strips can react to sound without a Pixelcade LCD (Pixelcade Pulse > React to Sound): in game only or all the time, in several styles",
+      "8.1.1 DOFLinx: Pixelcade fixes DOFLinx.ini when its MAME process name doesn't match your MAME (mame.exe or mame64.exe); In Game Effects shows a check and a Launch DOFLinx button",
+      "8.1.1 ScreenScraper login check works again (it said a correct login wasn't recognized)",
       "8.1.0 Windows: a new Pixelcade Setup window (pixelweb.exe -setup, or http://localhost:8080/setup) with three tabs, Pixelcade LCD, Artwork and Front End Setup Wizard, each showing what is happening live",
       "8.1.0 Pixelcade LCD Finder is now in Companion (Pixelcade LCD tab, or /lcdfinder): finds and pairs your Pixelcade LCD over the network, USB or HDMI, shows what is paired now and has an Identify button",
       "8.1.0 Artwork setup window (pixelweb.exe -setup-artwork, or /setupartwork) shows the install progress and says when the latest LED or LCD artwork is already installed",
