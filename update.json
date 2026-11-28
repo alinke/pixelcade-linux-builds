@@ -191,9 +191,10 @@
     ]
   },
   "beta": {
-    "version": "8.1.1",
+    "version": "8.1.2",
     "artworkUpdate": true,
     "releaseNotes": [
+      "8.1.2 LEDBlinky front end exit: the LED marquee shows the exit text (Thanks for Playing) again, then the Pixelcade logo (8.1.1 went straight to the logo)",
       "8.1.1 Pixelcade LCD: your own LCD marquees from LaunchBox and Arcade One folders are found by themselves, plus folders of your own, with Pixelcade's artwork or yours first (needs Pixelcade LCD 8.1.1)",
       "8.1.1 Find Missing LCD Marquees: scans your front end's games and downloads the missing LCD marquees from ScreenScraper",
       "8.1.1 Browse Artwork: Pixelcade LED Artwork, Local LCD Artwork and Pixelcade LCD Artwork tabs; a click shows the marquee on the Pixelcade LCD",
